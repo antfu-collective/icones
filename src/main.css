@@ -1,5 +1,15 @@
 @import 'tailwindcss/base';
-
 @import 'tailwindcss/components';
-
 @import 'tailwindcss/utilities';
+
+.btn {
+  @apply border border-gray-200 rounded shadow-sm outline-none bg-transparent px-4 py-1 text-gray-600 text-sm;
+}
+
+.btn:hover {
+  @apply shadow outline-none;
+}
+
+.btn:focus {
+  @apply shadow outline-none;
+}

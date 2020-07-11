@@ -1,17 +1,5 @@
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-light px-1">
-      &lt;<Icon icon="mdi:emoticon-happy-outline" class="inline-block"/>>
-      <b class="font-bold">Iconify</b>Explorer
-    </h1>
-    <p class="text-gray-600 px-1">
-      by
-      <a
-        class="opacity-75 hover:opacity-100"
-        href="https://github.com/antfu"
-        target="_blank"
-      >@antfu</a>
-    </p>
     <div class="grid py-4 gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <router-link
         v-for="collection in collections"

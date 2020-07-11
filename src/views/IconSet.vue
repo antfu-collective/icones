@@ -19,29 +19,20 @@
           class="shadow rounded outline-none py-2 px-4 flex-auto"
           placeholder="Search..."
         />
-        <!-- <div class="text-xl m-auto -ml-6 text-gray-400">
-          <Icon icon="mdi:magnify" />
-        </div>-->
       </div>
     </div>
-    <div class="py-4">
-      <Icons :icons="icons.slice(0, 200)" :selected="[selected]" @select="onSelect" />
+    <div class="py-4 text-center">
+      <Icons :icons="icons.slice(0, max)" :selected="[selected]" @select="onSelect" />
+      <button
+        v-if='icons.length > max'
+        class="btn m-2"
+        @click="loadMore"
+      >Load More</button>
     </div>
     <p class="text-gray-500 text-sm px-2">Icons: {{icons.length}}</p>
 
     <Modal :value="!!selected" @close="selected = null">
-      <div class="flex" v-if="selected">
-        <div class="text-6xl p-3 text-gray-700">
-          <Icon :icon="selected" />
-        </div>
-        <div class="p-2">
-          <p class="font-mono flex text-gray-700 font-light">
-            {{selected}}
-            <IconButton icon="mdi:content-copy" @click="copySelected" class="ml-2" />
-          </p>
-          <p class="text-gray-500">WIP... more info</p>
-        </div>
-      </div>
+      <IconDetail :icon="selected"/>
     </Modal>
   </div>
 </template>
@@ -53,13 +44,15 @@ import Icon from '../components/Icon.vue'
 import IconButton from '../components/IconButton.vue'
 import Icons from '../components/Icons.vue'
 import Modal from '../components/Modal.vue'
+import IconDetail from '../components/IconDetail.vue'
 
 export default defineComponent({
   components: {
     Icon,
     IconButton,
     Icons,
-    Modal
+    Modal,
+    IconDetail,
   },
   props: {
     id: {
@@ -70,6 +63,8 @@ export default defineComponent({
   setup(props) {
     const search = ref('')
     const selected = ref<string | null>(null)
+    const max = ref(200)
+
     const collection = collections.find(c => c.id === props.id)!
     const icons = computed(() => {
       if (!search.value) {
@@ -84,8 +79,8 @@ export default defineComponent({
       selected.value = icon
     }
 
-    const copySelected = () => {
-      if (selected.value) navigator.clipboard.writeText(selected.value)
+    const loadMore = () => {
+      max.value += 100
     }
 
     return {
@@ -94,7 +89,8 @@ export default defineComponent({
       collection,
       icons,
       onSelect,
-      copySelected
+      max,
+      loadMore
     }
   }
 })

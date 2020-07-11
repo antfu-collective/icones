@@ -5,7 +5,7 @@ module.exports = {
     './index.html',
     './src/**/*.vue',
     './src/**/*.js',
-    // etc.
+    './src/**/*.ts',
   ],
   theme: {
     extend: {
@@ -14,4 +14,7 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    require('tailwindcss-dark-mode')()
+  ]
 }

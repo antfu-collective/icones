@@ -21,8 +21,17 @@ export default defineComponent({
           'data-icon': props.icon,
           'data-inline': props.inline.toString(),
         },
-        []
+        [' ']
       )
   }
 })
 </script>
+
+<style>
+span.iconify {
+  background: #5551;
+  border-radius: 100%;
+  min-width: 10px;
+  min-height: 1em;
+}
+</style>
