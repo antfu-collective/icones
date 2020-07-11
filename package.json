@@ -8,14 +8,17 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@vueuse/core": "^4.0.0-beta.1",
     "tailwindcss": "^1.4.6",
     "vue": "next",
     "vue-router": "next"
   },
   "devDependencies": {
+    "@antfu/eslint-config-vue": "^0.2.13",
     "@iconify/json": "^1.1.186",
     "@types/fs-extra": "^9.0.1",
     "@vue/compiler-sfc": "^3.0.0-beta.20",
+    "eslint": "^7.4.0",
     "fs-extra": "^9.0.1",
     "tailwindcss-dark-mode": "^1.1.4",
     "ts-node": "^8.10.2",
@@ -25,5 +28,10 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "eslintConfig": {
+    "extends": [
+      "@antfu/eslint-config-vue"
+    ]
   }
 }

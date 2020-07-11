@@ -5,25 +5,25 @@ export default defineComponent({
   props: {
     icon: {
       type: String,
-      required: true
+      required: true,
     },
     inline: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  setup(props, {attrs}) {
+  setup(props, { attrs }) {
     return () =>
       h(
         'span',
         {
-          class: attrs.class + ' iconify',
+          class: `${attrs.class} iconify`,
           'data-icon': props.icon,
           'data-inline': props.inline.toString(),
         },
-        [' ']
+        [' '],
       )
-  }
+  },
 })
 </script>
 

@@ -13,17 +13,24 @@
             class="border-r border-gray-300 pt-1 justify-center overflow-hidden"
           />
           <div class="px-4 py-2 bg-gray-100 flex-auto bg-opacity-50">
-            <div class="text-gray-900 text-lg">{{collection.name}}</div>
-            <div class="text-gray-500 text-sm block leading-none">{{collection.author}}</div>
-            <div class="text-gray-500 text-xs block mt-2">{{collection.license}}</div>
-            <div class="text-gray-500 text-xs block">{{collection.icons.length}} icons</div>
+            <div class="text-gray-900 text-lg">
+              {{ collection.name }}
+            </div>
+            <div class="text-gray-500 text-sm block leading-none">
+              {{ collection.author }}
+            </div>
+            <div class="text-gray-500 text-xs block mt-2">
+              {{ collection.license }}
+            </div>
+            <div class="text-gray-500 text-xs block">
+              {{ collection.icons.length }} icons
+            </div>
           </div>
         </div>
       </router-link>
     </div>
   </div>
 </template>
-
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
@@ -34,12 +41,12 @@ import Icons from '../components/Icons.vue'
 export default defineComponent({
   components: {
     Icon,
-    Icons
+    Icons,
   },
   data() {
     return {
-      collections
+      collections,
     }
-  }
+  },
 })
 </script>

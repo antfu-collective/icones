@@ -13,13 +13,13 @@ import Icon from '../components/Icon.vue'
 
 export default defineComponent({
   components: {
-    Icon
+    Icon,
   },
   props: {
     icon: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
 </script>

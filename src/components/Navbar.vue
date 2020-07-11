@@ -24,7 +24,7 @@ import IconButton from './IconButton.vue'
 export default defineComponent({
   components: {
     Icon,
-    IconButton
-  }
+    IconButton,
+  },
 })
 </script>

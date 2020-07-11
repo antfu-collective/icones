@@ -1,20 +1,32 @@
 <template>
-  <div class="flex" v-if="icon">
+  <div v-if="icon" class="flex">
     <div class="text-6xl p-4 text-gray-700">
       <Icon :icon="icon" />
     </div>
     <div class="px-2 py-4">
       <p class="font-mono flex text-gray-700 font-light">
-        {{icon}}
-        <IconButton icon="mdi:content-copy" @click="copy('id')" class="ml-2" />
+        {{ icon }}
+        <IconButton icon="mdi:content-copy" class="ml-2" @click="copy('id')" />
       </p>
 
-      <div class="my-1 text-gray-500 mt-3">Copy</div>
-      <button class="btn mr-1" @click="copy('url')">URL</button>
-      <button class="btn mr-1" @click="copy('html')">HTML</button>
-      <button class="btn mr-1" @click="copy('css')">CSS</button>
-      <button class="btn mr-1" @click="copy('svg')">SVG</button>
-      <div class="my-1 text-gray-500 mt-3">Download</div>
+      <div class="my-1 text-gray-500 mt-3">
+        Copy
+      </div>
+      <button class="btn mr-1" @click="copy('url')">
+        URL
+      </button>
+      <button class="btn mr-1" @click="copy('html')">
+        HTML
+      </button>
+      <button class="btn mr-1" @click="copy('css')">
+        CSS
+      </button>
+      <button class="btn mr-1" @click="copy('svg')">
+        SVG
+      </button>
+      <div class="my-1 text-gray-500 mt-3">
+        Download
+      </div>
       <a :href="downlodUrl">
         <button class="btn mr-1" @click="download()">SVG</button>
       </a>
@@ -35,18 +47,18 @@ export default defineComponent({
   components: {
     Icon,
     IconButton,
-    Notification
+    Notification,
   },
   props: {
     icon: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   setup(props) {
     const copied = ref(false)
 
-    const copy = async (type: string) => {
+    const copy = async(type: string) => {
       if (!props.icon) return
 
       let text = props.icon
@@ -62,7 +74,7 @@ export default defineComponent({
           break
         case 'svg':
           text = await fetch(
-            `https://api.iconify.design/${props.icon}.svg?inline=false&height=auto`
+            `https://api.iconify.design/${props.icon}.svg?inline=false&height=auto`,
           ).then(r => r.text())
           break
       }
@@ -77,14 +89,14 @@ export default defineComponent({
 
     const downlodUrl = computed(
       () =>
-        `https://api.iconify.design/${props.icon}.svg?download=true&inline=false&height=auto`
+        `https://api.iconify.design/${props.icon}.svg?download=true&inline=false&height=auto`,
     )
 
     return {
       copy,
       copied,
-      downlodUrl
+      downlodUrl,
     }
-  }
+  },
 })
 </script>

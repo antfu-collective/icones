@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Navbar/>
+    <Navbar />
     <router-view />
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import Footer from './components/Footer.vue'
 export default defineComponent({
   components: {
     Navbar,
-    Footer
-  }
+    Footer,
+  },
 })
 </script>

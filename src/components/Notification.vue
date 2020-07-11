@@ -1,11 +1,11 @@
 <template>
   <div
-    class="fixed top-0 left-0 right-0 z-50 transition-transform duration-500 text-center"
-    :class="value ? '': 'opacity-0 pointer-events-none'"
-    :style="value ? {}: {transform: 'translateY(-150%)'}"
+    class="fixed top-0 left-0 right-0 z-50 text-center overflow-hidden"
+    :class="value ? '': 'pointer-events-none'"
   >
     <div
-      class="shadow-xl px-4 py-1 rounded bg-white inline-block m-2"
+      class="shadow-xl px-4 py-1 rounded bg-white inline-block m-2 transition-transform duration-500"
+      :style="value ? {}: {transform: 'translateY(-150%)'}"
     >
       <slot />
     </div>
@@ -19,8 +19,8 @@ export default defineComponent({
   props: {
     value: {
       type: Boolean,
-      defualt: false
-    }
-  }
+      defualt: false,
+    },
+  },
 })
 </script>
