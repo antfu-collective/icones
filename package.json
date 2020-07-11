@@ -1,0 +1,28 @@
+{
+  "name": "iconify-vite",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "ts-node scripts/prepare.ts",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "tailwindcss": "^1.4.6",
+    "vue": "next",
+    "vue-router": "next"
+  },
+  "devDependencies": {
+    "@iconify/json": "^1.1.186",
+    "@types/fs-extra": "^9.0.1",
+    "@vue/compiler-sfc": "^3.0.0-beta.20",
+    "fs-extra": "^9.0.1",
+    "ts-node": "^8.10.2",
+    "typescript": "3.9.3",
+    "vite": "^1.0.0-beta.11"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}
