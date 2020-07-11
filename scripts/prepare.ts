@@ -21,6 +21,7 @@ async function prepare() {
     set.icons = icons
   }
 
+  await fs.ensureDir(path.dirname(outfile))
   await fs.writeJSON(outfile, collections)
 }
 
