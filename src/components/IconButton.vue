@@ -1,6 +1,7 @@
 <template>
   <div
-    class="m-auto opacity-50 hover:opacity-75 cursor-pointer"
+    class="m-auto cursor-pointer"
+    :class="active ? 'opacity-100 hover:opacity-100' : 'opacity-50 hover:opacity-75' "
     @click="e => $emit('click', e)"
   >
     <Icon :icon="icon" />
@@ -19,6 +20,10 @@ export default defineComponent({
     icon: {
       type: String,
       required: true,
+    },
+    active: {
+      type: Boolean,
+      default: false,
     },
   },
 })

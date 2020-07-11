@@ -1,10 +1,10 @@
 <template>
-  <nav class="shadow p-4 fixed top-0 left-0 right-0 bg-white z-10 dark:bg-black flex">
+  <nav class="p-4 fixed top-0 left-0 right-0 bg-white z-10 dark:bg-black flex border-b border-gray-200">
     <div class="absolute top-0 left-0 bottom-0 flex">
       <IconButton
         v-show="$route.path !== '/'"
         class="text-xl mr-2 my-auto p-4"
-        icon="mdi:arrow-left"
+        icon="carbon:arrow-left"
         @click="$router.replace('/')"
       />
     </div>
@@ -15,16 +15,3 @@
   </nav>
   <div class="py-8" />
 </template>
-
-<script lang='ts'>
-import { defineComponent } from 'vue'
-import Icon from './Icon.vue'
-import IconButton from './IconButton.vue'
-
-export default defineComponent({
-  components: {
-    Icon,
-    IconButton,
-  },
-})
-</script>

@@ -14,12 +14,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from './Icon.vue'
 
 export default defineComponent({
-  components: {
-    Icon,
-  },
   emits: ['select'],
   props: {
     icons: {

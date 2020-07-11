@@ -35,14 +35,8 @@
 <script lang='ts'>
 import { defineComponent } from 'vue'
 import { collections } from '../data'
-import Icon from '../components/Icon.vue'
-import Icons from '../components/Icons.vue'
 
 export default defineComponent({
-  components: {
-    Icon,
-    Icons,
-  },
   data() {
     return {
       collections,

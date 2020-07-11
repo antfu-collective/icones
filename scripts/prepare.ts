@@ -1,5 +1,5 @@
-import fs from 'fs-extra'
 import path from 'path'
+import fs from 'fs-extra'
 
 const dir = path.resolve(__dirname, '../node_modules/@iconify/json')
 const outfile = path.resolve(__dirname, '../src/assets/collections.json')
@@ -16,7 +16,7 @@ async function prepare() {
     const setData = await fs.readJSON(path.join(dir, 'json', `${set.id}.json`))
 
     const prefix = setData.prefix
-    const icons = Object.keys(setData.icons).map((i) => prefix + ':' + i)
+    const icons = Object.keys(setData.icons).map(i => `${prefix}:${i}`)
 
     set.icons = icons
   }

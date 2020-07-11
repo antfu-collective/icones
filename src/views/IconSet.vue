@@ -1,38 +1,72 @@
 <template>
   <div class="p-5">
-    <div>
-      <div class="text-gray-900 text-lg">
-        {{ collection.name }}
+    <div class="flex">
+      <!-- Left -->
+      <div class="flex-auto">
+        <div class="text-gray-900 text-lg flex">
+          {{ collection.name }}
+          <a
+            class="text-gray-500 hover:text-gray-900 ml-1"
+            :href="collection.url"
+            target="_blank"
+          >
+            <Icon icon="la:external-link-square-alt-solid" />
+          </a>
+        </div>
+        <div class="text-gray-500 text-xs block">
+          {{ collection.author }}
+        </div>
+        <a
+          class="text-gray-500 text-xs block mt-3 hover:text-gray-900"
+          :href="collection.licenseURL"
+          target="_blank"
+        >{{ collection.license }}</a>
+        <div class="text-gray-500 text-xs block">
+          {{ collection.icons.length }} icons
+        </div>
       </div>
-      <a
-        class="text-gray-500 text-sm block leading-none hover:text-gray-900"
-        :href="collection.url"
-      >{{ collection.author }}</a>
-      <a
-        class="text-gray-500 text-xs block mt-3 hover:text-gray-900"
-        :href="collection.licenseURL"
-        target="_blank"
-      >{{ collection.license }}</a>
-      <div class="text-gray-500 text-xs block">
-        {{ collection.icons.length }} icons
-      </div>
-      <div class="flex mt-6">
-        <input
-          v-model="search"
-          class="shadow rounded outline-none py-2 px-4 flex-auto"
-          placeholder="Search..."
-        >
+
+      <!-- Right -->
+      <div class="px-1 text-xl text-gray-800">
+        <IconButton
+          class="inline-block ml-3"
+          icon="carbon:hinton-plot"
+          :active="store.iconSize === '2xl'"
+          @click="store.iconSize='2xl'"
+        />
+        <IconButton
+          class="inline-block ml-3"
+          icon="carbon:app-switcher"
+          :active="store.iconSize === '4xl'"
+          @click="store.iconSize='4xl'"
+        />
       </div>
     </div>
+
+    <!-- Search -->
+    <div class="flex mt-6">
+      <input
+        v-model="search"
+        class="shadow rounded outline-none py-2 px-4 flex-auto"
+        placeholder="Search..."
+      >
+    </div>
+
+    <!-- Icons -->
     <div class="py-4 text-center">
-      <Icons :icons="icons.slice(0, max)" :selected="[selected]" @select="onSelect" />
+      <Icons
+        :icons="icons.slice(0, max)"
+        :selected="[selected]"
+        :size="store.iconSize"
+        @select="onSelect"
+      />
       <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
         Load More
       </button>
+      <p class="text-gray-500 text-sm px-2">
+        {{ icons.length }} icons
+      </p>
     </div>
-    <p class="text-gray-500 text-sm px-2">
-      Icons: {{ icons.length }}
-    </p>
 
     <Modal :value="!!selected" @close="selected = null">
       <IconDetail :icon="selected" />
@@ -43,20 +77,9 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { collections, all } from '../data'
-import Icon from '../components/Icon.vue'
-import IconButton from '../components/IconButton.vue'
-import Icons from '../components/Icons.vue'
-import Modal from '../components/Modal.vue'
-import IconDetail from '../components/IconDetail.vue'
+import store from '../store'
 
 export default defineComponent({
-  components: {
-    Icon,
-    IconButton,
-    Icons,
-    Modal,
-    IconDetail,
-  },
   props: {
     id: {
       type: String,
@@ -68,16 +91,13 @@ export default defineComponent({
     const selected = ref<string | null>(null)
     const max = ref(200)
 
-    const collection = props.id === 'all'
-      ? all
-      : collections.find(c => c.id === props.id)!
+    const collection
+      = props.id === 'all' ? all : collections.find(c => c.id === props.id)!
 
     const icons = computed(() => {
       const searchString = search.value.trim().toLowerCase()
-      if (!searchString)
-        return collection.icons
-      else
-        return collection.icons.filter(i => i.includes(searchString))
+      if (!searchString) return collection.icons
+      else return collection.icons.filter(i => i.includes(searchString))
     })
 
     const onSelect = (icon: string) => {
@@ -96,6 +116,7 @@ export default defineComponent({
       onSelect,
       max,
       loadMore,
+      store,
     }
   },
 })
