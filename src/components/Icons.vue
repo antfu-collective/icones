@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap text-gray-700" :class="`text-${size}`">
+  <div class="flex flex-wrap text-gray-700 text-2xl" :class="`text-${size}`">
     <div
       class="p-2 cursor-pointer"
       v-for="icon of icons"

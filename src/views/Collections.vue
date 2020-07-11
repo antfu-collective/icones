@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="px-8 py-4">
     <div class="grid py-4 gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <router-link
         v-for="collection in collections"

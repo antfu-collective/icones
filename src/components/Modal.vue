@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 bottom-0 left-0 right-0 z-50" :class="value ? '': 'pointer-events-none'">
+  <div class="fixed top-0 bottom-0 left-0 right-0 z-40" :class="value ? '': 'pointer-events-none'">
     <div
       class="bg-black bg-opacity-75 bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-200"
       :class="value ? '': 'opacity-0'"

@@ -1,7 +1,7 @@
 <template>
   <footer class="text-center my-5">
     <p class="text-gray-600">
-      by
+      Explorer by
       <a
         class="opacity-75 hover:opacity-100"
         href="https://github.com/antfu"

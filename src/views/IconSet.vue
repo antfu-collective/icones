@@ -1,7 +1,6 @@
 <template>
   <div class="p-5">
     <div>
-      <IconButton icon="mdi:arrow-left" class="text-lg mb-3" @click="$router.replace('/')" />
       <div class="text-gray-900 text-lg">{{collection.name}}</div>
       <a
         class="text-gray-500 text-sm block leading-none hover:text-gray-900"
