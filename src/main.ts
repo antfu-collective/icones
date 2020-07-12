@@ -8,6 +8,7 @@ import IconButton from './components/IconButton.vue'
 import Icons from './components/Icons.vue'
 import Modal from './components/Modal.vue'
 import IconDetail from './components/IconDetail.vue'
+import ColorPicker from './components/ColorPicker.vue'
 import './main.css'
 
 const app = createApp(App)
@@ -38,5 +39,6 @@ app.component('Icon', Icon)
 app.component('Modal', Modal)
 app.component('IconDetail', IconDetail)
 app.component('Notification', Notification)
+app.component('ColorPicker', ColorPicker)
 
 app.mount('#app')

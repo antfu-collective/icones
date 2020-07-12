@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-wrap text-gray-700" :class="`text-${size}`">
+  <div class="flex flex-wrap" :class="`text-${size}`" :style="{color, '--hover-color': store.iconColor }">
     <div
       v-for="icon of icons"
       :key="icon"
-      class="p-2 cursor-pointer"
-      :class="selected.includes(icon) ? 'text-green-600':'' "
+      class="icons-item p-2 cursor-pointer"
+      :class="selected.includes(icon) ? 'active': ''"
       @click="$emit('select', icon)"
     >
       <Icon :icon="icon" />
@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import store from '../store'
 
 export default defineComponent({
   emits: ['select'],
@@ -30,6 +31,21 @@ export default defineComponent({
       type: String,
       default: '2xl',
     },
+    color: {
+      type: String,
+      default: '#555',
+    },
+  },
+  setup() {
+    return {
+      store,
+    }
   },
 })
 </script>
+
+<style>
+.icons-item:hover, .icons-item.active {
+  color: var(--hover-color);
+}
+</style>

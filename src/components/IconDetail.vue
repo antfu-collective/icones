@@ -1,9 +1,11 @@
 <template>
-  <div v-if="icon" class="flex">
-    <div class="p-4 text-gray-700">
-      <Icon class="text-8xl" :icon="icon" />
-    </div>
-    <div class="px-2 py-4">
+  <div v-if="icon" class="flex flex-col md:flex-row md:text-left">
+    <ColorPicker v-model:value="store.iconColor" class="inline-block">
+      <div :style="{color: store.iconColor}">
+        <Icon class="p-4 text-8xl" :icon="icon" />
+      </div>
+    </ColorPicker>
+    <div class="px-6 py-2 mb-4 md:px-2 md:py-4">
       <p class="font-mono flex text-gray-700 font-light">
         {{ icon }}
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
@@ -43,6 +45,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import Base64 from '../utils/base64'
+import store from '../store'
 
 export default defineComponent({
   props: {
@@ -97,6 +100,7 @@ export default defineComponent({
       copy,
       copied,
       downlodUrl,
+      store,
     }
   },
 })

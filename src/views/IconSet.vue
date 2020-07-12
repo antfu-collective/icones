@@ -6,6 +6,7 @@
         <div class="text-gray-900 text-lg flex">
           {{ collection.name }}
           <a
+            v-if="collection.url"
             class="text-gray-500 hover:text-gray-900 ml-1"
             :href="collection.url"
             target="_blank"

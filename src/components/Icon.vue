@@ -7,22 +7,21 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    inline: {
-      type: Boolean,
-      default: true,
-    },
   },
   setup(props, { attrs }) {
     return () =>
-      h(
-        'span',
-        {
-          class: `${attrs.class} iconify`,
-          'data-icon': props.icon,
-          'data-inline': props.inline.toString(),
-        },
-        [' '],
-      )
+      h('div', {
+        ...attrs,
+      }, [
+        h(
+          'span',
+          {
+            class: 'iconify',
+            'data-icon': props.icon,
+          },
+          [' '],
+        ),
+      ])
   },
 })
 </script>
