@@ -19,7 +19,7 @@
       href="https://github.com/antfu/iconify-explorer"
       target="_blank"
     >
-      <Icon icon="carbon:code" class="inline font-2xl" />
+      <Icon icon="carbon:code" class="inline-block text-xl align-baseline" />
       Source Code
     </a>
   </footer>

@@ -3,7 +3,7 @@
     <div class="flex">
       <!-- Left -->
       <div class="flex-auto">
-        <div class="text-gray-900 text-lg flex">
+        <div class="text-gray-900 text-xl flex">
           {{ collection.name }}
           <a
             v-if="collection.url"
@@ -32,14 +32,14 @@
         <IconButton
           class="inline-block ml-3"
           icon="carbon:hinton-plot"
-          :active="store.iconSize === '2xl'"
-          @click="store.iconSize='2xl'"
+          :active="iconSize === '2xl'"
+          @click="iconSize='2xl'"
         />
         <IconButton
           class="inline-block ml-3"
           icon="carbon:app-switcher"
-          :active="store.iconSize === '4xl'"
-          @click="store.iconSize='4xl'"
+          :active="iconSize === '4xl'"
+          @click="iconSize='4xl'"
         />
       </div>
     </div>
@@ -58,7 +58,7 @@
       <Icons
         :icons="icons.slice(0, max)"
         :selected="[selected]"
-        :size="store.iconSize"
+        :size="iconSize"
         @select="onSelect"
       />
       <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
@@ -78,7 +78,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { collections, all } from '../data'
-import store from '../store'
+import { iconSize } from '../store'
 
 export default defineComponent({
   props: {
@@ -92,13 +92,16 @@ export default defineComponent({
     const selected = ref<string | null>(null)
     const max = ref(200)
 
-    const collection
-      = props.id === 'all' ? all : collections.find(c => c.id === props.id)!
+    const collection = computed(() => {
+      return props.id === 'all'
+        ? all
+        : collections.find(c => c.id === props.id)!
+    })
 
     const icons = computed(() => {
       const searchString = search.value.trim().toLowerCase()
-      if (!searchString) return collection.icons
-      else return collection.icons.filter(i => i.includes(searchString))
+      if (!searchString) return collection.value.icons
+      else return collection.value.icons.filter(i => i.includes(searchString))
     })
 
     const onSelect = (icon: string) => {
@@ -117,7 +120,7 @@ export default defineComponent({
       onSelect,
       max,
       loadMore,
-      store,
+      iconSize,
     }
   },
 })

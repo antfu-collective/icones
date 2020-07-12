@@ -11,10 +11,10 @@ export interface Collection {
   icons: string[]
 }
 
-export const collections = json as Collection[]
+export const collections = Object.freeze(json as Collection[])
 
-export const all: Collection = {
+export const all: Collection = Object.freeze({
   id: 'all',
   name: 'All',
   icons: collections.flatMap(i => i.icons),
-}
+})

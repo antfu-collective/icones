@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap" :class="`text-${size}`" :style="{color, '--hover-color': store.iconColor }">
+  <div class="flex flex-wrap" :class="`text-${size}`" :style="{color, '--hover-color': themeColor }">
     <div
       v-for="icon of icons"
       :key="icon"
@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import store from '../store'
+import { themeColor } from '../store'
 
 export default defineComponent({
   emits: ['select'],
@@ -38,7 +38,7 @@ export default defineComponent({
   },
   setup() {
     return {
-      store,
+      themeColor,
     }
   },
 })

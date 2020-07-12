@@ -1,7 +1,7 @@
 <template>
   <div v-if="icon" class="flex flex-col md:flex-row md:text-left">
-    <ColorPicker v-model:value="store.iconColor" class="inline-block">
-      <div :style="{color: store.iconColor}">
+    <ColorPicker v-model:value="previewColor" class="inline-block">
+      <div :style="{color: previewColor}">
         <Icon class="p-4 text-8xl" :icon="icon" />
       </div>
     </ColorPicker>
@@ -45,7 +45,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import Base64 from '../utils/base64'
-import store from '../store'
+import { previewColor } from '../store'
 
 export default defineComponent({
   props: {
@@ -100,7 +100,7 @@ export default defineComponent({
       copy,
       copied,
       downlodUrl,
-      store,
+      previewColor,
     }
   },
 })
