@@ -7,7 +7,7 @@
           {{ collection.name }}
           <a
             v-if="collection.url"
-            class="text-gray-500 hover:text-gray-900 ml-1"
+            class="text-gray-500 hover:text-gray-900 mt-1 text-base"
             :href="collection.url"
             target="_blank"
           >
@@ -32,14 +32,20 @@
         <IconButton
           class="inline-block ml-3"
           icon="carbon:hinton-plot"
-          :active="iconSize === '2xl'"
-          @click="iconSize='2xl'"
+          :active="listType === 'grid' && iconSize === '2xl'"
+          @click="()=>setGrid('small')"
         />
         <IconButton
           class="inline-block ml-3"
           icon="carbon:app-switcher"
-          :active="iconSize === '4xl'"
-          @click="iconSize='4xl'"
+          :active="listType === 'grid' && iconSize === '4xl'"
+          @click="()=>setGrid('large')"
+        />
+        <IconButton
+          class="inline-block ml-3"
+          icon="carbon:list"
+          :active="listType === 'list'"
+          @click="()=>setGrid('list')"
         />
       </div>
     </div>
@@ -59,6 +65,8 @@
         :icons="icons.slice(0, max)"
         :selected="[selected]"
         :size="iconSize"
+        :display="listType"
+        :search="search"
         @select="onSelect"
       />
       <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
@@ -78,7 +86,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { collections, all } from '../data'
-import { iconSize } from '../store'
+import { iconSize, listType } from '../store'
 
 export default defineComponent({
   props: {
@@ -112,6 +120,22 @@ export default defineComponent({
       max.value += 100
     }
 
+    const setGrid = (type: string) => {
+      switch (type) {
+        case 'small':
+          iconSize.value = '2xl'
+          listType.value = 'grid'
+          break
+        case 'large':
+          iconSize.value = '4xl'
+          listType.value = 'grid'
+          break
+        default :
+          iconSize.value = '3xl'
+          listType.value = 'list'
+      }
+    }
+
     return {
       selected,
       search,
@@ -121,6 +145,8 @@ export default defineComponent({
       max,
       loadMore,
       iconSize,
+      listType,
+      setGrid,
     }
   },
 })

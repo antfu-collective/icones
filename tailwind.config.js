@@ -25,12 +25,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         '7xl': '5rem',
         '8xl': '6rem',
         '9xl': '7rem',
+      },
+      opacity: {
+        60: '0.6',
       },
     },
   },

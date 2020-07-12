@@ -3,11 +3,12 @@
     <div
       v-for="icon of icons"
       :key="icon"
-      class="icons-item p-2 cursor-pointer"
+      class="icons-item cursor-pointer flex m-2"
       :class="selected.includes(icon) ? 'active': ''"
       @click="$emit('select', icon)"
     >
       <Icon :icon="icon" />
+      <span v-if="display==='list'" class="text-sm ml-2 opacity-60 m-auto" v-html="searchNameHTML(icon)" />
     </div>
   </div>
 </template>
@@ -31,14 +32,32 @@ export default defineComponent({
       type: String,
       default: '2xl',
     },
+    search: {
+      type: String,
+      default: '',
+    },
     color: {
       type: String,
       default: '#555',
     },
+    display: {
+      type: String,
+      default: 'grid',
+    },
   },
-  setup() {
+  setup(props) {
+    const searchNameHTML = (icon: string) => {
+      if (!props.search)
+        return icon
+
+      const start = icon.indexOf(props.search)
+      const end = start + props.search.length
+      return `${icon.slice(0, start)}<b class="font-bold">${icon.slice(start, end)}</b>${icon.slice(end)}`
+    }
+
     return {
       themeColor,
+      searchNameHTML,
     }
   },
 })
