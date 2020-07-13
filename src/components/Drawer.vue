@@ -1,5 +1,15 @@
 <template>
   <div class="border-r border-gray-200">
+    <div
+      class="border-b border-gray-200"
+    >
+      <IconButton
+        v-show="$route.path !== '/'"
+        class="text-xl my-auto p-4"
+        icon="carbon:arrow-left"
+        @click="$router.replace('/')"
+      />
+    </div>
     <router-link
       v-for="collection in collections"
       :key="collection.id"

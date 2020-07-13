@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col h-screen overflow-hidden" :style="style">
-    <Navbar />
     <div class="flex flex-auto overflow-hidden">
       <Drawer v-if="!isRoot" class="h-full overflow-auto flex-none hidden md:block" style="width:300px" />
       <div class="h-full flex-auto overflow-auto">

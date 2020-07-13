@@ -10,18 +10,14 @@ export default defineComponent({
   },
   setup(props, { attrs }) {
     return () =>
-      h('div', {
-        ...attrs,
-      }, [
-        h(
-          'span',
-          {
-            class: 'iconify',
-            'data-icon': props.icon,
-          },
-          [' '],
-        ),
-      ])
+      h(
+        'span',
+        {
+          class: 'iconify',
+          'data-icon': props.icon,
+        },
+        [' '],
+      )
   },
 })
 </script>

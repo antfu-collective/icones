@@ -1,5 +1,6 @@
 <template>
-  <div class="p-5">
+  <Navbar class="md:hidden" />
+  <div class="py-5 px-5 md:px-8">
     <div class="flex">
       <!-- Left -->
       <div class="flex-auto">
@@ -17,13 +18,12 @@
         <div class="text-gray-500 text-xs block">
           {{ collection.author }}
         </div>
-        <a
-          class="text-gray-500 text-xs block mt-3 hover:text-gray-900"
-          :href="collection.licenseURL"
-          target="_blank"
-        >{{ collection.license }}</a>
-        <div class="text-gray-500 text-xs block">
-          {{ collection.icons.length }} icons
+        <div>
+          <a
+            class="text-gray-500 text-xs hover:text-gray-900"
+            :href="collection.licenseURL"
+            target="_blank"
+          >{{ collection.license }}</a>
         </div>
       </div>
 
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Search -->
-    <div class="flex mt-6">
+    <div class="flex mt-4">
       <input
         v-model="search"
         class="shadow rounded outline-none py-2 px-4 flex-auto"
