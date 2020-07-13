@@ -3,3 +3,4 @@ yarn-error.log
 dist
 
 src/assets/collections.json
+.DS_Store
