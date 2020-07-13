@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center my-5">
+  <footer class="text-center text-sm my-5">
     <p class="text-gray-600">
       built by
       <a
@@ -19,7 +19,7 @@
       href="https://github.com/antfu/iconify-explorer"
       target="_blank"
     >
-      <Icon icon="carbon:code" class="inline-block text-xl align-baseline" />
+      <Icon icon="carbon:code" class="inline-block text-lg align-middle" />
       Source Code
     </a>
   </footer>

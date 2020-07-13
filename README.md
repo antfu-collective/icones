@@ -2,13 +2,17 @@
 
 <p align="center">Explorer for <a href="https://iconify.design/" target="_blank">Iconify</a> with <b>Instant</b> searching.</p>
 
+<p align="center">
+<a href="https://iconify.antfu.me/">⇁ iconify.antfu.me</a>
+</p>
+
 ![](./screenshots/1.png)
 ![](./screenshots/2.png)
 ![](./screenshots/3.png)
 
 ### Features
 
-- Instant Searching - all done locally, no web queries!
+- Instant Fuzzy Searching - all done locally, no web queries!
 - Copy the usage scripts
 - Direct download
 - Mobile friendly
@@ -16,8 +20,10 @@
 
 ### TODOs
 
+- Favorite collections
+- Tags filter
 - Dark mode
-- Full-offline mode - pack the icons as well
+- Full-offline mode - pack all the icons
 - Electron client
 - The Shop - collect your icons and pack them into a single js file!
 

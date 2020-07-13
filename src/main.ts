@@ -10,6 +10,9 @@ import Modal from './components/Modal.vue'
 import IconDetail from './components/IconDetail.vue'
 import ColorPicker from './components/ColorPicker.vue'
 import Navbar from './components/Navbar.vue'
+import WithNavbar from './components/WithNavbar.vue'
+import Footer from './components/Footer.vue'
+import Drawer from './components/Drawer.vue'
 import './main.css'
 
 const app = createApp(App)
@@ -42,5 +45,8 @@ app.component('IconDetail', IconDetail)
 app.component('Notification', Notification)
 app.component('ColorPicker', ColorPicker)
 app.component('Navbar', Navbar)
+app.component('WithNavbar', WithNavbar)
+app.component('Footer', Footer)
+app.component('Drawer', Drawer)
 
 app.mount('#app')

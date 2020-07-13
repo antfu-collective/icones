@@ -1,5 +1,7 @@
 // @ts-ignore
+import { computed } from 'vue'
 import json from './assets/collections.json'
+import { favoritedCollections } from './store'
 
 export interface Collection {
   id: string
@@ -11,10 +13,14 @@ export interface Collection {
   icons: string[]
 }
 
-export const collections = Object.freeze(json as Collection[])
+export const collections = json.map(collection => Object.freeze(collection as Collection))
 
 export const all: Collection = Object.freeze({
   id: 'all',
   name: 'All',
   icons: collections.flatMap(i => i.icons),
+})
+
+export const sortedCollections = computed(() => {
+  return [...collections].sort((a, b) => favoritedCollections.value.indexOf(a.id) - favoritedCollections.value.indexOf(b.id))
 })

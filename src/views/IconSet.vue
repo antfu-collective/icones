@@ -1,92 +1,97 @@
 <template>
-  <Navbar class="md:hidden" />
-  <div class="py-5 px-5 md:px-8">
-    <div class="flex">
-      <!-- Left -->
-      <div class="flex-auto">
-        <div class="text-gray-900 text-xl flex">
-          {{ collection.name }}
-          <a
-            v-if="collection.url"
-            class="text-gray-500 hover:text-gray-900 mt-1 text-base"
-            :href="collection.url"
-            target="_blank"
-          >
-            <Icon icon="la:external-link-square-alt-solid" />
-          </a>
+  <WithNavbar nav-class="md:hidden">
+    <div class="py-5 px-5 md:px-8">
+      <div class="flex">
+        <!-- Left -->
+        <div class="flex-auto">
+          <div class="text-gray-900 text-xl flex">
+            {{ collection.name }}
+            <a
+              v-if="collection.url"
+              class="text-gray-500 hover:text-gray-900 mt-1 text-base"
+              :href="collection.url"
+              target="_blank"
+            >
+              <Icon icon="la:external-link-square-alt-solid" />
+            </a>
+            <!-- <IconButton class="ml-2" icon="carbon:star" @click="()=>toggleFavorite(id)" /> -->
+            <div class="flex-auto" />
+          </div>
+          <div class="text-gray-500 text-xs block">
+            {{ collection.author }}
+          </div>
+          <div>
+            <a
+              class="text-gray-500 text-xs hover:text-gray-900"
+              :href="collection.licenseURL"
+              target="_blank"
+            >{{ collection.license }}</a>
+          </div>
         </div>
-        <div class="text-gray-500 text-xs block">
-          {{ collection.author }}
-        </div>
-        <div>
-          <a
-            class="text-gray-500 text-xs hover:text-gray-900"
-            :href="collection.licenseURL"
-            target="_blank"
-          >{{ collection.license }}</a>
+
+        <!-- Right -->
+        <div class="px-1 text-xl text-gray-800">
+          <IconButton
+            class="inline-block ml-3"
+            icon="carbon:hinton-plot"
+            :active="listType === 'grid' && iconSize === '2xl'"
+            @click="()=>setGrid('small')"
+          />
+          <IconButton
+            class="inline-block ml-3"
+            icon="carbon:app-switcher"
+            :active="listType === 'grid' && iconSize === '4xl'"
+            @click="()=>setGrid('large')"
+          />
+          <IconButton
+            class="inline-block ml-3"
+            icon="carbon:list"
+            :active="listType === 'list'"
+            @click="()=>setGrid('list')"
+          />
         </div>
       </div>
 
-      <!-- Right -->
-      <div class="px-1 text-xl text-gray-800">
-        <IconButton
-          class="inline-block ml-3"
-          icon="carbon:hinton-plot"
-          :active="listType === 'grid' && iconSize === '2xl'"
-          @click="()=>setGrid('small')"
-        />
-        <IconButton
-          class="inline-block ml-3"
-          icon="carbon:app-switcher"
-          :active="listType === 'grid' && iconSize === '4xl'"
-          @click="()=>setGrid('large')"
-        />
-        <IconButton
-          class="inline-block ml-3"
-          icon="carbon:list"
-          :active="listType === 'list'"
-          @click="()=>setGrid('list')"
-        />
+      <!-- Search -->
+      <div class="flex mt-4">
+        <input
+          v-model="search"
+          class="shadow rounded outline-none py-2 px-4 flex-auto"
+          placeholder="Search..."
+        >
       </div>
-    </div>
 
-    <!-- Search -->
-    <div class="flex mt-4">
-      <input
-        v-model="search"
-        class="shadow rounded outline-none py-2 px-4 flex-auto"
-        placeholder="Search..."
-      >
-    </div>
+      <!-- Icons -->
+      <div class="py-4 text-center">
+        <Icons
+          :icons="icons.slice(0, max)"
+          :selected="[selected]"
+          :size="iconSize"
+          :display="listType"
+          :search="search"
+          @select="onSelect"
+        />
+        <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
+          Load More
+        </button>
+        <p class="text-gray-500 text-sm px-2">
+          {{ icons.length }} icons
+        </p>
+      </div>
 
-    <!-- Icons -->
-    <div class="py-4 text-center">
-      <Icons
-        :icons="icons.slice(0, max)"
-        :selected="[selected]"
-        :size="iconSize"
-        :display="listType"
-        :search="search"
-        @select="onSelect"
-      />
-      <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
-        Load More
-      </button>
-      <p class="text-gray-500 text-sm px-2">
-        {{ icons.length }} icons
-      </p>
-    </div>
+      <Footer />
 
-    <Modal :value="!!selected" @close="selected = null">
-      <IconDetail :icon="selected" />
-    </Modal>
-  </div>
+      <Modal :value="!!selected" @close="selected = null">
+        <IconDetail :icon="selected" />
+      </Modal>
+    </div>
+  </WithNavbar>
 </template>
 
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { collections, all } from '../data'
-import { iconSize, listType } from '../store'
+import { iconSize, listType, isFavorited, toggleFavorite } from '../store'
 
 export default defineComponent({
   props: {
@@ -147,6 +152,8 @@ export default defineComponent({
       iconSize,
       listType,
       setGrid,
+      isFavorited,
+      toggleFavorite,
     }
   },
 })
