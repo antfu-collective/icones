@@ -4,6 +4,7 @@ export const themeColor = useStorage('explorer-theme-color', '#329672')
 export const iconSize = useStorage('explorer-icon-size', '2xl')
 export const previewColor = useStorage('explorer-preview-color', '#888')
 export const listType = useStorage('explorer-list-type', 'grid')
+export const showCategories = useStorage('explorer-show-categories', true)
 export const favoritedCollections = useStorage<string[]>('explorer-fav-collections', [])
 
 export function isFavorited(id: string) {
@@ -27,4 +28,5 @@ export default {
   previewColor,
   listType,
   favoritedCollections,
+  showCategories,
 }

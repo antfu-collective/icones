@@ -4,10 +4,10 @@
       v-for="icon of icons"
       :key="icon"
       class="icons-item cursor-pointer flex m-2"
-      :class="selected.includes(icon) ? 'active': ''"
-      @click="$emit('select', icon)"
+      :class="selected.includes(namespace+icon) ? 'active': ''"
+      @click="$emit('select', namespace+icon)"
     >
-      <Icon :icon="icon" />
+      <Icon :icon="namespace+icon" />
       <span v-if="display==='list'" class="text-sm ml-2 opacity-60 m-auto" v-html="searchNameHTML(icon)" />
     </div>
   </div>
@@ -43,6 +43,10 @@ export default defineComponent({
     display: {
       type: String,
       default: 'grid',
+    },
+    namespace: {
+      type: String,
+      default: '',
     },
   },
   setup(props) {

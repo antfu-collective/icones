@@ -10,6 +10,7 @@
           <div class="rounded shadow transition-shadow duration-300 hover:shadow-lg flex relative">
             <Icons
               :icons="collection.icons.slice(0,9)"
+              :namespace="`${collection.id}:`"
               style="width:140px;height:140px;"
               class="border-r border-gray-300 pt-1 justify-center overflow-hidden flex-none"
             />

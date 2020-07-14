@@ -30,6 +30,15 @@
 
         <!-- Right -->
         <div class="px-1 text-xl text-gray-800">
+          <template v-if="collection.categories">
+            <IconButton
+              class="inline-block mr-3"
+              icon="carbon:categories"
+              :active="showCategories"
+              @click="showCategories = !showCategories"
+            />
+            <div class="mx-2 py-1 bg-gray-400 inline-block" style="width:1px;height:1em" />
+          </template>
           <IconButton
             class="inline-block ml-3"
             icon="carbon:hinton-plot"
@@ -51,8 +60,23 @@
         </div>
       </div>
 
+      <!-- Categories -->
+      <div class="py-2">
+        <template v-if="collection.categories && showCategories">
+          <div
+            v-for="c of Object.keys(collection.categories)"
+            :key="c"
+            class="text-sm inline-block px-2 border border-gray-200 text-gray-500 rounded-full m-1 hover:bg-gray-100 cursor-pointer"
+            :class="c === category ? 'text-primary border-primary' : ''"
+            @click="toggleCategory(c)"
+          >
+            {{ c }}
+          </div>
+        </template>
+      </div>
+
       <!-- Search -->
-      <div class="flex mt-4">
+      <div class="flex">
         <input
           v-model="search"
           class="shadow rounded outline-none py-2 px-4 flex-auto"
@@ -68,6 +92,7 @@
           :size="iconSize"
           :display="listType"
           :search="search"
+          :namespace="id==='all' ? '' : `${id}:`"
           @select="onSelect"
         />
         <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
@@ -88,11 +113,11 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed, markRaw } from 'vue'
+import { defineComponent, ref, computed, markRaw, watch } from 'vue'
 import Fuse from 'fuse.js'
 import { useThrottle } from '@vueuse/core'
 import { collections, all } from '../data'
-import { iconSize, listType } from '../store'
+import { iconSize, listType, showCategories } from '../store'
 
 export default defineComponent({
   props: {
@@ -106,6 +131,14 @@ export default defineComponent({
     const throttledSearch = useThrottle(search, 150)
     const selected = ref<string | null>(null)
     const max = ref(200)
+    const category = ref('')
+
+    const toggleCategory = (cat: string) => {
+      if (category.value === cat)
+        category.value = ''
+      else
+        category.value = cat
+    }
 
     const collection = computed(() => {
       return props.id === 'all'
@@ -113,22 +146,31 @@ export default defineComponent({
         : collections.find(c => c.id === props.id)!
     })
 
+    const iconSource = computed(() => {
+      if (category.value && showCategories.value)
+        return collection.value.categories?.[category.value] || []
+      else
+        return collection.value.icons
+    })
+
     const fuse = computed(() => {
-      const icons = props.id === 'all'
-        ? collection.value.icons.map(icon => ({ icon, key: icon }))
-        : collection.value.icons.map(icon => ({ icon, key: icon.split(':', 2)[1] }))
+      const icons = iconSource.value.map(icon => ({ icon }))
       return markRaw(new Fuse(icons, {
         includeScore: false,
-        keys: ['key'],
+        keys: ['icon'],
       }))
     })
 
     const icons = computed(() => {
       const searchString = throttledSearch.value.trim().toLowerCase()
       if (!searchString)
-        return collection.value.icons
+        return iconSource.value
       else
         return fuse.value.search(searchString).map(i => i.item.icon)
+    })
+
+    watch(() => props.id, () => {
+      category.value = ''
     })
 
     const onSelect = (icon: string) => {
@@ -162,10 +204,13 @@ export default defineComponent({
       icons,
       onSelect,
       max,
+      category,
       loadMore,
       iconSize,
       listType,
       setGrid,
+      toggleCategory,
+      showCategories,
     }
   },
 })

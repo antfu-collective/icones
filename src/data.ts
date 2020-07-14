@@ -8,9 +8,10 @@ export interface Collection {
   name: string
   author?: string
   license?: string
-  licenseUrl?: string
+  licenseURL?: string
   url?: string
   icons: string[]
+  categories?: Record<string, string[]>
 }
 
 export const collections = json.map(collection => Object.freeze(collection as Collection))
@@ -18,7 +19,7 @@ export const collections = json.map(collection => Object.freeze(collection as Co
 export const all: Collection = Object.freeze({
   id: 'all',
   name: 'All',
-  icons: collections.flatMap(i => i.icons),
+  icons: collections.flatMap(c => c.icons.map(i => `${c.id}:${i}`)),
 })
 
 export const sortedCollections = computed(() => {

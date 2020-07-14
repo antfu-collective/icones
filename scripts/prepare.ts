@@ -15,10 +15,10 @@ async function prepare() {
   for (const set of collections) {
     const setData = await fs.readJSON(path.join(dir, 'json', `${set.id}.json`))
 
-    const prefix = setData.prefix
-    const icons = Object.keys(setData.icons).map(i => `${prefix}:${i}`)
+    const icons = Object.keys(setData.icons)
 
     set.icons = icons
+    set.categories = setData.categories
   }
 
   await fs.ensureDir(path.dirname(outfile))
