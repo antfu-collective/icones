@@ -14,7 +14,6 @@
             >
               <Icon icon="la:external-link-square-alt-solid" />
             </a>
-            <!-- <IconButton class="ml-2" icon="carbon:star" @click="()=>toggleFavorite(id)" /> -->
             <div class="flex-auto" />
           </div>
           <div class="text-gray-500 text-xs block">
@@ -91,7 +90,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { collections, all } from '../data'
-import { iconSize, listType, isFavorited, toggleFavorite } from '../store'
+import { iconSize, listType } from '../store'
 
 export default defineComponent({
   props: {
@@ -152,8 +151,6 @@ export default defineComponent({
       iconSize,
       listType,
       setGrid,
-      isFavorited,
-      toggleFavorite,
     }
   },
 })

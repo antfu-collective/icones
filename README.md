@@ -17,10 +17,10 @@
 - Direct download
 - Mobile friendly
 - Powered by [Vite](https://github.com/vitejs/vite)
+- Bookmarks
 
 ### TODOs
 
-- Favorite collections
 - Tags filter
 - Dark mode
 - Full-offline mode - pack all the icons

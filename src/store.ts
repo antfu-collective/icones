@@ -1,10 +1,10 @@
 import { useStorage } from '@vueuse/core'
 
-export const themeColor = useStorage('iconify-explorer-theme-color', '#329672')
-export const iconSize = useStorage('iconify-explorer-icon-size', '2xl')
-export const previewColor = useStorage('iconify-explorer-preview-color', '#888')
-export const listType = useStorage('iconify-explorer-list-type', 'grid')
-export const favoritedCollections = useStorage<string[]>('iconify-explorer-fav-collections', [])
+export const themeColor = useStorage('explorer-theme-color', '#329672')
+export const iconSize = useStorage('explorer-icon-size', '2xl')
+export const previewColor = useStorage('explorer-preview-color', '#888')
+export const listType = useStorage('explorer-list-type', 'grid')
+export const favoritedCollections = useStorage<string[]>('explorer-fav-collections', [])
 
 export function isFavorited(id: string) {
   return favoritedCollections.value.includes(id)

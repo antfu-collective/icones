@@ -1,10 +1,9 @@
 <template>
-  <div
-    class="m-auto cursor-pointer"
-    :class="active ? 'opacity-100 hover:opacity-100' : 'opacity-25 hover:opacity-50' "
-    @click="e => $emit('click', e)"
-  >
-    <Icon :icon="icon" />
+  <div class="m-auto cursor-pointer">
+    <Icon
+      :icon="icon"
+      :class="active ? 'opacity-100 hover:opacity-100' : 'opacity-25 hover:opacity-50' "
+    />
   </div>
 </template>
 

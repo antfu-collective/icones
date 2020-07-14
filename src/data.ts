@@ -22,5 +22,6 @@ export const all: Collection = Object.freeze({
 })
 
 export const sortedCollections = computed(() => {
-  return [...collections].sort((a, b) => favoritedCollections.value.indexOf(a.id) - favoritedCollections.value.indexOf(b.id))
+  return [...collections]
+    .sort((a, b) => favoritedCollections.value.indexOf(b.id) - favoritedCollections.value.indexOf(a.id))
 })

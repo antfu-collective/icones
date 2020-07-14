@@ -7,7 +7,7 @@
           :key="collection.id"
           :to="`/collection/${collection.id}`"
         >
-          <div class="rounded shadow transition-shadow duration-300 hover:shadow-lg flex">
+          <div class="rounded shadow transition-shadow duration-300 hover:shadow-lg flex relative">
             <Icons
               :icons="collection.icons.slice(0,9)"
               style="width:140px;height:140px;"
@@ -27,6 +27,7 @@
                 {{ collection.icons.length }} icons
               </div>
             </div>
+            <IconButton v-if="isFavorited(collection.id)" class="absolute bottom-0 right-0 p-3 text-lg" icon="carbon:bookmark" />
           </div>
         </router-link>
       </div>
@@ -37,12 +38,14 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-import { collections } from '../data'
+import { sortedCollections } from '../data'
+import { isFavorited } from '../store'
 
 export default defineComponent({
   data() {
     return {
-      collections,
+      collections: sortedCollections,
+      isFavorited,
     }
   },
 })

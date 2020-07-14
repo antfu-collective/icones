@@ -8,7 +8,8 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@vueuse/core": "^4.0.0-beta.1",
+    "@vueuse/core": "^4.0.0-beta.2",
+    "fuse.js": "^6.3.0",
     "tailwindcss": "^1.4.6",
     "vue": "next",
     "vue-router": "next"
@@ -28,10 +29,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "eslintConfig": {
-    "extends": [
-      "@antfu/eslint-config-vue"
-    ]
   }
 }

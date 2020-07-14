@@ -1,5 +1,8 @@
+<template>
+  <div ref="el" :class="$attrs.class" />
+</template>
 <script lang="ts">
-import { defineComponent, h } from 'vue'
+import { defineComponent, watch, ref, onMounted } from 'vue'
 
 export default defineComponent({
   props: {
@@ -8,16 +11,41 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, { attrs }) {
-    return () =>
-      h(
-        'span',
-        {
-          class: 'iconify',
-          'data-icon': props.icon,
-        },
-        [' '],
-      )
+  setup(props) {
+    const el = ref<HTMLElement | null>(null)
+
+    const update = () => {
+      if (el.value) {
+        // @ts-ignore
+        const data = window.Iconify.getSVGObject(props.icon)
+        if (data) {
+          const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+          for (const key of Object.keys(data.attributes))
+            svg.setAttribute(key, data.attributes[key])
+          svg.innerHTML = data ? data.body : null
+          el.value.textContent = ''
+          el.value.appendChild(svg)
+        }
+        else {
+          const span = document.createElement('span')
+          span.className = 'iconify'
+          span.dataset.icon = props.icon
+          el.value.textContent = ''
+          el.value.appendChild(span)
+        }
+      }
+    }
+
+    watch(
+      () => props.icon,
+      update,
+      { flush: 'post' })
+
+    onMounted(update)
+
+    return {
+      el,
+    }
   },
 })
 </script>
