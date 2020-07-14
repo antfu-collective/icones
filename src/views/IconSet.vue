@@ -88,7 +88,9 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, markRaw } from 'vue'
+import Fuse from 'fuse.js'
+import { useThrottle } from '@vueuse/core'
 import { collections, all } from '../data'
 import { iconSize, listType } from '../store'
 
@@ -101,6 +103,7 @@ export default defineComponent({
   },
   setup(props) {
     const search = ref('')
+    const throttledSearch = useThrottle(search, 150)
     const selected = ref<string | null>(null)
     const max = ref(200)
 
@@ -110,10 +113,22 @@ export default defineComponent({
         : collections.find(c => c.id === props.id)!
     })
 
+    const fuse = computed(() => {
+      const icons = props.id === 'all'
+        ? collection.value.icons.map(icon => ({ icon, key: icon }))
+        : collection.value.icons.map(icon => ({ icon, key: icon.split(':', 2)[1] }))
+      return markRaw(new Fuse(icons, {
+        includeScore: false,
+        keys: ['key'],
+      }))
+    })
+
     const icons = computed(() => {
-      const searchString = search.value.trim().toLowerCase()
-      if (!searchString) return collection.value.icons
-      else return collection.value.icons.filter(i => i.includes(searchString))
+      const searchString = throttledSearch.value.trim().toLowerCase()
+      if (!searchString)
+        return collection.value.icons
+      else
+        return fuse.value.search(searchString).map(i => i.item.icon)
     })
 
     const onSelect = (icon: string) => {

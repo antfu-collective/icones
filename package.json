@@ -8,7 +8,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@vueuse/core": "^4.0.0-beta.2",
+    "@vueuse/core": "^4.0.0-beta.1",
     "fuse.js": "^6.3.0",
     "tailwindcss": "^1.4.6",
     "vue": "next",

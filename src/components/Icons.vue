@@ -51,6 +51,9 @@ export default defineComponent({
         return icon
 
       const start = icon.indexOf(props.search)
+      if (start < 0)
+        return icon
+
       const end = start + props.search.length
       return `${icon.slice(0, start)}<b class="font-bold">${icon.slice(start, end)}</b>${icon.slice(end)}`
     }
