@@ -526,7 +526,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.0.0-beta.20.tgz#022b7aac09669d6ca79ff2cd38418853b2ffc8be"
   integrity sha512-Ttuh2Kib8aelCm0J0M31z7ajHYWI3DOj59sbAh8ZuwIn8l5sKUmDUkxry2n3gYJ5s3uV3xhFCLQs1THtsg1/qA==
 
-"@vueuse/core@^4.0.0-beta.1":
+"@vueuse/core@^4.0.0-beta.2":
   version "4.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.0.0-beta.2.tgz#4e9dda8647ad05c48d8ed73264098bde9f118b02"
   integrity sha512-pdFf4vwcx+/9KPUkF2cvfcI0SRAUe+DO0uIDSq5hWnC1xs9w7t7rnX0hJ3kOpAMHJ38nv6oPQFFMFsTO/2QfZQ==

@@ -19,13 +19,15 @@
 - Powered by [Vite](https://github.com/vitejs/vite)
 - Collection bookmarks
 - Categories filters
+- The Bag - collect your icons and pack them into a single js file! (WIP)
+  - I made [svg-packer](https://github.com/antfu/svg-packer) for this.
 
 ### TODOs
 
+- Collection name display in icon detail
 - Dark mode
 - Full-offline mode - pack all the icons
 - Electron client
-- The Shop - collect your icons and pack them into a single js file!
 
 ## License
 

@@ -1,11 +1,11 @@
-import { iconsCart } from '../store'
+import { bags } from '../store'
 import { getSvg } from './icons'
 
-export async function PackCart(options: any) {
-  if (!iconsCart.value.length)
+export async function PackIconsInBag(options: any = {}) {
+  if (!bags.value.length)
     return
 
-  const icons = await Promise.all(iconsCart.value.filter(Boolean).sort().map(async(name) => {
+  const icons = await Promise.all(bags.value.filter(Boolean).sort().map(async(name) => {
     return {
       name,
       svg: await getSvg(name),

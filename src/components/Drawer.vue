@@ -27,13 +27,16 @@
           {{ collection.icons.length }} icons
         </div>
       </div>
-      <IconButton
-        v-if="collection.id != 'all'"
-        class="flex-none text-lg p-2 -mr-3"
+      <div
         :class="isFavorited(collection.id) ? '' : 'opacity-0 hover:opacity-50' "
-        :icon="isFavorited(collection.id) ? 'carbon:bookmark' : 'carbon:up-to-top'"
-        @click="()=>toggleFavorite(collection.id)"
-      />
+      >
+        <IconButton
+          v-if="collection.id != 'all'"
+          class="flex-none text-lg p-2 -mr-3"
+          :icon="isFavorited(collection.id) ? 'carbon:bookmark' : 'carbon:up-to-top'"
+          @click="()=>toggleFavorite(collection.id)"
+        />
+      </div>
     </router-link>
   </div>
 </template>

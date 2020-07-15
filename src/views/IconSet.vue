@@ -32,12 +32,12 @@
         <div class="flex flex-col">
           <div class="px-1 text-xl text-gray-800 flex">
             <IconButton
-              class="mr-3"
+              class="hidden md:block mr-3"
               icon="carbon:checkbox-checked"
-              :active="cartEnabled"
-              @click="cartEnabled = !cartEnabled"
+              :active="selectingMode"
+              @click="selectingMode = !selectingMode"
             />
-            <div class="mx-1 py-1 m-auto bg-gray-200" style="width:1px;height:1em" />
+            <div class="hidden md:block mx-1 h-full m-auto bg-gray-200" style="width:1px;" />
             <template v-if="collection.categories">
               <IconButton
                 class="mx-3"
@@ -46,7 +46,7 @@
                 title="Categories"
                 @click="showCategories = !showCategories"
               />
-              <div class="mx-1 py-1 m-auto bg-gray-200" style="width:1px;height:1em" />
+              <div class="mx-1 m-auto h-full bg-gray-200" style="width:1px;" />
             </template>
             <IconButton
               class="ml-3"
@@ -119,29 +119,40 @@
 
       <Footer />
 
+      <!-- Details -->
       <Modal :value="!!current" @close="current = null">
         <IconDetail :icon="current" />
       </Modal>
 
-      <Modal :value="showCart" direction="right" @close="showCart = false">
-        <Cart @close="showCart = false" />
+      <!-- Bag -->
+      <Modal :value="showBag" direction="right" @close="showBag = false">
+        <Bag @close="showBag = false" />
       </Modal>
 
+      <!-- Bag Fab -->
       <FAB
         icon="carbon:shopping-bag"
-        :number="iconsCart.length"
-        @click="showCart = true"
+        :number="bags.length"
+        @click="showBag = true"
       />
-    </div>
+
+      <!-- Selecting Note -->
+      <div
+        class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
+        :style="selectingMode ? {} : {transform: 'translateX(120%)'}"
+        @click="selectingMode = false"
+      >
+        Selecting Mode
+        <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
+      </div>
     </div>
   </WithNavbar>
 </template>
 
 <script lang='ts'>
 import { defineComponent, ref, toRefs, computed } from 'vue'
-import { iconSize, listType, showCategories, cartEnabled, iconsCart, toggleCart } from '../store'
+import { iconSize, listType, showCategories, selectingMode, bags, toggleBag } from '../store'
 import { useSearch } from '../hooks/search'
-import { PackCart } from '../utils/pack'
 
 export default defineComponent({
   props: {
@@ -153,7 +164,7 @@ export default defineComponent({
   setup(props) {
     const { id } = toRefs(props)
     const { search, icons, collection, category } = useSearch(id)
-    const showCart = ref(false)
+    const showBag = ref(false)
 
     const current = ref<string | null>(null)
     const max = ref(200)
@@ -170,15 +181,15 @@ export default defineComponent({
     })
 
     const onSelect = (icon: string) => {
-      if (cartEnabled.value)
-        toggleCart(icon)
+      if (selectingMode.value)
+        toggleBag(icon)
       else
         current.value = icon
     }
 
     const selectedIcons = computed(() => {
-      if (cartEnabled.value)
-        return iconsCart.value
+      if (selectingMode.value)
+        return bags.value
       else
         return current.value ? [] : [current.value]
     })
@@ -214,15 +225,18 @@ export default defineComponent({
       loadMore,
       iconSize,
       listType,
-      showCart,
       setGrid,
       namespace,
       selectedIcons,
-      iconsCart,
+
+      // cates
       toggleCategory,
       showCategories,
-      cartEnabled,
-      PackCart,
+
+      // bags
+      showBag,
+      bags,
+      selectingMode,
     }
   },
 })
