@@ -44,7 +44,7 @@
 
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
-import Base64 from '../utils/base64'
+import { getIconSnippet, getIconDownloadLink } from '../utils/icons'
 import { previewColor } from '../store'
 
 export default defineComponent({
@@ -57,44 +57,19 @@ export default defineComponent({
   setup(props) {
     const copied = ref(false)
 
-    const getSvg = () =>
-      fetch(`https://api.iconify.design/${props.icon}.svg?inline=false&height=auto`)
-        .then(r => r.text())
-
     const copy = async(type: string) => {
-      if (!props.icon) return
-
-      let text = props.icon
-      switch (type) {
-        case 'url':
-          text = `https://api.iconify.design/${props.icon}.svg`
-          break
-        case 'html':
-          text = `<span class="iconify" data-icon="${props.icon}" data-inline="false"></span>`
-          break
-        case 'css':
-          text = `background: url('https://api.iconify.design/${props.icon}.svg') no-repeat center center / contain;`
-          break
-        case 'svg':
-          text = await getSvg()
-          break
-        case 'data_url':
-          text = `data:image/svg+xml;base64,${Base64.encode(await getSvg())}`
-          break
-      }
+      const text = await getIconSnippet(props.icon, type)
+      if (!text)
+        return
 
       await navigator.clipboard.writeText(text)
       copied.value = true
-
       setTimeout(() => {
         copied.value = false
       }, 2000)
     }
 
-    const downlodUrl = computed(
-      () =>
-        `https://api.iconify.design/${props.icon}.svg?download=true&inline=false&height=auto`,
-    )
+    const downlodUrl = computed(() => getIconDownloadLink(props.icon))
 
     return {
       copy,

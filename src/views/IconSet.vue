@@ -113,11 +113,9 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed, markRaw, watch } from 'vue'
-import Fuse from 'fuse.js'
-import { useThrottle } from '@vueuse/core'
-import { collections, all } from '../data'
+import { defineComponent, ref, toRefs } from 'vue'
 import { iconSize, listType, showCategories } from '../store'
+import { useSearch } from '../utils/search'
 
 export default defineComponent({
   props: {
@@ -127,11 +125,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const search = ref('')
-    const throttledSearch = useThrottle(search, 150)
+    const { id } = toRefs(props)
+    const { search, icons, collection, category } = useSearch(id)
+
     const selected = ref<string | null>(null)
     const max = ref(200)
-    const category = ref('')
 
     const toggleCategory = (cat: string) => {
       if (category.value === cat)
@@ -139,39 +137,6 @@ export default defineComponent({
       else
         category.value = cat
     }
-
-    const collection = computed(() => {
-      return props.id === 'all'
-        ? all
-        : collections.find(c => c.id === props.id)!
-    })
-
-    const iconSource = computed(() => {
-      if (category.value && showCategories.value)
-        return collection.value.categories?.[category.value] || []
-      else
-        return collection.value.icons
-    })
-
-    const fuse = computed(() => {
-      const icons = iconSource.value.map(icon => ({ icon }))
-      return markRaw(new Fuse(icons, {
-        includeScore: false,
-        keys: ['icon'],
-      }))
-    })
-
-    const icons = computed(() => {
-      const searchString = throttledSearch.value.trim().toLowerCase()
-      if (!searchString)
-        return iconSource.value
-      else
-        return fuse.value.search(searchString).map(i => i.item.icon)
-    })
-
-    watch(() => props.id, () => {
-      category.value = ''
-    })
 
     const onSelect = (icon: string) => {
       selected.value = icon
