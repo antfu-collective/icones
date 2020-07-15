@@ -11,6 +11,8 @@ export async function getIconSnippet(icon: string, type: string): Promise<string
     return
 
   switch (type) {
+    case 'id':
+      return icon
     case 'url':
       return `${API_ENTRY}/${icon}.svg`
     case 'html':
