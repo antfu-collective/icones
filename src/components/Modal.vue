@@ -6,8 +6,9 @@
       @click="$emit('close')"
     />
     <div
-      class="bg-white bottom-0 left-0 right-0 p-2 absolute shadow-2xl transition-all duration-200 ease-out"
-      :style="value ? {}: {transform: 'translateY(100%)'}"
+      class="bg-white absolute shadow-2xl transition-all duration-200 ease-out"
+      :class="positionClass"
+      :style="value ? {}: {transform}"
     >
       <slot />
     </div>
@@ -15,7 +16,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
   props: {
@@ -23,6 +24,42 @@ export default defineComponent({
       type: Boolean,
       defualt: false,
     },
+    direction: {
+      type: String,
+      default: 'bottom',
+    },
+  },
+  setup(props) {
+    const positionClass = computed(() => {
+      switch (props.direction) {
+        case 'bottom':
+          return 'bottom-0 left-0 right-0'
+        case 'top':
+          return 'top-0 left-0 right-0'
+        case 'left':
+          return 'bottom-0 left-0 top-0'
+        case 'right':
+          return 'bottom-0 top-0 right-0'
+      }
+    })
+
+    const transform = computed(() => {
+      switch (props.direction) {
+        case 'bottom':
+          return 'translateY(100%)'
+        case 'top':
+          return 'translateY(-100%)'
+        case 'left':
+          return 'translateX(-100%)'
+        case 'right':
+          return 'translateX(100%)'
+      }
+    })
+
+    return {
+      transform,
+      positionClass,
+    }
   },
 })
 </script>

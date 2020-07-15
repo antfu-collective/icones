@@ -1,5 +1,5 @@
 <template>
-  <div v-if="icon" class="flex flex-col md:flex-row md:text-left">
+  <div v-if="icon" class="p-2 flex flex-col md:flex-row md:text-left">
     <ColorPicker v-model:value="previewColor" class="inline-block">
       <div :style="{color: previewColor}">
         <Icon class="p-4 text-8xl" :icon="icon" />

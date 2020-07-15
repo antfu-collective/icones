@@ -29,34 +29,48 @@
         </div>
 
         <!-- Right -->
-        <div class="px-1 text-xl text-gray-800">
-          <template v-if="collection.categories">
+        <div class="flex flex-col">
+          <div class="px-1 text-xl text-gray-800 flex">
             <IconButton
-              class="inline-block mr-3"
-              icon="carbon:categories"
-              :active="showCategories"
-              @click="showCategories = !showCategories"
+              class="mr-3"
+              icon="carbon:checkbox-checked"
+              :active="cartEnabled"
+              @click="cartEnabled = !cartEnabled"
             />
-            <div class="mx-2 py-1 bg-gray-400 inline-block" style="width:1px;height:1em" />
-          </template>
-          <IconButton
-            class="inline-block ml-3"
-            icon="carbon:hinton-plot"
-            :active="listType === 'grid' && iconSize === '2xl'"
-            @click="()=>setGrid('small')"
-          />
-          <IconButton
-            class="inline-block ml-3"
-            icon="carbon:app-switcher"
-            :active="listType === 'grid' && iconSize === '4xl'"
-            @click="()=>setGrid('large')"
-          />
-          <IconButton
-            class="inline-block ml-3"
-            icon="carbon:list"
-            :active="listType === 'list'"
-            @click="()=>setGrid('list')"
-          />
+            <div class="mx-1 py-1 m-auto bg-gray-200" style="width:1px;height:1em" />
+            <template v-if="collection.categories">
+              <IconButton
+                class="mx-3"
+                icon="carbon:categories"
+                :active="showCategories"
+                title="Categories"
+                @click="showCategories = !showCategories"
+              />
+              <div class="mx-1 py-1 m-auto bg-gray-200" style="width:1px;height:1em" />
+            </template>
+            <IconButton
+              class="ml-3"
+              icon="carbon:hinton-plot"
+              title="Small"
+              :active="listType === 'grid' && iconSize === '2xl'"
+              @click="()=>setGrid('small')"
+            />
+            <IconButton
+              class="ml-3"
+              icon="carbon:app-switcher"
+              title="Large"
+              :active="listType === 'grid' && iconSize === '4xl'"
+              @click="()=>setGrid('large')"
+            />
+            <IconButton
+              class="ml-3"
+              icon="carbon:list"
+              title="List View"
+              :active="listType === 'list'"
+              @click="()=>setGrid('list')"
+            />
+          </div>
+          <div class="flex-auto" />
         </div>
       </div>
 
@@ -88,11 +102,11 @@
       <div class="py-4 text-center">
         <Icons
           :icons="icons.slice(0, max)"
-          :selected="[selected]"
+          :selected="selectedIcons"
           :size="iconSize"
           :display="listType"
           :search="search"
-          :namespace="id==='all' ? '' : `${id}:`"
+          :namespace="namespace"
           @select="onSelect"
         />
         <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
@@ -105,17 +119,29 @@
 
       <Footer />
 
-      <Modal :value="!!selected" @close="selected = null">
-        <IconDetail :icon="selected" />
+      <Modal :value="!!current" @close="current = null">
+        <IconDetail :icon="current" />
       </Modal>
+
+      <Modal :value="showCart" direction="right" @close="showCart = false">
+        <Cart @close="showCart = false" />
+      </Modal>
+
+      <FAB
+        icon="carbon:shopping-bag"
+        :number="iconsCart.length"
+        @click="showCart = true"
+      />
+    </div>
     </div>
   </WithNavbar>
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, toRefs } from 'vue'
-import { iconSize, listType, showCategories } from '../store'
+import { defineComponent, ref, toRefs, computed } from 'vue'
+import { iconSize, listType, showCategories, cartEnabled, iconsCart, toggleCart } from '../store'
 import { useSearch } from '../hooks/search'
+import { PackCart } from '../utils/pack'
 
 export default defineComponent({
   props: {
@@ -127,8 +153,9 @@ export default defineComponent({
   setup(props) {
     const { id } = toRefs(props)
     const { search, icons, collection, category } = useSearch(id)
+    const showCart = ref(false)
 
-    const selected = ref<string | null>(null)
+    const current = ref<string | null>(null)
     const max = ref(200)
 
     const toggleCategory = (cat: string) => {
@@ -138,9 +165,23 @@ export default defineComponent({
         category.value = cat
     }
 
+    const namespace = computed(() => {
+      return props.id === 'all' ? '' : `${props.id}:`
+    })
+
     const onSelect = (icon: string) => {
-      selected.value = icon
+      if (cartEnabled.value)
+        toggleCart(icon)
+      else
+        current.value = icon
     }
+
+    const selectedIcons = computed(() => {
+      if (cartEnabled.value)
+        return iconsCart.value
+      else
+        return current.value ? [] : [current.value]
+    })
 
     const loadMore = () => {
       max.value += 100
@@ -163,7 +204,7 @@ export default defineComponent({
     }
 
     return {
-      selected,
+      current,
       search,
       collection,
       icons,
@@ -173,9 +214,15 @@ export default defineComponent({
       loadMore,
       iconSize,
       listType,
+      showCart,
       setGrid,
+      namespace,
+      selectedIcons,
+      iconsCart,
       toggleCategory,
       showCategories,
+      cartEnabled,
+      PackCart,
     }
   },
 })

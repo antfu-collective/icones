@@ -12,7 +12,9 @@ import ColorPicker from './components/ColorPicker.vue'
 import Navbar from './components/Navbar.vue'
 import WithNavbar from './components/WithNavbar.vue'
 import Footer from './components/Footer.vue'
+import FAB from './components/FAB.vue'
 import Drawer from './components/Drawer.vue'
+import Cart from './components/Cart.vue'
 import './main.css'
 
 const app = createApp(App)
@@ -48,5 +50,7 @@ app.component('Navbar', Navbar)
 app.component('WithNavbar', WithNavbar)
 app.component('Footer', Footer)
 app.component('Drawer', Drawer)
+app.component('FAB', FAB)
+app.component('Cart', Cart)
 
 app.mount('#app')
