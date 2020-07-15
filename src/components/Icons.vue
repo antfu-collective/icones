@@ -8,7 +8,7 @@
       @click="$emit('select', namespace+icon)"
     >
       <Icon :icon="namespace+icon" />
-      <span v-if="display==='list'" class="text-sm ml-2 opacity-60 m-auto" v-html="searchNameHTML(icon)" />
+      <span v-if="display==='list'" class="text-sm ml-2 m-auto" v-html="getSearchHighlightHTML(icon, search)" />
     </div>
   </div>
 </template>
@@ -16,6 +16,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { themeColor } from '../store'
+import { getSearchHighlightHTML } from '../hooks'
 
 export default defineComponent({
   emits: ['select'],
@@ -50,21 +51,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const searchNameHTML = (icon: string) => {
-      if (!props.search)
-        return icon
-
-      const start = icon.indexOf(props.search)
-      if (start < 0)
-        return icon
-
-      const end = start + props.search.length
-      return `${icon.slice(0, start)}<b class="font-bold">${icon.slice(start, end)}</b>${icon.slice(end)}`
-    }
-
     return {
       themeColor,
-      searchNameHTML,
+      getSearchHighlightHTML,
     }
   },
 })

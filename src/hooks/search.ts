@@ -47,3 +47,13 @@ export function useSearch(id: Ref<string>, defaultCategory = '', defaultSearch =
     icons,
   }
 }
+
+export function getSearchHighlightHTML(text: string, search: string, baseClass = 'text-gray-500', activeClass = 'text-primary') {
+  const start = text.indexOf(search || '')
+
+  if (!search || start < 0)
+    return `<span class="${baseClass}">${text}</span>`
+
+  const end = start + search.length
+  return `<span class="${baseClass}">${text.slice(0, start)}<b class="${activeClass}">${text.slice(start, end)}</b>${text.slice(end)}</span>`
+}

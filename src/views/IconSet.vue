@@ -115,7 +115,7 @@
 <script lang='ts'>
 import { defineComponent, ref, toRefs } from 'vue'
 import { iconSize, listType, showCategories } from '../store'
-import { useSearch } from '../utils/search'
+import { useSearch } from '../hooks/search'
 
 export default defineComponent({
   props: {
