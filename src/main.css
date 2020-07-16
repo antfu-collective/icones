@@ -13,3 +13,11 @@
 .btn:focus {
   @apply shadow outline-none;
 }
+
+.dragging {
+  -webkit-app-region: drag;
+}
+
+.non-dragging {
+  -webkit-app-region: no-drag;
+}
