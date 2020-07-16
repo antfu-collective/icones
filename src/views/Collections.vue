@@ -17,7 +17,7 @@
               </div>
             </div>
             <Icons
-              :icons="sample(collection.icons, 7)"
+              :icons="collection.icons.slice(0, 7)"
               :namespace="`${collection.id}:`"
               class="py-2 justify-center overflow-hidden flex-none pointer-events-none"
             />

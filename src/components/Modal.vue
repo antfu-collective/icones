@@ -1,12 +1,12 @@
 <template>
   <div class="fixed top-0 bottom-0 left-0 right-0 z-40" :class="value ? '': 'pointer-events-none'">
     <div
-      class="bg-black bg-opacity-75 bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out"
+      class="bg-white bg-opacity-85 bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out"
       :class="value ? '': 'opacity-0'"
       @click="$emit('close')"
     />
     <div
-      class="bg-white absolute shadow-2xl transition-all duration-200 ease-out"
+      class="bg-white absolute shadow-lg transition-all duration-200 ease-out border-gray-200"
       :class="positionClass"
       :style="value ? {}: {transform}"
     >
@@ -33,13 +33,13 @@ export default defineComponent({
     const positionClass = computed(() => {
       switch (props.direction) {
         case 'bottom':
-          return 'bottom-0 left-0 right-0'
+          return 'bottom-0 left-0 right-0 border-t'
         case 'top':
-          return 'top-0 left-0 right-0'
+          return 'top-0 left-0 right-0 border-b'
         case 'left':
-          return 'bottom-0 left-0 top-0'
+          return 'bottom-0 left-0 top-0 border-r'
         case 'right':
-          return 'bottom-0 top-0 right-0'
+          return 'bottom-0 top-0 right-0 border-l'
       }
     })
 

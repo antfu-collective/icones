@@ -14,7 +14,7 @@
       <IconButton class="text-2xl flex-none" icon="carbon:close" @click="$emit('close')" />
     </div>
     <template v-if="bags.length">
-      <div class="flex-auto overflow-y-auto py-3 px-5">
+      <div class="flex-auto overflow-y-auto py-3 px-1">
         <Icons :icons="bags" />
       </div>
       <div class="flex-none border-t border-gray-200 py-3 px-6 text-2xl text-gray-700">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap select-none" :class="`text-${size}`" :style="{ color }">
+  <div class="flex flex-wrap select-none justify-center" :class="`text-${size}`" :style="{ color }">
     <div
       v-for="icon of icons"
       :key="icon"

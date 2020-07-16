@@ -34,6 +34,7 @@ module.exports = {
       },
       opacity: {
         60: '0.6',
+        85: '0.85',
       },
       colors: {
         primary: 'var(--theme-color)',

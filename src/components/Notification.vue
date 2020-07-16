@@ -1,11 +1,12 @@
 <template>
   <div
-    class="fixed top-0 left-0 right-0 z-50 text-center overflow-hidden"
-    :class="value ? '': 'pointer-events-none'"
+    class="fixed top-0 left-0 right-0 z-50 text-center"
+    :class="value ? '': 'pointer-events-none overflow-hidden'"
   >
     <div
-      class="shadow-xl px-4 py-1 rounded bg-white inline-block m-2 transition-transform duration-500"
+      class="px-4 py-1 rounded bg-white inline-block m-3 transition-all duration-500 text-primary"
       :style="value ? {}: {transform: 'translateY(-150%)'}"
+      :class="value ? 'shadow': 'shadow-none'"
     >
       <slot />
     </div>

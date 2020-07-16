@@ -9,18 +9,20 @@
 ![](./screenshots/1.png)
 ![](./screenshots/2.png)
 ![](./screenshots/3.png)
+![](./screenshots/4.png)
+![](./screenshots/5.png)
 
 ### Features
 
-- Instant Fuzzy Searching - all done locally, no web queries!
+- **Instant Fuzzy Searching** *- all are done locally, no web queries!*
+- The **Bag** *- select your icons and pack them into a ready-to-use icon font!*
+  - *[svg-packer](https://github.com/antfu/svg-packer) was born from this XD*
 - Copy the usage scripts
-- Direct download
+- SVGs direct download
 - Mobile friendly
 - Powered by [Vite](https://github.com/vitejs/vite)
 - Collection bookmarks
 - Categories filters
-- The Bag - collect your icons and pack them into a single js file! (WIP)
-  - I made [svg-packer](https://github.com/antfu/svg-packer) for this.
 
 ### TODOs
 

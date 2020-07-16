@@ -131,6 +131,7 @@
 
       <!-- Bag Fab -->
       <FAB
+        v-if="bags.length"
         icon="carbon:shopping-bag"
         :number="bags.length"
         @click="showBag = true"
