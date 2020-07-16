@@ -24,7 +24,7 @@
           {{ collection.name }}
         </div>
         <div class="text-xs block opacity-50 -mt-1">
-          {{ collection.icons.length }} icons
+          {{ collection.total }} icons
         </div>
       </div>
       <div
@@ -44,7 +44,7 @@
 <script lang='ts'>
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { sortedCollections, all } from '../data'
+import { sortedCollectionsInfo } from '../data'
 import { isFavorited, toggleFavorite } from '../store'
 
 export default defineComponent({
@@ -54,8 +54,8 @@ export default defineComponent({
 
     const collections = computed(() => {
       return [
-        all,
-        ...sortedCollections.value,
+        { id: 'all', name: 'All' },
+        ...sortedCollectionsInfo.value,
       ]
     })
 

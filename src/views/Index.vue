@@ -17,7 +17,7 @@
               </div>
             </div>
             <Icons
-              :icons="collection.icons.slice(0, 7)"
+              :icons="collection.sampleIcons"
               :namespace="`${collection.id}:`"
               class="py-2 justify-center overflow-hidden flex-none pointer-events-none"
             />
@@ -26,7 +26,7 @@
                 {{ collection.license }}
               </div>
               <div class="text-gray-500 text-xs block">
-                {{ collection.icons.length }} icons
+                {{ collection.total }} icons
               </div>
             </div>
             <IconButton v-if="isFavorited(collection.id)" class="absolute top-0 right-0 p-2 text-lg" icon="carbon:bookmark" />
@@ -40,14 +40,14 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-import { sortedCollections } from '../data'
+import { sortedCollectionsInfo } from '../data'
 import { isFavorited } from '../store'
 import { sample } from '../utils/sample'
 
 export default defineComponent({
   data() {
     return {
-      collections: sortedCollections,
+      collections: sortedCollectionsInfo,
       isFavorited,
       sample,
     }

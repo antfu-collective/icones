@@ -151,20 +151,21 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, toRefs, computed } from 'vue'
+import { defineComponent, ref, toRefs, computed, PropType } from 'vue'
 import { iconSize, listType, showCategories, selectingMode, bags, toggleBag } from '../store'
 import { useSearch } from '../hooks/search'
+import { CollectionMeta } from '../data'
 
 export default defineComponent({
   props: {
-    id: {
-      type: String,
+    collection: {
+      type: Object as PropType<CollectionMeta>,
       required: true,
     },
   },
   setup(props) {
-    const { id } = toRefs(props)
-    const { search, icons, collection, category } = useSearch(id)
+    const { collection } = toRefs(props)
+    const { search, icons, category } = useSearch(collection)
     const showBag = ref(false)
 
     const current = ref<string | null>(null)
@@ -178,7 +179,7 @@ export default defineComponent({
     }
 
     const namespace = computed(() => {
-      return props.id === 'all' ? '' : `${props.id}:`
+      return collection.value.id === 'all' ? '' : `${collection.value.id}:`
     })
 
     const onSelect = (icon: string) => {

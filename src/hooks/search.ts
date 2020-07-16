@@ -1,19 +1,13 @@
 import Fuse from 'fuse.js'
 import { ref, computed, markRaw, Ref, watch } from 'vue'
 import { useThrottle } from '@vueuse/core'
-import { collections, all } from '../data'
+import { CollectionMeta } from '../data'
 import { showCategories } from '../store'
 
-export function useSearch(id: Ref<string>, defaultCategory = '', defaultSearch = '') {
+export function useSearch(collection: Ref<CollectionMeta>, defaultCategory = '', defaultSearch = '') {
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
   const throttledSearch = useThrottle(search, 150)
-
-  const collection = computed(() => {
-    return id.value === 'all'
-      ? all
-      : collections.find(c => c.id === id.value)!
-  })
 
   const iconSource = computed(() => {
     if (category.value && showCategories.value)
@@ -38,7 +32,7 @@ export function useSearch(id: Ref<string>, defaultCategory = '', defaultSearch =
       return fuse.value.search(searchString).map(i => i.item.icon)
   })
 
-  watch(id, () => { category.value = defaultCategory })
+  watch(collection, () => { category.value = defaultCategory })
 
   return {
     collection,
