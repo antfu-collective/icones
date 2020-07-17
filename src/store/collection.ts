@@ -8,6 +8,7 @@ import {
   getMeta,
 } from '../data'
 import { useSearch } from '../hooks'
+import { isElectron } from '../env'
 
 const currentCollectionId = ref('')
 const loaded = ref(false)
@@ -36,7 +37,7 @@ export async function setCurrentCollection(id: string) {
   loaded.value = isMetaLoaded(id)
   installed.value = isInstalled(id)
 
-  if (!installed.value)
+  if (isElectron)
     installed.value = await install(id)
 
   if (id === 'all') {

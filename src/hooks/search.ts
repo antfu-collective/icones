@@ -13,7 +13,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       return []
 
     if (category.value)
-      return collection.value.categories?.[category.value] || []
+      return (collection.value.categories && collection.value.categories[category.value]) || []
     else
       return collection.value.icons
   })

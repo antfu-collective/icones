@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import infoJSON from '../../public/collections-info.json'
 import { favoritedCollections } from '../store'
+import { isElectron } from '../env'
 
 export interface CollectionInfo {
   id: string
@@ -24,8 +25,11 @@ const installed: string[] = []
 export const collections = infoJSON.map(c => Object.freeze(c as CollectionInfo))
 
 export const sortedCollectionsInfo = computed(() => {
-  return [...collections]
-    .sort((a, b) => favoritedCollections.value.indexOf(b.id) - favoritedCollections.value.indexOf(a.id))
+  return [...collections].sort(
+    (a, b) =>
+      favoritedCollections.value.indexOf(b.id)
+      - favoritedCollections.value.indexOf(a.id),
+  )
 })
 
 export async function install(id: string) {
@@ -35,8 +39,8 @@ export async function install(id: string) {
   if (installed.includes(id))
     return true
 
-  const data = Object.freeze(await fetch(`/collections/${id}-raw.json`)
-    .then(r => r.json()))
+  // TODO: for browser, cache them into IndexedDB
+  const data = Object.freeze(await fetch(`/collections/${id}-raw.json`).then(r => r.json()))
 
   window.Iconify.addCollection(data)
   installed.push(id)
@@ -56,7 +60,9 @@ export async function getMeta(id: string): Promise<CollectionMeta | null> {
   if (meta)
     return meta
 
-  meta = Object.freeze(await fetch(`/collections/${id}-meta.json`).then(r => r.json()))
+  meta = Object.freeze(
+    await fetch(`/collections/${id}-meta.json`).then(r => r.json()),
+  )
 
   if (!meta)
     return null
@@ -70,10 +76,12 @@ export async function getFullMeta() {
   if (loadedMeta.value.length === collections.length)
     return loadedMeta.value
 
-  loadedMeta.value = Object.freeze(await fetch('/collections-meta.json')
-    .then(r => r.json()))
+  loadedMeta.value = Object.freeze(
+    await fetch('/collections-meta.json').then(r => r.json()),
+  )
 
   return loadedMeta.value
 }
 
-install('carbon')
+if (isElectron)
+  install('carbon')
