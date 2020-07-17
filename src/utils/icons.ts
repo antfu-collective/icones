@@ -3,7 +3,7 @@ import Base64 from './base64'
 const API_ENTRY = 'https://api.iconify.design'
 
 export async function getSvg(icon: string) {
-  return window.Iconify.getSVG(icon) || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=auto`).then(r => r.text()) || ''
+  return window.Iconify.getSVG(icon, undefined) || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=auto`).then(r => r.text()) || ''
 }
 
 export async function getIconSnippet(icon: string, type: string): Promise<string | undefined> {

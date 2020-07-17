@@ -1,16 +1,44 @@
 <template>
-  <nav class="p-4 relative bg-white z-10 dark:bg-black flex border-b border-gray-200">
-    <div class="absolute top-0 left-0 bottom-0 flex">
+  <nav class="dragging p-2 relative bg-white z-10 dark:bg-black flex border-b border-gray-200">
+    <!-- In Collections -->
+    <template v-if="$route.path !== '/'">
       <IconButton
-        v-show="$route.path !== '/'"
-        class="text-xl mr-2 my-auto p-4"
+        class="non-dragging text-xl mx-3 my-auto flex-none"
         icon="carbon:arrow-left"
         @click="$router.replace('/')"
       />
+      <div class="flex-auto" />
+    </template>
+
+    <!-- Homepage Only -->
+    <template v-else>
+      <h1 class="text-base font-light py-2 m-auto flex-auto text-center">
+        <a href="https://iconify.design" target="_blank" class="font-bold">Iconify</a>Explorer
+      </h1>
+      <a
+        class="non-dragging text-xl mx-3 mr-4 my-auto flex-none"
+        href="https://github.com/antfu/iconify-explorer"
+        target="_blank"
+      >
+        <IconButton icon="carbon:logo-github" />
+      </a>
+    </template>
+
+    <!-- Searching -->
+    <div v-if="collection" class="flex">
+      <Icon icon="carbon:search" class="m-auto opacity-60" />
+      <input
+        v-model="search"
+        class="text-base outline-none py-2 px-4 flex-auto m-0"
+        :placeholder="`Search...`"
+      >
     </div>
-    <h1 class="text-lg font-light px-1 m-auto">
-      &lt;<Icon icon="mdi:emoticon-happy-outline" class="inline-block align-middle" />>
-      <b class="font-bold">Iconify</b>Explorer
-    </h1>
   </nav>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { getSearchResults } from '../store'
+
+export default defineComponent(() => getSearchResults())
+</script>

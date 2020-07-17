@@ -1,6 +1,6 @@
 
 <template>
-  <div class="hidden md:block p-4 m-6 fixed bottom-0 right-0 shadow-lg bg-white rounded-full text-2xl cursor-pointer hover:bg-gray-100">
+  <div class="p-4 m-6 fixed bottom-0 right-0 shadow-lg bg-white rounded-full text-2xl cursor-pointer hover:bg-gray-100">
     <Icon class="text-gray-700" :icon="icon" />
     <div
       v-if="number"

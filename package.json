@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
     "dev": "vite",
+    "dev:electron": "pnpm -C ./electron dev",
     "build": "vite build"
   },
   "dependencies": {
@@ -16,11 +18,15 @@
   },
   "devDependencies": {
     "@antfu/eslint-config-vue": "^0.2.13",
+    "@iconify/iconify": "^1.0.7",
     "@iconify/json": "^1.1.186",
     "@types/fs-extra": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@vue/compiler-sfc": "^3.0.0-beta.20",
     "eslint": "^7.4.0",
     "fs-extra": "^9.0.1",
+    "jszip": "^3.5.0",
+    "svg-packer": "^0.0.3",
     "tailwindcss-dark-mode": "^1.1.4",
     "ts-node": "^8.10.2",
     "typescript": "3.9.3",

@@ -27,6 +27,8 @@
           <Icon class="inline-block text-lg align-middle" icon="carbon:add" />
           add to bag
         </template>
+
+        <!-- TODO: add a button to toggle selecting mode -->
       </div>
 
       <div class="flex flex-wrap">

@@ -2,7 +2,7 @@
   <div ref="el" :class="$attrs.class" />
 </template>
 <script lang="ts">
-import { defineComponent, watch, ref, onMounted } from 'vue'
+import { defineComponent, watch, ref, onMounted, nextTick } from 'vue'
 
 export default defineComponent({
   props: {
@@ -14,8 +14,9 @@ export default defineComponent({
   setup(props) {
     const el = ref<HTMLElement | null>(null)
 
-    const update = () => {
+    const update = async () => {
       if (el.value) {
+        await nextTick()
         // @ts-ignore
         const data = window.Iconify.getSVGObject(props.icon)
         if (data) {

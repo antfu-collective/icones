@@ -1,6 +1,7 @@
 <template>
   <div class="flex h-screen flex-col overflow-hidden">
-    <Navbar :class="navClass" />
+    <Navbar v-if="!isElectron" />
+    <NavElectron v-if="isElectron" />
     <div class="flex-auto overflow-auto">
       <slot />
     </div>
@@ -9,13 +10,17 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
+import { isElectron } from '../env'
+import NavElectron from './NavElectron.vue'
 
 export default defineComponent({
-  props: {
-    navClass: {
-      type: String,
-      default: '',
-    },
+  components: {
+    NavElectron,
+  },
+  setup() {
+    return {
+      isElectron,
+    }
   },
 })
 </script>

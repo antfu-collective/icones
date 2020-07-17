@@ -1,13 +1,13 @@
 <template>
-  <div class="flex flex-wrap select-none justify-center" :class="`text-${size}`" :style="{ color }">
+  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size}`">
     <div
       v-for="icon of icons"
       :key="icon"
-      class="icons-item cursor-pointer flex m-2"
-      :class="selected.includes(namespace+icon) ? 'active': ''"
+      class="non-dragging icons-item flex"
+      :class="[spacing, selected.includes(namespace+icon) ? 'active': '']"
       @click="$emit('select', namespace+icon)"
     >
-      <Icon :icon="namespace+icon" />
+      <Icon class="non-dragging" :icon="namespace+icon" />
       <span v-if="display==='list'" class="text-sm ml-1 px-1 m-auto" v-html="getSearchHighlightHTML(icon, search)" />
     </div>
   </div>
@@ -33,13 +33,13 @@ export default defineComponent({
       type: String,
       default: '2xl',
     },
+    spacing: {
+      type: String,
+      default: 'm-2'
+    },
     search: {
       type: String,
       default: '',
-    },
-    color: {
-      type: String,
-      default: '#555',
     },
     display: {
       type: String,

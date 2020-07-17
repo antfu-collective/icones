@@ -1,10 +1,10 @@
 import { RouterOptions } from 'vue-router'
-import Collections from './views/Collections.vue'
+import Index from './views/Index.vue'
 import NotFound from './views/NotFound.vue'
-import IconSet from './views/IconSet.vue'
+import Collection from './views/Collection.vue'
 
 export const routes: RouterOptions['routes'] = [
-  { path: '/', component: Collections },
-  { path: '/collection/:id', component: IconSet, props: true },
+  { path: '/', component: Index },
+  { path: '/collection/:id', component: Collection, props: true },
   { path: '/:path(.*)', component: NotFound },
 ]

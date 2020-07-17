@@ -6,7 +6,7 @@
       @click="$emit('close')"
     />
     <div
-      class="bg-white absolute shadow-lg transition-all duration-200 ease-out border-gray-200"
+      class="bg-white absolute transition-all duration-200 ease-out border-gray-200"
       :class="positionClass"
       :style="value ? {}: {transform}"
     >

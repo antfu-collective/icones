@@ -3,7 +3,7 @@
 <p align="center">Explorer for <a href="https://iconify.design/" target="_blank">Iconify</a> with <b>Instant</b> searching.</p>
 
 <p align="center">
-<a href="https://iconify.antfu.me/">⇁ iconify.antfu.me</a>
+<a href="https://iconify.antfu.me/">iconify.antfu.me</a>
 </p>
 
 ![](./screenshots/1.png)

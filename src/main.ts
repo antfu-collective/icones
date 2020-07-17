@@ -10,11 +10,13 @@ import Modal from './components/Modal.vue'
 import IconDetail from './components/IconDetail.vue'
 import ColorPicker from './components/ColorPicker.vue'
 import Navbar from './components/Navbar.vue'
+import NavPlaceholder from './components/NavPlaceholder.vue'
 import WithNavbar from './components/WithNavbar.vue'
 import Footer from './components/Footer.vue'
 import FAB from './components/FAB.vue'
 import Drawer from './components/Drawer.vue'
 import Bag from './components/Bag.vue'
+import ActionsMenu from './components/ActionsMenu.vue'
 import './main.css'
 
 const app = createApp(App)
@@ -52,5 +54,7 @@ app.component('Footer', Footer)
 app.component('Drawer', Drawer)
 app.component('FAB', FAB)
 app.component('Bag', Bag)
+app.component('ActionsMenu', ActionsMenu)
+app.component('NavPlaceholder', NavPlaceholder)
 
 app.mount('#app')
