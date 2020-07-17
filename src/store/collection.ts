@@ -30,27 +30,27 @@ export async function setCurrentCollection(id: string) {
     loaded.value = false
     installed.value = false
     collection.value = null
-    return collection.value 
+    return collection.value
   }
 
   loaded.value = isMetaLoaded(id)
   installed.value = isInstalled(id)
 
-  if (!installed.value) {
+  if (!installed.value)
     installed.value = await install(id)
-  }
 
   if (id === 'all') {
     const meta = await getFullMeta()
     collection.value = {
       id: 'all',
       name: 'All',
-      icons: meta.flatMap((c) => c.icons.map((i) => `${c.id}:${i}`)),
+      icons: meta.flatMap(c => c.icons.map(i => `${c.id}:${i}`)),
     }
-  } else {
+  }
+  else {
     collection.value = await getMeta(id)
     loaded.value = true
   }
 
-  return collection.value 
+  return collection.value
 }

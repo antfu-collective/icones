@@ -1,32 +1,26 @@
 <template>
   <WithNavbar v-if="!collection">
-    <div class="py-8 px-4 text-gray-700 text-center">Loading...</div>
+    <div class="py-8 px-4 text-gray-700 text-center">
+      Loading...
+    </div>
   </WithNavbar>
-  <IconSet v-else :collection="collection"/>
+  <IconSet v-else :collection="collection" />
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, watch, onUnmounted } from 'vue'
-import {
-  isMetaLoaded,
-  isInstalled,
-  getFullMeta,
-  install,
-  getMeta,
-  CollectionMeta
-} from '../data'
-import IconSet from './IconSet.vue'
+import { defineComponent, watch, onUnmounted } from 'vue'
 import { useCurrentCollection, setCurrentCollection } from '../store'
+import IconSet from './IconSet.vue'
 
 export default defineComponent({
   components: {
-    IconSet
+    IconSet,
   },
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     watch(
@@ -34,7 +28,7 @@ export default defineComponent({
       () => {
         setCurrentCollection(props.id)
       },
-      { immediate: true }
+      { immediate: true },
     )
 
     onUnmounted(() => {
@@ -42,8 +36,8 @@ export default defineComponent({
     })
 
     return {
-      collection: useCurrentCollection()
+      collection: useCurrentCollection(),
     }
-  }
+  },
 })
 </script>

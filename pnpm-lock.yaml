@@ -11,9 +11,11 @@ importers:
       '@iconify/iconify': 1.0.7
       '@iconify/json': 1.1.189
       '@types/fs-extra': 9.0.1
+      '@typescript-eslint/eslint-plugin': 3.6.1_eslint@7.4.0+typescript@3.9.3
       '@vue/compiler-sfc': 3.0.0-beta.24_vue@3.0.0-beta.24
       eslint: 7.4.0
       fs-extra: 9.0.1
+      jszip: 3.5.0
       svg-packer: 0.0.3
       tailwindcss-dark-mode: 1.1.5
       ts-node: 8.10.2_typescript@3.9.3
@@ -24,11 +26,13 @@ importers:
       '@iconify/iconify': ^1.0.7
       '@iconify/json': ^1.1.186
       '@types/fs-extra': ^9.0.1
+      '@typescript-eslint/eslint-plugin': ^3.6.1
       '@vue/compiler-sfc': ^3.0.0-beta.20
       '@vueuse/core': ^4.0.0-beta.2
       eslint: ^7.4.0
       fs-extra: ^9.0.1
       fuse.js: ^6.3.0
+      jszip: ^3.5.0
       svg-packer: ^0.0.3
       tailwindcss: ^1.4.6
       tailwindcss-dark-mode: ^1.1.4
@@ -1372,6 +1376,28 @@ packages:
         optional: true
     resolution:
       integrity: sha512-D52KwdgkjYc+fmTZKW7CZpH5ZBJREJKZXRrveMiRCmlzZ+Rw9wRVJ1JAmHQ9b/+Ehy1ZeaylofDB9wwXUt83wg==
+  /@typescript-eslint/eslint-plugin/3.6.1_eslint@7.4.0+typescript@3.9.3:
+    dependencies:
+      '@typescript-eslint/experimental-utils': 3.6.1_eslint@7.4.0+typescript@3.9.3
+      debug: 4.1.1
+      eslint: 7.4.0
+      functional-red-black-tree: 1.0.1
+      regexpp: 3.1.0
+      semver: 7.3.2
+      tsutils: 3.17.1_typescript@3.9.3
+      typescript: 3.9.3
+    dev: true
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      '@typescript-eslint/parser': ^3.0.0
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-06lfjo76naNeOMDl+mWG9Fh/a0UHKLGhin+mGaIw72FUMbMGBkdi/FEJmgEDzh4eE73KIYzHWvOCYJ0ak7nrJQ==
   /@typescript-eslint/experimental-utils/3.1.0_eslint@7.4.0+typescript@3.9.3:
     dependencies:
       '@types/json-schema': 7.0.5
@@ -5184,6 +5210,10 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
+  /immediate/3.0.6:
+    dev: true
+    resolution:
+      integrity: sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
   /import-cwd/2.1.0:
     dependencies:
       import-from: 2.1.0
@@ -5799,6 +5829,15 @@ packages:
     dev: true
     resolution:
       integrity: sha1-dET9hVHd8+XacZj+oMkbyDCMwnQ=
+  /jszip/3.5.0:
+    dependencies:
+      lie: 3.3.0
+      pako: 1.0.11
+      readable-stream: 2.3.7
+      set-immediate-shim: 1.0.1
+    dev: true
+    resolution:
+      integrity: sha512-WRtu7TPCmYePR1nazfrtuF216cIVon/3GWOvHS9QR5bIwSbnxtdpma6un3jyGGNhHsKCSzn5Ypk+EkDRvTGiFA==
   /keyboardevent-from-electron-accelerator/2.0.0:
     dev: false
     resolution:
@@ -5973,6 +6012,12 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
+  /lie/3.3.0:
+    dependencies:
+      immediate: 3.0.6
+    dev: true
+    resolution:
+      integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==
   /lines-and-columns/1.1.6:
     dev: true
     resolution:
@@ -8173,6 +8218,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
+  /set-immediate-shim/1.0.1:
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=
   /set-value/2.0.1:
     dependencies:
       extend-shallow: 2.0.1

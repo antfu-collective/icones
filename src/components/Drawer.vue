@@ -1,6 +1,6 @@
 <template>
   <div class="border-r border-gray-200">
-    <NavPlaceholder/>
+    <NavPlaceholder class="mb-4"/>
     <!-- Collections -->
     <router-link
       v-for="collection in collections"

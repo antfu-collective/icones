@@ -56,11 +56,16 @@ async function copyLibs() {
     path.join(modules, 'svg-packer/dist/index.browser.js'), 
     path.join(out, 'lib/svg-packer.js')
   )
+
+  await fs.copy(
+    path.join(modules, 'jszip/dist/jszip.min.js'), 
+    path.join(out, 'lib/jszip.min.js')
+  )
 }
 
 async function prepare() {
-  await prepareJSON()
   await copyLibs()
+  await prepareJSON()
 }
 
 prepare()

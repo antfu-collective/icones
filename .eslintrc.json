@@ -3,6 +3,7 @@
     "@antfu/eslint-config-vue"
   ],
   "rules": {
-    "vue/valid-v-model": "off"
+    "vue/valid-v-model": "off",
+    "vue/singleline-html-element-content-newline": "off"
   }
 }

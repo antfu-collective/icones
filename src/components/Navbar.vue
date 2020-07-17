@@ -8,7 +8,7 @@
       />
     <h1 class="text-base font-light py-2 m-auto flex-auto text-center">
       <span v-if="collection"></span>
-      <template v-show="$route.path === '/'">
+      <template v-if="$route.path === '/'">
         <b class="font-bold">Iconify</b>Explorer
       </template>
     </h1>
