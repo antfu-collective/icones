@@ -4,14 +4,20 @@
       <IconButton class="ml-3 text-xl" active icon="carbon:overflow-menu-vertical" title="Menu" />
       <select v-model="menu" class="absolute text-base top-0 bottom-0 left-0 right-0 opacity-0">
         <optgroup label="Size">
-          <option value="large">Large Icons</option>
-          <option value="small">Small Icons</option>
+          <option value="small">Small</option>
+          <option value="large">Large</option>
           <option value="list">List</option>
         </optgroup>
         <optgroup label="Actions">
           <option value="select">Select mutiple</option>
         </optgroup>
-        <optgroup label="Downloads">
+
+        <!--
+          TODO: due to this function requires to download and pack
+                the full set, we should make some UI to aware users
+                in browser version.
+        -->
+        <optgroup v-if="isElectron" label="Downloads">
           <option value="download_iconfont">Iconfont</option>
           <option value="download_svgs">SVGs Zip</option>
         </optgroup>

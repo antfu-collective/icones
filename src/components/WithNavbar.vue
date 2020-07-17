@@ -10,17 +10,17 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-import NavElectron from './NavElectron.vue'
 import { isElectron } from '../env'
+import NavElectron from './NavElectron.vue'
 
 export default defineComponent({
   components: {
-    NavElectron
+    NavElectron,
   },
   setup() {
     return {
-      isElectron
+      isElectron,
     }
-  }
+  },
 })
 </script>
