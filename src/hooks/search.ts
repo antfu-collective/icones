@@ -2,15 +2,17 @@ import Fuse from 'fuse.js'
 import { ref, computed, markRaw, Ref, watch } from 'vue'
 import { useThrottle } from '@vueuse/core'
 import { CollectionMeta } from '../data'
-import { showCategories } from '../store'
 
-export function useSearch(collection: Ref<CollectionMeta>, defaultCategory = '', defaultSearch = '') {
+export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategory = '', defaultSearch = '') {
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
-  const throttledSearch = useThrottle(search, 150)
+  const throttledSearch = useThrottle(search, 300)
 
   const iconSource = computed(() => {
-    if (category.value && showCategories.value)
+    if (!collection.value)
+      return []
+
+    if (category.value)
       return collection.value.categories?.[category.value] || []
     else
       return collection.value.icons

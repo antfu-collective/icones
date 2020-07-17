@@ -1,7 +1,7 @@
 // @ts-ignore
 import { computed, ref } from 'vue'
-import infoJSON from '../public/collections-info.json'
-import { favoritedCollections } from './store'
+import infoJSON from '../../public/collections-info.json'
+import { favoritedCollections } from '../store'
 
 export interface CollectionInfo {
   id: string
@@ -29,6 +29,9 @@ export const sortedCollectionsInfo = computed(() => {
 })
 
 export async function install(id: string) {
+  if (id === 'all')
+    return false
+
   if (installed.includes(id))
     return true
 

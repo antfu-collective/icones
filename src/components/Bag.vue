@@ -1,7 +1,8 @@
 <template>
-  <div class="h-full flex flex-col w-screen md:w-16">
+  <div class="h-full flex flex-col w-screen md:w-96 xl:w-128">
     <div class="flex-none border-b border-gray-200 py-3 px-6 flex">
       <div>
+        <NavPlaceholder class="md:hidden" />
         <div class="text-gray-700 text-lg">
           Bag
         </div>

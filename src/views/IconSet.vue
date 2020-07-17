@@ -1,11 +1,13 @@
 <template>
-  <WithNavbar nav-class="md:hidden">
+  <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden">
       <Drawer class="h-full overflow-auto flex-none hidden md:block" style="width:280px" />
-      <div class="py-5 px-5 md:px-8 h-full overflow-y-auto">
+      <div class="py-5 px-5 md:px-8 h-full overflow-y-auto" v-if='collection'>
         <div class="flex">
           <!-- Left -->
-          <div class="flex-auto">
+          <div class="flex-auto px-2">
+            <NavPlaceholder class="md:hidden"/>
+
             <div class="text-gray-900 text-xl flex">
               {{ collection.name }}
               <a
@@ -36,7 +38,7 @@
         </div>
 
         <!-- Categories -->
-        <div class="py-3 pr-3 overflow-x-auto flex flex-no-wrap">
+        <div class="py-2 pr-3 overflow-x-auto flex flex-no-wrap select-none">
           <template v-if="collection.categories">
             <div
               v-for="c of Object.keys(collection.categories)"
@@ -48,17 +50,8 @@
           </template>
         </div>
 
-        <!-- Search -->
-        <div class="flex">
-          <input
-            v-model="search"
-            class="shadow rounded outline-none py-2 px-4 flex-auto"
-            placeholder="Search..."
-          />
-        </div>
-
         <!-- Icons -->
-        <div class="py-4 text-center">
+        <div class="pt-2 pb-4 text-center">
           <Icons
             :icons="icons.slice(0, max)"
             :selected="selectedIcons"
@@ -112,15 +105,15 @@ import { defineComponent, ref, toRefs, computed, PropType } from 'vue'
 import {
   iconSize,
   listType,
-  showCategories,
   selectingMode,
   bags,
   toggleBag
 } from '../store'
-import { useSearch } from '../hooks/search'
-import { CollectionMeta } from '../data'
+import {CollectionMeta} from '../data'
+import { useSearch } from '../hooks'
 import { useRoute } from 'vue-router'
 import { isElectron } from '../env'
+import { getSearchResults } from '../store'
 
 export default defineComponent({
   props: {
@@ -130,8 +123,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { collection } = toRefs(props)
-    const { search, icons, category } = useSearch(collection)
+    const { search, icons, category, collection } = getSearchResults()
     const showBag = ref(false)
 
     const current = ref<string | null>(null)
@@ -143,7 +135,7 @@ export default defineComponent({
     }
 
     const namespace = computed(() => {
-      return collection.value.id === 'all' ? '' : `${collection.value.id}:`
+      return !collection.value || collection.value.id === 'all' ? '' : `${collection.value.id}:`
     })
 
     const onSelect = (icon: string) => {
@@ -176,7 +168,6 @@ export default defineComponent({
 
       // cates
       toggleCategory,
-      showCategories,
 
       // bags
       showBag,

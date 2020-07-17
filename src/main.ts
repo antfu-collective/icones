@@ -10,6 +10,7 @@ import Modal from './components/Modal.vue'
 import IconDetail from './components/IconDetail.vue'
 import ColorPicker from './components/ColorPicker.vue'
 import Navbar from './components/Navbar.vue'
+import NavPlaceholder from './components/NavPlaceholder.vue'
 import WithNavbar from './components/WithNavbar.vue'
 import Footer from './components/Footer.vue'
 import FAB from './components/FAB.vue'
@@ -54,5 +55,6 @@ app.component('Drawer', Drawer)
 app.component('FAB', FAB)
 app.component('Bag', Bag)
 app.component('ViewControls', ViewControls)
+app.component('NavPlaceholder', NavPlaceholder)
 
 app.mount('#app')

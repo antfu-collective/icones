@@ -1,28 +1,28 @@
 <template>
   <div class="px-1 text-xl text-gray-800 flex">
     <IconButton
-      class="mr-3"
+      class="ml-3"
       icon="carbon:checkbox-checked"
       :active="selectingMode"
       @click="selectingMode = !selectingMode"
     />
-    <div class="mx-1 h-full m-auto bg-gray-200" style="width:1px;" />
+    <div class="mr-1 ml-4 h-full m-auto bg-gray-200 hidden sm:block" style="width:1px;" />
     <IconButton
-      class="ml-3"
+      class="ml-3 hidden sm:block"
       icon="carbon:hinton-plot"
       title="Small"
       :active="listType === 'grid' && iconSize === '2xl'"
       @click="()=>setGrid('small')"
     />
     <IconButton
-      class="ml-3"
+      class="ml-3 hidden sm:block"
       icon="carbon:app-switcher"
       title="Large"
       :active="listType === 'grid' && iconSize === '4xl'"
       @click="()=>setGrid('large')"
     />
     <IconButton
-      class="ml-3"
+      class="ml-3 hidden sm:block"
       icon="carbon:list"
       title="List View"
       :active="listType === 'list'"
@@ -33,7 +33,7 @@
 
 <script lang='ts'>
 import { defineComponent, PropType } from 'vue'
-import { iconSize, listType, showCategories, selectingMode } from '../store'
+import { iconSize, listType, selectingMode } from '../store'
 import { CollectionMeta } from '../data'
 
 export default defineComponent({
@@ -43,7 +43,7 @@ export default defineComponent({
     }
   },
   setup() {
-     const setGrid = (type: string) => {
+    const setGrid = (type: string) => {
       switch (type) {
         case 'small':
           iconSize.value = '2xl'
@@ -63,7 +63,6 @@ export default defineComponent({
       setGrid,
       listType,
       iconSize,
-      showCategories,
       selectingMode
     }
   }

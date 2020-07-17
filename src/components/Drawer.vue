@@ -1,18 +1,6 @@
 <template>
   <div class="border-r border-gray-200">
-    <!-- Back button, Mobile Only -->
-    <div
-      v-if='!isElectron'
-      class="border-b border-gray-200"
-    >
-      <IconButton
-        v-show="$route.path !== '/'"
-        class="text-xl my-auto p-4 align-middle inline-block"
-        icon="carbon:arrow-left"
-        @click="$router.replace('/')"
-      />
-    </div>
-
+    <NavPlaceholder/>
     <!-- Collections -->
     <router-link
       v-for="collection in collections"
