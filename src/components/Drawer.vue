@@ -1,6 +1,8 @@
 <template>
   <div class="border-r border-gray-200">
+    <!-- Back button, Mobile Only -->
     <div
+      v-if='!isElectron'
       class="border-b border-gray-200"
     >
       <IconButton
@@ -10,6 +12,8 @@
         @click="$router.replace('/')"
       />
     </div>
+
+    <!-- Collections -->
     <router-link
       v-for="collection in collections"
       :key="collection.id"
@@ -46,6 +50,7 @@ import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { sortedCollectionsInfo } from '../data'
 import { isFavorited, toggleFavorite } from '../store'
+import { isElectron } from '../env'
 
 export default defineComponent({
   setup() {
@@ -64,6 +69,7 @@ export default defineComponent({
       current,
       toggleFavorite,
       isFavorited,
+      isElectron,
     }
   },
 })

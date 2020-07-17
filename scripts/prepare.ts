@@ -1,11 +1,12 @@
 import path from 'path'
 import fs from 'fs-extra'
 
-const dir = path.resolve(__dirname, '../node_modules/@iconify/json')
 const out = path.resolve(__dirname, '../public')
-const collectionsDir = path.resolve(__dirname, '../public/collections')
 
-async function prepare() {
+async function prepareJSON() {
+  const dir = path.resolve(__dirname, '../node_modules/@iconify/json')
+  const collectionsDir = path.resolve(__dirname, '../public/collections')
+
   const raw = await fs.readJSON(path.join(dir, 'collections.json'))
   await fs.ensureDir(collectionsDir)
 
@@ -21,9 +22,12 @@ async function prepare() {
 
     const icons = Object.keys(setData.icons)
     const categories = setData.categories
-    const meta = {...info, icons, categories }
+    const meta = { ...info, icons, categories }
 
-    await fs.writeJSON(path.join(collectionsDir, `${info.id}-raw.json`), setData)
+    await fs.writeJSON(
+      path.join(collectionsDir, `${info.id}-raw.json`),
+      setData
+    )
     await fs.writeJSON(path.join(collectionsDir, `${info.id}-meta.json`), meta)
     collectionsMeta.push(meta)
 
@@ -32,6 +36,31 @@ async function prepare() {
 
   await fs.writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)
   await fs.writeJSON(path.join(out, 'collections-info.json'), collections)
+}
+
+async function copyLibs() {
+  const modules = path.resolve(__dirname, '../node_modules')
+
+  await fs.copy(
+    path.join(modules, '@iconify/iconify/dist/'),
+    path.join(out, 'lib'),
+    {
+      filter: (src) => {
+        if (fs.lstatSync(src).isDirectory()) return true
+        const basename = path.basename(src)
+        return basename.startsWith('iconify') && basename.endsWith('.min.js')
+      }
+    }
+  )
+  await fs.copy(
+    path.join(modules, 'svg-packer/dist/index.browser.js'), 
+    path.join(out, 'lib/svg-packer.js')
+  )
+}
+
+async function prepare() {
+  await prepareJSON()
+  await copyLibs()
 }
 
 prepare()

@@ -17,7 +17,7 @@ const createMainWindow = async() => {
     height: 500,
     minWidth: 200,
     minHeight: 200,
-    titleBarStyle: 'hidden',
+    titleBarStyle: 'hiddenInset',
   })
 
   win.on('ready-to-show', () => {

@@ -1,7 +1,7 @@
 <template>
-  <div v-if="!collection" class="p-4 text-gray-700">
-    Loading...
-  </div>
+  <WithNavbar v-if="!collection">
+    <div class="py-8 px-4 text-gray-700 text-center">Loading...</div>
+  </WithNavbar>
   <IconSet v-else :collection="collection" :installed="installed" />
 </template>
 
@@ -13,19 +13,19 @@ import {
   getFullMeta,
   install,
   getMeta,
-  CollectionMeta,
+  CollectionMeta
 } from '../data'
 import IconSet from './IconSet.vue'
 
 export default defineComponent({
   components: {
-    IconSet,
+    IconSet
   },
   props: {
     id: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const loaded = ref(isMetaLoaded(props.id))
@@ -34,7 +34,7 @@ export default defineComponent({
 
     watch(
       () => props.id,
-      async() => {
+      async () => {
         loaded.value = false
 
         if (props.id === 'all') {
@@ -42,23 +42,22 @@ export default defineComponent({
           collection.value = {
             id: 'all',
             name: 'All',
-            icons: meta.flatMap(c => c.icons.map(i => `${c.id}:${i}`)),
+            icons: meta.flatMap(c => c.icons.map(i => `${c.id}:${i}`))
           }
-        }
-        else {
+        } else {
           await install(props.id)
           collection.value = await getMeta(props.id)
         }
         loaded.value = true
       },
-      { immediate: true },
+      { immediate: true }
     )
 
     return {
       collection,
       loaded,
-      installed,
+      installed
     }
-  },
+  }
 })
 </script>

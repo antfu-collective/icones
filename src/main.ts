@@ -15,6 +15,7 @@ import Footer from './components/Footer.vue'
 import FAB from './components/FAB.vue'
 import Drawer from './components/Drawer.vue'
 import Bag from './components/Bag.vue'
+import ViewControls from './components/ViewControls.vue'
 import './main.css'
 
 const app = createApp(App)
@@ -52,5 +53,6 @@ app.component('Footer', Footer)
 app.component('Drawer', Drawer)
 app.component('FAB', FAB)
 app.component('Bag', Bag)
+app.component('ViewControls', ViewControls)
 
 app.mount('#app')

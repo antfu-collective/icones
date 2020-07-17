@@ -1,6 +1,6 @@
 <template>
   <div
-    class="m-auto cursor-pointer"
+    class="icon-button m-auto"
     :class="active ? 'opacity-100 hover:opacity-100 hover:text-primary' : 'opacity-25 hover:opacity-50' "
   >
     <Icon

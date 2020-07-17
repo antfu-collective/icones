@@ -1,10 +1,10 @@
 <template>
-  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size}`" :style="{ color }">
+  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size}`">
     <div
       v-for="icon of icons"
       :key="icon"
-      class="non-dragging icons-item cursor-pointer flex m-2"
-      :class="selected.includes(namespace+icon) ? 'active': ''"
+      class="non-dragging icons-item flex"
+      :class="[spacing, selected.includes(namespace+icon) ? 'active': '']"
       @click="$emit('select', namespace+icon)"
     >
       <Icon class="non-dragging" :icon="namespace+icon" />
@@ -33,13 +33,13 @@ export default defineComponent({
       type: String,
       default: '2xl',
     },
+    spacing: {
+      type: String,
+      default: 'm-2'
+    },
     search: {
       type: String,
       default: '',
-    },
-    color: {
-      type: String,
-      default: '#555',
     },
     display: {
       type: String,

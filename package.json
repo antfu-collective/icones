@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
     "dev": "vite",
+    "dev:electron": "pnpm -C ./electron dev",
     "build": "vite build"
   },
   "dependencies": {
@@ -15,6 +17,8 @@
     "vue-router": "next"
   },
   "devDependencies": {
+    "svg-packer": "^0.0.3",
+    "@iconify/iconify": "^1.0.7",
     "@antfu/eslint-config-vue": "^0.2.13",
     "@iconify/json": "^1.1.186",
     "@types/fs-extra": "^9.0.1",

@@ -24,9 +24,6 @@ module.exports = {
   },
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
-      },
       fontSize: {
         '7xl': '5rem',
         '8xl': '6rem',
