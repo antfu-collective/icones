@@ -1,6 +1,6 @@
 <template>
-  <footer class="text-center text-sm my-5">
-    <p class="text-gray-600">
+  <footer class="text-center text-sm my-8">
+    <p class="text-gray-500">
       built by
       <a
         class="opacity-75 hover:opacity-100"

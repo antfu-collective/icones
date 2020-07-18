@@ -1,8 +1,16 @@
 <template>
   <WithNavbar>
-    <div class="flex flex-auto h-full overflow-hidden">
+    <div class="flex flex-auto h-full overflow-hidden ">
       <Drawer class="h-full overflow-auto flex-none hidden md:block" style="width:280px" />
-      <div v-if="collection" class="py-5 px-5 md:px-8 h-full overflow-y-auto flex-auto overflow-x-hidden">
+      <div v-if="collection" class="py-5 px-5 md:px-8 h-full overflow-y-auto flex-auto overflow-x-hidden relative">
+        <!-- Loading -->
+        <div
+          class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50"
+          :class="loading ? '' : 'opacity-0 pointer-events-none'"
+        >
+          <div class="absolute text-gray-800" style="top:50%;left:50%;transform:translate(-50%,-50%)">Loading...</div>
+        </div>
+
         <div class="flex px-2">
           <!-- Left -->
           <div class="flex-auto px-2">
@@ -115,7 +123,7 @@
 
 <script lang='ts'>
 import { defineComponent, ref, computed, PropType } from 'vue'
-import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults } from '../store'
+import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
 import { CollectionMeta } from '../data'
 import { isElectron } from '../env'
 
@@ -159,6 +167,7 @@ export default defineComponent({
     }
 
     return {
+      loading: isCurrentCollectionLoading(),
       current,
       search,
       collection,

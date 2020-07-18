@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import {
   isMetaLoaded,
   isInstalled,
@@ -24,6 +24,10 @@ export function useCurrentCollection() {
   return collection
 }
 
+export function isCurrentCollectionLoading() {
+  return computed(() => !loaded.value)
+}
+
 export async function setCurrentCollection(id: string) {
   currentCollectionId.value = id
 
@@ -47,6 +51,7 @@ export async function setCurrentCollection(id: string) {
       name: 'All',
       icons: meta.flatMap(c => c.icons.map(i => `${c.id}:${i}`)),
     }
+    loaded.value = true
   }
   else {
     collection.value = await getMeta(id)
