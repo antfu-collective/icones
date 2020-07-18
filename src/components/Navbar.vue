@@ -24,7 +24,7 @@
       </h1>
       <a
         class="non-dragging text-xl mx-3 mr-4 my-auto flex-none"
-        href="https://github.com/antfu/iconify-explorer"
+        href="https://github.com/antfu/icones"
         target="_blank"
       >
         <IconButton icon="carbon:logo-github" />

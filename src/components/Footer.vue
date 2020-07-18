@@ -16,7 +16,7 @@
     </p>
     <a
       class="text-gray-500 font-light opacity-75 hover:opacity-100"
-      href="https://github.com/antfu/iconify-explorer"
+      href="https://github.com/antfu/icones"
       target="_blank"
     >
       <Icon icon="carbon:code" class="inline-block text-lg align-middle" />

@@ -7,14 +7,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/iconify-explorer.git"
+    "url": "git+https://github.com/antfu/icones.git"
   },
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/antfu/iconify-explorer/issues"
+    "url": "https://github.com/antfu/icones/issues"
   },
-  "homepage": "https://github.com/antfu/iconify-explorer#readme",
+  "homepage": "https://github.com/antfu/icones#readme",
   "scripts": {
     "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
     "dev": "vite --port 3333",

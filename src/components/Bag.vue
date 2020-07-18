@@ -59,7 +59,7 @@ export default defineComponent({
       // TODO: customzie
       await PackSvgZip(
         bags.value.map(i => i.replace(':', '-')),
-        'iconify-bags',
+        'icones-bags',
       )
     }
 
