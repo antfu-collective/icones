@@ -19,8 +19,8 @@
       >
         <IconButton icon="carbon:logo-github" />
       </div>
-      <h1 class="text-base font-light py-2 m-auto flex-auto text-center">
-        <a href="https://iconify.design" target="_blank" class="font-bold">Iconify</a>Explorer
+      <h1 class="text-xl py-1 m-auto flex-auto text-center font-light" style="letter-spacing: 2px">
+        Icônes
       </h1>
       <a
         class="non-dragging text-xl mx-3 mr-4 my-auto flex-none"

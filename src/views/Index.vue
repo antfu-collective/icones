@@ -1,6 +1,8 @@
 <template>
   <WithNavbar>
-    <NavPlaceholder />
+    <NavPlaceholder class="md:border-b border-gray-200 text-center m-auto flex text-gray-500 font-light" style="height:40px">
+      <div class="m-auto">Collections</div>
+    </NavPlaceholder>
     <div class="collections-list grid">
       <div
         v-for="collection in collections"

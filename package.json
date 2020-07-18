@@ -1,10 +1,20 @@
 {
-  "name": "iconify-explorer",
+  "name": "icones",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
     "electron"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/iconify-explorer.git"
+  },
+  "author": "Anthony Fu<https://github.com/antfu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antfu/iconify-explorer/issues"
+  },
+  "homepage": "https://github.com/antfu/iconify-explorer#readme",
   "scripts": {
     "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
     "dev": "vite --port 3333",

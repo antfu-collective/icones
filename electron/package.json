@@ -1,9 +1,18 @@
 {
-  "name": "iconify-explorer-electron",
+  "name": "icones-electron",
   "version": "0.0.0",
-  "license": "MIT",
-  "appname": "Iconify Explorer",
+  "appname": "Icônes",
   "description": "Explorer for Iconify with Instant searching.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/icones.git"
+  },
+  "author": "Anthony Fu<https://github.com/antfu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antfu/icones/issues"
+  },
+  "homepage": "https://github.com/antfu/icones#readme",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",

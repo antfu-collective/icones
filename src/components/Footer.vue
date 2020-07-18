@@ -6,8 +6,8 @@
         class="opacity-75 hover:opacity-100"
         href="https://github.com/antfu"
         target="_blank"
-      >@antfu</a>
-      for
+      >@antfu</a>,
+      powered by
       <a
         class="opacity-75 hover:opacity-100"
         href="https://iconify.design"

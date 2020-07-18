@@ -65,7 +65,7 @@
         </div>
 
         <!-- Searching -->
-        <div class="mx-8 mt-2 text-gray-500 hidden md:flex shadow rounded outline-none py-1 px-4">
+        <div class="mx-8 my-2 text-gray-500 hidden md:flex shadow rounded outline-none py-1 px-4">
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <input
             ref="input"
@@ -73,7 +73,7 @@
             class="text-base outline-none py-1 px-4 flex-auto m-0"
             :placeholder="`Search...`"
           >
-          <Icon icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="search = ''" />
+          <Icon v-if="search" icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="search = ''" />
         </div>
 
         <!-- Icons -->

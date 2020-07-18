@@ -1,9 +1,15 @@
-<h1 align="center">Iconify Explorer</h1>
+<h1 align="center">
+Icônes
+</h1>
 
-<p align="center">Explorer for <a href="https://iconify.design/" target="_blank">Iconify</a> with <b>Instant</b> searching.</p>
+<p align="center">Icon Explorer with <b>Instant</b> searching, powered by <a href="https://iconify.design/" target="_blank">Iconify</a> </p>
 
 <p align="center">
-<a href="https://iconify.antfu.me/">iconify.antfu.me</a>
+<a href="https://iconify.antfu.me/">Go to App</a>
+</p>
+
+<p align="center">
+<sub><em>Electron is comming...</em></sub>
 </p>
 
 ![](./screenshots/1.png)
@@ -26,10 +32,9 @@
 
 ### TODOs
 
-- Collection name display in icon detail
+- Electron client (Coming!)
 - Dark mode
 - Full-offline mode - pack all the icons
-- Electron client
 
 ## License
 
