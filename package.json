@@ -9,7 +9,8 @@
     "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
     "dev": "vite --port 3333",
     "dev:electron": "npm -C ./electron run dev",
-    "build": "vite build"
+    "build": "vite build",
+    "build:electron": "npm -C ./electron run build"
   },
   "dependencies": {
     "@vueuse/core": "^4.0.0-beta.2",

@@ -1,5 +1,8 @@
 <template>
-  <nav class="dragging p-2 relative bg-white z-10 dark:bg-black flex border-b border-gray-200">
+  <nav
+    class="dragging p-2 relative bg-white z-10 dark:bg-black flex border-b border-gray-200"
+    :class="$route.path !== '/' ? 'md:hidden' : ''"
+  >
     <!-- In Collections -->
     <template v-if="$route.path !== '/'">
       <IconButton
@@ -7,7 +10,6 @@
         icon="carbon:arrow-left"
         @click="$router.replace('/')"
       />
-      <div class="flex-auto" />
     </template>
 
     <!-- Homepage Only -->
@@ -31,10 +33,9 @@
 
     <!-- Searching -->
     <div v-if="collection" class="flex">
-      <Icon icon="carbon:search" class="m-auto opacity-60" />
       <input
         v-model="search"
-        class="text-base outline-none py-2 px-4 flex-auto m-0"
+        class="text-base outline-none py-2 px-4 flex-auto m-0 w-full"
         :placeholder="`Search...`"
       >
     </div>

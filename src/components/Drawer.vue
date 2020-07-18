@@ -1,6 +1,18 @@
 <template>
   <div class="border-r border-gray-200">
-    <NavPlaceholder class="mb-4"/>
+    <NavPlaceholder class="mb-4" />
+    <div
+      v-if="!isElectron"
+      class="border-b border-gray-200"
+    >
+      <IconButton
+        v-show="$route.path !== '/'"
+        class="text-xl my-auto px-4 py-3 align-middle inline-block"
+        icon="carbon:arrow-left"
+        @click="$router.replace('/')"
+      />
+    </div>
+
     <!-- Collections -->
     <router-link
       v-for="collection in collections"

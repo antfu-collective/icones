@@ -2,11 +2,14 @@
   "name": "iconify-explorer-electron",
   "version": "0.0.0",
   "license": "MIT",
+  "appname": "Iconify Explorer",
+  "description": "Explorer for Iconify with Instant searching.",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "copy": "cp -r ../dist ./dist/main/app",
+    "build": "npm run compile && npm run copy && electron-builder",
+    "build:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
     "babel-loader": "^8.1.0",
