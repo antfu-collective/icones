@@ -1,5 +1,6 @@
 <template>
-  <div v-if="icon" class="p-2 flex flex-col md:flex-row md:text-left">
+  <div class="p-2 flex flex-col md:flex-row md:text-left relative">
+    <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
     <ColorPicker v-model:value="previewColor" class="inline-block">
       <div :style="{color: previewColor}">
         <Icon class="p-4 text-8xl" :icon="icon" />
@@ -14,21 +15,31 @@
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
       </p>
 
-      <div
-        class="hidden md:inline-block border border-gray-200 my-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100"
-        :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
-        @click="toggleBag(icon)"
-      >
-        <template v-if="inBag(icon)">
-          <Icon class="inline-block text-lg align-middle" icon="carbon:shopping-bag" />
-          in bag
-        </template>
-        <template v-else>
-          <Icon class="inline-block text-lg align-middle" icon="carbon:add" />
-          add to bag
-        </template>
+      <div>
+        <div
+          class="inline-block border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100"
+          :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
+          @click="toggleBag(icon)"
+        >
+          <template v-if="inBag(icon)">
+            <Icon class="inline-block text-lg align-middle" icon="carbon:shopping-bag" />
+            in bag
+          </template>
+          <template v-else>
+            <Icon class="inline-block text-lg align-middle" icon="carbon:add" />
+            add to bag
+          </template>
+        </div>
 
-        <!-- TODO: add a button to toggle selecting mode -->
+        <div
+          v-if="inBag(icon)"
+          class="inline-block my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100"
+          :class="selectingMode ? 'text-primary' : 'text-gray-500'"
+          @click="toggleSelectingMode"
+        >
+          <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
+          multiple select
+        </div>
       </div>
 
       <div class="flex flex-wrap">
@@ -71,7 +82,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { getIconSnippet, getIconDownloadLink } from '../utils/icons'
-import { previewColor, toggleBag, inBag } from '../store'
+import { previewColor, toggleBag, inBag, selectingMode } from '../store'
 
 export default defineComponent({
   props: {
@@ -80,7 +91,7 @@ export default defineComponent({
       default: '',
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const copied = ref(false)
 
     const copy = async(type: string) => {
@@ -95,6 +106,12 @@ export default defineComponent({
       }, 2000)
     }
 
+    const toggleSelectingMode = () => {
+      selectingMode.value = !selectingMode.value
+      if (selectingMode.value)
+        emit('close')
+    }
+
     const downlodUrl = computed(() => getIconDownloadLink(props.icon))
 
     return {
@@ -104,6 +121,8 @@ export default defineComponent({
       previewColor,
       toggleBag,
       inBag,
+      selectingMode,
+      toggleSelectingMode,
     }
   },
 })

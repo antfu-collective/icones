@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
-    "dev": "vite",
+    "dev": "vite --port 3333",
     "dev:electron": "npm -C ./electron run dev",
     "build": "vite build"
   },

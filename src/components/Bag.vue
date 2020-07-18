@@ -17,8 +17,7 @@
 
     <template v-if="bags.length">
       <div class="flex-auto overflow-y-auto py-3 px-1">
-        <!-- TODO: listen to onSelect event to popup icon details -->
-        <Icons :icons="bags" style="color: #666" />
+        <Icons :icons="bags" style="color: #666" @select="e => $emit('select', e)" />
       </div>
       <div class="flex-none border-t border-gray-200 py-3 px-6 text-2xl text-gray-700">
         <IconButton class="p-1 cursor-pointer" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
@@ -40,11 +39,13 @@ import { bags, clearBag } from '../store'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
 
 export default defineComponent({
-  setup() {
+  setup(props, { emit }) {
     const clear = () => {
       // eslint-disable-next-line no-alert
-      if (confirm('Are you sure to remove all icons from the bag?'))
+      if (confirm('Are you sure to remove all icons from the bag?')) {
         clearBag()
+        emit('close')
+      }
     }
 
     const packIconFont = async() => {

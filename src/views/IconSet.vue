@@ -60,7 +60,7 @@
         <div class="pt-2 pb-4 text-center">
           <Icons
             :icons="icons.slice(0, max)"
-            :selected="selectedIcons"
+            :selected="bags"
             :size="iconSize"
             :display="listType"
             :search="search"
@@ -78,14 +78,17 @@
 
         <Footer />
 
-        <!-- Details -->
-        <Modal :value="!!current" @close="current = null">
-          <IconDetail :icon="current" />
-        </Modal>
-
         <!-- Bag -->
         <Modal :value="showBag" direction="right" @close="showBag = false">
-          <Bag @close="showBag = false" />
+          <Bag
+            @close="showBag = false"
+            @select="e => current = e"
+          />
+        </Modal>
+
+        <!-- Details -->
+        <Modal :value="!!current" @close="current = ''">
+          <IconDetail :icon="current" @close="current = ''" />
         </Modal>
 
         <!-- Bag Fab -->
@@ -127,7 +130,7 @@ export default defineComponent({
     const { search, icons, category, collection } = getSearchResults()
     const showBag = ref(false)
 
-    const current = ref<string | null>(null)
+    const current = ref<string>('')
     const max = ref(isElectron ? 500 : 200)
 
     const toggleCategory = (cat: string) => {

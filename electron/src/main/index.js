@@ -49,7 +49,7 @@ app.on('activate', async() => {
   await app.whenReady()
 
   mainWindow = await createMainWindow()
-  mainWindow.loadURL(DEV ? 'http://localhost:3000/' : 'app://-')
+  mainWindow.loadURL(DEV ? 'http://localhost:3333/' : 'app://-')
   mainWindow.focus()
 })()
   .catch(console.error)

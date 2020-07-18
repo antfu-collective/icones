@@ -31,6 +31,7 @@ import { defineComponent, PropType, ref, watch, nextTick } from 'vue'
 import { iconSize, listType, selectingMode } from '../store'
 import { CollectionMeta, install } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
+import { isElectron } from '../env'
 
 export default defineComponent({
   props: {
@@ -111,6 +112,7 @@ export default defineComponent({
       listType,
       iconSize,
       selectingMode,
+      isElectron,
     }
   },
 })
