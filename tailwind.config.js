@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 module.exports = {
   purge: {
     content: [
@@ -37,15 +34,16 @@ module.exports = {
         primary: 'var(--theme-color)',
       },
       spacing: {
-        '72': '18rem',
-        '84': '21rem',
-        '96': '24rem',
-        '128': '32rem',
-        '256': '64rem',
+        7: '1.75rem',
+        72: '18rem',
+        84: '21rem',
+        96: '24rem',
+        128: '32rem',
+        256: '64rem',
       },
       screens: {
-        'dark': {'raw': '(prefers-color-scheme: dark)'},
-      }
+        dark: { raw: '(prefers-color-scheme: dark)' },
+      },
     },
   },
 }

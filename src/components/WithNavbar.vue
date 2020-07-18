@@ -11,7 +11,7 @@
 <script lang='ts'>
 import { defineComponent } from 'vue'
 import { isElectron } from '../env'
-import NavElectron from './NavElectron.vue'
+import NavElectron from './electron/NavElectron.vue'
 
 export default defineComponent({
   components: {

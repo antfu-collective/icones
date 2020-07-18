@@ -12,6 +12,11 @@
 
     <!-- Homepage Only -->
     <template v-else>
+      <div
+        class="opacity-0 text-xl mx-3 mr-4 my-auto flex-none"
+      >
+        <IconButton icon="carbon:logo-github" />
+      </div>
       <h1 class="text-base font-light py-2 m-auto flex-auto text-center">
         <a href="https://iconify.design" target="_blank" class="font-bold">Iconify</a>Explorer
       </h1>

@@ -1,11 +1,11 @@
 <template>
   <div class="p-2 flex flex-col md:flex-row md:text-left relative">
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
-    <ColorPicker v-model:value="previewColor" class="inline-block">
-      <div :style="{color: previewColor}">
+    <div :style="{color: previewColor}">
+      <ColorPicker v-model:value="previewColor" class="inline-block">
         <Icon class="p-4 text-8xl" :icon="icon" />
-      </div>
-    </ColorPicker>
+      </ColorPicker>
+    </div>
     <div class="px-6 py-2 mb-4 md:px-2 md:py-4">
       <a class="text-gray-500 hover:text-primary text-sm" href="https://iconify.design/docs/iconify-in-pages/" target="_blank">
         How to use the icon?

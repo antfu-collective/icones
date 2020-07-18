@@ -13,26 +13,27 @@
   },
   "dependencies": {
     "@vueuse/core": "^4.0.0-beta.2",
-    "fuse.js": "^6.3.0",
-    "tailwindcss": "^1.4.6",
+    "fuse.js": "^6.4.0",
+    "hotkeys-js": "^3.8.1",
+    "tailwindcss": "^1.5.1",
     "vue": "next",
     "vue-router": "next"
   },
   "devDependencies": {
     "@antfu/eslint-config-vue": "^0.2.13",
     "@iconify/iconify": "^1.0.7",
-    "@iconify/json": "^1.1.186",
+    "@iconify/json": "^1.1.190",
     "@types/fs-extra": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
-    "@vue/compiler-sfc": "^3.0.0-beta.20",
+    "@vue/compiler-sfc": "^3.0.0-rc.1",
     "eslint": "^7.4.0",
     "fs-extra": "^9.0.1",
     "jszip": "^3.5.0",
     "svg-packer": "^0.0.3",
-    "tailwindcss-dark-mode": "^1.1.4",
+    "tailwindcss-dark-mode": "^1.1.5",
     "ts-node": "^8.10.2",
-    "typescript": "3.9.3",
-    "vite": "^1.0.0-beta.11"
+    "typescript": "3.9.7",
+    "vite": "^1.0.0-rc.1"
   },
   "prettier": {
     "semi": false,

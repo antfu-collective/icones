@@ -8,18 +8,17 @@
 
 <script lang='ts'>
 import { defineComponent, computed } from 'vue'
-import { useRoute } from 'vue-router'
 import { themeColor } from './store'
 
 export default defineComponent({
   setup() {
     const style = computed(() => ({
-      '--theme-color': themeColor.value
+      '--theme-color': themeColor.value,
     }))
 
     return {
-      style
+      style,
     }
-  }
+  },
 })
 </script>

@@ -2,7 +2,7 @@
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden ">
       <Drawer class="h-full overflow-auto flex-none hidden md:block" style="width:280px" />
-      <div v-if="collection" class="py-5 px-5 md:px-8 h-full overflow-y-auto flex-auto overflow-x-hidden relative">
+      <div v-if="collection" class="py-5 h-full overflow-y-auto flex-auto overflow-x-hidden relative">
         <!-- Loading -->
         <div
           class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50"
@@ -11,7 +11,7 @@
           <div class="absolute text-gray-800" style="top:50%;left:50%;transform:translate(-50%,-50%)">Loading...</div>
         </div>
 
-        <div class="flex px-2">
+        <div class="flex px-8">
           <!-- Left -->
           <div class="flex-auto px-2">
             <NavPlaceholder class="md:hidden" />
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Categories -->
-        <div class="py-2 px-1 pr-3 overflow-x-auto flex flex-no-wrap select-none">
+        <div class="py-2 px-7 overflow-x-auto flex flex-no-wrap select-none">
           <template v-if="collection.categories">
             <div
               v-for="c of Object.keys(collection.categories)"
@@ -65,7 +65,7 @@
         </div>
 
         <!-- Icons -->
-        <div class="pt-2 pb-4 text-center">
+        <div class="px-4 pt-2 pb-4 text-center">
           <Icons
             :icons="icons.slice(0, max)"
             :selected="bags"
@@ -86,6 +86,14 @@
 
         <Footer />
 
+        <!-- Bag Fab -->
+        <FAB
+          v-if="bags.length"
+          icon="carbon:shopping-bag"
+          :number="bags.length"
+          @click="showBag = true"
+        />
+
         <!-- Bag -->
         <Modal :value="showBag" direction="right" @close="showBag = false">
           <Bag
@@ -99,14 +107,6 @@
           <IconDetail :icon="current" @close="current = ''" />
         </Modal>
 
-        <!-- Bag Fab -->
-        <FAB
-          v-if="bags.length"
-          icon="carbon:shopping-bag"
-          :number="bags.length"
-          @click="showBag = true"
-        />
-
         <!-- Selecting Note -->
         <div
           class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
@@ -116,6 +116,8 @@
           Selecting Mode
           <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
         </div>
+
+        <SearchElectron />
       </div>
     </div>
   </WithNavbar>

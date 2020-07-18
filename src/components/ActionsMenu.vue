@@ -1,7 +1,7 @@
 <template>
-  <div class="px-1 text-xl text-gray-800 flex">
+  <div class="text-xl text-gray-800 flex">
     <div class="relative w-4">
-      <IconButton class="ml-3 text-xl" active icon="carbon:overflow-menu-vertical" title="Menu" />
+      <IconButton class="text-xl" active icon="carbon:overflow-menu-vertical" title="Menu" />
       <select v-model="menu" class="absolute text-base top-0 bottom-0 left-0 right-0 opacity-0">
         <optgroup label="Size">
           <option value="small">Small</option>

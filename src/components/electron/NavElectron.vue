@@ -9,16 +9,20 @@
       icon="carbon:chevron-left"
       @click="$router.replace('/')"
     />
-    <div class="inline-block text-sm text-gray-800 my-auto ml-1 font-light"></div>
-    <div class="flex-auto"></div>
+    <div class="inline-block text-sm text-gray-800 my-auto ml-1 font-light" />
+    <div class="flex-auto" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { getSearchResults } from '../store'
+import SearchElectron from './SearchElectron.vue'
 
-export default defineComponent(() => getSearchResults())
+export default defineComponent({
+  components: {
+    SearchElectron,
+  },
+})
 </script>
 
 <style>

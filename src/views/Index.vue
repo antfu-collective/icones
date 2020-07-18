@@ -1,5 +1,6 @@
 <template>
   <WithNavbar>
+    <NavPlaceholder />
     <div class="collections-list grid">
       <div
         v-for="collection in collections"
@@ -27,10 +28,10 @@
           />
         </router-link>
         <IconButton
-            v-if="isFavorited(collection.id)"
-            class="absolute top-0 right-0 p-2 text-lg"
-            icon="carbon:bookmark"
-          />
+          v-if="isFavorited(collection.id)"
+          class="absolute top-0 right-0 p-2 text-lg"
+          icon="carbon:bookmark"
+        />
       </div>
     </div>
     <Footer />
@@ -48,9 +49,9 @@ export default defineComponent({
     return {
       collections: sortedCollectionsInfo,
       isFavorited,
-      sample
+      sample,
     }
-  }
+  },
 })
 </script>
 
