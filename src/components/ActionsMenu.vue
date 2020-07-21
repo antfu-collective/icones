@@ -17,9 +17,9 @@
                 the full set, we should make some UI to aware users
                 in browser version.
         -->
-        <optgroup v-if="isElectron" label="Downloads">
-          <option value="download_iconfont">Iconfont</option>
-          <option value="download_svgs">SVGs Zip</option>
+        <optgroup label="Downloads">
+          <option value="download_iconfont" :disabled="inProgress">Iconfont</option>
+          <option value="download_svgs" :disabled="inProgress">SVGs Zip</option>
         </optgroup>
       </select>
     </div>
@@ -28,7 +28,7 @@
 
 <script lang='ts'>
 import { defineComponent, PropType, ref, watch, nextTick } from 'vue'
-import { iconSize, listType, selectingMode } from '../store'
+import { iconSize, listType, selectingMode, inProgress, progressMessage } from '../store'
 import { CollectionMeta, install } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
 import { isElectron } from '../env'
@@ -52,26 +52,34 @@ export default defineComponent({
       if (!props.collection)
         return
 
-      // TODO: prompt user about size and time
-      // TODO: loading status
+      progressMessage.value = 'Downloading...'
+      inProgress.value = true
+      await nextTick()
       await install(props.collection.id)
+      progressMessage.value = 'Packing up...'
+      await nextTick()
       await PackIconFont(
         props.collection.icons.map(i => `${props.collection!.id}:${i}`),
         { fontName: props.collection.name, fileName: props.collection.id },
       )
+      inProgress.value = false
     }
 
     const packSvgs = async() => {
       if (!props.collection)
         return
 
-      // TODO: prompt user about size and time
-      // TODO: loading status
+      progressMessage.value = 'Downloading...'
+      inProgress.value = true
+      await nextTick()
       await install(props.collection.id)
+      progressMessage.value = 'Packing up...'
+      await nextTick()
       await PackSvgZip(
-        props.collection.icons,
+        props.collection.icons.map(i => `${props.collection!.id}:${i}`),
         props.collection.id,
       )
+      inProgress.value = false
     }
 
     watch(
@@ -108,6 +116,7 @@ export default defineComponent({
     )
 
     return {
+      inProgress,
       menu,
       listType,
       iconSize,

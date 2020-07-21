@@ -15,6 +15,7 @@ import Footer from './components/Footer.vue'
 import FAB from './components/FAB.vue'
 import Drawer from './components/Drawer.vue'
 import Bag from './components/Bag.vue'
+import Progress from './components/Progress.vue'
 import ActionsMenu from './components/ActionsMenu.vue'
 import NavPlaceholder from './components/electron/NavPlaceholder.vue'
 import SearchElectron from './components/electron/SearchElectron.vue'
@@ -59,5 +60,6 @@ app.component('Bag', Bag)
 app.component('ActionsMenu', ActionsMenu)
 app.component('NavPlaceholder', NavPlaceholder)
 app.component('SearchElectron', SearchElectron)
+app.component('Progress', Progress)
 
 app.mount('#app')

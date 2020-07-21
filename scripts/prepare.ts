@@ -20,6 +20,7 @@ const builtInIcons: Record<string, string[]> = {
     'search',
     'shopping-bag',
     'up-to-top',
+    'circle-dash',
   ],
   la: [
     'external-link-square-alt-solid',

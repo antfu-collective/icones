@@ -3,6 +3,7 @@
     <div class="h-full flex-auto overflow-auto">
       <router-view />
     </div>
+    <Progress />
   </div>
 </template>
 
