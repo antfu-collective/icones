@@ -3,12 +3,14 @@
   "version": "0.0.0",
   "appname": "Icônes",
   "description": "Explorer for Iconify with Instant searching.",
+  "main": "dist/main/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antfu/icones.git"
   },
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
+  "copyright": "Copyright © 2020 Anthony Fu",
   "bugs": {
     "url": "https://github.com/antfu/icones/issues"
   },
@@ -17,8 +19,25 @@
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "copy": "cp -r ../dist ./dist/main/app",
-    "build": "npm run compile && npm run copy && electron-builder",
-    "build:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "build:vite": "cd .. && yarn build && cd electron",
+    "build": "cd .. && yarn build && cd electron && yarn compile && yarn copy && electron-builder build",
+    "package": "yarn copy && electron-builder build -c.mac.identity=null"
+  },
+  "build": {
+    "productName": "Icônes",
+    "appId": "me.antfu.icones",
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "antfu",
+      "repo": "icones",
+      "private": false
+    }
   },
   "dependencies": {
     "babel-loader": "^8.1.0",
