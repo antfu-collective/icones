@@ -33,6 +33,12 @@ function ObjectPick(source: Record<string, any>, keys: string[]) {
   return obj
 }
 
+function humanFileSize(size: number) {
+  const i = Math.floor(Math.log(size) / Math.log(1024))
+  const v = (size / Math.pow(1024, i))
+  return `${v.toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB'][i]}`
+}
+
 async function prepareJSON() {
   const dir = path.resolve(__dirname, '../node_modules/@iconify/json')
   const collectionsDir = path.resolve(__dirname, '../public/collections')
@@ -53,12 +59,11 @@ async function prepareJSON() {
     const icons = Object.keys(setData.icons)
     const categories = setData.categories
     const meta = { ...info, icons, categories }
+    const rawFilePath = path.join(collectionsDir, `${info.id}-raw.json`)
+    const metaFilePath = path.join(collectionsDir, `${info.id}-meta.json`)
 
-    await fs.writeJSON(
-      path.join(collectionsDir, `${info.id}-raw.json`),
-      setData,
-    )
-    await fs.writeJSON(path.join(collectionsDir, `${info.id}-meta.json`), meta)
+    await fs.writeJSON(rawFilePath, setData)
+    await fs.writeJSON(metaFilePath, meta)
     collectionsMeta.push(meta)
 
     info.sampleIcons = icons.slice(0, 7)
@@ -68,6 +73,7 @@ async function prepareJSON() {
       height: setData.height,
       icons: ObjectPick(setData.icons, [...info.sampleIcons, ...(builtInIcons[info.id] || [])]),
     }
+    info.size = humanFileSize(fs.statSync(rawFilePath).size)
   }
 
   await fs.writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)

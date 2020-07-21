@@ -7,7 +7,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
   const throttledSearch = useThrottle(search, 300)
-  const isAll = computed(() => collection.value?.id === 'all')
+  const isAll = computed(() => collection.value && collection.value.id === 'all')
 
   const iconSource = computed(() => {
     if (!collection.value)
