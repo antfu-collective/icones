@@ -21,3 +21,10 @@
 .non-dragging {
   -webkit-app-region: no-drag;
 }
+
+.iconify.svg-loading {
+  line-height: 1;
+  height: 1em;
+  top: 0;
+  vertical-align: top;
+}

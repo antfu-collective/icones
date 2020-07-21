@@ -7,7 +7,7 @@
       :class="[spacing, selected.includes(namespace+icon) ? 'active': '']"
       @click="$emit('select', namespace+icon)"
     >
-      <Icon class="non-dragging" :icon="namespace+icon" />
+      <Icon class="non-dragging leading-none" :icon="namespace+icon" />
       <span v-if="display==='list'" class="text-sm ml-1 px-1 m-auto" v-html="getSearchHighlightHTML(icon, search)" />
     </div>
   </div>
@@ -35,7 +35,7 @@ export default defineComponent({
     },
     spacing: {
       type: String,
-      default: 'm-2'
+      default: 'm-2',
     },
     search: {
       type: String,

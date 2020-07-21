@@ -14,7 +14,7 @@ export default defineComponent({
   setup(props) {
     const el = ref<HTMLElement | null>(null)
 
-    const update = async () => {
+    const update = async() => {
       if (el.value) {
         await nextTick()
         // @ts-ignore
