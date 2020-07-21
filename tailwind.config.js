@@ -45,6 +45,9 @@ module.exports = {
       screens: {
         dark: { raw: '(prefers-color-scheme: dark)' },
       },
+      flex: {
+        '1-0': '1 0 auto',
+      },
     },
   },
 }

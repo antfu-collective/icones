@@ -48,9 +48,3 @@ import { getSearchResults } from '../store'
 
 export default defineComponent(() => getSearchResults())
 </script>
-
-<style>
-.flex-1-0 {
-  flex: 1 0 auto;
-}
-</style>
