@@ -1,7 +1,7 @@
 <template>
   <div class="text-xl text-gray-800 flex">
     <!-- Download State -->
-    <IconButton v-if="instealled && !isElectron" none class="text-xl mr-3 opacity-25" icon="carbon:checkmark-outline" title="Downloaded" />
+    <IconButton v-if="installed && !isElectron" none class="text-xl mr-3 opacity-25" icon="carbon:checkmark-outline" title="Downloaded" />
 
     <!-- Menu -->
     <div class="relative w-4">
@@ -22,7 +22,7 @@
                 in browser version.
         -->
         <optgroup label="Downloads">
-          <option v-if="!isElectron && !isInstalled" value="cache" :checked="isInstalled">Cache in Browser</option>
+          <option v-if="!isElectron && !installed" value="cache">Cache in Browser</option>
           <option value="download_iconfont" :disabled="inProgress">Iconfont</option>
           <option value="download_svgs" :disabled="inProgress">SVGs Zip</option>
         </optgroup>
@@ -141,7 +141,7 @@ export default defineComponent({
       iconSize,
       selectingMode,
       isElectron,
-      instealled: computed(() => props.collection && isInstalled(props.collection.id)),
+      installed: computed(() => props.collection && isInstalled(props.collection.id)),
     }
   },
 })
