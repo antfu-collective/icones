@@ -2,6 +2,36 @@ import path from 'path'
 import fs from 'fs-extra'
 
 const out = path.resolve(__dirname, '../public')
+const builtInIcons: Record<string, string[]> = {
+  carbon: [
+    'add',
+    'arrow-left',
+    'bookmark',
+    'chevron-left',
+    'close',
+    'code',
+    'copy',
+    'delete',
+    'download',
+    'function',
+    'list-checked',
+    'logo-github',
+    'overflow-menu-vertical',
+    'search',
+    'shopping-bag',
+    'up-to-top',
+  ],
+  la: [
+    'external-link-square-alt-solid',
+  ],
+}
+
+function ObjectPick(source: Record<string, any>, keys: string[]) {
+  const obj: Record<string, any> = {}
+  for (const key of keys)
+    obj[key] = source[key]
+  return obj
+}
 
 async function prepareJSON() {
   const dir = path.resolve(__dirname, '../node_modules/@iconify/json')
@@ -26,12 +56,18 @@ async function prepareJSON() {
 
     await fs.writeJSON(
       path.join(collectionsDir, `${info.id}-raw.json`),
-      setData
+      setData,
     )
     await fs.writeJSON(path.join(collectionsDir, `${info.id}-meta.json`), meta)
     collectionsMeta.push(meta)
 
     info.sampleIcons = icons.slice(0, 7)
+    info.prepacked = {
+      prefix: setData.prefix,
+      width: setData.width,
+      height: setData.height,
+      icons: ObjectPick(setData.icons, [...info.sampleIcons, ...(builtInIcons[info.id] || [])]),
+    }
   }
 
   await fs.writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)
@@ -49,17 +85,17 @@ async function copyLibs() {
         if (fs.lstatSync(src).isDirectory()) return true
         const basename = path.basename(src)
         return basename.startsWith('iconify') && basename.endsWith('.min.js')
-      }
-    }
+      },
+    },
   )
   await fs.copy(
-    path.join(modules, 'svg-packer/dist/index.browser.js'), 
-    path.join(out, 'lib/svg-packer.js')
+    path.join(modules, 'svg-packer/dist/index.browser.js'),
+    path.join(out, 'lib/svg-packer.js'),
   )
 
   await fs.copy(
-    path.join(modules, 'jszip/dist/jszip.min.js'), 
-    path.join(out, 'lib/jszip.min.js')
+    path.join(modules, 'jszip/dist/jszip.min.js'),
+    path.join(out, 'lib/jszip.min.js'),
   )
 }
 

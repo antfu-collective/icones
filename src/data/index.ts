@@ -32,6 +32,18 @@ export const sortedCollectionsInfo = computed(() => {
   )
 })
 
+export const isInstalled = (id: string) => installed.includes(id)
+export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id === id)
+
+// install the preview icons on the homepage
+export function preInstall() {
+  for (const collection of infoJSON) {
+    if (collection.prepacked)
+      window.Iconify.addCollection(collection.prepacked as any)
+  }
+}
+
+// load full iconset
 export async function install(id: string) {
   if (id === 'all')
     return false
@@ -45,14 +57,6 @@ export async function install(id: string) {
   window.Iconify.addCollection(data)
   installed.push(id)
   return true
-}
-
-export function isInstalled(id: string) {
-  return installed.includes(id)
-}
-
-export function isMetaLoaded(id: string) {
-  return !!loadedMeta.value.find(i => i.id === id)
 }
 
 export async function getMeta(id: string): Promise<CollectionMeta | null> {
@@ -83,5 +87,6 @@ export async function getFullMeta() {
   return loadedMeta.value
 }
 
+preInstall()
 if (isElectron)
   install('carbon')

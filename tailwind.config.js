@@ -40,6 +40,7 @@ module.exports = {
         96: '24rem',
         128: '32rem',
         256: '64rem',
+        '1em': '1em',
       },
       screens: {
         dark: { raw: '(prefers-color-scheme: dark)' },
