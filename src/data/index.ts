@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import infoJSON from '../../public/collections-info.json'
 import { favoritedCollections } from '../store'
 import { isElectron } from '../env'
+import { saveCollection, loadCollection } from '../store/indexedDB'
 
 export interface CollectionInfo {
   id: string
@@ -20,7 +21,7 @@ export interface CollectionMeta extends CollectionInfo {
 }
 
 const loadedMeta = ref<CollectionMeta[]>([])
-const installed: string[] = []
+const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as CollectionInfo))
 
@@ -32,7 +33,7 @@ export const sortedCollectionsInfo = computed(() => {
   )
 })
 
-export const isInstalled = (id: string) => installed.includes(id)
+export const isInstalled = (id: string) => installed.value.includes(id)
 export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id === id)
 
 // install the preview icons on the homepage
@@ -43,19 +44,43 @@ export function preInstall() {
   }
 }
 
-// load full iconset
-export async function install(id: string) {
+export async function tryInstallFromLocal(id: string) {
   if (id === 'all')
     return false
 
-  if (installed.includes(id))
+  if (isElectron)
     return true
 
-  // TODO: for browser, cache them into IndexedDB
+  if (installed.value.includes(id))
+    return true
+
+  const result = await loadCollection(id)
+  if (!result || !result.data)
+    return false
+
+  const data = result.data
+  window.Iconify.addCollection(data)
+  installed.value.push(id)
+
+  return true
+}
+
+// load full iconset
+export async function downloadAndInstall(id: string) {
+  if (id === 'all')
+    return false
+
+  if (installed.value.includes(id))
+    return true
+
   const data = Object.freeze(await fetch(`/collections/${id}-raw.json`).then(r => r.json()))
 
   window.Iconify.addCollection(data)
-  installed.push(id)
+  installed.value.push(id)
+
+  if (!isElectron)
+    saveCollection(id, data) // async
+
   return true
 }
 
@@ -89,4 +114,4 @@ export async function getFullMeta() {
 
 preInstall()
 if (isElectron)
-  install('carbon')
+  downloadAndInstall('carbon')

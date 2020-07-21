@@ -1,12 +1,12 @@
 import { useStorage } from '@vueuse/core'
 import { ref } from 'vue'
 
-export const themeColor = useStorage('explorer-theme-color', '#329672')
-export const iconSize = useStorage('explorer-icon-size', '2xl')
-export const previewColor = useStorage('explorer-preview-color', '#888')
-export const listType = useStorage('explorer-list-type', 'grid')
-export const favoritedCollections = useStorage<string[]>('explorer-fav-collections', [])
-export const bags = useStorage<string[]>('explorer-bags', [])
+export const themeColor = useStorage('icones-theme-color', '#329672')
+export const iconSize = useStorage('icones-icon-size', '2xl')
+export const previewColor = useStorage('icones-preview-color', '#888')
+export const listType = useStorage('icones-list-type', 'grid')
+export const favoritedCollections = useStorage<string[]>('icones-fav-collections', [])
+export const bags = useStorage<string[]>('icones-bags', [])
 export const selectingMode = ref(false)
 
 export function isFavorited(id: string) {

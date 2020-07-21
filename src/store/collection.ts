@@ -4,8 +4,9 @@ import {
   isInstalled,
   CollectionMeta,
   getFullMeta,
-  install,
+  downloadAndInstall,
   getMeta,
+  tryInstallFromLocal,
 } from '../data'
 import { useSearch } from '../hooks'
 import { isElectron } from '../env'
@@ -41,8 +42,12 @@ export async function setCurrentCollection(id: string) {
   loaded.value = isMetaLoaded(id)
   installed.value = isInstalled(id)
 
-  if (isElectron)
-    installed.value = await install(id)
+  if (!installed.value) {
+    if (isElectron)
+      installed.value = await downloadAndInstall(id)
+    else
+      installed.value = await tryInstallFromLocal(id)
+  }
 
   if (id === 'all') {
     const meta = await getFullMeta()

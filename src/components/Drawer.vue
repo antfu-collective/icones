@@ -28,7 +28,7 @@
           {{ collection.name }}
         </div>
         <div class="text-xs block opacity-50 -mt-1">
-          {{ collection.total }} icons
+          {{ collection.id !== 'all' ? `${collection.total} icons` : `${collections.length} iconsets` }}
         </div>
       </div>
       <div
@@ -36,7 +36,7 @@
       >
         <IconButton
           v-if="collection.id != 'all'"
-          class="flex-none text-lg p-2 -mr-3"
+          class="flex-none text-lg p-1 -mr-1"
           :icon="isFavorited(collection.id) ? 'carbon:bookmark' : 'carbon:up-to-top'"
           @click="()=>toggleFavorite(collection.id)"
         />

@@ -21,6 +21,7 @@ const builtInIcons: Record<string, string[]> = {
     'shopping-bag',
     'up-to-top',
     'circle-dash',
+    'checkmark-outline',
   ],
   la: [
     'external-link-square-alt-solid',

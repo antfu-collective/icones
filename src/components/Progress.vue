@@ -1,16 +1,16 @@
 <template>
   <div
-    class="fixed bottom-0 left-0 border-gray-200 border bg-white rounded-tr shadow px-3 py-1 text-gray-700 text-sm transition-transform duration-300 flex"
-    :style="inProgress ? '' : { transform: 'translateY(120%)' }"
+    class="fixed bottom-0 left-0 border-gray-200 border bg-white rounded-tr shadow px-3 py-1 text-gray-700 text-sm flex"
+    :style="inProgress ? {} : { transform: 'translateY(120%)' }"
   >
-    <Icon icon="carbon:circle-dash" class="rotating m-auto mr-1 text-lg blinking" />
+    <Icon icon="carbon:circle-dash" class="rotating m-auto mr-1 text-lg" />
     <span class="m-auto px-1 blinking">{{ progressMessage }}</span>
   </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
-import { inProgress, progressMessage } from '../store/progress'
+import { inProgress, progressMessage } from '../store'
 
 export default defineComponent({
   setup() {

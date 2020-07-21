@@ -1,7 +1,7 @@
 <template>
   <WithNavbar>
-    <NavPlaceholder class="sm:border-b border-gray-200 text-center m-auto flex text-gray-500 font-light" style="height:40px">
-      <div class="m-auto">Collections</div>
+    <NavPlaceholder class="sm:border-b border-gray-200 text-center m-auto flex text-gray-500 font-light" style="height:37px">
+      <div class="m-auto">Icônes</div>
     </NavPlaceholder>
     <div class="collections-list grid">
       <div
