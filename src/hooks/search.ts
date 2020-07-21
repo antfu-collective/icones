@@ -7,6 +7,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
   const throttledSearch = useThrottle(search, 300)
+  const isAll = computed(() => collection.value?.id === 'all')
 
   const iconSource = computed(() => {
     if (!collection.value)
@@ -30,6 +31,8 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
     const searchString = throttledSearch.value.trim().toLowerCase()
     if (!searchString)
       return iconSource.value
+    else if (isAll.value) // disable fuse when search in all collections
+      return iconSource.value.filter(i => i.includes(searchString))
     else
       return fuse.value.search(searchString).map(i => i.item.icon)
   })
