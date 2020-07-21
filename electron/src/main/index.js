@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import serve from 'electron-serve'
 import debug from 'electron-debug'
 
@@ -29,6 +29,16 @@ const createMainWindow = async() => {
   })
 
   win.removeMenu()
+
+  const handleRedirect = (e, url) => {
+    if (url !== win.webContents.getURL()) {
+      e.preventDefault()
+      shell.openExternal(url)
+    }
+  }
+
+  win.webContents.on('will-navigate', handleRedirect)
+  win.webContents.on('new-window', handleRedirect)
 
   return win
 }

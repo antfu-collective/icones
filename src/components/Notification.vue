@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 left-0 right-0 z-50 text-center pointer-events-auto"
+    class="fixed top-0 left-0 right-0 z-50 text-center"
     :class="value ? '': 'pointer-events-none overflow-hidden'"
   >
     <div
