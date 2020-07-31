@@ -37,7 +37,6 @@
     "@iconify/json": "^1.1.197",
     "@types/fs-extra": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
-    "@vue/compiler-sfc": "^3.0.0-rc.5",
     "eslint": "^7.5.0",
     "fs-extra": "^9.0.1",
     "jszip": "^3.5.0",
@@ -45,7 +44,7 @@
     "tailwindcss-dark-mode": "^1.1.5",
     "ts-node": "^8.10.2",
     "typescript": "3.9.7",
-    "vite": "^1.0.0-rc.4"
+    "vite": "1.0.0-rc.3"
   },
   "prettier": {
     "semi": false,
