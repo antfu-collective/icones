@@ -116,7 +116,7 @@
 
         <!-- Details -->
         <Modal :value="!!current" @close="current = ''">
-          <IconDetail :icon="current" @close="current = ''" />
+          <IconDetail :icon="current" :show-collection="collection.id === 'all'" @close="current = ''" />
         </Modal>
 
         <!-- Selecting Note -->
@@ -136,18 +136,11 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref, computed, PropType } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
-import { CollectionMeta } from '../data'
 import { isElectron } from '../env'
 
 export default defineComponent({
-  props: {
-    collection: {
-      type: Object as PropType<CollectionMeta>,
-      required: true,
-    },
-  },
   setup(props) {
     const { search, icons, category, collection } = getSearchResults()
     const showBag = ref(false)

@@ -19,15 +19,26 @@
       >
         <IconButton icon="carbon:logo-github" />
       </div>
+      <div
+        class="opacity-0 text-xl mx-3 mr-4 my-auto flex-none"
+      >
+        <IconButton icon="carbon:logo-github" />
+      </div>
       <h1 class="text-xl py-1 m-auto flex-auto text-center font-light" style="letter-spacing: 2px">
         Icônes
       </h1>
+      <router-link
+        class="non-dragging text-xl mx-3 mr-4 my-auto flex-none"
+        to="/collection/all"
+      >
+        <IconButton icon="carbon:search" style="padding-bottom: 3px" />
+      </router-link>
       <a
         class="non-dragging text-xl mx-3 mr-4 my-auto flex-none"
         href="https://github.com/antfu/icones"
         target="_blank"
       >
-        <IconButton icon="carbon:logo-github" />
+        <IconButton icon="carbon:logo-github" style="padding-bottom: 3px" />
       </a>
     </template>
 

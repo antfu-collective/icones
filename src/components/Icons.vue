@@ -19,7 +19,6 @@ import { themeColor } from '../store'
 import { getSearchHighlightHTML } from '../hooks'
 
 export default defineComponent({
-  emits: ['select'],
   props: {
     icons: {
       type: Array,
@@ -50,6 +49,7 @@ export default defineComponent({
       default: '',
     },
   },
+  emits: ['select'],
   setup(props) {
     return {
       themeColor,

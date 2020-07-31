@@ -15,6 +15,13 @@
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
       </p>
 
+      <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
+        Collection:
+        <router-link class="ml-1 text-gray-600 hover:text-gray-700" :to="`/collection/${collection.id}`" @click="$emit('close')">
+          {{ collection.name }}
+        </router-link>
+      </p>
+
       <div>
         <div
           class="inline-block border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100"
@@ -83,12 +90,17 @@
 import { defineComponent, ref, computed } from 'vue'
 import { getIconSnippet, getIconDownloadLink } from '../utils/icons'
 import { previewColor, toggleBag, inBag, selectingMode } from '../store'
+import { collections } from '../data'
 
 export default defineComponent({
   props: {
     icon: {
       type: String,
       default: '',
+    },
+    showCollection: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props, { emit }) {
@@ -114,6 +126,11 @@ export default defineComponent({
 
     const downlodUrl = computed(() => getIconDownloadLink(props.icon))
 
+    const collection = computed(() => {
+      const id = props.icon.split(':')[0]
+      return collections.find(i => i.id === id)
+    })
+
     return {
       copy,
       copied,
@@ -123,6 +140,7 @@ export default defineComponent({
       inBag,
       selectingMode,
       toggleSelectingMode,
+      collection,
     }
   },
 })
