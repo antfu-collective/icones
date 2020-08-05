@@ -2,7 +2,7 @@
 Icônes
 </h1>
 
-<p align="center">Icon Explorer with <b>Instant</b> searching, powered by <a href="https://iconify.design/" target="_blank">Iconify</a> </p>
+<p align="center">Icon Explorer with <b>Instant</b> searching, powered by <a href="https://github.com/iconify/iconify" target="_blank">Iconify</a> </p>
 
 <p align="center">
 <a href="https://icones.netlify.app/">Go to App</a>
@@ -26,9 +26,9 @@ Icônes
 - Copy the usage scripts
 - SVGs direct download
 - Mobile friendly
-- Powered by [Vite](https://github.com/vitejs/vite)
 - Collection bookmarks
 - Categories filters
+- Built with [Vite](https://github.com/vitejs/vite) and Vue 3
 
 ### TODOs
 
