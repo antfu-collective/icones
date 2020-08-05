@@ -16,7 +16,8 @@
   },
   "homepage": "https://github.com/antfu/icones#readme",
   "scripts": {
-    "postinstall": "ts-node -P tsconfig.tsnode.json scripts/prepare.ts",
+    "postinstall": "node -r esm -r esbuild-register scripts/prepare.ts",
+    "postbuild": "node -r esm -r esbuild-register scripts/postbuild.ts",
     "dev": "vite --port 3333",
     "dev:electron": "npm -C ./electron run dev",
     "build": "vite build",
@@ -27,24 +28,25 @@
     "dexie": "^3.0.2",
     "fuse.js": "^6.4.1",
     "hotkeys-js": "^3.8.1",
-    "tailwindcss": "^1.6.0",
-    "vue": "next",
-    "vue-router": "next"
+    "tailwindcss": "^1.6.2",
+    "vue": "3.0.0-rc.5",
+    "vue-router": "4.0.0-beta.5"
   },
   "devDependencies": {
     "@antfu/eslint-config-vue": "^0.2.14",
     "@iconify/iconify": "^1.0.7",
-    "@iconify/json": "^1.1.197",
+    "@iconify/json": "^1.1.200",
     "@types/fs-extra": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^3.7.1",
-    "eslint": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "esbuild-register": "^1.0.2",
+    "eslint": "^7.6.0",
+    "esm": "^3.2.25",
     "fs-extra": "^9.0.1",
     "jszip": "^3.5.0",
     "svg-packer": "^0.0.3",
     "tailwindcss-dark-mode": "^1.1.5",
-    "ts-node": "^8.10.2",
-    "typescript": "3.9.7",
-    "vite": "1.0.0-rc.3"
+    "typescript": "^3.9.7",
+    "vite": "^1.0.0-rc.4"
   },
   "prettier": {
     "semi": false,
