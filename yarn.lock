@@ -3750,7 +3750,7 @@ esbuild-register@^1.0.2:
     source-map-support "^0.5.19"
     strip-json-comments "^3.1.1"
 
-esbuild@^0.6.10:
+esbuild@^0.6.10, esbuild@^0.6.16:
   version "0.6.16"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.6.16.tgz#a5363761dd17283e090dae398f5ff4908cad789d"
   integrity sha512-Jm4aJYAk4uBP2RssDe/rvYCrpGkfOJ5tPBZUF6da62pUtyzk8/RVwXZB4q8dxjYLKZNmY4lYJRpWY+wT3kme1w==
@@ -3971,6 +3971,15 @@ esm@^3.2.25:
   version "3.2.25"
   resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
   integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
+
+esno@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/esno/-/esno-0.1.6.tgz#5b1900937e74ef93d99fc824742899498cb8eeee"
+  integrity sha512-xJ/jz/YrQ0xWfrIXCR9rYkOfBZr7RgkGWCWooN3kUd13nPkshlWXlOmTDqu5uqgQeLuAWzWVaAGsUBjIoF6dbw==
+  dependencies:
+    esbuild "^0.6.16"
+    esbuild-register "^1.0.2"
+    esm "^3.2.25"
 
 espree@^6.2.1:
   version "6.2.1"

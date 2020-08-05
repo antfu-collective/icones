@@ -52,11 +52,8 @@
       <div class="flex flex-wrap">
         <div class="mr-4">
           <div class="my-1 text-gray-500 mt-3">
-            Copy
+            Snippets
           </div>
-          <button class="btn mr-1 mb-1" @click="copy('url')">
-            URL
-          </button>
           <button class="btn mr-1 mb-1" @click="copy('html')">
             HTML
           </button>
@@ -65,6 +62,25 @@
           </button>
           <button class="btn mr-1 mb-1" @click="copy('svg')">
             SVG
+          </button>
+        </div>
+        <div class="mr-4">
+          <div class="my-1 text-gray-500 mt-3">
+            Components
+          </div>
+          <button class="btn mr-1 mb-1" @click="copy('react')">
+            React
+          </button>
+          <button class="btn mr-1 mb-1" @click="copy('vue')">
+            Vue
+          </button>
+        </div>
+        <div class="mr-4">
+          <div class="my-1 text-gray-500 mt-3">
+            Links
+          </div>
+          <button class="btn mr-1 mb-1" @click="copy('url')">
+            URL
           </button>
           <button class="btn mr-1 mb-1" @click="copy('data_url')">
             Data URL

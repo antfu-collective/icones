@@ -16,8 +16,9 @@
   },
   "homepage": "https://github.com/antfu/icones#readme",
   "scripts": {
-    "postinstall": "node -r esm -r esbuild-register scripts/prepare.ts",
-    "postbuild": "node -r esm -r esbuild-register scripts/postbuild.ts",
+    "postinstall": "esno scripts/prepare.ts",
+    "prebuild": "esno scripts/prebuild.ts",
+    "postbuild": "esno scripts/postbuild.ts",
     "dev": "vite --port 3333",
     "dev:electron": "npm -C ./electron run dev",
     "build": "vite build",
@@ -26,6 +27,7 @@
   "dependencies": {
     "@vueuse/core": "^4.0.0-beta.4",
     "dexie": "^3.0.2",
+    "esno": "^0.1.6",
     "fuse.js": "^6.4.1",
     "hotkeys-js": "^3.8.1",
     "tailwindcss": "^1.6.2",
@@ -38,7 +40,6 @@
     "@iconify/json": "^1.1.200",
     "@types/fs-extra": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
-    "esbuild-register": "^1.0.2",
     "eslint": "^7.6.0",
     "esm": "^3.2.25",
     "fs-extra": "^9.0.1",
