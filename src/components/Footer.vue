@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center text-sm mt-8 mb-2">
+  <footer class="text-center text-sm pt-8 pb-6">
     <p class="text-gray-500">
       built by
       <a

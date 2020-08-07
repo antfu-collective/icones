@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="dragging p-2 relative bg-white z-10 flex border-b border-gray-200 flex-1-0"
+    class="dragging p-2 relative bg-white z-10 flex border-b border-gray-200 flex-none"
     :class="$route.path !== '/' ? 'md:hidden' : ''"
   >
     <!-- In Collections -->
