@@ -37,7 +37,7 @@
   "devDependencies": {
     "@antfu/eslint-config-vue": "^0.2.14",
     "@iconify/iconify": "^1.0.7",
-    "@iconify/json": "^1.1.200",
+    "@iconify/json": "^1.1.202",
     "@types/fs-extra": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "eslint": "^7.6.0",
@@ -45,7 +45,7 @@
     "fs-extra": "^9.0.1",
     "jszip": "^3.5.0",
     "svg-packer": "^0.0.3",
-    "tailwindcss-dark-mode": "^1.1.5",
+    "tailwindcss-dark-mode": "^1.1.6",
     "typescript": "^3.9.7",
     "vite": "^1.0.0-rc.4"
   },
