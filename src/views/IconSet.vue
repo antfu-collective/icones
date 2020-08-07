@@ -16,13 +16,13 @@
           <div class="flex-auto px-2">
             <NavPlaceholder class="md:hidden" />
 
-            <div class="text-gray-900 text-xl flex select-none">
+            <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
               <div class="whitespace-no-wrap overflow-hidden">
                 {{ collection.name }}
               </div>
               <a
                 v-if="collection.url"
-                class="text-gray-500 hover:text-gray-900 mt-1 text-base"
+                class="hover:text-gray-900 ml-1 mt-1 text-base opacity-25"
                 :href="collection.url"
                 target="_blank"
               >
@@ -30,12 +30,12 @@
               </a>
               <div class="flex-auto" />
             </div>
-            <div class="text-gray-500 text-xs block">
+            <div class="text-xs block opacity-50">
               {{ collection.author }}
             </div>
             <div>
               <a
-                class="text-gray-500 text-xs hover:text-gray-900"
+                class="text-xs opacity-50 hover:opacity-100"
                 :href="collection.licenseURL"
                 target="_blank"
               >{{ collection.license }}</a>
@@ -55,8 +55,11 @@
             <div
               v-for="c of Object.keys(collection.categories)"
               :key="c"
-              class="whitespace-no-wrap text-sm inline-block px-2 border border-gray-200 text-gray-500 rounded-full m-1 hover:bg-gray-100 cursor-pointer"
-              :class="c === category ? 'text-primary border-primary' : ''"
+              class="
+                whitespace-no-wrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-100 cursor-pointer
+                dark:border-dark-200
+              "
+              :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
               @click="toggleCategory(c)"
             >
               {{ c }}
@@ -65,13 +68,13 @@
         </div>
 
         <!-- Searching -->
-        <div class="mx-8 my-2 text-gray-500 hidden md:flex shadow rounded outline-none py-1 px-4">
+        <div class="mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4">
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <input
             ref="input"
             v-model="search"
-            class="text-base outline-none py-1 px-4 flex-auto m-0"
-            :placeholder="`Search...`"
+            class="text-base outline-none py-1 px-4 flex-auto m-0 bg-transparent"
+            placeholder="Search..."
           >
           <Icon v-if="search" icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="search = ''" />
         </div>
@@ -85,7 +88,7 @@
             :display="listType"
             :search="search"
             :namespace="namespace"
-            style="color: #666"
+            class="text-dark-600 dark:text-dark-700"
             @select="onSelect"
           />
           <button v-if="icons.length > max" class="btn m-2" @click="loadMore">

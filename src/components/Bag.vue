@@ -1,6 +1,11 @@
 <template>
   <div class="h-full flex flex-col w-screen md:w-96 xl:w-128">
-    <div class="flex-none border-b border-gray-200 py-3 px-6 flex">
+    <div
+      class="
+        py-3 px-6 flex flex-none border-b border-gray-200
+        dark:border-dark-200
+      "
+    >
       <div>
         <NavPlaceholder class="md:hidden" />
         <div class="text-gray-700 text-lg">
@@ -19,7 +24,12 @@
       <div class="flex-auto overflow-y-auto py-3 px-1">
         <Icons :icons="bags" style="color: #666" @select="e => $emit('select', e)" />
       </div>
-      <div class="flex-none border-t border-gray-200 py-3 px-6 text-2xl text-gray-700">
+      <div
+        class="
+          flex-none border-t border-gray-200 py-3 px-6 text-2xl text-gray-700
+          dark:border-dark-200
+        "
+      >
         <IconButton class="p-1 cursor-pointer" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
         <IconButton class="p-1 cursor-pointer" icon="carbon:download" text="Download SVGs Zip" :active="true" @click="packSvgs" />
       </div>

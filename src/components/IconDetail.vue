@@ -24,7 +24,10 @@
 
       <div>
         <div
-          class="inline-block border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100"
+          class="
+            inline-block border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100
+            dark:border-dark-200
+          "
           :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
           @click="toggleBag(icon)"
         >

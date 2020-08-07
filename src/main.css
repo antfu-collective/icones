@@ -6,6 +6,10 @@
   @apply border border-gray-200 rounded shadow-sm outline-none bg-transparent px-4 py-1 text-gray-600 text-sm;
 }
 
+.mode-dark .btn {
+  @apply border-dark-200 text-gray-200;
+}
+
 .btn:hover {
   @apply shadow outline-none;
 }

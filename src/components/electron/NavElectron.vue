@@ -1,6 +1,9 @@
 <template>
   <div
-    class="electron-nav dragging flex-none flex justify-start fixed top-0 left-0 z-50 border-gray-200 bg-white border-r border-b rounded-br opacity-0 hover:opacity-100 transition-all duration-300"
+    class="
+      electron-nav dragging flex-none flex justify-start fixed top-0 left-0 z-50 border-gray-200 bg-white border-r border-b rounded-br opacity-0 hover:opacity-100 transition-all duration-300
+      dark:bg-dark-100 dark:border-dark-200
+    "
   >
     <div class="mac-controls flex-none" />
     <IconButton

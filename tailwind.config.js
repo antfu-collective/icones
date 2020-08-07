@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 module.exports = {
   purge: {
     content: [
@@ -16,6 +18,7 @@ module.exports = {
         'text-6xl',
         'text-7xl',
         'text-8xl',
+        'mode-dark',
       ],
     },
   },
@@ -32,6 +35,15 @@ module.exports = {
       },
       colors: {
         primary: 'var(--theme-color)',
+        dark: {
+          100: '#222',
+          200: '#333',
+          300: '#444',
+          400: '#555',
+          500: '#666',
+          600: '#777',
+          700: '#888',
+        },
       },
       spacing: {
         7: '1.75rem',
@@ -44,4 +56,12 @@ module.exports = {
       },
     },
   },
+  variants: {
+    backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd'],
+    borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-focus-within'],
+    textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder'],
+  },
+  plugins: [
+    require('tailwindcss-dark-mode')(),
+  ],
 }

@@ -7,10 +7,16 @@
       <div
         v-for="collection in collections"
         :key="collection.id"
-        class="px-2 py-4 border-r border-b border-gray-200 relative"
+        class="
+          px-2 py-4 border-r border-b border-gray-200 relative
+          dark:border-dark-200
+        "
       >
         <router-link
-          class="flex flex-col transition-all duration-300 text-gray-900 text-center justify-center hover:text-primary"
+          class="
+            flex flex-col transition-all duration-300 text-gray-900 text-center justify-center hover:text-primary
+            dark:text-gray-300
+          "
           :to="`/collection/${collection.id}`"
         >
           <div class="flex-auto text-lg">{{ collection.name }}</div>
@@ -31,7 +37,7 @@
         </router-link>
         <IconButton
           v-if="isFavorited(collection.id)"
-          class="absolute top-0 right-0 p-2 text-lg"
+          class="absolute top-0 right-0 p-2 text-lg dark:text-gray-100"
           icon="carbon:bookmark"
         />
       </div>

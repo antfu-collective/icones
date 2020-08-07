@@ -15,7 +15,6 @@ const builtInIcons: Record<string, string[]> = {
     'download',
     'function',
     'list-checked',
-    'logo-github',
     'overflow-menu-vertical',
     'search',
     'shopping-bag',
@@ -23,9 +22,14 @@ const builtInIcons: Record<string, string[]> = {
     'check',
     'circle-dash',
     'checkmark-outline',
+    'sun',
+    'moon',
   ],
   la: [
     'external-link-square-alt-solid',
+  ],
+  codicon: [
+    'github',
   ],
 }
 

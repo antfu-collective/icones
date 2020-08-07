@@ -1,9 +1,9 @@
 <template>
-  <div class="border-r border-gray-200">
+  <div class="border-r border-gray-200 dark:border-dark-200">
     <NavPlaceholder class="mb-4" />
     <div
       v-if="!isElectron"
-      class="border-b border-gray-200"
+      class="border-b border-gray-200 dark:border-dark-200"
     >
       <IconButton
         v-show="$route.path !== '/'"
@@ -17,12 +17,12 @@
     <router-link
       v-for="collection in collections"
       :key="collection.id"
-      class="px-4 py-2 border-b border-gray-200 flex"
+      class="px-4 py-2 flex border-b border-gray-200 dark:border-dark-200"
       :to="`/collection/${collection.id}`"
     >
       <div
         class="flex-auto"
-        :style="{color: (collection.id === current ? 'var(--theme-color)' : '#555')}"
+        :class="collection.id === current ? 'text-primary' : ''"
       >
         <div class="text-base">
           {{ collection.name }}
