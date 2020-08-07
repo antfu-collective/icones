@@ -40,21 +40,10 @@
   </WithNavbar>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
-import { sortedCollectionsInfo } from '../data'
-import { isFavorited } from '../store'
-import { sample } from '../utils/sample'
-
-export default defineComponent({
-  data() {
-    return {
-      collections: sortedCollectionsInfo,
-      isFavorited,
-      sample,
-    }
-  },
-})
+<script setup lang='ts'>
+export { sortedCollectionsInfo as collections } from '../data'
+export { isFavorited } from '../store'
+export { sample } from '../utils/sample'
 </script>
 
 <style>

@@ -1,4 +1,4 @@
-// @ts-ignore
+import type { IconifyJSON } from '@iconify/iconify'
 import { computed, ref } from 'vue'
 import infoJSON from '../../public/collections-info.json'
 import { favoritedCollections } from '../store'
@@ -13,6 +13,9 @@ export interface CollectionInfo {
   licenseURL?: string
   url?: string
   sampleIcons?: string[]
+  category?: string
+  palette?: string
+  prepacked?: IconifyJSON
 }
 
 export interface CollectionMeta extends CollectionInfo {
@@ -23,14 +26,22 @@ export interface CollectionMeta extends CollectionInfo {
 const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
-export const collections = infoJSON.map(c => Object.freeze(c as CollectionInfo))
+export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
+export const categories = Array.from(new Set(collections.map(i => i.category).filter(Boolean)))
+export const categoryFilter = ref<string | null>(null)
 
 export const sortedCollectionsInfo = computed(() => {
-  return [...collections].sort(
-    (a, b) =>
-      favoritedCollections.value.indexOf(b.id)
+  return collections
+    .filter((c) => {
+      if (!categoryFilter.value)
+        return true
+      return c.category === categoryFilter.value
+    })
+    .sort(
+      (a, b) =>
+        favoritedCollections.value.indexOf(b.id)
       - favoritedCollections.value.indexOf(a.id),
-  )
+    )
 })
 
 export const isInstalled = (id: string) => installed.value.includes(id)
@@ -38,7 +49,7 @@ export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id ==
 
 // install the preview icons on the homepage
 export function preInstall() {
-  for (const collection of infoJSON) {
+  for (const collection of collections) {
     if (collection.prepacked)
       window.Iconify.addCollection(collection.prepacked as any)
   }

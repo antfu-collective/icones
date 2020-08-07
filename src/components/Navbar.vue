@@ -14,15 +14,13 @@
 
     <!-- Homepage Only -->
     <template v-else>
-      <div
-        class="opacity-0 text-xl mx-3 mr-4 my-auto flex-none"
-      >
-        <IconButton icon="carbon:logo-github" />
-      </div>
-      <div
-        class="opacity-0 text-xl mx-3 mr-4 my-auto flex-none"
-      >
-        <IconButton icon="carbon:logo-github" />
+      <div class="mx-3 mr-4 my-auto flex-none">
+        <select v-model="categoryFilter" class="text-gray-600 font-normal w-auto outline-none focus:outline-none">
+          <option :value="null">All</option>
+          <option v-for="category of categories" :key="category" :value="category">
+            {{ category.split('/')[0].trim() }}
+          </option>
+        </select>
       </div>
       <h1 class="text-xl py-1 m-auto flex-auto text-center font-light" style="letter-spacing: 2px">
         Icônes
@@ -56,6 +54,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { getSearchResults } from '../store'
+import { categories, categoryFilter } from '../data'
 
-export default defineComponent(() => getSearchResults())
+export default defineComponent(() => ({
+  ...getSearchResults(),
+  categories,
+  categoryFilter,
+}))
 </script>
