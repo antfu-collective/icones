@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/antfu/icones#readme",
   "scripts": {
+    "preinstall": "npx only-allow yarn",
     "postinstall": "esno scripts/prepare.ts",
     "prebuild": "esno scripts/prebuild.ts",
     "postbuild": "esno scripts/postbuild.ts",
