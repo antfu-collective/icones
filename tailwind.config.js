@@ -43,6 +43,7 @@ module.exports = {
           500: '#666',
           600: '#777',
           700: '#888',
+          800: '#999',
         },
       },
       spacing: {
@@ -57,9 +58,9 @@ module.exports = {
     },
   },
   variants: {
-    backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'dark-even', 'dark-odd'],
-    borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-focus-within'],
-    textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder'],
+    backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'hover'],
+    borderColor: ['dark', 'dark-disabled', 'dark-focus'],
+    textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder', 'hover', 'active'],
   },
   plugins: [
     require('tailwindcss-dark-mode')(),

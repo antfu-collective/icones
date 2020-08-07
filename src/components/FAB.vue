@@ -1,7 +1,12 @@
 
 <template>
-  <div class="p-4 m-6 fixed bottom-0 right-0 shadow-lg bg-white rounded-full text-2xl cursor-pointer hover:bg-gray-100">
-    <Icon class="text-gray-700" :icon="icon" />
+  <div
+    class="
+      p-4 m-6 fixed bottom-0 right-0 shadow-lg bg-white rounded-full text-2xl cursor-pointer border border-transparent hover:bg-gray-100
+      dark:bg-dark-100 dark:border dark:border-dark-300 dark-hover:bg-dark-200
+    "
+  >
+    <Icon class="text-gray-700 dark:text-gray-400" :icon="icon" />
     <div
       v-if="number"
       class="absolute top-0 right-0 -mt-1 -mr-1 bg-primary text-white text-xs leading-none rounded-full shadow text-center"

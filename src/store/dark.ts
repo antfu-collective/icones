@@ -1,4 +1,4 @@
-import { watch, ref } from 'vue'
+import { watch } from 'vue'
 import { useStorage, usePreferredDark } from '@vueuse/core'
 
 export const isDark = useStorage('icones-dark', usePreferredDark().value)

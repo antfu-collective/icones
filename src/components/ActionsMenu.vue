@@ -1,11 +1,19 @@
 <template>
-  <div class="text-xl text-gray-800 flex">
+  <div class="text-xl flex">
+    <DarkSwitcher class="mx-2 opacity-25 align-middle" />
+
     <!-- Download State -->
-    <IconButton v-if="installed && !isElectron" none class="text-xl mr-3 opacity-25" icon="carbon:checkmark-outline" title="Downloaded" />
+    <IconButton
+      v-if="installed && !isElectron"
+      class="mx-2 opacity-25 align-middle"
+      icon="carbon:checkmark-outline"
+      title="Downloaded"
+      none
+    />
 
     <!-- Menu -->
-    <div class="relative w-4">
-      <IconButton class="text-xl" active icon="carbon:overflow-menu-vertical" title="Menu" />
+    <div class="relative w-4 mx-2">
+      <IconButton active icon="carbon:overflow-menu-vertical" title="Menu" />
       <select v-model="menu" class="absolute text-base top-0 bottom-0 left-0 right-0 opacity-0">
         <optgroup label="Size">
           <option value="small">Small</option>

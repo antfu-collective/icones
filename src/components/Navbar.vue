@@ -44,11 +44,7 @@
       <div
         class="non-dragging text-xl mx-3 my-auto flex-none"
       >
-        <IconButton
-          :icon="isDark ? 'carbon:moon' : 'carbon:sun'"
-          style="padding-bottom: 3px"
-          @click="isDark = !isDark"
-        />
+        <DarkSwitcher />
       </div>
     </template>
 

@@ -1,5 +1,8 @@
 <template>
-  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size}`">
+  <div
+    class="non-dragging flex flex-wrap select-none justify-center "
+    :class="`text-${size} ${colorClass}`"
+  >
     <div
       v-for="icon of icons"
       :key="icon"
@@ -47,6 +50,10 @@ export default defineComponent({
     namespace: {
       type: String,
       default: '',
+    },
+    colorClass: {
+      type: String,
+      default: 'text-dark-600 dark:text-dark-800',
     },
   },
   emits: ['select'],

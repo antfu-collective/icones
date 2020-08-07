@@ -17,7 +17,11 @@
 
       <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
         Collection:
-        <router-link class="ml-1 text-gray-600 hover:text-gray-700" :to="`/collection/${collection.id}`" @click="$emit('close')">
+        <router-link
+          class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark-hover:text-gray-200"
+          :to="`/collection/${collection.id}`"
+          @click="$emit('close')"
+        >
           {{ collection.name }}
         </router-link>
       </p>
@@ -26,7 +30,7 @@
         <div
           class="
             inline-block border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100
-            dark:border-dark-200
+            dark:border-dark-200 dark-hover:bg-dark-200
           "
           :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
           @click="toggleBag(icon)"
@@ -43,7 +47,7 @@
 
         <div
           v-if="inBag(icon)"
-          class="inline-block my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100"
+          class="inline-block my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-100 dark-hover:bg-dark-200"
           :class="selectingMode ? 'text-primary' : 'text-gray-500'"
           @click="toggleSelectingMode"
         >

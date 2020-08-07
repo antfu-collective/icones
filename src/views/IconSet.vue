@@ -68,7 +68,12 @@
         </div>
 
         <!-- Searching -->
-        <div class="mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4">
+        <div
+          class="
+            mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4
+            border border-transparent dark:border-dark-200
+          "
+        >
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <input
             ref="input"
@@ -88,7 +93,6 @@
             :display="listType"
             :search="search"
             :namespace="namespace"
-            class="text-dark-600 dark:text-dark-700"
             @select="onSelect"
           />
           <button v-if="icons.length > max" class="btn m-2" @click="loadMore">

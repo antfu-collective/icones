@@ -11,3 +11,9 @@
     >
   </div>
 </template>
+
+<script script="props" lang="ts">
+declare const props: {
+  value: string
+}
+</script>

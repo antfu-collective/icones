@@ -2,37 +2,24 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import { routes } from './routes'
-import Icon from './components/Icon.vue'
-import Notification from './components/Notification.vue'
-import IconButton from './components/IconButton.vue'
-import Icons from './components/Icons.vue'
-import Modal from './components/Modal.vue'
-import IconDetail from './components/IconDetail.vue'
-import ColorPicker from './components/ColorPicker.vue'
-import Navbar from './components/Navbar.vue'
-import WithNavbar from './components/WithNavbar.vue'
-import Footer from './components/Footer.vue'
-import FAB from './components/FAB.vue'
-import Drawer from './components/Drawer.vue'
-import Bag from './components/Bag.vue'
-import Progress from './components/Progress.vue'
-import ActionsMenu from './components/ActionsMenu.vue'
-import NavPlaceholder from './components/electron/NavPlaceholder.vue'
-import SearchElectron from './components/electron/SearchElectron.vue'
-import './main.css'
+import { RegisterComponents } from './components'
 import './utils/electron'
+import './main.css'
 
 const app = createApp(App)
 const router = createRouter({
   history: createWebHistory(),
+  // @ts-ignore
   routes: import.meta.hot ? [] : routes,
 })
 
+// @ts-ignore
 if (import.meta.hot) {
-  let removeRoutes = []
+  let removeRoutes: any[] = []
 
   for (const route of routes) removeRoutes.push(router.addRoute(route))
 
+  // @ts-ignore
   import.meta.hot.acceptDeps('./routes.js', ({ routes }) => {
     for (const removeRoute of removeRoutes) removeRoute()
     removeRoutes = []
@@ -43,23 +30,6 @@ if (import.meta.hot) {
 }
 
 app.use(router)
-
-app.component('IconButton', IconButton)
-app.component('Icons', Icons)
-app.component('Icon', Icon)
-app.component('Modal', Modal)
-app.component('IconDetail', IconDetail)
-app.component('Notification', Notification)
-app.component('ColorPicker', ColorPicker)
-app.component('Navbar', Navbar)
-app.component('WithNavbar', WithNavbar)
-app.component('Footer', Footer)
-app.component('Drawer', Drawer)
-app.component('FAB', FAB)
-app.component('Bag', Bag)
-app.component('ActionsMenu', ActionsMenu)
-app.component('NavPlaceholder', NavPlaceholder)
-app.component('SearchElectron', SearchElectron)
-app.component('Progress', Progress)
+RegisterComponents(app)
 
 app.mount('#app')

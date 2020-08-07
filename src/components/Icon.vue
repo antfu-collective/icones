@@ -15,8 +15,8 @@ export default defineComponent({
     const el = ref<HTMLElement | null>(null)
 
     const update = async() => {
+      await nextTick()
       if (el.value) {
-        await nextTick()
         // @ts-ignore
         const data = window.Iconify.getSVGObject(props.icon)
         if (data) {
@@ -24,15 +24,19 @@ export default defineComponent({
           for (const key of Object.keys(data.attributes))
             svg.setAttribute(key, data.attributes[key])
           svg.innerHTML = data ? data.body : null
-          el.value.textContent = ''
-          el.value.appendChild(svg)
+          if (el.value) {
+            el.value.textContent = ''
+            el.value.appendChild(svg)
+          }
         }
         else {
           const span = document.createElement('span')
           span.className = 'iconify'
           span.dataset.icon = props.icon
-          el.value.textContent = ''
-          el.value.appendChild(span)
+          if (el.value) {
+            el.value.textContent = ''
+            el.value.appendChild(span)
+          }
         }
       }
     }

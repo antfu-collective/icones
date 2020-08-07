@@ -30,6 +30,7 @@
           <Icons
             :icons="collection.sampleIcons"
             :namespace="`${collection.id}:`"
+            color-class=""
             size="xl"
             spacing="m-1"
             class="mt-2 mb-1 justify-center opacity-75 overflow-hidden flex-none pointer-events-none"

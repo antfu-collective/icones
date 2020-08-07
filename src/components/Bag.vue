@@ -8,10 +8,10 @@
     >
       <div>
         <NavPlaceholder class="md:hidden" />
-        <div class="text-gray-700 text-lg">
+        <div class="text-lg">
           Bag
         </div>
-        <div class="text-gray-500 text-xs">
+        <div class="opacity-50 text-xs">
           {{ bags.length }} icons picked
         </div>
       </div>
@@ -22,16 +22,16 @@
 
     <template v-if="bags.length">
       <div class="flex-auto overflow-y-auto py-3 px-1">
-        <Icons :icons="bags" style="color: #666" @select="e => $emit('select', e)" />
+        <Icons :icons="bags" @select="e => $emit('select', e)" />
       </div>
       <div
         class="
-          flex-none border-t border-gray-200 py-3 px-6 text-2xl text-gray-700
+          flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
           dark:border-dark-200
         "
       >
-        <IconButton class="p-1 cursor-pointer" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
-        <IconButton class="p-1 cursor-pointer" icon="carbon:download" text="Download SVGs Zip" :active="true" @click="packSvgs" />
+        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
+        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:download" text="Download SVGs Zip" :active="true" @click="packSvgs" />
       </div>
     </template>
 

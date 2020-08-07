@@ -1,7 +1,7 @@
 <template>
   <div
     class="icon-button m-auto"
-    :class="none ? '' : active ? 'opacity-100 hover:opacity-100 hover:text-primary' : 'opacity-25 hover:opacity-50'"
+    :class="none ? '' : active ? 'opacity-100 hover:opacity-100' : 'opacity-25 hover:opacity-50'"
   >
     <Icon
       :icon="icon"
