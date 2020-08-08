@@ -18,6 +18,12 @@ Icônes
 ![](./screenshots/4.png)
 ![](./screenshots/5.png)
 
+<p align="center">
+<sub><em>Dark Mode is now Live!</em></sub>
+</p>
+
+![](./screenshots/6.png)
+
 ### Features
 
 - **Instant Fuzzy Searching** *- all are done locally, no web queries!*
@@ -28,12 +34,12 @@ Icônes
 - Mobile friendly
 - Collection bookmarks
 - Categories filters
+- Dark mode
 - Built with [Vite](https://github.com/vitejs/vite) and Vue 3
 
 ### TODOs
 
 - Electron client (Coming!)
-- Dark mode
 - Full-offline mode - pack all the icons
 
 ## License
