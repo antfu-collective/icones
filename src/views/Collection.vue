@@ -1,6 +1,6 @@
 <template>
   <WithNavbar v-if="!collection">
-    <div class="py-8 px-4 text-gray-700 text-center">
+    <div class="py-8 px-4 text-gray-700 text-center dark:bg-dark-700">
       Loading...
     </div>
   </WithNavbar>

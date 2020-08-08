@@ -5,10 +5,10 @@
       <div v-if="collection" class="py-5 h-full overflow-y-auto flex-auto overflow-x-hidden relative">
         <!-- Loading -->
         <div
-          class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50"
+          class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
           :class="loading ? '' : 'opacity-0 pointer-events-none'"
         >
-          <div class="absolute text-gray-800" style="top:50%;left:50%;transform:translate(-50%,-50%)">Loading...</div>
+          <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">Loading...</div>
         </div>
 
         <div class="flex px-8">
@@ -57,7 +57,7 @@
               :key="c"
               class="
                 whitespace-no-wrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-100 cursor-pointer
-                dark:border-dark-200
+                dark:border-dark-200 dark-hover:bg-dark-200
               "
               :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
               @click="toggleCategory(c)"

@@ -53,7 +53,7 @@ export default defineComponent({
     },
     colorClass: {
       type: String,
-      default: 'text-dark-600 dark:text-dark-800',
+      default: 'text-dark-600 dark:text-dark-900',
     },
   },
   emits: ['select'],
