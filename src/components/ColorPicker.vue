@@ -12,8 +12,15 @@
   </div>
 </template>
 
-<script script="props" lang="ts">
-declare const props: {
-  value: string
-}
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  props: {
+    value: {
+      type: String,
+      required: true
+    }
+  } 
+})
 </script>
