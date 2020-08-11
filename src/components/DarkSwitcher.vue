@@ -6,9 +6,6 @@
   />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { isDark } from '../store'
-
-export default defineComponent(() => ({ isDark }))
+<script setup lang="ts">
+export { isDark } from '../store'
 </script>

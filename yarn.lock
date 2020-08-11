@@ -9312,6 +9312,11 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
+variantwind@^0.6.0:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/variantwind/-/variantwind-0.6.6.tgz#480cdf9a79964efe91f301b35d76f8c7cdc0d80b"
+  integrity sha512-3Ia80DnnKOhbCfhobIMM4siLTT99vJtqBZ00nRScSuzb3dt2VED/NEIvKo8lol6JQIp5xtVlolxHXLQfNYNXUg==
+
 varstream@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/varstream/-/varstream-0.3.2.tgz#18ac6494765f3ff1a35ad9a4be053bec188a5de1"

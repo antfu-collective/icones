@@ -7,10 +7,10 @@
       </ColorPicker>
     </div>
     <div class="px-6 py-2 mb-4 md:px-2 md:py-4">
-      <a class="text-gray-500 hover:text-primary text-sm" href="https://iconify.design/docs/iconify-in-pages/" target="_blank">
+      <a class="text-gray-500 hover:text-primary text-sm dark:text-dark-500" href="https://iconify.design/docs/iconify-in-pages/" target="_blank">
         How to use the icon?
       </a>
-      <p class="flex text-gray-700 font-mono">
+      <p class="flex text-gray-700 font-mono dark:text-dark-900">
         {{ icon }}
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
       </p>
@@ -101,10 +101,11 @@
             <button class="btn mr-1 mb-1" @click="download()">SVG</button>
           </a>
         </div>
-      </div>
+      </div>\
     </div>
     <Notification :value="copied">
-      <Icon icon="mdi:check" class="inline-block mr-2 font-xl" />Copied
+      <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
+      <span class="align-middle">Copied</span>
     </Notification>
   </div>
 </template>

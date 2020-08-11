@@ -2,11 +2,15 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+.schema-dark {
+  background: #222;
+}
+
 .btn {
   @apply border border-gray-200 rounded shadow-sm outline-none bg-transparent px-4 py-1 text-gray-600 text-sm;
 }
 
-.mode-dark .btn {
+.schema-dark .btn {
   @apply border-dark-200 text-gray-200;
 }
 
@@ -20,10 +24,6 @@
 
 .dragging {
   -webkit-app-region: drag;
-}
-
-.mode-dark {
-  background: #222;
 }
 
 .non-dragging {

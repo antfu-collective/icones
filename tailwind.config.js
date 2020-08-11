@@ -10,6 +10,7 @@ module.exports = {
     ],
     options: {
       whitelist: [
+        'schema-dark',
         'text-xl',
         'text-2xl',
         'text-3xl',
@@ -23,6 +24,7 @@ module.exports = {
     },
   },
   theme: {
+    darkSelector: '.schema-dark',
     extend: {
       fontSize: {
         '7xl': '5rem',
@@ -60,8 +62,8 @@ module.exports = {
   },
   variants: {
     backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'hover'],
-    borderColor: ['dark', 'dark-disabled', 'dark-focus'],
-    textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder', 'hover', 'active'],
+    borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-active', 'active', 'focus', 'disabled'],
+    textColor: ['dark', 'dark-hover', 'dark-active', 'hover', 'active'],
   },
   plugins: [
     require('tailwindcss-dark-mode')(),

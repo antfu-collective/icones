@@ -1,12 +1,14 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { directive } from 'variantwind'
 import App from './App.vue'
 import { routes } from './routes'
-import { RegisterComponents } from './components'
+import { registerComponents } from './components'
 import './utils/electron'
-import './main.css'
+import './main.postcss'
 
 const app = createApp(App)
+
 const router = createRouter({
   history: createWebHistory(),
   // @ts-ignore
@@ -29,7 +31,8 @@ if (import.meta.hot) {
   })
 }
 
+app.directive('wind', directive)
 app.use(router)
-RegisterComponents(app)
+app.use(registerComponents)
 
 app.mount('#app')

@@ -1,8 +1,9 @@
 <template>
   <nav
+    v-wind
     class="
       dragging p-2 relative bg-white z-10 flex border-b border-gray-200 flex-none
-      dark:bg-dark-100 dark:border-dark-200 dark:text-gray-200
+      dark:{bg-dark-100 border-dark-200 text-gray-200}
     "
     :class="$route.path !== '/' ? 'md:hidden' : ''"
   >
@@ -41,9 +42,7 @@
       >
         <IconButton icon="codicon:github" style="padding-bottom: 3px" />
       </a>
-      <div
-        class="non-dragging text-xl mx-3 my-auto flex-none"
-      >
+      <div class="non-dragging text-xl mx-3 my-auto flex-none">
         <DarkSwitcher />
       </div>
     </template>
@@ -52,7 +51,7 @@
     <div v-if="collection" class="flex">
       <input
         v-model="search"
-        class="text-base outline-none py-2 px-4 flex-auto m-0 w-full"
+        class="text-base outline-none py-2 px-4 flex-auto m-0 w-full bg-transparent"
         placeholder="Search..."
       >
     </div>
