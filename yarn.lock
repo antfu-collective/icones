@@ -875,10 +875,15 @@
     postcss "7.0.32"
     purgecss "^2.3.0"
 
-"@iconify/iconify@^1.0.7":
+"@iconify/iconify@*":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@iconify/iconify/-/iconify-1.0.7.tgz#22e6d384482995738746eeb38b9b76588df41d57"
   integrity sha512-qCbH1V/Ceg302lrgBiiXCZAyqMAq8KqsHYokCpUvgBH6yYfAmvlSkEEBrmJdHofQvfY/+xaeQcsOOTjW7JakNw==
+
+"@iconify/iconify@>=2.0.0-alpha.0", "@iconify/iconify@^2.0.0-beta.5":
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@iconify/iconify/-/iconify-2.0.0-beta.5.tgz#74b3c2c33a1a2405dc184c08dce71258671ffb4a"
+  integrity sha512-+cycuWyodI5ND/YNXn9zr3lbRife8Q/wnaAWMavQQNJqxKMOPRzSlUyXMOyIT6SQRmpq2Z2oOIq5EKoV8lplDQ==
 
 "@iconify/json@^1.1.202":
   version "1.1.202"
@@ -905,6 +910,20 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
+
+"@purge-icons/generated@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@purge-icons/generated/-/generated-0.1.0.tgz#51e1946dc170cf212865c665e53f444d7f988c94"
+  integrity sha512-ixZczHbC6xGpmmq8EvD5zUN/yuVPH31AECvld6XpACPX6bqhZdNGIWTHMkag36AzoGsaanSrdQxPXOj1894kog==
+  dependencies:
+    "@iconify/iconify" "*"
+
+"@purge-icons/generated@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@purge-icons/generated/-/generated-0.1.1.tgz#067134a98a1da5bc9ec18b635aee5e1fa1f11f3a"
+  integrity sha512-bW6YOPtjH1eFodyfvqFA9s6X+2n499w7cTVQ3aJ/SVS2f3JlnRztwSLd0p+XqAWZr9GrkHhPBGBjh5Oeii0DpA==
+  dependencies:
+    "@iconify/iconify" ">=2.0.0-alpha.0"
 
 "@rollup/plugin-commonjs@^14.0.0":
   version "14.0.0"
@@ -1970,6 +1989,13 @@ aws4@^1.8.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.10.0.tgz#a17b3a8ea811060e74d47d306122400ad4497ae2"
   integrity sha512-3YDiu347mtVtjpyV3u5kVqQLP242c06zwDOgpeRnybmXlYYsLbtTrUBUm8i8srONt+FWobl5aibnU1030PeeuA==
+
+axios@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
+  dependencies:
+    follow-redirects "1.5.10"
 
 babel-eslint@^10.1.0:
   version "10.1.0"
@@ -3071,6 +3097,13 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
+debug@=3.1.0, debug@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
+  dependencies:
+    ms "2.0.0"
+
 debug@^3.1.0, debug@^3.1.1, debug@^3.2.5:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
@@ -3091,13 +3124,6 @@ debug@^4.2.0:
   integrity sha512-IX2ncY78vDTjZMFUdmsvIRFY2Cf4FnD0wRs+nQwJU8Lu99/tPFdb0VybiiMTPe3I6rQmwsqQqRBvxU+bZ/I8sg==
   dependencies:
     ms "2.1.2"
-
-debug@~3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
-  dependencies:
-    ms "2.0.0"
 
 decamelize@^1.2.0:
   version "1.2.0"
@@ -4221,7 +4247,7 @@ fast-deep-equal@^3.1.1:
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-glob@^3.1.1:
+fast-glob@^3.1.1, fast-glob@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.4.tgz#d20aefbf99579383e7f3cc66529158c9b98554d3"
   integrity sha512-kr/Oo6PX51265qeuCYsyGypiO5uJFgBS0jksyG7FUeCyQzNwYnzrNIMR1NXfkZXsMYXYLRAHgISHBz8gQcxKHQ==
@@ -4404,6 +4430,13 @@ flush-write-stream@^1.0.0:
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
+
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
+  dependencies:
+    debug "=3.1.0"
 
 follow-redirects@^1.0.0:
   version "1.12.1"
@@ -7134,6 +7167,11 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pify@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pify/-/pify-5.0.0.tgz#1f5eca3f5e87ebec28cc6d54a0e4aaf00acc127f"
+  integrity sha512-eW/gHNMlxdSP6dmG6uJip6FXN0EQBwm2clYYd8Wul42Cwu/DK8HEftzsapcNdYe2MfLiIwZqsDk2RDEsTE79hA==
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
@@ -7458,6 +7496,17 @@ pupa@^2.0.1:
   integrity sha512-hEJH0s8PXLY/cdXh66tNEQGndDrIKNqNC5xmrysZy3i5C3oEoLna7YAOad+7u125+zH1HNXUmGEkrhb3c2VriA==
   dependencies:
     escape-goat "^2.0.0"
+
+purge-icons@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/purge-icons/-/purge-icons-0.1.0.tgz#365cd962eb982128ad61755bafd4115e7c1df342"
+  integrity sha512-Slu25tm5kkccB/hcZVocbO3G9OhTym4j5SqLOH2GKPl25ufSUETGGck9w2oUsXg++gxBE1djcS8R+i/1CgjeTw==
+  dependencies:
+    axios "^0.19.2"
+    debug "^4.1.1"
+    fast-glob "^3.2.4"
+    fs-extra "^9.0.1"
+    yargs "^15.4.1"
 
 purgecss@^2.3.0:
   version "2.3.0"
@@ -9312,7 +9361,7 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-variantwind@^0.6.0:
+variantwind@^0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/variantwind/-/variantwind-0.6.6.tgz#480cdf9a79964efe91f301b35d76f8c7cdc0d80b"
   integrity sha512-3Ia80DnnKOhbCfhobIMM4siLTT99vJtqBZ00nRScSuzb3dt2VED/NEIvKo8lol6JQIp5xtVlolxHXLQfNYNXUg==
@@ -9337,6 +9386,22 @@ verror@1.10.0:
     assert-plus "^1.0.0"
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
+
+vite-plugin-purge-icons@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-purge-icons/-/vite-plugin-purge-icons-0.2.1.tgz#9c922db8f16a5fa789986bdbd02b7a6e5e5fdee3"
+  integrity sha512-eIynYFhoU6u075WxQ6rHmdpBpQ4AKudawVu0V6LNXXIXT4Y63vu6qexeRiyLEeb4O3WaQzBYoWsUDBe0rb/yfA==
+  dependencies:
+    "@purge-icons/generated" "0.1.0"
+    purge-icons "0.1.0"
+
+vite-plugin-voie@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-voie/-/vite-plugin-voie-0.2.0.tgz#40b6eb2df3bd39163a6200b328c0d7d4a6f0767c"
+  integrity sha512-w894cvCcRPaX4u/l4ARHvUbLMpF2NkG9/UCHkE9YBZIAYuQkX0xKMM9EkGeyRnaGLS/VYMX1uyjTGLeozRCwUw==
+  dependencies:
+    glob "^7.1.6"
+    pify "^5.0.0"
 
 vite@^1.0.0-rc.4:
   version "1.0.0-rc.4"
@@ -9766,7 +9831,7 @@ yargs@^13.3.2:
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
 
-yargs@^15.3.1:
+yargs@^15.3.1, yargs@^15.4.1:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.4.1.tgz#0d87a16de01aee9d8bec2bfbf74f67851730f4f8"
   integrity sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==

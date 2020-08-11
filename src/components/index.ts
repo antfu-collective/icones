@@ -15,11 +15,13 @@ import Bag from './Bag.vue'
 import Progress from './Progress.vue'
 import ActionsMenu from './ActionsMenu.vue'
 import DarkSwitcher from './DarkSwitcher.vue'
+import IconSet from './IconSet.vue'
 import NavPlaceholder from './electron/NavPlaceholder.vue'
 import SearchElectron from './electron/SearchElectron.vue'
 
 export const registerComponents: Plugin = {
   install(app) {
+    app.component('IconSet', IconSet)
     app.component('IconButton', IconButton)
     app.component('Icons', Icons)
     app.component('Icon', Icon)

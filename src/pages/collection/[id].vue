@@ -9,13 +9,9 @@
 
 <script lang='ts'>
 import { defineComponent, watch, onUnmounted } from 'vue'
-import { useCurrentCollection, setCurrentCollection } from '../store'
-import IconSet from './IconSet.vue'
+import { useCurrentCollection, setCurrentCollection } from '../../store'
 
 export default defineComponent({
-  components: {
-    IconSet,
-  },
   props: {
     id: {
       type: String,

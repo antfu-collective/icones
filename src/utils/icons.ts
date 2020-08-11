@@ -1,9 +1,10 @@
+import Iconify from '@purge-icons/generated'
 import Base64 from './base64'
 
 const API_ENTRY = 'https://api.iconify.design'
 
 export async function getSvg(icon: string) {
-  return window.Iconify.getSVG(icon, undefined) || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=auto`).then(r => r.text()) || ''
+  return Iconify.renderSVG(icon, {})?.outerHTML || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=auto`).then(r => r.text()) || ''
 }
 
 export function toComponentName(icon: string) {

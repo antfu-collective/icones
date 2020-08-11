@@ -2,36 +2,6 @@ import path from 'path'
 import fs from 'fs-extra'
 
 const out = path.resolve(__dirname, '../public')
-const builtInIcons: Record<string, string[]> = {
-  carbon: [
-    'add',
-    'arrow-left',
-    'bookmark',
-    'chevron-left',
-    'close',
-    'code',
-    'copy',
-    'delete',
-    'download',
-    'function',
-    'list-checked',
-    'overflow-menu-vertical',
-    'search',
-    'shopping-bag',
-    'up-to-top',
-    'check',
-    'circle-dash',
-    'checkmark-outline',
-    'sun',
-    'moon',
-  ],
-  la: [
-    'external-link-square-alt-solid',
-  ],
-  codicon: [
-    'github',
-  ],
-}
 
 function ObjectPick(source: Record<string, any>, keys: string[]) {
   const obj: Record<string, any> = {}
@@ -78,7 +48,7 @@ async function prepareJSON() {
       prefix: setData.prefix,
       width: setData.width,
       height: setData.height,
-      icons: ObjectPick(setData.icons, [...info.sampleIcons, ...(builtInIcons[info.id] || [])]),
+      icons: ObjectPick(setData.icons, info.sampleIcons),
     }
     info.size = humanFileSize(fs.statSync(rawFilePath).size)
   }

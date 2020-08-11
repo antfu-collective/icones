@@ -101,7 +101,7 @@
             <button class="btn mr-1 mb-1" @click="download()">SVG</button>
           </a>
         </div>
-      </div>\
+      </div>
     </div>
     <Notification :value="copied">
       <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />

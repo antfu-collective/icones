@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { extractor } = require('variantwind')
 
 module.exports = {
   purge: {
@@ -19,7 +20,12 @@ module.exports = {
         'text-6xl',
         'text-7xl',
         'text-8xl',
-        'mode-dark',
+      ],
+      extractors: [
+        {
+          extractor,
+          extensions: ['vue'],
+        },
       ],
     },
   },
