@@ -36,6 +36,7 @@ Icônes
 - Categories filters
 - Dark mode
 - Built with [Vite](https://github.com/vitejs/vite) and Vue 3
+  - If you like how it's built - try [🏕 Vitesse](https://github.com/antfu/vitesse), an opinionated starter template made from Icônes
 
 ### TODOs
 
