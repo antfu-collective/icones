@@ -75,11 +75,14 @@
           <div class="my-1 text-gray-500 mt-3">
             Components
           </div>
-          <button class="btn mr-1 mb-1" @click="copy('react')">
-            React
-          </button>
           <button class="btn mr-1 mb-1" @click="copy('vue')">
             Vue
+          </button>
+          <button class="btn mr-1 mb-1" @click="copy('jsx')">
+            JSX
+          </button>
+          <button class="btn mr-1 mb-1" @click="copy('tsx')">
+            TSX
           </button>
         </div>
         <div class="mr-4">
@@ -97,9 +100,10 @@
           <div class="my-1 text-gray-500 mt-3">
             Download
           </div>
-          <a :href="downlodUrl">
-            <button class="btn mr-1 mb-1" @click="download()">SVG</button>
-          </a>
+          <button class="btn mr-1 mb-1" @click="download('svg')">SVG</button>
+          <button class="btn mr-1 mb-1" @click="download('vue')">Vue</button>
+          <button class="btn mr-1 mb-1" @click="download('jsx')">JSX</button>
+          <button class="btn mr-1 mb-1" @click="download('tsx')">TSX</button>
         </div>
       </div>
     </div>
@@ -110,62 +114,50 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, ref, computed } from 'vue'
-import { getIconSnippet, getIconDownloadLink } from '../utils/icons'
-import { previewColor, toggleBag, inBag, selectingMode } from '../store'
+<script setup="props, {emit}" lang='ts'>
+import FileSaver from 'file-saver'
+import { ref, computed } from 'vue'
+import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
+import { selectingMode } from '../store'
 
-export default defineComponent({
-  props: {
-    icon: {
-      type: String,
-      default: '',
-    },
-    showCollection: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  setup(props, { emit }) {
-    const copied = ref(false)
+declare const props: {
+  icon: string
+  showCollection: boolean
+}
+declare const emit: (...args: any) => void
 
-    const copy = async(type: string) => {
-      const text = await getIconSnippet(props.icon, type)
-      if (!text)
-        return
+export const copied = ref(false)
 
-      await navigator.clipboard.writeText(text)
-      copied.value = true
-      setTimeout(() => {
-        copied.value = false
-      }, 2000)
-    }
+export { previewColor, toggleBag, inBag } from '../store'
+export const copy = async(type: string) => {
+  const text = await getIconSnippet(props.icon, type, true)
+  if (!text)
+    return
 
-    const toggleSelectingMode = () => {
-      selectingMode.value = !selectingMode.value
-      if (selectingMode.value)
-        emit('close')
-    }
+  await navigator.clipboard.writeText(text)
+  copied.value = true
+  setTimeout(() => {
+    copied.value = false
+  }, 2000)
+}
 
-    const downlodUrl = computed(() => getIconDownloadLink(props.icon))
+export const download = async(type: string) => {
+  const text = await getIconSnippet(props.icon, type, false)
+  if (!text)
+    return
 
-    const collection = computed(() => {
-      const id = props.icon.split(':')[0]
-      return collections.find(i => i.id === id)
-    })
+  FileSaver.saveAs(new Blob([text], { type: 'text/plain;charset=utf-8' }), `${toComponentName(props.icon)}.${type}`)
+}
 
-    return {
-      copy,
-      copied,
-      downlodUrl,
-      previewColor,
-      toggleBag,
-      inBag,
-      selectingMode,
-      toggleSelectingMode,
-      collection,
-    }
-  },
+export const toggleSelectingMode = () => {
+  selectingMode.value = !selectingMode.value
+  if (selectingMode.value)
+    emit('close')
+}
+
+export const collection = computed(() => {
+  const id = props.icon.split(':')[0]
+  return collections.find(i => i.id === id)
 })
 </script>

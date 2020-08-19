@@ -24,18 +24,30 @@ export function ClearSvg(svgCode: string) {
   return el.innerHTML
 }
 
-export function SvgToReact(svg: string, name: string) {
-  return `
-import * as React from 'react'
-
-function ${name}(props) {
+export function SvgToJSX(svg: string, name: string, snippet: boolean) {
+  const code = `
+export function ${name}(props) {
   return (
     ${ClearSvg(svg).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
   )
+}`
+  if (snippet)
+    return code
+  else
+    return `import React from 'react'\n${code}\nexport default ${name}`
 }
 
-export default ${name}
-  `
+export function SvgToTSX(svg: string, name: string, snippet: boolean) {
+  const code = `
+export function ${name}(props: SVGProps<SVGSVGElement>) {
+  return (
+    ${ClearSvg(svg).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
+  )
+}`
+  if (snippet)
+    return code
+  else
+    return `import React, { SVGProps } from 'react'\n${code}\nexport default ${name}`
 }
 
 export function SvgToVue(svg: string, name: string) {
@@ -48,11 +60,10 @@ export function SvgToVue(svg: string, name: string) {
 export default {
   name: '${name}'
 }
-</script>
-  `
+</script>`
 }
 
-export async function getIconSnippet(icon: string, type: string): Promise<string | undefined> {
+export async function getIconSnippet(icon: string, type: string, snippet = true): Promise<string | undefined> {
   if (!icon)
     return
 
@@ -69,8 +80,10 @@ export async function getIconSnippet(icon: string, type: string): Promise<string
       return await getSvg(icon)
     case 'data_url':
       return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon))}`
-    case 'react':
-      return SvgToReact(await getSvg(icon), toComponentName(icon))
+    case 'jsx':
+      return SvgToJSX(await getSvg(icon), toComponentName(icon), snippet)
+    case 'tsx':
+      return SvgToTSX(await getSvg(icon), toComponentName(icon), snippet)
     case 'vue':
       return SvgToVue(await getSvg(icon), toComponentName(icon))
   }
