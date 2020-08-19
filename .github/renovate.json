@@ -1,0 +1,10 @@
+{
+  "automerge": true,
+  "rangeStrategy": "replace",
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges",
+    "schedule:weekly",
+    "group:allNonMajor"
+  ]
+}
