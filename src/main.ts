@@ -3,7 +3,6 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { directive as variantwind } from 'variantwind'
 import App from './App.vue'
-import { registerComponents } from './components'
 import './utils/electron'
 import './main.postcss'
 
@@ -21,5 +20,4 @@ const router = createRouter({
 
 app.directive('wind', variantwind)
 app.use(router)
-app.use(registerComponents)
 app.mount('#app')
