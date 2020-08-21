@@ -2,12 +2,11 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { directive as variantwind } from 'variantwind'
+import routes from 'voie-pages'
 import App from './App.vue'
 import './utils/electron'
 import './main.postcss'
 
-// @ts-ignore: this is generated from voie, which TypeScript is not able to infer types correctly
-import routes from '/@voie/pages'
 // import icons data genereted by PurgeIcons
 import '@purge-icons/generated'
 
