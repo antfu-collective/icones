@@ -5,7 +5,7 @@ Icônes
 <p align="center">Icon Explorer with <b>Instant</b> searching, powered by <a href="https://github.com/iconify/iconify" target="_blank">Iconify</a> </p>
 
 <p align="center">
-<a href="https://icones.netlify.app/">Go to App</a>
+<a href="https://icones.js.org">Go to App</a>
 </p>
 
 <p align="center">
