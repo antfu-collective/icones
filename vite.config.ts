@@ -5,7 +5,9 @@ import ViteComponents from 'vite-plugin-components'
 
 const config: UserConfig = {
   plugins: [
-    Voie(),
+    Voie({
+      importMode: 'sync',
+    }),
     ViteComponents(),
     PurgeIcons(),
   ],

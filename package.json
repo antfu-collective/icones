@@ -25,24 +25,25 @@
     "build:electron": "cross-env NODE_ENV=production npm -C ./electron run build"
   },
   "dependencies": {
-    "@iconify/iconify": "^2.0.0-beta.6",
-    "@vueuse/core": "^4.0.0-beta.7",
+    "@iconify/iconify": "^2.0.0-rc.1",
+    "@vueuse/core": "^4.0.0-beta.9",
     "dexie": "^3.0.2",
     "file-saver": "^2.0.2",
     "fuse.js": "^6.4.1",
     "hotkeys-js": "^3.8.1",
-    "tailwindcss": "^1.7.3",
+    "tailwindcss": "^1.7.5",
     "variantwind": "0.11.2",
-    "vue": "3.0.0-rc.6",
+    "vue": "3.0.0-rc.9",
     "vue-router": "4.0.0-beta.7"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.3.2",
-    "@iconify/json": "^1.1.209",
+    "@antfu/eslint-config": "^0.3.3",
+    "@iconify/json": "^1.1.213",
     "@purge-icons/generated": "^0.4.0",
     "@types/file-saver": "^2.0.1",
     "@types/fs-extra": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@vue/compiler-sfc": "^3.0.0-rc.9",
     "cross-env": "^7.0.2",
     "eslint": "^7.7.0",
     "esno": "^0.2.0",
@@ -52,10 +53,10 @@
     "tailwindcss-dark-mode": "^1.1.6",
     "typescript": "^4.0.2",
     "vite": "^1.0.0-rc.4",
-    "vite-plugin-components": "^0.2.6",
+    "vite-plugin-components": "^0.2.13",
     "vite-plugin-purge-icons": "^0.4.0",
-    "vite-plugin-voie": "^0.3.0",
-    "voie-pages": "^0.3.0"
+    "vite-plugin-voie": "^0.4.0",
+    "voie-pages": "^0.4.0"
   },
   "prettier": {
     "semi": false,
