@@ -24,6 +24,14 @@ Icônes
 
 ![](./screenshots/6.png)
 
+
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
+    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+  </a>
+</p>
+
+
 ### Features
 
 - **Instant Fuzzy Searching** *- all are done locally, no web queries!*
