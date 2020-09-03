@@ -26,7 +26,7 @@ export async function PackIconFont(icons: string[], options: any = {}) {
   if (!icons.length) return
   const data = await LoadIconSvgs(icons)
   const result = await window.SvgPacker({
-    fontName: 'Iconfiy Explorer Font',
+    fontName: 'Iconify Explorer Font',
     fileName: 'iconfont',
     cssPrefix: 'i',
     ...options,

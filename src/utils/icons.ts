@@ -80,6 +80,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true)
       return await getSvg(icon)
     case 'data_url':
       return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon))}`
+    case 'pure-jsx':
+      return ClearSvg(await getSvg(icon))
     case 'jsx':
       return SvgToJSX(await getSvg(icon), toComponentName(icon), snippet)
     case 'tsx':

@@ -70,6 +70,9 @@
           <button class="btn mr-1 mb-1" @click="copy('svg')">
             SVG
           </button>
+          <button class="btn mr-1 mb-1" @click="copy('pure-jsx')">
+            JSX
+          </button>
         </div>
         <div class="mr-4">
           <div class="my-1 text-gray-500 mt-3">
@@ -79,10 +82,10 @@
             Vue
           </button>
           <button class="btn mr-1 mb-1" @click="copy('jsx')">
-            JSX
+            React
           </button>
           <button class="btn mr-1 mb-1" @click="copy('tsx')">
-            TSX
+            React<sup class="opacity-50 -mr-1">TS</sup>
           </button>
         </div>
         <div class="mr-4">
@@ -102,8 +105,8 @@
           </div>
           <button class="btn mr-1 mb-1" @click="download('svg')">SVG</button>
           <button class="btn mr-1 mb-1" @click="download('vue')">Vue</button>
-          <button class="btn mr-1 mb-1" @click="download('jsx')">JSX</button>
-          <button class="btn mr-1 mb-1" @click="download('tsx')">TSX</button>
+          <button class="btn mr-1 mb-1" @click="download('jsx')">React</button>
+          <button class="btn mr-1 mb-1" @click="download('tsx')">React<sup class="opacity-50 -mr-1">TS</sup></button>
         </div>
       </div>
     </div>
