@@ -6,7 +6,7 @@
         <Icon class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
     </div>
-    <div class="px-6 py-2 mb-4 md:px-2 md:py-4">
+    <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
       <a class="text-gray-500 hover:text-primary text-sm dark:text-dark-500" href="https://iconify.design/docs/iconify-in-pages/" target="_blank">
         How to use the icon?
       </a>
@@ -56,57 +56,57 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap mt-2">
         <div class="mr-4">
-          <div class="my-1 text-gray-500 mt-3">
+          <div class="my-1 text-gray-500 text-sm">
             Snippets
           </div>
-          <button class="btn mr-1 mb-1" @click="copy('html')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
             HTML
           </button>
-          <button class="btn mr-1 mb-1" @click="copy('css')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('css')">
             CSS
           </button>
-          <button class="btn mr-1 mb-1" @click="copy('svg')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
             SVG
           </button>
-          <button class="btn mr-1 mb-1" @click="copy('pure-jsx')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('pure-jsx')">
             JSX
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 mt-3">
+          <div class="my-1 text-gray-500 text-sm">
             Components
           </div>
-          <button class="btn mr-1 mb-1" @click="copy('vue')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue')">
             Vue
           </button>
-          <button class="btn mr-1 mb-1" @click="copy('jsx')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('jsx')">
             React
           </button>
-          <button class="btn mr-1 mb-1" @click="copy('tsx')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 mt-3">
+          <div class="my-1 text-gray-500 text-sm">
             Links
           </div>
-          <button class="btn mr-1 mb-1" @click="copy('url')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('url')">
             URL
           </button>
-          <button class="btn mr-1 mb-1" @click="copy('data_url')">
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('data_url')">
             Data URL
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 mt-3">
+          <div class="my-1 text-gray-500 text-sm">
             Download
           </div>
-          <button class="btn mr-1 mb-1" @click="download('svg')">SVG</button>
-          <button class="btn mr-1 mb-1" @click="download('vue')">Vue</button>
-          <button class="btn mr-1 mb-1" @click="download('jsx')">React</button>
-          <button class="btn mr-1 mb-1" @click="download('tsx')">React<sup class="opacity-50 -mr-1">TS</sup></button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">SVG</button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">Vue</button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('jsx')">React</button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">React<sup class="opacity-50 -mr-1">TS</sup></button>
         </div>
       </div>
     </div>

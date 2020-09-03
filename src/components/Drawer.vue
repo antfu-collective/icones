@@ -45,32 +45,20 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script setup lang='ts'>
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { sortedCollectionsInfo } from '../data'
-import { isFavorited, toggleFavorite } from '../store'
-import { isElectron } from '../env'
+export { isFavorited, toggleFavorite } from '../store'
+export { isElectron } from '../env'
 
-export default defineComponent({
-  setup() {
-    const route = useRoute()
-    const current = computed(() => route.path.split('/').slice(-1)[0])
+const route = useRoute()
+export const current = computed(() => route.path.split('/').slice(-1)[0])
 
-    const collections = computed(() => {
-      return [
-        { id: 'all', name: 'All' },
-        ...sortedCollectionsInfo.value,
-      ]
-    })
-
-    return {
-      collections,
-      current,
-      toggleFavorite,
-      isFavorited,
-      isElectron,
-    }
-  },
+export const collections = computed(() => {
+  return [
+    { id: 'all', name: 'All' },
+    ...sortedCollectionsInfo.value,
+  ]
 })
 </script>

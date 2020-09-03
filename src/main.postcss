@@ -7,19 +7,23 @@
 }
 
 .btn {
-  @apply border border-gray-200 rounded shadow-sm outline-none bg-transparent px-4 py-1 text-gray-600 text-sm;
+  @apply border border-gray-200 rounded shadow-sm outline-none bg-black px-4 py-1 text-gray-600 text-sm bg-opacity-0;
 }
 
 .schema-dark .btn {
-  @apply border-dark-200 text-gray-200;
+  @apply border-dark-200 text-gray-200 bg-white bg-opacity-0;
 }
 
 .btn:hover {
-  @apply shadow outline-none;
+  @apply shadow outline-none bg-opacity-10;
 }
 
 .btn:focus {
-  @apply shadow outline-none;
+  @apply shadow outline-none bg-opacity-10;
+}
+
+.btn.small {
+  @apply px-2 py-0.5 text-sm;
 }
 
 .dragging {

@@ -1,7 +1,7 @@
 <template>
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden ">
-      <Drawer class="h-full overflow-auto flex-none hidden md:block" style="width:280px" />
+      <Drawer class="h-full overflow-auto flex-none hidden md:block" style="width:220px" />
       <div v-if="collection" class="py-5 h-full overflow-y-auto flex-auto overflow-x-hidden relative">
         <!-- Loading -->
         <div

@@ -5,7 +5,7 @@
       <input
         ref="input"
         v-model="search"
-        class="text-base outline-none py-1 px-4 flex-auto m-0"
+        class="text-base outline-none py-1 px-4 flex-auto m-0 bg-transparent"
         :placeholder="`Search...`"
         @keydown.esc="isSearchOpen = false"
       >
@@ -14,35 +14,30 @@
   </Notification>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 import { getSearchResults, isSearchOpen } from '../../store'
-import { isElectron } from '../../env'
+export { isElectron } from '../../env'
 
-export default defineComponent({
-  setup() {
-    const { search, collection } = getSearchResults()
-    const input = ref<HTMLInputElement | null>(null)
+const { search, collection } = getSearchResults()
+const input = ref<HTMLInputElement | null>(null)
 
-    watch(isSearchOpen, (v) => {
-      if (input.value) {
-        if (v) {
-          input.value.focus()
-        }
-        else {
-          input.value.blur()
-          search.value = ''
-        }
-      }
-    })
-
-    return {
-      search,
-      collection,
-      isElectron,
-      isSearchOpen,
-      input,
+watch(isSearchOpen, (v) => {
+  if (input.value) {
+    if (v) {
+      input.value.focus()
     }
-  },
+    else {
+      input.value.blur()
+      search.value = ''
+    }
+  }
 })
+
+export {
+  search,
+  collection,
+  isSearchOpen,
+  input,
+}
 </script>

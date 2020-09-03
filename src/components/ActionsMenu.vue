@@ -12,7 +12,7 @@
     />
 
     <!-- Menu -->
-    <div class="relative w-4 mx-2">
+    <div class="relative w-4">
       <IconButton active icon="carbon:overflow-menu-vertical" title="Menu" />
       <select v-model="menu" class="absolute text-base top-0 bottom-0 left-0 right-0 opacity-0">
         <optgroup label="Size">

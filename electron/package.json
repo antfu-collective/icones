@@ -37,7 +37,11 @@
       "owner": "antfu",
       "repo": "icones",
       "private": false
-    }
+    },
+    "files": [
+      "dist",
+      "build"
+    ]
   },
   "dependencies": {
     "babel-loader": "^8.1.0",
