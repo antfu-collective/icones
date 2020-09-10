@@ -1,5 +1,6 @@
 import Iconify from '@purge-icons/generated'
 import Base64 from './base64'
+import { HtmlToJSX } from './htmlToJsx'
 
 const API_ENTRY = 'https://api.iconify.design'
 
@@ -21,7 +22,7 @@ export function ClearSvg(svgCode: string) {
       continue
     svg.removeAttributeNode(key)
   }
-  return el.innerHTML
+  return HtmlToJSX(el.innerHTML)
 }
 
 export function SvgToJSX(svg: string, name: string, snippet: boolean) {
