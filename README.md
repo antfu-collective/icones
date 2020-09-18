@@ -9,7 +9,7 @@ Icônes
 </p>
 
 <p align="center">
-<sub><em>Electron is comming...</em></sub>
+<sub><em>Desktop Client is under development...</em></sub>
 </p>
 
 ![](./screenshots/1.png)
