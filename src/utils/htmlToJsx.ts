@@ -1,5 +1,7 @@
 export function HtmlToJSX(html: string) {
   const jsx = html.replace(/([\w-]+)=/g, (i) => {
+    if (i === 'viewBox')
+      return i
     return i
       .split('-')
       .map((i, idx) =>
