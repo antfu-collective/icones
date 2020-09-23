@@ -23,3 +23,26 @@ export default defineComponent({
   },
 })
 </script>
+<style >
+  * {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    scrollbar-width: 6px;
+    scrollbar-color: rgba(0,0,0,.2);
+  }
+
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track-piece {
+    background: rgba(9,30,66,.08);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(128,128,128,0.4);
+    border-radius: 3px;
+  }
+</style>

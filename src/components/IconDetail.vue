@@ -103,10 +103,18 @@
           <div class="my-1 text-gray-500 text-sm">
             Download
           </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">SVG</button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">Vue</button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('jsx')">React</button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">React<sup class="opacity-50 -mr-1">TS</sup></button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">
+            SVG
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">
+            Vue
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('jsx')">
+            React
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">
+            React<sup class="opacity-50 -mr-1">TS</sup>
+          </button>
         </div>
       </div>
     </div>
@@ -118,6 +126,7 @@
 </template>
 
 <script setup="props, {emit}" lang='ts'>
+import copyText from 'copy-text-to-clipboard'
 import FileSaver from 'file-saver'
 import { ref, computed } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
@@ -138,8 +147,7 @@ export const copy = async(type: string) => {
   if (!text)
     return
 
-  await navigator.clipboard.writeText(text)
-  copied.value = true
+  copied.value = copyText(text)
   setTimeout(() => {
     copied.value = false
   }, 2000)
