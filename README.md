@@ -46,6 +46,10 @@ Icônes
 - Built with [Vite](https://github.com/vitejs/vite) and Vue 3
   - If you like how it's built - try [🏕 Vitesse](https://github.com/antfu/vitesse), an opinionated starter template made from Icônes
 
+### Community
+
+- [VS Code Extension](https://github.com/afzalsayed96/vscode-icones) by [@afzalsayed96](https://github.com/afzalsayed96)
+
 ### TODOs
 
 - Electron client (Coming!)
