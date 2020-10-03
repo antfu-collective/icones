@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import Iconify from '@purge-icons/generated'
 import infoJSON from '../../public/collections-info.json'
 import { favoritedCollections } from '../store'
-import { isElectron } from '../env'
+import { isElectron, staticPath } from '../env'
 import { saveCollection, loadCollection } from '../store/indexedDB'
 
 export interface CollectionInfo {
@@ -85,7 +85,7 @@ export async function downloadAndInstall(id: string) {
   if (installed.value.includes(id))
     return true
 
-  const data = Object.freeze(await fetch(`/collections/${id}-raw.json`).then(r => r.json()))
+  const data = Object.freeze(await fetch(`${staticPath}/collections/${id}-raw.json`).then(r => r.json()))
 
   Iconify.addCollection(data)
   installed.value.push(id)
@@ -102,7 +102,7 @@ export async function getMeta(id: string): Promise<CollectionMeta | null> {
     return meta
 
   meta = Object.freeze(
-    await fetch(`/collections/${id}-meta.json`).then(r => r.json()),
+    await fetch(`${staticPath}/collections/${id}-meta.json`).then(r => r.json()),
   )
 
   if (!meta)
@@ -118,7 +118,7 @@ export async function getFullMeta() {
     return loadedMeta.value
 
   loadedMeta.value = Object.freeze(
-    await fetch('/collections-meta.json').then(r => r.json()),
+    await fetch(`${staticPath}/collections-meta.json`).then(r => r.json()),
   )
 
   return loadedMeta.value
