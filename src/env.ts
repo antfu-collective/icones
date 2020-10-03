@@ -3,4 +3,4 @@ export const isVSCode = location.protocol === 'vscode-webview:'
 // @ts-ignore
 export const basePath = isVSCode ? window.baseURI : '/'
 // @ts-ignore
-export const staticPath = isVSCode ? window.staticURI : '' 
+export const staticPath = isVSCode ? window.staticURI : ''
