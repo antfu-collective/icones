@@ -9,11 +9,12 @@ import './main.postcss'
 
 // import icons data genereted by PurgeIcons
 import '@purge-icons/generated'
+import { basePath } from './env'
 
 const app = createApp(App)
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(basePath),
   routes,
 })
 

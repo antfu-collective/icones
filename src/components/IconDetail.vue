@@ -118,6 +118,7 @@
 </template>
 
 <script setup="props, {emit}" lang='ts'>
+import copyText from 'copy-text-to-clipboard'
 import FileSaver from 'file-saver'
 import { ref, computed } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
@@ -138,8 +139,7 @@ export const copy = async(type: string) => {
   if (!text)
     return
 
-  await navigator.clipboard.writeText(text)
-  copied.value = true
+  copied.value = copyText(text)
   setTimeout(() => {
     copied.value = false
   }, 2000)
