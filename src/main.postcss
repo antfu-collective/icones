@@ -33,3 +33,51 @@
 .non-dragging {
   -webkit-app-region: no-drag;
 }
+
+.overflow-overlay {
+  overflow: overlay;
+}
+
+.overflow-y-overlay {
+  overflow-y: overlay;
+}
+
+.overflow-x-overlay {
+  overflow-x: overlay;
+}
+
+/* Scrollbar */
+* {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: 6px;
+  scrollbar-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+*:hover::-webkit-scrollbar {
+  display: block;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(128, 128, 128, 0.5);
+  border-radius: 3px;
+}

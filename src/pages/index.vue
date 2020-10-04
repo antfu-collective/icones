@@ -1,9 +1,11 @@
 <template>
   <WithNavbar>
     <NavPlaceholder class="sm:border-b border-gray-200 text-center m-auto flex font-light dark:border-dark-200" style="height:37px">
-      <div class="m-auto">Icônes</div>
+      <div class="m-auto">
+        Icônes
+      </div>
     </NavPlaceholder>
-    <div class="collections-list grid">
+    <div class="collections-list grid overflow-y-overlay">
       <div
         v-for="collection in collections"
         :key="collection.id"
@@ -19,7 +21,9 @@
           "
           :to="`/collection/${collection.id}`"
         >
-          <div class="flex-auto text-lg">{{ collection.name }}</div>
+          <div class="flex-auto text-lg">
+            {{ collection.name }}
+          </div>
           <div class="flex-auto opacity-50 text-xs">
             <span>{{ collection.author }}</span>
             <span class="px-1 opacity-25">/</span>

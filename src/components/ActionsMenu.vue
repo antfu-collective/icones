@@ -16,12 +16,20 @@
       <IconButton active icon="carbon:overflow-menu-vertical" title="Menu" />
       <select v-model="menu" class="absolute text-base top-0 bottom-0 left-0 right-0 opacity-0">
         <optgroup label="Size">
-          <option value="small">Small</option>
-          <option value="large">Large</option>
-          <option value="list">List</option>
+          <option value="small">
+            Small
+          </option>
+          <option value="large">
+            Large
+          </option>
+          <option value="list">
+            List
+          </option>
         </optgroup>
         <optgroup label="Actions">
-          <option value="select">Select mutiple</option>
+          <option value="select">
+            Select mutiple
+          </option>
         </optgroup>
 
         <!--
@@ -30,9 +38,15 @@
                 in browser version.
         -->
         <optgroup label="Downloads">
-          <option v-if="!isElectron && !installed" value="cache">Cache in Browser</option>
-          <option value="download_iconfont" :disabled="inProgress">Iconfont</option>
-          <option value="download_svgs" :disabled="inProgress">SVGs Zip</option>
+          <option v-if="!isElectron && !installed" value="cache">
+            Cache in Browser
+          </option>
+          <option value="download_iconfont" :disabled="inProgress">
+            Iconfont
+          </option>
+          <option value="download_svgs" :disabled="inProgress">
+            SVGs Zip
+          </option>
         </optgroup>
       </select>
     </div>

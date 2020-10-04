@@ -9,7 +9,7 @@ import {
   tryInstallFromLocal,
 } from '../data'
 import { useSearch } from '../hooks'
-import { isElectron } from '../env'
+import { isLocalMode } from '../env'
 
 const currentCollectionId = ref('')
 const loaded = ref(false)
@@ -43,7 +43,7 @@ export async function setCurrentCollection(id: string) {
   installed.value = isInstalled(id)
 
   if (!installed.value) {
-    if (isElectron)
+    if (isLocalMode)
       installed.value = await downloadAndInstall(id)
     else
       installed.value = await tryInstallFromLocal(id)

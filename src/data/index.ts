@@ -1,9 +1,10 @@
+// eslint-disable-next-line
 import type { IconifyJSON } from '@iconify/iconify'
 import { computed, ref } from 'vue'
 import Iconify from '@purge-icons/generated'
 import infoJSON from '../../public/collections-info.json'
 import { favoritedCollections } from '../store'
-import { isElectron, staticPath } from '../env'
+import { isLocalMode, staticPath } from '../env'
 import { saveCollection, loadCollection } from '../store/indexedDB'
 
 export interface CollectionInfo {
@@ -60,7 +61,7 @@ export async function tryInstallFromLocal(id: string) {
   if (id === 'all')
     return false
 
-  if (isElectron)
+  if (isLocalMode)
     return true
 
   if (installed.value.includes(id))
@@ -90,7 +91,7 @@ export async function downloadAndInstall(id: string) {
   Iconify.addCollection(data)
   installed.value.push(id)
 
-  if (!isElectron)
+  if (!isLocalMode)
     saveCollection(id, data) // async
 
   return true
@@ -125,5 +126,3 @@ export async function getFullMeta() {
 }
 
 preInstall()
-if (isElectron)
-  downloadAndInstall('carbon')

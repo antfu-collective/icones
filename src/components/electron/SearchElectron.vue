@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { getSearchResults, isSearchOpen } from '../../store'
 export { isElectron } from '../../env'
 

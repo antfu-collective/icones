@@ -1,14 +1,16 @@
 <template>
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden ">
-      <Drawer class="h-full overflow-auto flex-none hidden md:block" style="width:220px" />
-      <div v-if="collection" class="py-5 h-full overflow-y-auto flex-auto overflow-x-hidden relative">
+      <Drawer class="h-full overflow-y-overlay flex-none hidden md:block" style="width:220px" />
+      <div v-if="collection" class="py-5 h-full overflow-y-overlay flex-auto overflow-x-hidden relative">
         <!-- Loading -->
         <div
           class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
           :class="loading ? '' : 'opacity-0 pointer-events-none'"
         >
-          <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">Loading...</div>
+          <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">
+            Loading...
+          </div>
         </div>
 
         <div class="flex px-8">
@@ -50,7 +52,7 @@
         </div>
 
         <!-- Categories -->
-        <div class="py-2 px-7 overflow-x-auto flex flex-no-wrap select-none">
+        <div class="py-2 px-7 overflow-x-overlay flex flex-no-wrap select-none">
           <template v-if="collection.categories">
             <div
               v-for="c of Object.keys(collection.categories)"
@@ -145,7 +147,7 @@
 <script lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
-import { isElectron } from '../env'
+import { isLocalMode } from '../env'
 
 export default defineComponent({
   setup(props) {
@@ -153,7 +155,7 @@ export default defineComponent({
     const showBag = ref(false)
 
     const current = ref<string>('')
-    const max = ref(isElectron ? 500 : 200)
+    const max = ref(isLocalMode ? 500 : 200)
 
     const toggleCategory = (cat: string) => {
       if (category.value === cat) category.value = ''

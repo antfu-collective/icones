@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang='ts'>
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { sortedCollectionsInfo } from '../data'
 export { isFavorited, toggleFavorite } from '../store'
