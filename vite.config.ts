@@ -13,7 +13,7 @@ const config: UserConfig = {
     PurgeIcons(),
   ],
   define: {
-    __BUILD_TIME__: dayjs().format('YYYY/MM/DD HH:mm'),
+    __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),
   },
 }
 
