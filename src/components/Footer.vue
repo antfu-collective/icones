@@ -15,12 +15,20 @@
       >Iconify</a>
     </p>
     <a
-      class="text-gray-500 font-light opacity-75 hover:opacity-100"
+      class="text-gray-500 font-light hover:opacity-100"
       href="https://github.com/antfu/icones"
       target="_blank"
     >
       <Icon icon="carbon:code" class="inline-block text-lg align-middle" />
       Source Code
     </a>
+    <div class="text-gray-500 mt-1 font-light opacity-75 hover:opacity-100 italic">
+      Last update: {{ buildTime }}
+    </div>
   </footer>
 </template>
+
+<script setup>
+// eslint-disable-next-line no-undef
+export const buildTime = __BUILD_TIME__
+</script>

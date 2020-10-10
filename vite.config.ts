@@ -2,6 +2,7 @@ import { UserConfig } from 'vite'
 import Voie from 'vite-plugin-voie'
 import PurgeIcons from 'vite-plugin-purge-icons'
 import ViteComponents from 'vite-plugin-components'
+import dayjs from 'dayjs'
 
 const config: UserConfig = {
   plugins: [
@@ -11,6 +12,9 @@ const config: UserConfig = {
     ViteComponents(),
     PurgeIcons(),
   ],
+  define: {
+    __BUILD_TIME__: dayjs().format('YYYY/MM/DD HH:mm'),
+  },
 }
 
 export default config

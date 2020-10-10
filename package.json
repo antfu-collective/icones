@@ -46,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@vue/compiler-sfc": "3.0.0-rc.12",
     "cross-env": "^7.0.2",
+    "dayjs": "^1.9.1",
     "eslint": "^7.9.0",
     "esno": "^0.2.0",
     "fs-extra": "^9.0.1",

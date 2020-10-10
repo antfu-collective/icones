@@ -21,13 +21,13 @@
       :to="`/collection/${collection.id}`"
     >
       <div
-        class="flex-auto"
+        class="flex-auto py-1"
         :class="collection.id === current ? 'text-primary' : ''"
       >
-        <div class="text-base">
+        <div class="text-base leading-tight">
           {{ collection.name }}
         </div>
-        <div class="text-xs block opacity-50 -mt-1">
+        <div class="text-xs block opacity-50 mt-1">
           {{ collection.id !== 'all' ? `${collection.total} icons` : `${collections.length} iconsets` }}
         </div>
       </div>
