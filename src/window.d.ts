@@ -9,5 +9,6 @@ declare global {
     // for vscode
     baseURI?: string
     staticURI?: string
+    vscode?: any
   }
 }
