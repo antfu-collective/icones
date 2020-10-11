@@ -152,15 +152,18 @@ export const download = async(type: string) => {
     return
 
   const name = `${toComponentName(props.icon)}.${type}`
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
 
   if (isVSCode) {
-    vscode.postMessage({
-      command: 'download',
-      name,
-      text
-    })
+    blob.arrayBuffer().then(
+      buffer => vscode.postMessage({
+        command: 'download',
+        name,
+        text: String.fromCharCode.apply(null, new Uint16Array(buffer) as any)
+      })
+    )
   } else {
-    FileSaver.saveAs(new Blob([text], { type: 'text/plain;charset=utf-8' }), name)
+    FileSaver.saveAs(blob, name)
   }
 }
 

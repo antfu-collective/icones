@@ -1,3 +1,4 @@
+import { isVSCode } from '../env'
 import { getSvg } from './icons'
 
 export async function LoadIconSvgs(icons: string[]) {
@@ -14,12 +15,23 @@ export async function LoadIconSvgs(icons: string[]) {
   )
 }
 
-export async function Download(url: string, name: string) {
-  const a = document.createElement('a')
-  a.href = url
-  a.download = name
-  a.click()
-  a.remove()
+export async function Download(blob: Blob, name: string) {
+  if (isVSCode) {
+    blob.arrayBuffer().then(
+      buffer => vscode.postMessage({
+        command: 'download',
+        name,
+        text: String.fromCharCode.apply(null, new Uint16Array(buffer) as any)
+      })
+    )
+  } else {  
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = name
+    a.click()
+    a.remove()
+  }
 }
 
 export async function PackIconFont(icons: string[], options: any = {}) {
@@ -33,7 +45,7 @@ export async function PackIconFont(icons: string[], options: any = {}) {
     icons: data,
   })
 
-  Download(result.zip.url, result.zip.name)
+  Download(result.zip.blob, result.zip.name)
 }
 
 export async function PackSvgZip(icons: string[], name: string) {
@@ -45,6 +57,5 @@ export async function PackSvgZip(icons: string[], name: string) {
     zip.file(`${name}.svg`, svg)
 
   const blob = await zip.generateAsync({ type: 'blob' })
-  const url = URL.createObjectURL(blob)
-  Download(url, `${name}.zip`)
+  Download(blob, `${name}.zip`)
 }
