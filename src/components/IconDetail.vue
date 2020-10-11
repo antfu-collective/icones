@@ -119,13 +119,13 @@
 
 <script setup="props, {emit}" lang='ts'>
 import copyText from 'copy-text-to-clipboard'
-import FileSaver from 'file-saver'
 import { ref, computed } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { selectingMode } from '../store'
 import { isVSCode } from '../env'
 import { bufferToString } from '../utils/bufferToSring'
+import { Download } from '../utils/pack'
 
 declare const props: {
   icon: string
@@ -155,17 +155,7 @@ export const download = async(type: string) => {
   const name = `${toComponentName(props.icon)}.${type}`
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
 
-  if (isVSCode) {
-    blob.arrayBuffer().then(
-      buffer => vscode.postMessage({
-        command: 'download',
-        name,
-        text: bufferToString(buffer)
-      })
-    )
-  } else {
-    FileSaver.saveAs(blob, name)
-  }
+  Download(blob, name)
 }
 
 export const toggleSelectingMode = () => {
