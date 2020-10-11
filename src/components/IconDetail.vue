@@ -124,6 +124,7 @@ import { ref, computed } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { selectingMode } from '../store'
+import { isVSCode } from '../env'
 
 declare const props: {
   icon: string
@@ -150,7 +151,17 @@ export const download = async(type: string) => {
   if (!text)
     return
 
-  FileSaver.saveAs(new Blob([text], { type: 'text/plain;charset=utf-8' }), `${toComponentName(props.icon)}.${type}`)
+  const name = `${toComponentName(props.icon)}.${type}`
+
+  if (isVSCode) {
+    vscode.postMessage({
+      command: 'download',
+      name,
+      text
+    })
+  } else {
+    FileSaver.saveAs(new Blob([text], { type: 'text/plain;charset=utf-8' }), name)
+  }
 }
 
 export const toggleSelectingMode = () => {
