@@ -159,10 +159,9 @@ export const download = async(type: string) => {
       name,
       text
     })
-    return
+  } else {
+    FileSaver.saveAs(new Blob([text], { type: 'text/plain;charset=utf-8' }), name)
   }
-
-  FileSaver.saveAs(new Blob([text], { type: 'text/plain;charset=utf-8' }), name)
 }
 
 export const toggleSelectingMode = () => {
