@@ -125,6 +125,7 @@ import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { selectingMode } from '../store'
 import { isVSCode } from '../env'
+import { bufferToString } from '../utils/bufferToSring'
 
 declare const props: {
   icon: string
@@ -159,7 +160,7 @@ export const download = async(type: string) => {
       buffer => vscode.postMessage({
         command: 'download',
         name,
-        text: String.fromCharCode.apply(null, new Uint16Array(buffer) as any)
+        text: bufferToString(buffer)
       })
     )
   } else {

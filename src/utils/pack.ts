@@ -1,4 +1,5 @@
 import { isVSCode } from '../env'
+import { bufferToString } from './bufferToSring'
 import { getSvg } from './icons'
 
 export async function LoadIconSvgs(icons: string[]) {
@@ -21,7 +22,7 @@ export async function Download(blob: Blob, name: string) {
       buffer => vscode.postMessage({
         command: 'download',
         name,
-        text: String.fromCharCode.apply(null, new Uint16Array(buffer) as any)
+        text: bufferToString(buffer)
       })
     )
   } else {  
