@@ -6,7 +6,11 @@ body {
   padding: 0;
 }
 
-.schema-dark {
+.bg {
+  background: white;
+}
+
+.schema-dark, .schema-dark .bg {
   background: #222;
 }
 
@@ -83,4 +87,29 @@ body {
 ::-webkit-scrollbar-thumb:active {
   background: rgba(128, 128, 128, 0.5);
   border-radius: 3px;
+}
+
+/* Tootip */
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  padding: 5px 8px;
+  top: 135%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
 }
