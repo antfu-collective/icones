@@ -19,7 +19,7 @@
     <!-- Homepage Only -->
     <template v-else>
       <div class="mx-3 mr-4 my-auto flex-none">
-        <select v-model="categoryFilter" class="opacity-50 bg-transparent font-normal w-auto outline-none focus:outline-none">
+        <select v-model="categoryFilter" class="opacity-50 bg-white dark:bg-dark-100 font-normal w-auto outline-none focus:outline-none">
           <option :value="null">All</option>
           <option v-for="category of categories" :key="category" :value="category">
             {{ category.split('/')[0].trim() }}
