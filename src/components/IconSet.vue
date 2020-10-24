@@ -24,7 +24,7 @@
               </div>
               <a
                 v-if="collection.url"
-                class="hover:text-gray-900 ml-1 mt-1 text-base opacity-25"
+                class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
                 :href="collection.url"
                 target="_blank"
               >
