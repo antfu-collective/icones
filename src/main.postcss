@@ -10,7 +10,8 @@ body {
   background: white;
 }
 
-.schema-dark, .schema-dark .bg {
+.schema-dark,
+.schema-dark .bg {
   background: #222;
 }
 
@@ -109,7 +110,9 @@ body {
   transition: opacity 0.3s;
 }
 
-.tooltip:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
+@media (hover: hover) {
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
 }

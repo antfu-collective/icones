@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 export const themeColor = useStorage('icones-theme-color', '#329672')
 export const iconSize = useStorage('icones-icon-size', '2xl')
-export const previewColor = useStorage('icones-preview-color', '#888')
+export const previewColor = useStorage('icones-preview-color', '#888888')
 export const listType = useStorage('icones-list-type', 'grid')
 export const favoritedCollections = useStorage<string[]>('icones-fav-collections', [])
 export const bags = useStorage<string[]>('icones-bags', [])
