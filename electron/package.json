@@ -54,6 +54,6 @@
     "electron": "10.1.5",
     "electron-builder": "^22.9.1",
     "electron-webpack": "^2.8.2",
-    "webpack": "~5.2.0"
+    "webpack": "~5.3.2"
   }
 }
