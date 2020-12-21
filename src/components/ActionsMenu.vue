@@ -53,118 +53,112 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, PropType, ref, watch, nextTick, computed } from 'vue'
+<script setup lang='ts'>
+import type { PropType } from 'vue'
+import { defineComponent, ref, watch, nextTick, computed, defineProps } from 'vue'
 import { iconSize, listType, selectingMode, inProgress, progressMessage } from '../store'
-import { CollectionMeta, downloadAndInstall, isInstalled } from '../data'
+import { downloadAndInstall, isInstalled } from '../data'
+import type { CollectionMeta } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
 import { isElectron } from '../env'
 
-export default defineComponent({
-  props: {
-    collection: {
-      type: Object as PropType<CollectionMeta>,
-    },
+const props = defineProps({
+  collection: {
+    type: Object as PropType<CollectionMeta>,
+    required: true,
   },
-  setup(props) {
-    const menu = ref(
-      listType.value === 'list'
-        ? 'list'
-        : iconSize.value === '2xl'
-          ? 'small'
-          : 'large',
-    )
+})
 
-    const packIconFont = async() => {
-      if (!props.collection)
+const menu = ref(
+  listType.value === 'list'
+    ? 'list'
+    : iconSize.value === '2xl'
+      ? 'small'
+      : 'large',
+)
+
+const packIconFont = async() => {
+  if (!props.collection)
+    return
+
+  progressMessage.value = 'Downloading...'
+  inProgress.value = true
+  await nextTick()
+  await downloadAndInstall(props.collection.id)
+  progressMessage.value = 'Packing up...'
+  await nextTick()
+  await PackIconFont(
+    props.collection.icons.map(i => `${props.collection!.id}:${i}`),
+    { fontName: props.collection.name, fileName: props.collection.id },
+  )
+  inProgress.value = false
+}
+
+const packSvgs = async() => {
+  if (!props.collection)
+    return
+
+  progressMessage.value = 'Downloading...'
+  inProgress.value = true
+  await nextTick()
+  await downloadAndInstall(props.collection.id)
+  progressMessage.value = 'Packing up...'
+  await nextTick()
+  await PackSvgZip(
+    props.collection.icons.map(i => `${props.collection!.id}:${i}`),
+    props.collection.id,
+  )
+  inProgress.value = false
+}
+
+const cache = async() => {
+  if (!props.collection)
+    return
+
+  progressMessage.value = 'Downloading...'
+  inProgress.value = true
+  await nextTick()
+  await downloadAndInstall(props.collection.id)
+  inProgress.value = false
+}
+
+watch(
+  menu,
+  async(current, prev) => {
+    switch (current) {
+      case 'small':
+        iconSize.value = '2xl'
+        listType.value = 'grid'
         return
-
-      progressMessage.value = 'Downloading...'
-      inProgress.value = true
-      await nextTick()
-      await downloadAndInstall(props.collection.id)
-      progressMessage.value = 'Packing up...'
-      await nextTick()
-      await PackIconFont(
-        props.collection.icons.map(i => `${props.collection!.id}:${i}`),
-        { fontName: props.collection.name, fileName: props.collection.id },
-      )
-      inProgress.value = false
-    }
-
-    const packSvgs = async() => {
-      if (!props.collection)
+      case 'large':
+        iconSize.value = '4xl'
+        listType.value = 'grid'
         return
-
-      progressMessage.value = 'Downloading...'
-      inProgress.value = true
-      await nextTick()
-      await downloadAndInstall(props.collection.id)
-      progressMessage.value = 'Packing up...'
-      await nextTick()
-      await PackSvgZip(
-        props.collection.icons.map(i => `${props.collection!.id}:${i}`),
-        props.collection.id,
-      )
-      inProgress.value = false
-    }
-
-    const cache = async() => {
-      if (!props.collection)
+      case 'list':
+        iconSize.value = '3xl'
+        listType.value = 'list'
         return
-
-      progressMessage.value = 'Downloading...'
-      inProgress.value = true
-      await nextTick()
-      await downloadAndInstall(props.collection.id)
-      inProgress.value = false
+      case 'select':
+        selectingMode.value = !selectingMode.value
+        break
+      case 'download_iconfont':
+        packIconFont()
+        break
+      case 'download_svgs':
+        packSvgs()
+        break
+      case 'cache':
+        cache()
+        break
     }
 
-    watch(
-      menu,
-      async(current, prev) => {
-        switch (current) {
-          case 'small':
-            iconSize.value = '2xl'
-            listType.value = 'grid'
-            return
-          case 'large':
-            iconSize.value = '4xl'
-            listType.value = 'grid'
-            return
-          case 'list':
-            iconSize.value = '3xl'
-            listType.value = 'list'
-            return
-          case 'select':
-            selectingMode.value = !selectingMode.value
-            break
-          case 'download_iconfont':
-            packIconFont()
-            break
-          case 'download_svgs':
-            packSvgs()
-            break
-          case 'cache':
-            cache()
-            break
-        }
-
-        await nextTick()
-        menu.value = prev
-      },
-      { flush: 'pre' },
-    )
-
-    return {
-      inProgress,
-      menu,
-      listType,
-      iconSize,
-      selectingMode,
-      isElectron,
-      installed: computed(() => props.collection && isInstalled(props.collection.id)),
-    }
+    await nextTick()
+    menu.value = prev
   },
+  { flush: 'pre' },
+)
+
+const installed = computed(() => {
+  return props.collection && isInstalled(props.collection.id)
 })
 </script>

@@ -17,19 +17,17 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
+<script setup lang='ts'>
+import { defineProps } from 'vue'
 
-export default defineComponent({
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-    number: {
-      type: Number,
-      default: 0,
-    },
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
+  },
+  number: {
+    type: Number,
+    default: 0,
   },
 })
 </script>

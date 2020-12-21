@@ -16,30 +16,25 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
-import Icon from '../components/Icon.vue'
+<script setup lang='ts'>
+import { defineProps } from 'vue'
 
-export default defineComponent({
-  components: {
-    Icon,
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
   },
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-    active: {
-      type: Boolean,
-      default: false,
-    },
-    none: {
-      type: Boolean,
-      default: false,
-    },
-    text: {
-      type: String,
-    },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  none: {
+    type: Boolean,
+    default: false,
+  },
+  text: {
+    type: String,
+    default: '',
   },
 })
 </script>

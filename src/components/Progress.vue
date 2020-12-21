@@ -8,18 +8,8 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
+<script setup lang='ts'>
 import { inProgress, progressMessage } from '../store'
-
-export default defineComponent({
-  setup() {
-    return {
-      inProgress,
-      progressMessage,
-    }
-  },
-})
 </script>
 
 <style>

@@ -24,51 +24,43 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, computed } from 'vue'
+<script setup lang='ts'>
+import { computed, defineProps } from 'vue'
 
-export default defineComponent({
-  props: {
-    value: {
-      type: Boolean,
-      defualt: false,
-    },
-    direction: {
-      type: String,
-      default: 'bottom',
-    },
+const props = defineProps({
+  value: {
+    type: Boolean,
+    defualt: false,
   },
-  setup(props) {
-    const positionClass = computed(() => {
-      switch (props.direction) {
-        case 'bottom':
-          return 'bottom-0 left-0 right-0 border-t'
-        case 'top':
-          return 'top-0 left-0 right-0 border-b'
-        case 'left':
-          return 'bottom-0 left-0 top-0 border-r'
-        case 'right':
-          return 'bottom-0 top-0 right-0 border-l'
-      }
-    })
-
-    const transform = computed(() => {
-      switch (props.direction) {
-        case 'bottom':
-          return 'translateY(100%)'
-        case 'top':
-          return 'translateY(-100%)'
-        case 'left':
-          return 'translateX(-100%)'
-        case 'right':
-          return 'translateX(100%)'
-      }
-    })
-
-    return {
-      transform,
-      positionClass,
-    }
+  direction: {
+    type: String,
+    default: 'bottom',
   },
+})
+
+const positionClass = computed(() => {
+  switch (props.direction) {
+    case 'bottom':
+      return 'bottom-0 left-0 right-0 border-t'
+    case 'top':
+      return 'top-0 left-0 right-0 border-b'
+    case 'left':
+      return 'bottom-0 left-0 top-0 border-r'
+    case 'right':
+      return 'bottom-0 top-0 right-0 border-l'
+  }
+})
+
+const transform = computed(() => {
+  switch (props.direction) {
+    case 'bottom':
+      return 'translateY(100%)'
+    case 'top':
+      return 'translateY(-100%)'
+    case 'left':
+      return 'translateX(-100%)'
+    case 'right':
+      return 'translateX(100%)'
+  }
 })
 </script>

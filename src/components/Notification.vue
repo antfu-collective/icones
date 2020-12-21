@@ -17,15 +17,13 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
+<script setup lang='ts'>
+import { defineProps } from 'vue'
 
-export default defineComponent({
-  props: {
-    value: {
-      type: Boolean,
-      defualt: false,
-    },
+defineProps({
+  value: {
+    type: Boolean,
+    defualt: false,
   },
 })
 </script>

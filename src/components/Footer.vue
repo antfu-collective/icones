@@ -30,5 +30,5 @@
 
 <script setup>
 // eslint-disable-next-line no-undef
-export const buildTime = __BUILD_TIME__
+const buildTime = __BUILD_TIME__
 </script>

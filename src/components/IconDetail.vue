@@ -103,10 +103,18 @@
           <div class="my-1 text-gray-500 text-sm">
             Download
           </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">SVG</button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">Vue</button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('jsx')">React</button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">React<sup class="opacity-50 -mr-1">TS</sup></button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">
+            SVG
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">
+            Vue
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('jsx')">
+            React
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">
+            React<sup class="opacity-50 -mr-1">TS</sup>
+          </button>
         </div>
       </div>
     </div>
@@ -117,26 +125,31 @@
   </div>
 </template>
 
-<script setup="props, {emit}" lang='ts'>
+<script setup lang='ts'>
 import copyText from 'copy-text-to-clipboard'
-import { ref, computed } from 'vue'
+import { ref, computed, defineProps, defineEmit } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { selectingMode } from '../store'
+import { selectingMode, previewColor, toggleBag, inBag } from '../store'
 import { isVSCode } from '../env'
 import { bufferToString } from '../utils/bufferToSring'
 import { Download } from '../utils/pack'
 
-declare const props: {
-  icon: string
-  showCollection: boolean
-}
-declare const emit: (...args: any) => void
+const emit = defineEmit(['close'])
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
+  },
+  showCollection: {
+    type: Boolean,
+    required: true,
+  },
+})
 
-export const copied = ref(false)
+const copied = ref(false)
 
-export { previewColor, toggleBag, inBag } from '../store'
-export const copy = async(type: string) => {
+const copy = async(type: string) => {
   const text = await getIconSnippet(props.icon, type, true)
   if (!text)
     return
@@ -147,7 +160,7 @@ export const copy = async(type: string) => {
   }, 2000)
 }
 
-export const download = async(type: string) => {
+const download = async(type: string) => {
   const text = await getIconSnippet(props.icon, type, false)
   if (!text)
     return
@@ -158,13 +171,13 @@ export const download = async(type: string) => {
   Download(blob, name)
 }
 
-export const toggleSelectingMode = () => {
+const toggleSelectingMode = () => {
   selectingMode.value = !selectingMode.value
   if (selectingMode.value)
     emit('close')
 }
 
-export const collection = computed(() => {
+const collection = computed(() => {
   const id = props.icon.split(':')[0]
   return collections.find(i => i.id === id)
 })

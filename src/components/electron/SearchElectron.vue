@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { getSearchResults, isSearchOpen } from '../../store'
-export { isElectron } from '../../env'
+import { isElectron } from '../../env'
 
 const { search, collection } = getSearchResults()
 const input = ref<HTMLInputElement | null>(null)
@@ -33,11 +33,4 @@ watch(isSearchOpen, (v) => {
     }
   }
 })
-
-export {
-  search,
-  collection,
-  isSearchOpen,
-  input,
-}
 </script>

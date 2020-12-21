@@ -12,15 +12,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { defineProps } from 'vue'
 
-export default defineComponent({
-  props: {
-    value: {
-      type: String,
-      required: true,
-    },
+defineProps({
+  value: {
+    type: String,
+    required: true,
   },
 })
 </script>

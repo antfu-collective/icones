@@ -43,42 +43,33 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
+<script setup lang='ts'>
+import { defineComponent, useContext } from 'vue'
 import { bags, clearBag } from '../store'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
 
-export default defineComponent({
-  setup(props, { emit }) {
-    const clear = () => {
-      // eslint-disable-next-line no-alert
-      if (confirm('Are you sure to remove all icons from the bag?')) {
-        clearBag()
-        emit('close')
-      }
-    }
+const { emit } = useContext()
 
-    const packIconFont = async() => {
-      // TODO: customzie
-      await PackIconFont(
-        bags.value,
-      )
-    }
+const clear = () => {
+  // eslint-disable-next-line no-alert
+  if (confirm('Are you sure to remove all icons from the bag?')) {
+    clearBag()
+    emit('close')
+  }
+}
 
-    const packSvgs = async() => {
-      // TODO: customzie
-      await PackSvgZip(
-        bags.value.map(i => i.replace(':', '-')),
-        'icones-bags',
-      )
-    }
+const packIconFont = async() => {
+  // TODO: customzie
+  await PackIconFont(
+    bags.value,
+  )
+}
 
-    return {
-      clear,
-      bags,
-      packIconFont,
-      packSvgs,
-    }
-  },
-})
+const packSvgs = async() => {
+  // TODO: customzie
+  await PackSvgZip(
+    bags.value.map(i => i.replace(':', '-')),
+    'icones-bags',
+  )
+}
 </script>

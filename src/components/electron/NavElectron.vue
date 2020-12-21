@@ -17,9 +17,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
 <style>
 .electron-nav {
   height: 37px;

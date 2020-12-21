@@ -49,13 +49,13 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { sortedCollectionsInfo } from '../data'
-export { isFavorited, toggleFavorite } from '../store'
-export { isElectron } from '../env'
+import { isFavorited, toggleFavorite } from '../store'
+import { isElectron } from '../env'
 
 const route = useRoute()
-export const current = computed(() => route.path.split('/').slice(-1)[0])
+const current = computed(() => route.path.split('/').slice(-1)[0])
 
-export const collections = computed(() => {
+const collections = computed(() => {
   return [
     { id: 'all', name: 'All' },
     ...sortedCollectionsInfo.value,

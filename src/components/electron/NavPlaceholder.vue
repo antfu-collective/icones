@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-export { isElectron } from '../../env'
+import { isElectron } from '../../env'
 </script>

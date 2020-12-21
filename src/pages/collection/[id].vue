@@ -7,33 +7,24 @@
   <IconSet v-else :collection="collection" />
 </template>
 
-<script lang='ts'>
-import { defineComponent, watch, onUnmounted } from 'vue'
+<script setup lang='ts'>
+import { defineComponent, watch, onUnmounted, defineProps } from 'vue'
 import { useCurrentCollection, setCurrentCollection } from '../../store'
 
-export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    watch(
-      () => props.id,
-      () => {
-        setCurrentCollection(props.id)
-      },
-      { immediate: true },
-    )
-
-    onUnmounted(() => {
-      setCurrentCollection('')
-    })
-
-    return {
-      collection: useCurrentCollection(),
-    }
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
   },
 })
+
+watch(
+  () => props.id,
+  () => setCurrentCollection(props.id),
+  { immediate: true },
+)
+
+onUnmounted(() => setCurrentCollection(''))
+
+const collection = useCurrentCollection()
 </script>

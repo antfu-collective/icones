@@ -7,19 +7,11 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent, computed } from 'vue'
+<script setup lang='ts'>
+import { computed } from 'vue'
 import { themeColor } from './store'
 
-export default defineComponent({
-  setup() {
-    const style = computed(() => ({
-      '--theme-color': themeColor.value,
-    }))
-
-    return {
-      style,
-    }
-  },
-})
+const style = computed(() => ({
+  '--theme-color': themeColor.value,
+}))
 </script>

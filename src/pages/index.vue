@@ -52,9 +52,9 @@
 </template>
 
 <script setup lang='ts'>
-export { sortedCollectionsInfo as collections } from '../data'
-export { isFavorited } from '../store'
-export { sample } from '../utils/sample'
+import { sortedCollectionsInfo as collections } from '../data'
+import { isFavorited } from '../store'
+import { sample } from '../utils/sample'
 </script>
 
 <style>

@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-export { isDark } from '../store'
+import { isDark } from '../store'
 </script>

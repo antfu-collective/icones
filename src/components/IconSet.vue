@@ -144,67 +144,41 @@
   </WithNavbar>
 </template>
 
-<script lang='ts'>
+<script setup lang='ts'>
 import { defineComponent, ref, computed } from 'vue'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
 import { isLocalMode } from '../env'
 
-export default defineComponent({
-  setup(props) {
-    const { search, icons, category, collection } = getSearchResults()
-    const showBag = ref(false)
+const { search, icons, category, collection } = getSearchResults()
+const showBag = ref(false)
 
-    const current = ref<string>('')
-    const max = ref(isLocalMode ? 500 : 200)
+const current = ref<string>('')
+const max = ref(isLocalMode ? 500 : 200)
 
-    const toggleCategory = (cat: string) => {
-      if (category.value === cat) category.value = ''
-      else category.value = cat
-    }
+const toggleCategory = (cat: string) => {
+  if (category.value === cat) category.value = ''
+  else category.value = cat
+}
 
-    const namespace = computed(() => {
-      return !collection.value || collection.value.id === 'all'
-        ? ''
-        : `${collection.value.id}:`
-    })
-
-    const onSelect = (icon: string) => {
-      if (selectingMode.value) toggleBag(icon)
-      else current.value = icon
-    }
-
-    const selectedIcons = computed(() => {
-      if (selectingMode.value) return bags.value
-      else return current.value ? [] : [current.value]
-    })
-
-    const loadMore = () => {
-      max.value += 100
-    }
-
-    return {
-      loading: isCurrentCollectionLoading(),
-      current,
-      search,
-      collection,
-      icons,
-      onSelect,
-      max,
-      category,
-      loadMore,
-      iconSize,
-      listType,
-      namespace,
-      selectedIcons,
-
-      // cates
-      toggleCategory,
-
-      // bags
-      showBag,
-      bags,
-      selectingMode,
-    }
-  },
+const namespace = computed(() => {
+  return !collection.value || collection.value.id === 'all'
+    ? ''
+    : `${collection.value.id}:`
 })
+
+const onSelect = (icon: string) => {
+  if (selectingMode.value) toggleBag(icon)
+  else current.value = icon
+}
+
+const selectedIcons = computed(() => {
+  if (selectingMode.value) return bags.value
+  else return current.value ? [] : [current.value]
+})
+
+const loadMore = () => {
+  max.value += 100
+}
+
+const loading = isCurrentCollectionLoading()
 </script>
