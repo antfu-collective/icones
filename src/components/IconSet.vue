@@ -78,7 +78,6 @@
         >
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <input
-            ref="input"
             v-model="search"
             class="text-base outline-none py-1 px-4 flex-auto m-0 bg-transparent"
             placeholder="Search..."
