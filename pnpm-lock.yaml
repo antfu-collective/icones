@@ -26,6 +26,7 @@ importers:
       esno: 0.3.0
       fs-extra: 9.0.1
       jszip: 3.5.0
+      pnpm: 5.13.7
       svg-packer: 0.0.3
       tailwindcss-dark-mode: 1.1.7
       typescript: 4.1.3
@@ -56,6 +57,7 @@ importers:
       fuse.js: ^6.4.3
       hotkeys-js: ^3.8.1
       jszip: ^3.5.0
+      pnpm: ^5.13.7
       svg-packer: ^0.0.3
       tailwindcss: ^1.9.6
       tailwindcss-dark-mode: ^1.1.7
@@ -8675,6 +8677,13 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
+  /pnpm/5.13.7:
+    dev: true
+    engines:
+      node: '>=10.16'
+    hasBin: true
+    resolution:
+      integrity: sha512-ejYJR8iK+IkN4HsHtwal9EB3K4N5AllQ86X6DwCaGWMrzDZNEwfAQYvyeqY35ElCvOd/M5W3ewvnrGpilGEgGQ==
   /portfinder/1.0.28:
     dependencies:
       async: 2.6.3

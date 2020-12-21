@@ -1,6 +1,9 @@
+[build.environment]
+  NPM_FLAGS = "--prefix=/dev/null"
+
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
 
 [[redirects]]
   from = "/*"
