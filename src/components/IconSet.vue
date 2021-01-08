@@ -58,8 +58,8 @@
               v-for="c of Object.keys(collection.categories)"
               :key="c"
               class="
-                whitespace-no-wrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-100 cursor-pointer
-                dark:border-dark-200 dark-hover:bg-dark-200
+                whitespace-no-wrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-50 cursor-pointer
+                dark:border-dark-200 dark:hover:bg-dark-200
               "
               :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
               @click="toggleCategory(c)"

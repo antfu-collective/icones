@@ -10,25 +10,24 @@ body {
   background: white;
 }
 
-.schema-dark,
-.schema-dark .bg {
+html.dark,
+html.dark .bg {
   background: #222;
 }
 
 .btn {
-  @apply border border-gray-200 rounded shadow-sm outline-none bg-black px-4 py-1 text-gray-600 text-sm bg-opacity-0;
+  @apply 
+    border border-gray-200 rounded shadow-sm outline-none
+    bg-white px-4 py-1 text-gray-600 text-sm
+    hover:bg-gray-50 hover:shadow focus:shadow;
 }
 
-.schema-dark .btn {
-  @apply border-dark-200 text-gray-200 bg-white bg-opacity-0;
-}
-
-.btn:hover {
-  @apply shadow outline-none bg-opacity-10;
+html.dark .btn {
+  @apply border-dark-200 text-gray-200 bg-dark-100 bg-white;
 }
 
 .btn:focus {
-  @apply shadow outline-none bg-opacity-10;
+  @apply outline-none border-primary;
 }
 
 .btn.small {

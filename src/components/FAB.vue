@@ -2,8 +2,8 @@
 <template>
   <div
     class="
-      p-4 m-6 fixed bottom-0 right-0 shadow-lg bg-white rounded-full text-2xl cursor-pointer border border-transparent hover:bg-gray-100
-      dark:bg-dark-100 dark:border dark:border-dark-300 dark-hover:bg-dark-200
+      p-4 m-6 fixed bottom-0 right-0 shadow-lg bg-white rounded-full text-2xl cursor-pointer border border-transparent hover:bg-gray-50
+      dark:bg-dark-100 dark:border dark:border-dark-300 dark:hover:bg-dark-200
     "
   >
     <Icon class="text-gray-700 dark:text-gray-400" :icon="icon" />

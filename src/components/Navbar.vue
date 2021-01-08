@@ -1,9 +1,8 @@
 <template>
   <nav
-    v-wind
     class="
       dragging p-2 relative bg-white z-10 flex border-b border-gray-200 flex-none
-      dark:{bg-dark-100 border-dark-200}
+      dark:bg-dark-100 dark:border-dark-200
     "
     :class="$route.path !== '/' ? 'md:hidden' : ''"
   >
@@ -20,7 +19,9 @@
     <template v-else>
       <div class="mx-3 mr-4 my-auto flex-none">
         <select v-model="categoryFilter" class="opacity-50 bg-white dark:bg-dark-100 font-normal w-auto outline-none focus:outline-none">
-          <option :value="null">All</option>
+          <option :value="null">
+            All
+          </option>
           <option v-for="category of categories" :key="category" :value="category">
             {{ category.split('/')[0].trim() }}
           </option>

@@ -4,9 +4,11 @@ import PurgeIcons from 'vite-plugin-purge-icons'
 import ViteComponents from 'vite-plugin-components'
 import { VitePWA } from 'vite-plugin-pwa'
 import dayjs from 'dayjs'
+import Vue from '@vitejs/plugin-vue'
 
 const config: UserConfig = {
   plugins: [
+    Vue(),
     Voie({
       importMode: 'sync',
     }),

@@ -1,7 +1,6 @@
 /* eslint-disable import/no-absolute-path */
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { directive as variantwind } from 'variantwind'
 import routes from 'voie-pages'
 import App from './App.vue'
 import './utils/electron'
@@ -18,6 +17,5 @@ const router = createRouter({
   routes,
 })
 
-app.directive('wind', variantwind)
 app.use(router)
 app.mount('#app')

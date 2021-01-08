@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { extractor } = require('variantwind')
-
 module.exports = {
   purge: {
     enabled: process.env.NODE_ENV === 'production',
     content: [
       './index.html',
       './src/**/*.vue',
+      './src/**/*.md',
       './src/**/*.js',
       './src/**/*.ts',
     ],
     options: {
-      whitelist: [
-        'schema-dark',
+      safelist: [
         'text-xl',
         'text-2xl',
         'text-3xl',
@@ -22,16 +20,9 @@ module.exports = {
         'text-7xl',
         'text-8xl',
       ],
-      extractors: [
-        {
-          extractor,
-          extensions: ['vue'],
-        },
-      ],
     },
   },
   theme: {
-    darkSelector: '.schema-dark',
     extend: {
       fontSize: {
         '7xl': '5rem',
@@ -70,22 +61,11 @@ module.exports = {
   },
   variants: {
     cursor: ['responsive', 'disabled'],
-    backgroundColor: ['dark', 'dark-hover', 'dark-group-hover', 'hover', 'disabled'],
-    borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-active', 'active', 'focus', 'disabled'],
-    textColor: ['dark', 'dark-hover', 'dark-active', 'hover', 'active', 'disabled'],
+    backgroundColor: ['dark', 'hover', 'disabled'],
+    borderColor: ['dark', 'active', 'focus', 'disabled'],
+    textColor: ['dark', 'hover', 'active', 'disabled'],
     opacity: ['dark', 'hover', 'active', 'focus', 'disabled'],
+    hover: ['outline'],
   },
-  plugins: [
-    require('tailwindcss-dark-mode')(),
-  ],
-  future: {
-    removeDeprecatedGapUtilities: true,
-  },
-  experimental: {
-    applyComplexClasses: true,
-    uniformColorPalette: true,
-    extendedSpacingScale: true,
-    defaultLineHeights: true,
-    extendedFontSizeScale: true,
-  },
+  darkMode: 'class',
 }
