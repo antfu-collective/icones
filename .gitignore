@@ -6,7 +6,7 @@ src/assets/collections.json
 .DS_Store
 
 public/collections
-public/collections-info.json
-public/collections-meta.json
 public/lib
 release
+collections-info.json
+collections-meta.json

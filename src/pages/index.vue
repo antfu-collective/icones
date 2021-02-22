@@ -16,7 +16,7 @@
       >
         <router-link
           class="
-            flex flex-col transition-all duration-300 text-gray-900 text-center justify-center hover:text-primary
+            flex flex-col text-gray-900 text-center justify-center hover:text-primary
             dark:text-gray-300
           "
           :to="`/collection/${collection.id}`"

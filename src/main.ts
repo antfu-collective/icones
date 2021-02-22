@@ -4,7 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import routes from 'voie-pages'
 import App from './App.vue'
 import './utils/electron'
-import './main.postcss'
+import 'windi.css'
+import './main.css'
 
 // import icons data genereted by PurgeIcons
 import '@purge-icons/generated'

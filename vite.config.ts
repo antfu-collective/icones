@@ -1,12 +1,13 @@
-import { UserConfig } from 'vite'
+import { defineConfig } from 'vite'
 import Voie from 'vite-plugin-voie'
 import PurgeIcons from 'vite-plugin-purge-icons'
 import ViteComponents from 'vite-plugin-components'
 import { VitePWA } from 'vite-plugin-pwa'
 import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
+import WindiCSS from 'vite-plugin-windicss'
 
-const config: UserConfig = {
+export default defineConfig({
   plugins: [
     Vue(),
     Voie({
@@ -32,10 +33,13 @@ const config: UserConfig = {
         ],
       },
     }),
+    WindiCSS({
+      preflight: {
+        enableAll: true,
+      },
+    }),
   ],
   define: {
     __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),
   },
-}
-
-export default config
+})

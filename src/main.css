@@ -1,7 +1,3 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 body {
   padding: 0;
 }
@@ -19,15 +15,10 @@ html.dark .bg {
   @apply 
     border border-gray-200 rounded shadow-sm outline-none
     bg-white px-4 py-1 text-gray-600 text-sm
-    hover:bg-gray-50 hover:shadow focus:shadow;
-}
-
-html.dark .btn {
-  @apply border-dark-200 text-gray-200 bg-dark-100 bg-white;
-}
-
-html.dark .btn:focus, .btn:focus {
-  @apply outline-none border-primary;
+    hover:(bg-gray-50 shadow)
+    dark:(border-dark-200 text-gray-300 bg-dark-100)
+    dark:hover:(border-primary text-primary)
+    focus:(shadow outline-none);
 }
 
 .btn.small {
@@ -110,6 +101,7 @@ html.dark .btn:focus, .btn:focus {
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s;
+  @apply whitespace-nowrap;
 }
 
 @media (hover: hover) {
