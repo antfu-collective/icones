@@ -144,7 +144,7 @@
 </template>
 
 <script setup lang='ts'>
-import { defineComponent, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
 import { isLocalMode } from '../env'
 

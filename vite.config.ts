@@ -34,6 +34,7 @@ export default defineConfig({
       },
     }),
     WindiCSS({
+      safelist: 'text-2xl text-3xl text-4xl',
       preflight: {
         enableAll: true,
       },

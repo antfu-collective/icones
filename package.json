@@ -19,7 +19,7 @@
     "postinstall": "esno scripts/prepare.ts",
     "prebuild": "esno scripts/prebuild.ts",
     "postbuild": "esno scripts/postbuild.ts",
-    "dev": "vite --port 3333",
+    "dev": "vite --port 3333 --open",
     "dev:electron": "npm -C ./electron run dev",
     "build": "cross-env NODE_ENV=production vite build",
     "build:electron": "cross-env NODE_ENV=production npm -C ./electron run build"

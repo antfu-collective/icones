@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import { defineEmit, defineProps } from 'vue'
-import { themeColor } from '../store'
 import { getSearchHighlightHTML } from '../hooks'
 
 const props = defineProps({
