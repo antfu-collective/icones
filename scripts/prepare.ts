@@ -53,9 +53,9 @@ async function prepareJSON() {
     info.size = humanFileSize(fs.statSync(rawFilePath).size)
   }
 
-  let metaOut = path.resolve(__dirname, '../src/data')
-  await fs.writeJSON(path.join(metaOut, 'collections-meta.json'), collectionsMeta)
-  await fs.writeJSON(path.join(metaOut, 'collections-info.json'), collections)
+  await fs.writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)
+  const infoOut = path.resolve(__dirname, '../src/data')
+  await fs.writeJSON(path.join(infoOut, 'collections-info.json'), collections)
 }
 
 async function copyLibs() {

@@ -2,10 +2,10 @@
 import type { IconifyJSON } from '@iconify/iconify'
 import { computed, ref } from 'vue'
 import Iconify from '@purge-icons/generated'
-import infoJSON from './collections-info.json'
 import { favoritedCollections } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { saveCollection, loadCollection } from '../store/indexedDB'
+import infoJSON from './collections-info.json'
 
 export interface CollectionInfo {
   id: string
