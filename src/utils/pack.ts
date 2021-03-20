@@ -100,5 +100,5 @@ export async function PackZip(
     action(name, svg)
 
   const blob = await zip.generateAsync({ type: 'blob' })
-  Download(blob, `${name}.zip`)
+  Download(blob, `${name}-${type}.zip`)
 }
