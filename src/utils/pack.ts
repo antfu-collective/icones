@@ -1,7 +1,9 @@
 import { isVSCode } from '../env'
 import { bufferToString } from './bufferToSring'
-import { getSvg } from './icons'
-
+import {
+  getSvg, SvgToVue, SvgToJSX,
+  SvgToTSX, toComponentName,
+} from './icons'
 export async function LoadIconSvgs(icons: string[]) {
   return await Promise.all(
     icons
@@ -22,10 +24,11 @@ export async function Download(blob: Blob, name: string) {
       buffer => vscode.postMessage({
         command: 'download',
         name,
-        text: bufferToString(buffer)
-      })
+        text: bufferToString(buffer),
+      }),
     )
-  } else {  
+  }
+  else {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
@@ -56,6 +59,45 @@ export async function PackSvgZip(icons: string[], name: string) {
   const zip = new window.JSZip()
   for (const { name, svg } of data)
     zip.file(`${name}.svg`, svg)
+
+  const blob = await zip.generateAsync({ type: 'blob' })
+  Download(blob, `${name}.zip`)
+}
+
+export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue'
+
+export async function PackZip(
+  icons: string[],
+  name: string,
+  type: PackType = 'svg',
+) {
+  if (!icons.length) return
+  const data = await LoadIconSvgs(icons)
+
+  const zip = new window.JSZip()
+
+  const zipActions: Record<PackType, (name: string, svg: string) => void> = {
+    vue(name: string, svg: string) {
+      name = toComponentName(name)
+      zip.file(`${name}.vue`, SvgToVue(svg, name))
+    },
+    jsx(name: string, svg: string) {
+      name = toComponentName(name)
+      zip.file(`${name}.jsx`, SvgToJSX(svg, name, false))
+    },
+    tsx(name: string, svg: string) {
+      name = toComponentName(name)
+      zip.file(`${name}.tsx`, SvgToTSX(svg, name, false))
+    },
+    svg(name: string, svg: string) {
+      zip.file(`${name}.svg`, svg)
+    },
+  }
+
+  const action = zipActions[type]
+
+  for (const { name, svg } of data)
+    action(name, svg)
 
   const blob = await zip.generateAsync({ type: 'blob' })
   Download(blob, `${name}.zip`)
