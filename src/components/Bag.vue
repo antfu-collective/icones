@@ -24,14 +24,38 @@
       <div class="flex-auto overflow-y-overflow py-3 px-1">
         <Icons :icons="bags" @select="e => $emit('select', e)" />
       </div>
+
+      <div
+        v-show="showPackOption"
+        class="
+        relative
+          flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
+          dark:border-dark-200
+        "
+      >
+        <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="showPackOption = false" />
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svg')">
+          SVG
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('vue')">
+          Vue
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('jsx')">
+          React
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('tsx')">
+          React<sup class="opacity-50 -mr-1">TS</sup>
+        </button>
+      </div>
+
       <div
         class="
           flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
           dark:border-dark-200
         "
       >
+        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:download" text="Download Zip" :active="true" @click="showPackOption = true" />
         <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
-        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:download" text="Download SVGs Zip" :active="true" @click="packSvgs" />
       </div>
     </template>
 
@@ -44,11 +68,14 @@
 </template>
 
 <script setup lang='ts'>
-import { defineComponent, useContext } from 'vue'
+import { defineComponent, useContext, ref } from 'vue'
 import { bags, clearBag } from '../store'
-import { PackIconFont, PackSvgZip } from '../utils/pack'
+import { PackIconFont, PackZip } from '../utils/pack'
+import type { PackType } from '../utils/pack'
 
 const { emit } = useContext()
+
+const showPackOption = ref(false)
 
 const clear = () => {
   // eslint-disable-next-line no-alert
@@ -65,11 +92,11 @@ const packIconFont = async() => {
   )
 }
 
-const packSvgs = async() => {
-  // TODO: customzie
-  await PackSvgZip(
+const PackSvgs = async(type: PackType = 'svg') => {
+  await PackZip(
     bags.value.map(i => i.replace(':', '-')),
     'icones-bags',
+    type,
   )
 }
 </script>
