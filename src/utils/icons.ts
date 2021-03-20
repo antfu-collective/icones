@@ -4,8 +4,9 @@ import { HtmlToJSX } from './htmlToJsx'
 
 const API_ENTRY = 'https://api.iconify.design'
 
-export async function getSvg(icon: string) {
-  return Iconify.renderSVG(icon, {})?.outerHTML || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=auto`).then(r => r.text()) || ''
+export async function getSvg(icon: string, size = '1em') {
+  return Iconify.renderSVG(icon, { height: size })?.outerHTML
+   || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}`).then(r => r.text()) || ''
 }
 
 export function toComponentName(icon: string) {
@@ -78,7 +79,7 @@ export async function getIconSnippet(icon: string, type: string, snippet = true)
     case 'css':
       return `background: url('${API_ENTRY}/${icon}.svg') no-repeat center center / contain;`
     case 'svg':
-      return await getSvg(icon)
+      return await getSvg(icon, '32')
     case 'data_url':
       return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon))}`
     case 'pure-jsx':
