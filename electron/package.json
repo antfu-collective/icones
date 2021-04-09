@@ -47,13 +47,13 @@
     "babel-loader": "^8.2.2",
     "electron-debug": "^3.2.0",
     "electron-serve": "^1.1.0",
-    "electron-util": "^0.14.2",
+    "electron-util": "^0.15.0",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
     "electron": "12.0.2",
     "electron-builder": "^22.10.5",
     "electron-webpack": "^2.8.2",
-    "webpack": "~5.28.0"
+    "webpack": "~5.31.0"
   }
 }
