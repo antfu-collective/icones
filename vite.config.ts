@@ -13,7 +13,9 @@ export default defineConfig({
     Voie({
       importMode: 'sync',
     }),
-    ViteComponents(),
+    ViteComponents({
+      globalComponentsDeclaration: true,
+    }),
     PurgeIcons(),
     VitePWA({
       manifest: {
