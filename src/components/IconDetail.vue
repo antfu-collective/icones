@@ -127,15 +127,13 @@
 
 <script setup lang='ts'>
 import copyText from 'copy-text-to-clipboard'
-import { ref, computed, defineProps, defineEmit } from 'vue'
+import { ref, computed } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { selectingMode, previewColor, toggleBag, inBag } from '../store'
-import { isVSCode } from '../env'
-import { bufferToString } from '../utils/bufferToSring'
 import { Download } from '../utils/pack'
 
-const emit = defineEmit(['close'])
+const emit = defineEmits(['close'])
 const props = defineProps({
   icon: {
     type: String,

@@ -5,6 +5,7 @@ importers:
   .:
     specifiers:
       '@antfu/eslint-config': ^0.6.6
+      '@antfu/utils': ^0.2.4
       '@iconify/iconify': ^2.0.3
       '@iconify/json': ^1.1.368
       '@purge-icons/generated': ^0.7.0
@@ -38,6 +39,7 @@ importers:
       vue-chemistry: ^0.2.2
       vue-router: 4.0.10
     dependencies:
+      '@antfu/utils': 0.2.4
       '@iconify/iconify': 2.0.3
       '@vueuse/core': 5.0.3_vue@3.1.3
       copy-text-to-clipboard: github.com/afzalsayed96/copy-text-to-clipboard/8b475341729dad85ccd053ac653d04797738e6ad
@@ -186,7 +188,6 @@ packages:
     resolution: {integrity: sha512-2bZNkVfL9IZESmvE26UKi8SzyvSoaIsGXDcnbHFMtmGMqUiB1fXpAJ1ijGf+tSqKRQ5yagck2U1Qk0p+705/kw==}
     dependencies:
       '@types/throttle-debounce': 2.1.0
-    dev: true
 
   /@babel/code-frame/7.10.4:
     resolution: {integrity: sha512-vG6SvB6oYEhvgisZNFRmRCUkLz11c7rp+tbNTynGqc6mS1d5ATd/sGyV6W0KZZnXRKMTzZDRgQT3Ou9jhpAfUg==}
@@ -2441,7 +2442,6 @@ packages:
 
   /@types/throttle-debounce/2.1.0:
     resolution: {integrity: sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==}
-    dev: true
 
   /@types/uglify-js/3.9.3:
     resolution: {integrity: sha512-KswB5C7Kwduwjj04Ykz+AjvPcfgv/37Za24O2EDzYNbwyzOo8+ydtvzUfZ5UMguiVu29Gx44l1A6VsPPcmYu9w==}

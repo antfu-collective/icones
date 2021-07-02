@@ -8,15 +8,12 @@
 </template>
 
 <script setup lang='ts'>
-import { defineComponent, watch, onUnmounted, defineProps } from 'vue'
+import { watch, onUnmounted } from 'vue'
 import { useCurrentCollection, setCurrentCollection } from '../../store'
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  id: string
+}>()
 
 watch(
   () => props.id,

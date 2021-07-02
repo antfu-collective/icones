@@ -27,15 +27,12 @@
 <script setup lang='ts'>
 import { computed, defineProps } from 'vue'
 
-const props = defineProps({
-  value: {
-    type: Boolean,
-    defualt: false,
-  },
-  direction: {
-    type: String,
-    default: 'bottom',
-  },
+const props = withDefaults(defineProps<{
+  value?: boolean
+  direction?: string
+}>(), {
+  value: false,
+  direction: 'bottom',
 })
 
 const positionClass = computed(() => {
@@ -48,6 +45,8 @@ const positionClass = computed(() => {
       return 'bottom-0 left-0 top-0 border-r'
     case 'right':
       return 'bottom-0 top-0 right-0 border-l'
+    default:
+      return ''
   }
 })
 
@@ -61,6 +60,8 @@ const transform = computed(() => {
       return 'translateX(-100%)'
     case 'right':
       return 'translateX(100%)'
+    default:
+      return ''
   }
 })
 </script>

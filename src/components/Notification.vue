@@ -17,12 +17,8 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps } from 'vue'
-
-defineProps({
-  value: {
-    type: Boolean,
-    defualt: false,
-  },
-})
+withDefaults(
+  defineProps<{ value?: boolean }>(),
+  { value: false },
+)
 </script>

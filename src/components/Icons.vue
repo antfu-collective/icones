@@ -34,12 +34,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmit, defineProps } from 'vue'
+import type { PropType } from 'vue'
 import { getSearchHighlightHTML } from '../hooks'
 
-const props = defineProps({
+defineProps({
   icons: {
-    type: Array,
+    type: Array as PropType<any[]>,
     default: () => [],
   },
   selected: {
@@ -72,7 +72,9 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmit(['select'])
+defineEmits<{
+  (event: 'select', id: string): void
+}>()
 </script>
 
 <style>

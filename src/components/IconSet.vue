@@ -170,10 +170,10 @@ const onSelect = (icon: string) => {
   else current.value = icon
 }
 
-const selectedIcons = computed(() => {
-  if (selectingMode.value) return bags.value
-  else return current.value ? [] : [current.value]
-})
+// const selectedIcons = computed(() => {
+//   if (selectingMode.value) return bags.value
+//   else return current.value ? [] : [current.value]
+// })
 
 const loadMore = () => {
   max.value += 100

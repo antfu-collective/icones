@@ -25,6 +25,7 @@
     "build:electron": "cross-env NODE_ENV=production npm -C ./electron run build"
   },
   "dependencies": {
+    "@antfu/utils": "^0.2.4",
     "@iconify/iconify": "^2.0.3",
     "@vueuse/core": "^5.0.3",
     "copy-text-to-clipboard": "afzalsayed96/copy-text-to-clipboard",
@@ -56,9 +57,9 @@
     "typescript": "^4.3.5",
     "vite": "2.3.8",
     "vite-plugin-components": "^0.12.0",
+    "vite-plugin-pages": "^0.14.8",
     "vite-plugin-purge-icons": "^0.7.0",
     "vite-plugin-pwa": "^0.8.1",
-    "vite-plugin-pages": "^0.14.8",
     "vite-plugin-windicss": "^1.2.0"
   },
   "prettier": {

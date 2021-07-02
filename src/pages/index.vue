@@ -54,7 +54,6 @@
 <script setup lang='ts'>
 import { sortedCollectionsInfo as collections } from '../data'
 import { isFavorited } from '../store'
-import { sample } from '../utils/sample'
 </script>
 
 <style>

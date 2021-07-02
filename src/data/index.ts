@@ -1,6 +1,6 @@
-// eslint-disable-next-line
 import type { IconifyJSON } from '@iconify/iconify'
 import { computed, ref } from 'vue'
+import { notNullish } from '@antfu/utils'
 import Iconify from '@purge-icons/generated'
 import { favoritedCollections } from '../store'
 import { isLocalMode, staticPath } from '../env'
@@ -17,6 +17,7 @@ export interface CollectionInfo {
   sampleIcons?: string[]
   category?: string
   palette?: string
+  total?: number
   prepacked?: IconifyJSON
 }
 
@@ -29,7 +30,7 @@ const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
-export const categories = Array.from(new Set(collections.map(i => i.category).filter(Boolean)))
+export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 export const categoryFilter = ref<string | null>(null)
 
 export const sortedCollectionsInfo = computed(() => {

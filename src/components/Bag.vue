@@ -68,12 +68,15 @@
 </template>
 
 <script setup lang='ts'>
-import { defineComponent, useContext, ref } from 'vue'
+import { ref } from 'vue'
 import { bags, clearBag } from '../store'
 import { PackIconFont, PackZip } from '../utils/pack'
 import type { PackType } from '../utils/pack'
 
-const { emit } = useContext()
+const emit = defineEmits<{
+  (event: 'close'): void
+  (event: 'select', value: string): void
+}>()
 
 const showPackOption = ref(false)
 
