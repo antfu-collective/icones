@@ -1,7 +1,7 @@
 /* eslint-disable import/no-absolute-path */
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import routes from 'voie-pages'
+import routes from 'virtual:generated-pages'
 import App from './App.vue'
 import 'virtual:windi.css'
 import 'virtual:windi-devtools'

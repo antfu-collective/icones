@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import Voie from 'vite-plugin-voie'
+import Pages from 'vite-plugin-pages'
 import PurgeIcons from 'vite-plugin-purge-icons'
 import ViteComponents from 'vite-plugin-components'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -10,7 +10,7 @@ import WindiCSS from 'vite-plugin-windicss'
 export default defineConfig({
   plugins: [
     Vue(),
-    Voie({
+    Pages({
       importMode: 'sync',
     }),
     ViteComponents({

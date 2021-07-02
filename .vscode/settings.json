@@ -2,5 +2,6 @@
   "search.useGlobalIgnoreFiles": true,
   "cSpell.words": [
     "icones"
-  ]
+  ],
+  "i18n-ally.enabledFramework": []
 }

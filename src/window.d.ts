@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import type JSZip from 'jszip'
 
 declare global {

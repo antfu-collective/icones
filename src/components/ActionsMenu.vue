@@ -55,7 +55,7 @@
 
 <script setup lang='ts'>
 import type { PropType } from 'vue'
-import { defineComponent, ref, watch, nextTick, computed, defineProps } from 'vue'
+import { ref, watch, nextTick, computed } from 'vue'
 import { iconSize, listType, selectingMode, inProgress, progressMessage } from '../store'
 import { downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'

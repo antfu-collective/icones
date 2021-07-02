@@ -13,16 +13,16 @@ declare module 'vue' {
     Icon: typeof import('./src/components/Icon.vue')['default']
     IconButton: typeof import('./src/components/IconButton.vue')['default']
     IconDetail: typeof import('./src/components/IconDetail.vue')['default']
-    IconSet: typeof import('./src/components/IconSet.vue')['default']
     Icons: typeof import('./src/components/Icons.vue')['default']
+    IconSet: typeof import('./src/components/IconSet.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
-    Notification: typeof import('./src/components/Notification.vue')['default']
-    Progress: typeof import('./src/components/Progress.vue')['default']
-    WithNavbar: typeof import('./src/components/WithNavbar.vue')['default']
     NavElectron: typeof import('./src/components/electron/NavElectron.vue')['default']
     NavPlaceholder: typeof import('./src/components/electron/NavPlaceholder.vue')['default']
+    Notification: typeof import('./src/components/Notification.vue')['default']
+    Progress: typeof import('./src/components/Progress.vue')['default']
     SearchElectron: typeof import('./src/components/electron/SearchElectron.vue')['default']
+    WithNavbar: typeof import('./src/components/WithNavbar.vue')['default']
   }
 }
 
