@@ -1,8 +1,8 @@
 import type { IconifyJSON } from '@iconify/iconify'
-import { computed, ref } from 'vue'
+import { computed, ref, nextTick } from 'vue'
 import { notNullish } from '@antfu/utils'
 import Iconify from '@purge-icons/generated'
-import { favoritedCollections } from '../store'
+import { favoritedCollections, inProgress, progressMessage } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { saveCollection, loadCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
@@ -96,6 +96,14 @@ export async function downloadAndInstall(id: string) {
     saveCollection(id, data) // async
 
   return true
+}
+
+export async function cacheCollection(id: string) {
+  progressMessage.value = 'Downloading...'
+  inProgress.value = true
+  await nextTick()
+  await downloadAndInstall(id)
+  inProgress.value = false
 }
 
 export async function getMeta(id: string): Promise<CollectionMeta | null> {

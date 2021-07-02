@@ -96,8 +96,11 @@
             :namespace="namespace"
             @select="onSelect"
           />
-          <button v-if="icons.length > max" class="btn m-2" @click="loadMore">
+          <button v-if="icons.length > max" class="btn mx-1 my-3" @click="loadMore">
             Load More
+          </button>
+          <button v-if="icons.length > max && namespace" class="btn mx-1 my-3" @click="loadAll">
+            Load All ({{ icons.length - max }})
           </button>
           <p class="text-gray-500 text-sm pt-4">
             {{ icons.length }} icons
@@ -144,13 +147,15 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
 import { isLocalMode } from '../env'
+import { cacheCollection } from '../data'
 
 const { search, icons, category, collection } = getSearchResults()
 const showBag = ref(false)
 
+const maxMap = new Map<string | NavigatorUserMediaErrorCallback, number>()
 const current = ref<string>('')
 const max = ref(isLocalMode ? 500 : 200)
 
@@ -170,6 +175,13 @@ const onSelect = (icon: string) => {
   else current.value = icon
 }
 
+watch(
+  namespace,
+  () => {
+    max.value = maxMap.get(namespace.value) || 200
+  },
+)
+
 // const selectedIcons = computed(() => {
 //   if (selectingMode.value) return bags.value
 //   else return current.value ? [] : [current.value]
@@ -177,6 +189,16 @@ const onSelect = (icon: string) => {
 
 const loadMore = () => {
   max.value += 100
+  maxMap.set(namespace.value, max.value)
+}
+
+const loadAll = async() => {
+  if (!namespace.value)
+    return
+
+  await cacheCollection(collection.value!.id)
+  max.value = icons.value.length
+  maxMap.set(namespace.value, max.value)
 }
 
 const loading = isCurrentCollectionLoading()

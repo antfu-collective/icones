@@ -57,7 +57,7 @@
 import type { PropType } from 'vue'
 import { ref, watch, nextTick, computed } from 'vue'
 import { iconSize, listType, selectingMode, inProgress, progressMessage } from '../store'
-import { downloadAndInstall, isInstalled } from '../data'
+import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
 import { isElectron } from '../env'
@@ -115,11 +115,7 @@ const cache = async() => {
   if (!props.collection)
     return
 
-  progressMessage.value = 'Downloading...'
-  inProgress.value = true
-  await nextTick()
-  await downloadAndInstall(props.collection.id)
-  inProgress.value = false
+  await cacheCollection(props.collection.id)
 }
 
 watch(
