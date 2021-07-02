@@ -5,6 +5,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     ActionsMenu: typeof import('./src/components/ActionsMenu.vue')['default']
     Bag: typeof import('./src/components/Bag.vue')['default']
+    CollectionEntries: typeof import('./src/components/CollectionEntries.vue')['default']
+    CollectionEntry: typeof import('./src/components/CollectionEntry.vue')['default']
     ColorPicker: typeof import('./src/components/ColorPicker.vue')['default']
     DarkSwitcher: typeof import('./src/components/DarkSwitcher.vue')['default']
     Drawer: typeof import('./src/components/Drawer.vue')['default']

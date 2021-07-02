@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen overflow-hidden" :style="style">
+  <div class="flex flex-col h-screen overflow-hidden bg" :style="style">
     <div class="h-full flex-auto overflow-overlay">
       <router-view />
     </div>

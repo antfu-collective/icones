@@ -2,7 +2,7 @@ import type { IconifyJSON } from '@iconify/iconify'
 import { computed, ref, nextTick } from 'vue'
 import { notNullish } from '@antfu/utils'
 import Iconify from '@purge-icons/generated'
-import { favoritedCollections, inProgress, progressMessage } from '../store'
+import { favoritedCollections, inProgress, isFavorited, progressMessage } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { saveCollection, loadCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
@@ -45,6 +45,14 @@ export const sortedCollectionsInfo = computed(() => {
         favoritedCollections.value.indexOf(b.id)
       - favoritedCollections.value.indexOf(a.id),
     )
+})
+
+export const favoritedCollectionsIcons = computed(() => {
+  return sortedCollectionsInfo.value.filter(i => isFavorited(i.id))
+})
+
+export const otherCollectionsIcons = computed(() => {
+  return sortedCollectionsInfo.value.filter(i => !isFavorited(i.id))
 })
 
 export const isInstalled = (id: string) => installed.value.includes(id)
