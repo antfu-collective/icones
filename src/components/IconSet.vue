@@ -130,6 +130,11 @@
           <IconDetail :icon="current" :show-collection="collection.id === 'all'" @close="current = ''" />
         </Modal>
 
+        <!-- Help -->
+        <ModalDialog :value="showHelp" @close="showHelp = false">
+          <HelpPage />
+        </ModalDialog>
+
         <!-- Selecting Note -->
         <div
           class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
@@ -148,15 +153,15 @@
 
 <script setup lang='ts'>
 import { ref, computed, watch } from 'vue'
-import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading } from '../store'
+import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading, showHelp } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 
 const { search, icons, category, collection } = getSearchResults()
 const showBag = ref(false)
 
-const maxMap = new Map<string | NavigatorUserMediaErrorCallback, number>()
-const current = ref<string>('')
+const maxMap = new Map<string, number>()
+const current = ref('')
 const max = ref(isLocalMode ? 500 : 200)
 
 const toggleCategory = (cat: string) => {
@@ -181,11 +186,6 @@ watch(
     max.value = maxMap.get(namespace.value) || 200
   },
 )
-
-// const selectedIcons = computed(() => {
-//   if (selectingMode.value) return bags.value
-//   else return current.value ? [] : [current.value]
-// })
 
 const loadMore = () => {
   max.value += 100

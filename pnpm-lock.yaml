@@ -29,6 +29,7 @@ importers:
       pnpm: ^6.15.0
       svg-packer: ^0.0.3
       typescript: ^4.4.3
+      unplugin-auto-import: ^0.4.5
       unplugin-vue-components: ^0.15.1
       vite: 2.5.7
       vite-plugin-pages: ^0.18.0
@@ -68,6 +69,7 @@ importers:
       pnpm: 6.15.0
       svg-packer: 0.0.3
       typescript: 4.4.3
+      unplugin-auto-import: 0.4.5_@vueuse+core@6.3.3+vite@2.5.7
       unplugin-vue-components: 0.15.1_vite@2.5.7+vue@3.2.11
       vite: 2.5.7
       vite-plugin-pages: 0.18.0_041358ba81d59a005a183d4d5bfada61
@@ -10358,6 +10360,28 @@ packages:
   /unpipe/1.0.0:
     resolution: {integrity: sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /unplugin-auto-import/0.4.5_@vueuse+core@6.3.3+vite@2.5.7:
+    resolution: {integrity: sha512-newc1GYPYhGQkR4WcORsGtFaEgZ3KvMyP7IOEcicXe2i/y12/w0u8HD47YogRf6UMdzaeJRqeqM5chCmClwSvQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@vueuse/core': ^6.0.0
+    peerDependenciesMeta:
+      '@vueuse/core':
+        optional: true
+    dependencies:
+      '@antfu/utils': 0.3.0
+      '@rollup/pluginutils': 4.1.1
+      '@vueuse/core': 6.3.3_vue@3.2.11
+      has-pkg: 0.0.1
+      magic-string: 0.25.7
+      resolve: 1.20.0
+      unplugin: 0.2.9_vite@2.5.7
+    transitivePeerDependencies:
+      - rollup
+      - vite
+      - webpack
     dev: true
 
   /unplugin-vue-components/0.15.1_vite@2.5.7+vue@3.2.11:

@@ -1,6 +1,3 @@
-import { useStorage } from '@vueuse/core'
-import { ref } from 'vue'
-
 export const themeColor = useStorage('icones-theme-color', '#329672')
 export const iconSize = useStorage('icones-icon-size', '2xl')
 export const previewColor = useStorage('icones-preview-color', '#888888')

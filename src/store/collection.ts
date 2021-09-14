@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import {
   isMetaLoaded,
   isInstalled,

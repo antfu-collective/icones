@@ -7,9 +7,12 @@
       </ColorPicker>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
-      <a class="text-gray-500 hover:text-primary text-sm dark:text-dark-500" href="https://iconify.design/docs/iconify-in-pages/" target="_blank">
+      <button
+        class="text-gray-500 hover:text-primary text-sm dark:text-dark-500 !outline-none"
+        @click="showHelp = !showHelp"
+      >
         How to use the icon?
-      </a>
+      </button>
       <p class="flex text-gray-700 font-mono dark:text-dark-900">
         {{ icon }}
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
@@ -130,7 +133,7 @@ import copyText from 'copy-text-to-clipboard'
 import { ref, computed } from 'vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { selectingMode, previewColor, toggleBag, inBag } from '../store'
+import { selectingMode, previewColor, toggleBag, inBag, showHelp } from '../store'
 import { Download } from '../utils/pack'
 
 const emit = defineEmits(['close'])
