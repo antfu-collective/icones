@@ -18,7 +18,7 @@
     <!-- Homepage Only -->
     <template v-else>
       <div class="mx-3 mr-4 my-auto flex-none">
-        <select v-model="categoryFilter" class="opacity-50 bg-white dark:bg-dark-100 font-normal w-auto outline-none focus:outline-none">
+        <select v-model="categoryFilter" class="opacity-50 text-current bg-white dark:bg-dark-100 font-normal w-auto outline-none focus:outline-none">
           <option :value="undefined">
             All
           </option>

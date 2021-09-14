@@ -31,7 +31,7 @@ const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
-export const categoryFilter = ref<string | null>(null)
+export const categoryFilter = ref<string | undefined>(undefined)
 
 export const sortedCollectionsInfo = computed(() => {
   return collections
