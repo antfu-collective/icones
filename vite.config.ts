@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import PurgeIcons from 'vite-plugin-purge-icons'
-import ViteComponents from 'vite-plugin-components'
+import Components from 'unplugin-vue-components/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
@@ -13,8 +13,8 @@ export default defineConfig({
     Pages({
       importMode: 'sync',
     }),
-    ViteComponents({
-      globalComponentsDeclaration: true,
+    Components({
+      dts: true,
     }),
     PurgeIcons(),
     VitePWA({
