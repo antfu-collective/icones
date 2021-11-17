@@ -23,10 +23,9 @@ async function prepareJSON() {
   const raw = await fs.readJSON(path.join(dir, 'collections.json'))
   await fs.ensureDir(collectionsDir)
 
-  const collections = Object.entries(raw).map(([id, v]) => ({
-    ...(v as any),
-    id,
-  }))
+  const collections = Object
+    .entries(raw).map(([id, v]) => ({ ...(v as any), id }))
+    .filter(v => v.hidden !== true)
 
   const collectionsMeta = []
 
