@@ -1,4 +1,4 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>icones search</ShortName>
+  <ShortName>icones</ShortName>
   <Url type="text/html" template="https://icones.js.org/collection/all?s={searchTerms}"/>
 </OpenSearchDescription>
