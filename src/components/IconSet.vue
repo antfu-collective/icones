@@ -152,7 +152,8 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading, showHelp } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
@@ -202,4 +203,14 @@ const loadAll = async() => {
 }
 
 const loading = isCurrentCollectionLoading()
+
+const route = useRoute()
+const router = useRouter()
+onMounted(() => {
+  search.value = route.query.s as string || ''
+  watch([search, collection], () => {
+    router.replace({ query: { s: search.value } })
+  })
+})
+
 </script>
