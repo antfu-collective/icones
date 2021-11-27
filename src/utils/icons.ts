@@ -65,6 +65,10 @@ export default {
 </script>`
 }
 
+export function SvgToSvelte(svg: string) {
+  return ClearSvg(svg)
+}
+
 export async function getIconSnippet(icon: string, type: string, snippet = true): Promise<string | undefined> {
   if (!icon)
     return
@@ -90,6 +94,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true)
       return SvgToTSX(await getSvg(icon), toComponentName(icon), snippet)
     case 'vue':
       return SvgToVue(await getSvg(icon), toComponentName(icon))
+    case 'svelte':
+      return SvgToSvelte(await getSvg(icon))
   }
 }
 
