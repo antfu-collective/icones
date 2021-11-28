@@ -1,4 +1,5 @@
 import Iconify from '@purge-icons/generated'
+import { getTransformedId } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
 
@@ -75,7 +76,7 @@ export async function getIconSnippet(icon: string, type: string, snippet = true)
 
   switch (type) {
     case 'id':
-      return icon
+      return getTransformedId(icon)
     case 'url':
       return `${API_ENTRY}/${icon}.svg`
     case 'html':

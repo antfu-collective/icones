@@ -13,10 +13,33 @@
       >
         How to use the icon?
       </button>
-      <p class="flex text-gray-700 font-mono dark:text-dark-900">
-        {{ icon }}
+      <div class="flex text-gray-700 relative font-mono dark:text-dark-900">
+        {{ transformedId }}
+
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
-      </p>
+        <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
+        <div class="flex-auto" />
+        <div
+          v-if="showCaseSelect"
+          ref="caseSelector"
+          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100"
+        >
+          <div
+            v-for="[k,v] of Object.entries(idCases)"
+            :key="k"
+            class="flex items-center p-1 cursor-pointer"
+            :class="k === preferredCase ? 'text-primary' : ''"
+            @click="preferredCase = k as any"
+          >
+            <Icon
+              icon="carbon:checkmark"
+              class="text-primary mr-1 text-lg"
+              :class="k === preferredCase ? '' : 'opacity-0'"
+            />
+            <span class="flex-auto mr-2">{{ v(icon) }}</span>
+          </div>
+        </div>
+      </div>
 
       <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
         Collection:
@@ -137,10 +160,12 @@
 <script setup lang='ts'>
 import copyText from 'copy-text-to-clipboard'
 import { ref, computed } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { selectingMode, previewColor, toggleBag, inBag, showHelp } from '../store'
+import { selectingMode, previewColor, toggleBag, inBag, showHelp, getTransformedId, showCaseSelect, preferredCase } from '../store'
 import { Download } from '../utils/pack'
+import { idCases } from '../utils/case'
 
 const emit = defineEmits(['close'])
 const props = defineProps({
@@ -155,6 +180,13 @@ const props = defineProps({
 })
 
 const copied = ref(false)
+
+const caseSelector = ref<HTMLDivElement>()
+const transformedId = computed(() => getTransformedId(props.icon))
+
+onClickOutside(caseSelector, () => {
+  showCaseSelect.value = false
+})
 
 const copy = async(type: string) => {
   const text = await getIconSnippet(props.icon, type, true)

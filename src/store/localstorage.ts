@@ -1,3 +1,5 @@
+import { IdCase, idCases } from '../utils/case'
+
 export const themeColor = useStorage('icones-theme-color', '#329672')
 export const iconSize = useStorage('icones-icon-size', '2xl')
 export const previewColor = useStorage('icones-preview-color', '#888888')
@@ -5,6 +7,11 @@ export const listType = useStorage('icones-list-type', 'grid')
 export const favoritedCollections = useStorage<string[]>('icones-fav-collections', [])
 export const bags = useStorage<string[]>('icones-bags', [])
 export const selectingMode = ref(false)
+export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
+
+export function getTransformedId(icon: string) {
+  return idCases[preferredCase.value]?.(icon) || icon
+}
 
 export function isFavorited(id: string) {
   return favoritedCollections.value.includes(id)
