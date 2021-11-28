@@ -90,6 +90,9 @@
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svelte')">
+            Svelte
+          </button>
         </div>
         <div class="mr-4">
           <div class="my-1 text-gray-500 text-sm">
@@ -117,6 +120,9 @@
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svelte')">
+            Svelte
           </button>
         </div>
       </div>
