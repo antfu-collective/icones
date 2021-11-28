@@ -44,16 +44,16 @@
     ]
   },
   "dependencies": {
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.3",
     "electron-debug": "^3.2.0",
     "electron-serve": "^1.1.0",
-    "electron-util": "^0.15.0",
-    "source-map-support": "^0.5.19"
+    "electron-util": "^0.17.2",
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "electron": "12.0.2",
-    "electron-builder": "^22.10.5",
+    "electron": "16.0.2",
+    "electron-builder": "^22.14.8",
     "electron-webpack": "^2.8.2",
-    "webpack": "~5.31.2"
+    "webpack": "~5.64.4"
   }
 }

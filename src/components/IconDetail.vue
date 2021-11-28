@@ -159,8 +159,6 @@
 
 <script setup lang='ts'>
 import copyText from 'copy-text-to-clipboard'
-import { ref, computed } from 'vue'
-import { onClickOutside } from '@vueuse/core'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { selectingMode, previewColor, toggleBag, inBag, showHelp, getTransformedId, showCaseSelect, preferredCase } from '../store'

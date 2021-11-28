@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { getSearchResults, isSearchOpen } from '../../store'
 import { isElectron } from '../../env'
 

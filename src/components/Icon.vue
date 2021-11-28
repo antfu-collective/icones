@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted, nextTick, defineProps } from 'vue'
 import Iconify from '@purge-icons/generated'
 
 const props = defineProps({

@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang='ts'>
-import { watch, onUnmounted } from 'vue'
 import { useCurrentCollection, setCurrentCollection } from '../../store'
 
 const props = defineProps<{

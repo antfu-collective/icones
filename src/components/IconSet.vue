@@ -33,14 +33,14 @@
               <div class="flex-auto" />
             </div>
             <div class="text-xs block opacity-50">
-              {{ collection.author }}
+              {{ collection.author?.name }}
             </div>
-            <div>
+            <div v-if="collection.license">
               <a
                 class="text-xs opacity-50 hover:opacity-100"
-                :href="collection.licenseURL"
+                :href="collection.license.url"
                 target="_blank"
-              >{{ collection.license }}</a>
+              >{{ collection.license.title }}</a>
             </div>
           </div>
 
@@ -152,7 +152,6 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading, showHelp } from '../store'
 import { isLocalMode } from '../env'

@@ -1,5 +1,4 @@
 import type { IconifyJSON } from '@iconify/iconify'
-import { computed, ref, nextTick } from 'vue'
 import { notNullish } from '@antfu/utils'
 import Iconify from '@purge-icons/generated'
 import { favoritedCollections, inProgress, isFavorited, progressMessage } from '../store'
@@ -10,9 +9,8 @@ import infoJSON from './collections-info.json'
 export interface CollectionInfo {
   id: string
   name: string
-  author?: string
-  license?: string
-  licenseURL?: string
+  author?: { name: string; url: string }
+  license?: { title: string; url: string }
   url?: string
   sampleIcons?: string[]
   category?: string

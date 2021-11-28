@@ -22,9 +22,9 @@ defineProps<{
         {{ collection.name }}
       </div>
       <div class="flex-auto opacity-50 text-xs">
-        <span>{{ collection.author }}</span>
+        <span>{{ collection.author?.name }}</span>
         <span class="px-1 opacity-25">/</span>
-        <span>{{ collection.license }}</span>
+        <span>{{ collection.license?.title }}</span>
         <span class="px-1 opacity-25">/</span>
         <span>{{ collection.total }} icons</span>
       </div>

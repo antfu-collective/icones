@@ -60,7 +60,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { getSearchResults, isDark } from '../store'
 import { categories, categoryFilter } from '../data'
 

@@ -68,7 +68,6 @@
 </template>
 
 <script setup lang='ts'>
-import { ref } from 'vue'
 import { bags, clearBag } from '../store'
 import { PackIconFont, PackZip } from '../utils/pack'
 import type { PackType } from '../utils/pack'
