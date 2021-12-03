@@ -96,6 +96,9 @@
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
             SVG
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg-symbol')">
+            SVG Symbol
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('pure-jsx')">
             JSX
           </button>

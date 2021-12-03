@@ -10,6 +10,22 @@ export async function getSvg(icon: string, size = '1em') {
    || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}`).then(r => r.text()) || ''
 }
 
+export async function getSvgSymbol(icon: string, size = '1em') {
+  const svgMarkup = Iconify.renderSVG(icon, { height: size })?.outerHTML
+  || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}`).then(r => r.text()) || ''
+
+  const symbolElem = document.createElement('symbol')
+  const node = document.createElement('div') // Create any old element
+  node.innerHTML = svgMarkup
+
+  // Grab the inner HTML and move into a symbol element
+  symbolElem.innerHTML = node.querySelector('svg').innerHTML
+  symbolElem.setAttribute('viewBox', node.querySelector('svg').getAttribute('viewBox'))
+  symbolElem.id = icon.replace(/\:/, '-') // Simple slugify for quick symbol lookup
+
+  return symbolElem?.outerHTML
+}
+
 export function toComponentName(icon: string) {
   return icon.split(/:|-|_/).filter(Boolean).map((s, i) => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
@@ -85,6 +101,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true)
       return `background: url('${API_ENTRY}/${icon}.svg') no-repeat center center / contain;`
     case 'svg':
       return await getSvg(icon, '32')
+    case 'svg-symbol':
+      return await getSvgSymbol(icon, '32')
     case 'data_url':
       return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon))}`
     case 'pure-jsx':
