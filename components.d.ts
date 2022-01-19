@@ -10,7 +10,6 @@ declare module 'vue' {
     CollectionEntry: typeof import('./src/components/CollectionEntry.vue')['default']
     ColorPicker: typeof import('./src/components/ColorPicker.vue')['default']
     DarkSwitcher: typeof import('./src/components/DarkSwitcher.vue')['default']
-    Dialog: typeof import('./src/components/Dialog.vue')['default']
     Drawer: typeof import('./src/components/Drawer.vue')['default']
     FAB: typeof import('./src/components/FAB.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
