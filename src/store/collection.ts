@@ -1,10 +1,10 @@
+import type { CollectionMeta } from '../data'
 import {
-  isMetaLoaded,
-  isInstalled,
-  CollectionMeta,
-  getFullMeta,
   downloadAndInstall,
+  getFullMeta,
   getMeta,
+  isInstalled,
+  isMetaLoaded,
   tryInstallFromLocal,
 } from '../data'
 import { useSearch } from '../hooks'

@@ -55,7 +55,7 @@
 
 <script setup lang='ts'>
 import type { PropType } from 'vue'
-import { iconSize, listType, selectingMode, inProgress, progressMessage } from '../store'
+import { iconSize, inProgress, listType, progressMessage, selectingMode } from '../store'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'

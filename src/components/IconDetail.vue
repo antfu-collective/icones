@@ -164,7 +164,7 @@
 import copyText from 'copy-text-to-clipboard'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { selectingMode, previewColor, toggleBag, inBag, showHelp, getTransformedId, showCaseSelect, preferredCase } from '../store'
+import { getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
 

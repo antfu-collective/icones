@@ -8,8 +8,8 @@ defineProps<{ collections: CollectionInfo[] }>()
   <div class="collections-list grid overflow-y-overly">
     <CollectionEntry
       v-for="collection of collections"
-      class="border-r border-b border-gray-200 dark:border-dark-200"
       :key="collection.id"
+      class="border-r border-b border-gray-200 dark:border-dark-200"
       :collection="collection"
     />
   </div>

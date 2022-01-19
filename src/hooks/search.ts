@@ -1,7 +1,8 @@
 import Fuse from 'fuse.js'
-import { ref, computed, markRaw, Ref, watch } from 'vue'
+import type { Ref } from 'vue'
+import { computed, markRaw, ref, watch } from 'vue'
 import { useThrottle } from '@vueuse/core'
-import { CollectionMeta } from '../data'
+import type { CollectionMeta } from '../data'
 
 export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategory = '', defaultSearch = '') {
   const category = ref(defaultCategory)

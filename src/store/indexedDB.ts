@@ -1,4 +1,5 @@
-import Dexie, { Table } from 'dexie'
+import type { Table } from 'dexie'
+import Dexie from 'dexie'
 
 const db = new Dexie('icones')
 

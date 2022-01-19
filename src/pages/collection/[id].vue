@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang='ts'>
-import { useCurrentCollection, setCurrentCollection } from '../../store'
+import { setCurrentCollection, useCurrentCollection } from '../../store'
 
 const props = defineProps<{
   id: string

@@ -153,7 +153,7 @@
 
 <script setup lang='ts'>
 import { useRoute, useRouter } from 'vue-router'
-import { iconSize, listType, selectingMode, bags, toggleBag, getSearchResults, isCurrentCollectionLoading, showHelp } from '../store'
+import { bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, selectingMode, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 

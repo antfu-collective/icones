@@ -3,7 +3,7 @@ import { notNullish } from '@antfu/utils'
 import Iconify from '@purge-icons/generated'
 import { favoritedCollections, inProgress, isFavorited, progressMessage } from '../store'
 import { isLocalMode, staticPath } from '../env'
-import { saveCollection, loadCollection } from '../store/indexedDB'
+import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
 
 export interface CollectionInfo {
