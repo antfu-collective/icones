@@ -5,14 +5,14 @@ import { HtmlToJSX } from './htmlToJsx'
 
 const API_ENTRY = 'https://api.iconify.design'
 
-export async function getSvg(icon: string, size = '1em') {
-  return Iconify.renderSVG(icon, { height: size })?.outerHTML
-   || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}`).then(r => r.text()) || ''
+export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
+  return Iconify.renderSVG(icon, { height: size })?.outerHTML?.replace('currentColor', color)
+   || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
 }
 
-export async function getSvgSymbol(icon: string, size = '1em') {
-  const svgMarkup = Iconify.renderSVG(icon, { height: size })?.outerHTML
-  || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}`).then(r => r.text()) || ''
+export async function getSvgSymbol(icon: string, size = '1em', color = 'currentColor') {
+  const svgMarkup = Iconify.renderSVG(icon, { height: size })?.outerHTML?.replace('currentColor', color)
+  || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
 
   const symbolElem = document.createElement('symbol')
   const node = document.createElement('div') // Create any old element
@@ -86,7 +86,7 @@ export function SvgToSvelte(svg: string) {
   return ClearSvg(svg)
 }
 
-export async function getIconSnippet(icon: string, type: string, snippet = true): Promise<string | undefined> {
+export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
   if (!icon)
     return
 
@@ -94,27 +94,27 @@ export async function getIconSnippet(icon: string, type: string, snippet = true)
     case 'id':
       return getTransformedId(icon)
     case 'url':
-      return `${API_ENTRY}/${icon}.svg`
+      return `${API_ENTRY}/${icon}.svg?color=${encodeURIComponent(color)}`
     case 'html':
-      return `<span class="iconify" data-icon="${icon}" data-inline="false"></span>`
+      return `<span class="iconify" data-icon="${icon}" data-inline="false"${color === 'currentColor' ? '' : ' style="color: '+color+'"'}></span>`
     case 'css':
-      return `background: url('${API_ENTRY}/${icon}.svg') no-repeat center center / contain;`
+      return `background: url('${API_ENTRY}/${icon}.svg?color=${encodeURIComponent(color)}') no-repeat center center / contain;`
     case 'svg':
-      return await getSvg(icon, '32')
+      return await getSvg(icon, '32', color)
     case 'svg-symbol':
-      return await getSvgSymbol(icon, '32')
+      return await getSvgSymbol(icon, '32', color)
     case 'data_url':
-      return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon))}`
+      return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon, undefined, color))}`
     case 'pure-jsx':
-      return ClearSvg(await getSvg(icon))
+      return ClearSvg(await getSvg(icon, undefined, color))
     case 'jsx':
-      return SvgToJSX(await getSvg(icon), toComponentName(icon), snippet)
+      return SvgToJSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'tsx':
-      return SvgToTSX(await getSvg(icon), toComponentName(icon), snippet)
+      return SvgToTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'vue':
-      return SvgToVue(await getSvg(icon), toComponentName(icon))
+      return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
     case 'svelte':
-      return SvgToSvelte(await getSvg(icon))
+      return SvgToSvelte(await getSvg(icon, undefined, color))
   }
 }
 

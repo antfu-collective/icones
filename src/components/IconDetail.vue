@@ -5,6 +5,12 @@
       <ColorPicker v-model:value="previewColor" class="inline-block">
         <Icon class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
+      <div class="my-4">
+        <label for="copy-color" class="cursor-pointer">
+          <input type="checkbox" id="copy-color" v-model="copyPreviewColor"> 
+          <span class="px-1 text-gray-500 text-sm">Copy with color</span>
+        </label>
+      </div>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
       <button
@@ -164,7 +170,7 @@
 import copyText from 'copy-text-to-clipboard'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
+import { getTransformedId, inBag, preferredCase, previewColor, copyPreviewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
 
@@ -184,13 +190,14 @@ const copied = ref(false)
 
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
+const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
 
 onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
 })
 
 const copy = async(type: string) => {
-  const text = await getIconSnippet(props.icon, type, true)
+  const text = await getIconSnippet(props.icon, type, true, color.value)
   if (!text)
     return
 
@@ -201,7 +208,7 @@ const copy = async(type: string) => {
 }
 
 const download = async(type: string) => {
-  const text = await getIconSnippet(props.icon, type, false)
+  const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
 
