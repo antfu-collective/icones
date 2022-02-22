@@ -3,7 +3,7 @@
     <NavPlaceholder class="mb-4" />
     <div
       v-if="!isElectron"
-      class="border-b border-gray-200 dark:border-dark-200"
+      class="sticky top-0 bg-white dark:bg-dark-100 z-1 border-b border-gray-200 dark:border-dark-200"
     >
       <IconButton
         v-show="$route.path !== '/'"
