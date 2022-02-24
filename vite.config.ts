@@ -6,7 +6,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
-import WindiCSS from 'vite-plugin-windicss'
+import UnoCSS from 'unocss/vite'
 
 export default defineConfig({
   plugins: [
@@ -44,12 +44,7 @@ export default defineConfig({
         ],
       },
     }),
-    WindiCSS({
-      safelist: 'text-2xl text-3xl text-4xl',
-      preflight: {
-        enableAll: true,
-      },
-    }),
+    UnoCSS(),
   ],
   define: {
     __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),

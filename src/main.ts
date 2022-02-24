@@ -3,10 +3,10 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from 'virtual:generated-pages'
 import App from './App.vue'
-import 'virtual:windi.css'
-import 'virtual:windi-devtools'
+import '@unocss/reset/tailwind.css'
 import './utils/electron'
 import './main.css'
+import 'uno.css'
 
 // import icons data genereted by PurgeIcons
 import '@purge-icons/generated'
