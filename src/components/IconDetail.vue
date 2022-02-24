@@ -5,12 +5,6 @@
       <ColorPicker v-model:value="previewColor" class="inline-block">
         <Icon class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
-      <div class="my-4">
-        <label for="copy-color" class="cursor-pointer">
-          <input type="checkbox" id="copy-color" v-model="copyPreviewColor"> 
-          <span class="px-1 text-gray-500 text-sm">Copy with color</span>
-        </label>
-      </div>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
       <button
@@ -59,9 +53,9 @@
       </p>
 
       <div>
-        <div
+        <button
           class="
-            inline-block border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
+            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
             dark:border-dark-200 dark:hover:bg-dark-200
           "
           :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
@@ -69,23 +63,39 @@
         >
           <template v-if="inBag(icon)">
             <Icon class="inline-block text-lg align-middle" icon="carbon:shopping-bag" />
-            in bag
+            <span class="inline-block align-middle ml1">in bag</span>
           </template>
           <template v-else>
             <Icon class="inline-block text-lg align-middle" icon="carbon:add" />
-            add to bag
+            <span class="inline-block align-middle ml1">add to bag</span>
           </template>
-        </div>
+        </button>
 
-        <div
+        <button
           v-if="inBag(icon)"
-          class="inline-block my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-dark-200"
+          class="
+            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
+            dark:border-dark-200 dark:hover:bg-dark-200
+          "
           :class="selectingMode ? 'text-primary' : 'text-gray-500'"
           @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
-          multiple select
-        </div>
+          <span class="inline-block align-middle ml1">multiple select</span>
+        </button>
+
+        <button
+          class="
+            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
+            dark:border-dark-200 dark:hover:bg-dark-200
+          "
+          :class="copyPreviewColor ? 'text-primary' : 'text-gray-500'"
+          @click="copyPreviewColor = !copyPreviewColor"
+        >
+          <Icon v-if="!copyPreviewColor" class="inline-block text-lg align-middle" icon="carbon:checkbox" />
+          <Icon v-else class="inline-block text-lg align-middle" icon="carbon:checkbox-checked" />
+          <span class="inline-block align-middle ml1">copy with color</span>
+        </button>
       </div>
 
       <div class="flex flex-wrap mt-2">
@@ -170,7 +180,7 @@
 import copyText from 'copy-text-to-clipboard'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { getTransformedId, inBag, preferredCase, previewColor, copyPreviewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
+import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
 
