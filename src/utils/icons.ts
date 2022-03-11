@@ -19,15 +19,15 @@ export async function getSvgSymbol(icon: string, size = '1em', color = 'currentC
   node.innerHTML = svgMarkup
 
   // Grab the inner HTML and move into a symbol element
-  symbolElem.innerHTML = node.querySelector('svg').innerHTML
-  symbolElem.setAttribute('viewBox', node.querySelector('svg').getAttribute('viewBox'))
+  symbolElem.innerHTML = node.querySelector('svg')!.innerHTML
+  symbolElem.setAttribute('viewBox', node.querySelector('svg')!.getAttribute('viewBox')!)
   symbolElem.id = icon.replace(/\:/, '-') // Simple slugify for quick symbol lookup
 
   return symbolElem?.outerHTML
 }
 
 export function toComponentName(icon: string) {
-  return icon.split(/:|-|_/).filter(Boolean).map((s, i) => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
+  return icon.split(/:|-|_/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
 
 export function ClearSvg(svgCode: string) {
@@ -96,7 +96,7 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
     case 'url':
       return `${API_ENTRY}/${icon}.svg?color=${encodeURIComponent(color)}`
     case 'html':
-      return `<span class="iconify" data-icon="${icon}" data-inline="false"${color === 'currentColor' ? '' : ' style="color: '+color+'"'}></span>`
+      return `<span class="iconify" data-icon="${icon}" data-inline="false"${color === 'currentColor' ? '' : ` style="color: ${color}"`}></span>`
     case 'css':
       return `background: url('${API_ENTRY}/${icon}.svg?color=${encodeURIComponent(color)}') no-repeat center center / contain;`
     case 'svg':

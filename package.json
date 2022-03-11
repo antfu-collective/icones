@@ -6,11 +6,11 @@
     "electron"
   ],
   "license": "MIT",
+  "author": "Anthony Fu<https://github.com/antfu>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antfu/icones.git"
   },
-  "author": "Anthony Fu<https://github.com/antfu>",
   "bugs": {
     "url": "https://github.com/antfu/icones/issues"
   },
@@ -19,6 +19,7 @@
     "postinstall": "esno scripts/prepare.ts",
     "prebuild": "esno scripts/prebuild.ts",
     "postbuild": "esno scripts/postbuild.ts",
+    "lint": "eslint .",
     "dev": "vite --port 3333 --open",
     "dev:electron": "npm -C ./electron run dev",
     "build": "cross-env NODE_ENV=production vite build",
