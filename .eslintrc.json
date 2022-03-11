@@ -1,7 +1,6 @@
 {
   "extends": "@antfu",
   "rules": {
-    "@typescript-eslint/no-unused-vars": "off",
-    "no-undef": "off"
+    "vue/require-explicit-emits": "off"
   }
 }
