@@ -14,7 +14,10 @@
     <!-- Menu -->
     <div class="relative w-4">
       <IconButton :active="true" icon="carbon:overflow-menu-vertical" title="Menu" />
-      <select v-model="menu" class="absolute dark:bg-dark-100 text-base top-0 bottom-0 left-0 right-0 opacity-0">
+      <select
+        v-model="menu"
+        class="absolute dark:bg-dark-100 text-base top-0 bottom-0 left-0 right-0 opacity-0"
+      >
         <optgroup label="Size">
           <option value="small">
             Small
@@ -28,7 +31,7 @@
         </optgroup>
         <optgroup label="Actions">
           <option value="select">
-            Select mutiple
+            Select multiple
           </option>
         </optgroup>
 
@@ -71,9 +74,9 @@ const props = defineProps({
 const menu = ref(
   listType.value === 'list'
     ? 'list'
-    : iconSize.value === '2xl'
-      ? 'small'
-      : 'large',
+    : iconSize.value === 'text-2xl'
+      ? 'large'
+      : 'small',
 )
 
 const packIconFont = async() => {
@@ -122,15 +125,15 @@ watch(
   async(current, prev) => {
     switch (current) {
       case 'small':
-        iconSize.value = '2xl'
+        iconSize.value = 'text-2xl'
         listType.value = 'grid'
         return
       case 'large':
-        iconSize.value = '4xl'
+        iconSize.value = 'text-4xl'
         listType.value = 'grid'
         return
       case 'list':
-        iconSize.value = '3xl'
+        iconSize.value = 'text-3xl'
         listType.value = 'list'
         return
       case 'select':
