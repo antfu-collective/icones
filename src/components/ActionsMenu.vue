@@ -14,22 +14,17 @@
     <!-- Menu -->
     <div class="relative w-4">
       <IconButton :active="true" icon="carbon:overflow-menu-vertical" title="Menu" />
-      <select v-model="menu" class="absolute dark:bg-dark-100 text-base top-0 bottom-0 left-0 right-0 opacity-0">
+      <select
+        v-model="menu"
+        class="absolute dark:bg-dark-100 text-base top-0 bottom-0 left-0 right-0 opacity-0"
+      >
         <optgroup label="Size">
-          <option value="small">
-            Small
-          </option>
-          <option value="large">
-            Large
-          </option>
-          <option value="list">
-            List
-          </option>
+          <option value="small">Small</option>
+          <option value="large">Large</option>
+          <option value="list">List</option>
         </optgroup>
         <optgroup label="Actions">
-          <option value="select">
-            Select mutiple
-          </option>
+          <option value="select">Select mutiple</option>
         </optgroup>
 
         <!--
@@ -38,15 +33,9 @@
                 in browser version.
         -->
         <optgroup label="Downloads">
-          <option v-if="!isElectron && !installed" value="cache">
-            Cache in Browser
-          </option>
-          <option value="download_iconfont" :disabled="inProgress">
-            Iconfont
-          </option>
-          <option value="download_svgs" :disabled="inProgress">
-            SVGs Zip
-          </option>
+          <option v-if="!isElectron && !installed" value="cache">Cache in Browser</option>
+          <option value="download_iconfont" :disabled="inProgress">Iconfont</option>
+          <option value="download_svgs" :disabled="inProgress">SVGs Zip</option>
         </optgroup>
       </select>
     </div>
@@ -72,11 +61,11 @@ const menu = ref(
   listType.value === 'list'
     ? 'list'
     : iconSize.value === '2xl'
-      ? 'small'
-      : 'large',
+      ? 'large'
+      : 'small',
 )
 
-const packIconFont = async() => {
+const packIconFont = async () => {
   if (!props.collection)
     return
 
@@ -93,7 +82,7 @@ const packIconFont = async() => {
   inProgress.value = false
 }
 
-const packSvgs = async() => {
+const packSvgs = async () => {
   if (!props.collection)
     return
 
@@ -110,7 +99,7 @@ const packSvgs = async() => {
   inProgress.value = false
 }
 
-const cache = async() => {
+const cache = async () => {
   if (!props.collection)
     return
 
@@ -119,7 +108,7 @@ const cache = async() => {
 
 watch(
   menu,
-  async(current, prev) => {
+  async (current, prev) => {
     switch (current) {
       case 'small':
         iconSize.value = '2xl'
