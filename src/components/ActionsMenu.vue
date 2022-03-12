@@ -74,7 +74,7 @@ const props = defineProps({
 const menu = ref(
   listType.value === 'list'
     ? 'list'
-    : iconSize.value === 'text-2xl'
+    : iconSize.value === 'text-4xl'
       ? 'large'
       : 'small',
 )
