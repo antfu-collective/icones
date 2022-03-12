@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { BrowserWindow, app, shell } from 'electron'
 import serve from 'electron-serve'
 import debug from 'electron-debug'
 

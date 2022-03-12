@@ -19,12 +19,20 @@
         class="absolute dark:bg-dark-100 text-base top-0 bottom-0 left-0 right-0 opacity-0"
       >
         <optgroup label="Size">
-          <option value="small">Small</option>
-          <option value="large">Large</option>
-          <option value="list">List</option>
+          <option value="small">
+            Small
+          </option>
+          <option value="large">
+            Large
+          </option>
+          <option value="list">
+            List
+          </option>
         </optgroup>
         <optgroup label="Actions">
-          <option value="select">Select mutiple</option>
+          <option value="select">
+            Select multiple
+          </option>
         </optgroup>
 
         <!--
@@ -33,9 +41,15 @@
                 in browser version.
         -->
         <optgroup label="Downloads">
-          <option v-if="!isElectron && !installed" value="cache">Cache in Browser</option>
-          <option value="download_iconfont" :disabled="inProgress">Iconfont</option>
-          <option value="download_svgs" :disabled="inProgress">SVGs Zip</option>
+          <option v-if="!isElectron && !installed" value="cache">
+            Cache in Browser
+          </option>
+          <option value="download_iconfont" :disabled="inProgress">
+            Iconfont
+          </option>
+          <option value="download_svgs" :disabled="inProgress">
+            SVGs Zip
+          </option>
         </optgroup>
       </select>
     </div>
@@ -60,12 +74,12 @@ const props = defineProps({
 const menu = ref(
   listType.value === 'list'
     ? 'list'
-    : iconSize.value === '2xl'
+    : iconSize.value === 'text-2xl'
       ? 'large'
       : 'small',
 )
 
-const packIconFont = async () => {
+const packIconFont = async() => {
   if (!props.collection)
     return
 
@@ -82,7 +96,7 @@ const packIconFont = async () => {
   inProgress.value = false
 }
 
-const packSvgs = async () => {
+const packSvgs = async() => {
   if (!props.collection)
     return
 
@@ -99,7 +113,7 @@ const packSvgs = async () => {
   inProgress.value = false
 }
 
-const cache = async () => {
+const cache = async() => {
   if (!props.collection)
     return
 
@@ -108,18 +122,18 @@ const cache = async () => {
 
 watch(
   menu,
-  async (current, prev) => {
+  async(current, prev) => {
     switch (current) {
       case 'small':
-        iconSize.value = '2xl'
+        iconSize.value = 'text-2xl'
         listType.value = 'grid'
         return
       case 'large':
-        iconSize.value = '4xl'
+        iconSize.value = 'text-4xl'
         listType.value = 'grid'
         return
       case 'list':
-        iconSize.value = '3xl'
+        iconSize.value = 'text-3xl'
         listType.value = 'list'
         return
       case 'select':

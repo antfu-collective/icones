@@ -90,7 +90,7 @@
           <Icons
             :icons="icons.slice(0, max)"
             :selected="bags"
-            :size="iconSize"
+            :class="iconSize"
             :display="listType"
             :search="search"
             :namespace="namespace"
