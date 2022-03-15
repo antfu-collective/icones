@@ -77,11 +77,16 @@
           "
         >
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
-          <input
-            v-model="search"
-            class="text-base outline-none py-1 px-4 flex-auto m-0 bg-transparent"
-            placeholder="Search..."
-          >
+          <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
+            <input
+              v-model="search"
+              aria-label="Search"
+              class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
+              name="s"
+              placeholder="Search..."
+            >
+          </form>
+
           <Icon v-if="search" icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="search = ''" />
         </div>
 

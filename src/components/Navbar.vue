@@ -50,11 +50,15 @@
 
     <!-- Searching -->
     <div v-if="collection" class="flex">
-      <input
-        v-model="search"
-        class="text-base outline-none py-2 px-4 flex-auto m-0 w-full bg-transparent"
-        placeholder="Search..."
-      >
+      <form action="/collection/all" role="search" method="get" @submit.prevent>
+        <input
+          v-model="search"
+          aria-label="Search"
+          class="text-base outline-none py-2 px-4 flex-auto m-0 w-full bg-transparent"
+          name="s"
+          placeholder="Search..."
+        >
+      </form>
     </div>
   </nav>
 </template>
