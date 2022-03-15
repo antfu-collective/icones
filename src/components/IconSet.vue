@@ -1,14 +1,23 @@
 <template>
   <WithNavbar>
-    <div class="flex flex-auto h-full overflow-hidden ">
-      <Drawer class="h-full overflow-y-overlay flex-none hidden md:block" style="width:220px" />
-      <div v-if="collection" class="py-5 h-full overflow-y-overlay flex-auto overflow-x-hidden relative">
+    <div class="flex flex-auto h-full overflow-hidden">
+      <Drawer
+        class="h-full overflow-y-overlay flex-none hidden md:block"
+        style="width: 220px"
+      />
+      <div
+        v-if="collection"
+        class="py-5 h-full overflow-y-overlay flex-auto overflow-x-hidden relative"
+      >
         <!-- Loading -->
         <div
           class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
           :class="loading ? '' : 'opacity-0 pointer-events-none'"
         >
-          <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">
+          <div
+            class="absolute text-gray-800 dark:text-dark-500"
+            style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
+          >
             Loading...
           </div>
         </div>
@@ -18,7 +27,9 @@
           <div class="flex-auto px-2">
             <NavPlaceholder class="md:hidden" />
 
-            <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
+            <div
+              class="text-gray-900 text-xl flex select-none dark:text-gray-200"
+            >
               <div class="whitespace-no-wrap overflow-hidden">
                 {{ collection.name }}
               </div>
@@ -58,7 +69,11 @@
               v-for="c of Object.keys(collection.categories)"
               :key="c"
               class="whitespace-nowrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-50 cursor-pointer dark:border-dark-200 dark:hover:bg-dark-200"
-              :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
+              :class="
+                c === category
+                  ? 'text-primary border-primary dark:border-primary'
+                  : 'opacity-75'
+              "
               @click="toggleCategory(c)"
             >
               {{ c }}
@@ -139,7 +154,10 @@
           @click="selectingMode = false"
         >
           Selecting Mode
-          <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
+          <Icon
+            icon="carbon:close"
+            class="inline-block text-xl align-text-bottom"
+          />
         </div>
 
         <SearchElectron />
@@ -148,9 +166,18 @@
   </WithNavbar>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, selectingMode, showHelp, toggleBag } from '../store'
+import {
+  bags,
+  getSearchResults,
+  iconSize,
+  isCurrentCollectionLoading,
+  listType,
+  selectingMode,
+  showHelp,
+  toggleBag,
+} from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 
@@ -199,7 +226,7 @@ const loading = isCurrentCollectionLoading()
 const route = useRoute()
 const router = useRouter()
 onMounted(() => {
-  search.value = route.query.s as string || ''
+  search.value = (route.query.s as string) || ''
   watch([search, collection], () => {
     router.replace({ query: { s: search.value } })
   })
