@@ -1,23 +1,14 @@
 <template>
   <WithNavbar>
-    <div class="flex flex-auto h-full overflow-hidden">
-      <Drawer
-        class="h-full overflow-y-overlay flex-none hidden md:block"
-        style="width: 220px"
-      />
-      <div
-        v-if="collection"
-        class="py-5 h-full overflow-y-overlay flex-auto overflow-x-hidden relative"
-      >
+    <div class="flex flex-auto h-full overflow-hidden ">
+      <Drawer class="h-full overflow-y-overlay flex-none hidden md:block" style="width:220px" />
+      <div v-if="collection" class="py-5 h-full overflow-y-overlay flex-auto overflow-x-hidden relative">
         <!-- Loading -->
         <div
           class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
           :class="loading ? '' : 'opacity-0 pointer-events-none'"
         >
-          <div
-            class="absolute text-gray-800 dark:text-dark-500"
-            style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
-          >
+          <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">
             Loading...
           </div>
         </div>
@@ -27,9 +18,7 @@
           <div class="flex-auto px-2">
             <NavPlaceholder class="md:hidden" />
 
-            <div
-              class="text-gray-900 text-xl flex select-none dark:text-gray-200"
-            >
+            <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
               <div class="whitespace-no-wrap overflow-hidden">
                 {{ collection.name }}
               </div>
@@ -68,12 +57,11 @@
             <div
               v-for="c of Object.keys(collection.categories)"
               :key="c"
-              class="whitespace-nowrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-50 cursor-pointer dark:border-dark-200 dark:hover:bg-dark-200"
-              :class="
-                c === category
-                  ? 'text-primary border-primary dark:border-primary'
-                  : 'opacity-75'
+              class="
+                whitespace-nowrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-50 cursor-pointer
+                dark:border-dark-200 dark:hover:bg-dark-200
               "
+              :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
               @click="toggleCategory(c)"
             >
               {{ c }}
@@ -82,7 +70,12 @@
         </div>
 
         <!-- Searching -->
-        <div class="mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4 border border-transparent dark:border-dark-200">
+        <div
+          class="
+            mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4
+            border border-transparent dark:border-dark-200
+          "
+        >
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
             <input
@@ -154,10 +147,7 @@
           @click="selectingMode = false"
         >
           Selecting Mode
-          <Icon
-            icon="carbon:close"
-            class="inline-block text-xl align-text-bottom"
-          />
+          <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
         </div>
 
         <SearchElectron />
@@ -166,18 +156,9 @@
   </WithNavbar>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { useRoute, useRouter } from 'vue-router'
-import {
-  bags,
-  getSearchResults,
-  iconSize,
-  isCurrentCollectionLoading,
-  listType,
-  selectingMode,
-  showHelp,
-  toggleBag,
-} from '../store'
+import { bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, selectingMode, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 
@@ -204,9 +185,12 @@ const onSelect = (icon: string) => {
   else current.value = icon
 }
 
-watch(namespace, () => {
-  max.value = maxMap.get(namespace.value) || 200
-})
+watch(
+  namespace,
+  () => {
+    max.value = maxMap.get(namespace.value) || 200
+  },
+)
 
 const loadMore = () => {
   max.value += 100
@@ -214,7 +198,8 @@ const loadMore = () => {
 }
 
 const loadAll = async() => {
-  if (!namespace.value) return
+  if (!namespace.value)
+    return
 
   await cacheCollection(collection.value!.id)
   max.value = icons.value.length
@@ -226,9 +211,10 @@ const loading = isCurrentCollectionLoading()
 const route = useRoute()
 const router = useRouter()
 onMounted(() => {
-  search.value = (route.query.s as string) || ''
+  search.value = route.query.s as string || ''
   watch([search, collection], () => {
     router.replace({ query: { s: search.value } })
   })
 })
+
 </script>
