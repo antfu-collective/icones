@@ -1,3 +1,13 @@
+<script setup lang='ts'>
+withDefaults(defineProps<{
+  value?: boolean
+  direction?: string
+}>(), {
+  value: false,
+  direction: 'bottom',
+})
+</script>
+
 <template>
   <div
     class="fixed top-0 bottom-0 left-0 right-0 z-60"
@@ -22,13 +32,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang='ts'>
-withDefaults(defineProps<{
-  value?: boolean
-  direction?: string
-}>(), {
-  value: false,
-  direction: 'bottom',
-})
-</script>

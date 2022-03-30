@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { isDark } from '../store'
+</script>
+
 <template>
   <IconButton
     :icon="isDark ? 'carbon:moon' : 'carbon:sun'"
@@ -5,7 +9,3 @@
     @click="isDark = !isDark"
   />
 </template>
-
-<script setup lang="ts">
-import { isDark } from '../store'
-</script>

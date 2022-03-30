@@ -1,7 +1,3 @@
-<template>
-  <div ref="el" :class="$attrs.class" />
-</template>
-
 <script setup lang="ts">
 import Iconify from '@purge-icons/generated'
 
@@ -40,6 +36,10 @@ watch(
 
 onMounted(update)
 </script>
+
+<template>
+  <div ref="el" :class="$attrs.class" />
+</template>
 
 <style>
 span.iconify {

@@ -1,3 +1,39 @@
+<script setup lang='ts'>
+import { bags, clearBag } from '../store'
+import { PackIconFont, PackZip } from '../utils/pack'
+import type { PackType } from '../utils/pack'
+
+const emit = defineEmits<{
+  (event: 'close'): void
+  (event: 'select', value: string): void
+}>()
+
+const showPackOption = ref(false)
+
+const clear = () => {
+  // eslint-disable-next-line no-alert
+  if (confirm('Are you sure to remove all icons from the bag?')) {
+    clearBag()
+    emit('close')
+  }
+}
+
+const packIconFont = async() => {
+  // TODO: customzie
+  await PackIconFont(
+    bags.value,
+  )
+}
+
+const PackSvgs = async(type: PackType = 'svg') => {
+  await PackZip(
+    bags.value.map(i => i.replace(':', '-')),
+    'icones-bags',
+    type,
+  )
+}
+</script>
+
 <template>
   <div class="h-full flex flex-col w-screen md:w-96 xl:w-128">
     <div
@@ -66,39 +102,3 @@
     </template>
   </div>
 </template>
-
-<script setup lang='ts'>
-import { bags, clearBag } from '../store'
-import { PackIconFont, PackZip } from '../utils/pack'
-import type { PackType } from '../utils/pack'
-
-const emit = defineEmits<{
-  (event: 'close'): void
-  (event: 'select', value: string): void
-}>()
-
-const showPackOption = ref(false)
-
-const clear = () => {
-  // eslint-disable-next-line no-alert
-  if (confirm('Are you sure to remove all icons from the bag?')) {
-    clearBag()
-    emit('close')
-  }
-}
-
-const packIconFont = async() => {
-  // TODO: customzie
-  await PackIconFont(
-    bags.value,
-  )
-}
-
-const PackSvgs = async(type: PackType = 'svg') => {
-  await PackZip(
-    bags.value.map(i => i.replace(':', '-')),
-    'icones-bags',
-    type,
-  )
-}
-</script>

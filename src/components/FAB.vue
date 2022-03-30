@@ -1,3 +1,15 @@
+<script setup lang='ts'>
+defineProps({
+  icon: {
+    type: String,
+    required: true,
+  },
+  number: {
+    type: Number,
+    default: 0,
+  },
+})
+</script>
 
 <template>
   <div
@@ -16,16 +28,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang='ts'>
-defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  number: {
-    type: Number,
-    default: 0,
-  },
-})
-</script>

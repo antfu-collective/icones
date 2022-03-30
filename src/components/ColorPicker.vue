@@ -1,3 +1,12 @@
+<script setup lang="ts">
+defineProps({
+  value: {
+    type: String,
+    required: true,
+  },
+})
+</script>
+
 <template>
   <div class="relative">
     <div>
@@ -11,12 +20,3 @@
     >
   </div>
 </template>
-
-<script setup lang="ts">
-defineProps({
-  value: {
-    type: String,
-    required: true,
-  },
-})
-</script>

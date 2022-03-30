@@ -1,3 +1,19 @@
+<script setup lang='ts'>
+import { sortedCollectionsInfo } from '../data'
+import { isFavorited, toggleFavorite } from '../store'
+import { isElectron } from '../env'
+
+const route = useRoute()
+const current = computed(() => route.path.split('/').slice(-1)[0])
+
+const collections = computed(() => {
+  return [
+    { id: 'all', name: 'All' },
+    ...sortedCollectionsInfo.value,
+  ]
+})
+</script>
+
 <template>
   <div class="border-r border-gray-200 dark:border-dark-200">
     <NavPlaceholder class="mb-4" />
@@ -44,19 +60,3 @@
     </router-link>
   </div>
 </template>
-
-<script setup lang='ts'>
-import { sortedCollectionsInfo } from '../data'
-import { isFavorited, toggleFavorite } from '../store'
-import { isElectron } from '../env'
-
-const route = useRoute()
-const current = computed(() => route.path.split('/').slice(-1)[0])
-
-const collections = computed(() => {
-  return [
-    { id: 'all', name: 'All' },
-    ...sortedCollectionsInfo.value,
-  ]
-})
-</script>

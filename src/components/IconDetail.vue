@@ -1,3 +1,67 @@
+<script setup lang='ts'>
+import copyText from 'copy-text-to-clipboard'
+import { getIconSnippet, toComponentName } from '../utils/icons'
+import { collections } from '../data'
+import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
+import { Download } from '../utils/pack'
+import { idCases } from '../utils/case'
+
+const emit = defineEmits(['close'])
+const props = defineProps({
+  icon: {
+    type: String,
+    required: true,
+  },
+  showCollection: {
+    type: Boolean,
+    required: true,
+  },
+})
+
+const copied = ref(false)
+
+const caseSelector = ref<HTMLDivElement>()
+const transformedId = computed(() => getTransformedId(props.icon))
+const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
+
+onClickOutside(caseSelector, () => {
+  showCaseSelect.value = false
+})
+
+const copy = async(type: string) => {
+  const text = await getIconSnippet(props.icon, type, true, color.value)
+  if (!text)
+    return
+
+  copied.value = copyText(text)
+  setTimeout(() => {
+    copied.value = false
+  }, 2000)
+}
+
+const download = async(type: string) => {
+  const text = await getIconSnippet(props.icon, type, false, color.value)
+  if (!text)
+    return
+
+  const name = `${toComponentName(props.icon)}.${type}`
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+
+  Download(blob, name)
+}
+
+const toggleSelectingMode = () => {
+  selectingMode.value = !selectingMode.value
+  if (selectingMode.value)
+    emit('close')
+}
+
+const collection = computed(() => {
+  const id = props.icon.split(':')[0]
+  return collections.find(i => i.id === id)
+})
+</script>
+
 <template>
   <div class="p-2 flex flex-col md:flex-row md:text-left relative">
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
@@ -175,67 +239,3 @@
     </Notification>
   </div>
 </template>
-
-<script setup lang='ts'>
-import copyText from 'copy-text-to-clipboard'
-import { getIconSnippet, toComponentName } from '../utils/icons'
-import { collections } from '../data'
-import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
-import { Download } from '../utils/pack'
-import { idCases } from '../utils/case'
-
-const emit = defineEmits(['close'])
-const props = defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  showCollection: {
-    type: Boolean,
-    required: true,
-  },
-})
-
-const copied = ref(false)
-
-const caseSelector = ref<HTMLDivElement>()
-const transformedId = computed(() => getTransformedId(props.icon))
-const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
-
-onClickOutside(caseSelector, () => {
-  showCaseSelect.value = false
-})
-
-const copy = async(type: string) => {
-  const text = await getIconSnippet(props.icon, type, true, color.value)
-  if (!text)
-    return
-
-  copied.value = copyText(text)
-  setTimeout(() => {
-    copied.value = false
-  }, 2000)
-}
-
-const download = async(type: string) => {
-  const text = await getIconSnippet(props.icon, type, false, color.value)
-  if (!text)
-    return
-
-  const name = `${toComponentName(props.icon)}.${type}`
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
-
-  Download(blob, name)
-}
-
-const toggleSelectingMode = () => {
-  selectingMode.value = !selectingMode.value
-  if (selectingMode.value)
-    emit('close')
-}
-
-const collection = computed(() => {
-  const id = props.icon.split(':')[0]
-  return collections.find(i => i.id === id)
-})
-</script>
