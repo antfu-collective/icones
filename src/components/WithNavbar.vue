@@ -1,3 +1,7 @@
+<script setup lang='ts'>
+import { isElectron } from '../env'
+</script>
+
 <template>
   <div class="flex h-screen flex-col overflow-hidden">
     <Navbar v-if="!isElectron" />
@@ -7,7 +11,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang='ts'>
-import { isElectron } from '../env'
-</script>

@@ -1,3 +1,7 @@
+<script setup lang='ts'>
+import { inProgress, progressMessage } from '../store'
+</script>
+
 <template>
   <div
     class="fixed bottom-0 left-0 border-gray-200 border bg-white rounded-tr shadow px-3 py-1 text-gray-700 text-sm flex"
@@ -7,10 +11,6 @@
     <span class="m-auto px-1 blinking">{{ progressMessage }}</span>
   </div>
 </template>
-
-<script setup lang='ts'>
-import { inProgress, progressMessage } from '../store'
-</script>
 
 <style>
 @keyframes rotating {

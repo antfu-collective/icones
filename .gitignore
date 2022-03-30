@@ -1,6 +1,7 @@
 node_modules
 yarn-error.log
 dist
+.idea
 
 src/assets/collections.json
 .DS_Store

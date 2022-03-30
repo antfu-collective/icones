@@ -1,3 +1,10 @@
+<script setup lang='ts'>
+withDefaults(
+  defineProps<{ value?: boolean }>(),
+  { value: false },
+)
+</script>
+
 <template>
   <div
     class="fixed top-0 left-0 right-0 z-50 text-center"
@@ -15,10 +22,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang='ts'>
-withDefaults(
-  defineProps<{ value?: boolean }>(),
-  { value: false },
-)
-</script>

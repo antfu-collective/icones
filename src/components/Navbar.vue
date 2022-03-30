@@ -1,3 +1,15 @@
+<script lang="ts">
+import { getSearchResults, isDark } from '../store'
+import { categories, categoryFilter } from '../data'
+
+export default defineComponent(() => ({
+  ...getSearchResults(),
+  isDark,
+  categories,
+  categoryFilter,
+}))
+</script>
+
 <template>
   <nav
     class="
@@ -62,15 +74,3 @@
     </div>
   </nav>
 </template>
-
-<script lang="ts">
-import { getSearchResults, isDark } from '../store'
-import { categories, categoryFilter } from '../data'
-
-export default defineComponent(() => ({
-  ...getSearchResults(),
-  isDark,
-  categories,
-  categoryFilter,
-}))
-</script>

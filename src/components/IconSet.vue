@@ -1,3 +1,66 @@
+<script setup lang='ts'>
+import { useRoute, useRouter } from 'vue-router'
+import { bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, selectingMode, showHelp, toggleBag } from '../store'
+import { isLocalMode } from '../env'
+import { cacheCollection } from '../data'
+
+const { search, icons, category, collection } = getSearchResults()
+const showBag = ref(false)
+
+const maxMap = new Map<string, number>()
+const current = ref('')
+const max = ref(isLocalMode ? 500 : 200)
+
+const toggleCategory = (cat: string) => {
+  if (category.value === cat) category.value = ''
+  else category.value = cat
+}
+
+const namespace = computed(() => {
+  return !collection.value || collection.value.id === 'all'
+    ? ''
+    : `${collection.value.id}:`
+})
+
+const onSelect = (icon: string) => {
+  if (selectingMode.value) toggleBag(icon)
+  else current.value = icon
+}
+
+watch(
+  namespace,
+  () => {
+    max.value = maxMap.get(namespace.value) || 200
+  },
+)
+
+const loadMore = () => {
+  max.value += 100
+  maxMap.set(namespace.value, max.value)
+}
+
+const loadAll = async() => {
+  if (!namespace.value)
+    return
+
+  await cacheCollection(collection.value!.id)
+  max.value = icons.value.length
+  maxMap.set(namespace.value, max.value)
+}
+
+const loading = isCurrentCollectionLoading()
+
+const route = useRoute()
+const router = useRouter()
+onMounted(() => {
+  search.value = route.query.s as string || ''
+  watch([search, collection], () => {
+    router.replace({ query: { s: search.value } })
+  })
+})
+
+</script>
+
 <template>
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden ">
@@ -155,66 +218,3 @@
     </div>
   </WithNavbar>
 </template>
-
-<script setup lang='ts'>
-import { useRoute, useRouter } from 'vue-router'
-import { bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, selectingMode, showHelp, toggleBag } from '../store'
-import { isLocalMode } from '../env'
-import { cacheCollection } from '../data'
-
-const { search, icons, category, collection } = getSearchResults()
-const showBag = ref(false)
-
-const maxMap = new Map<string, number>()
-const current = ref('')
-const max = ref(isLocalMode ? 500 : 200)
-
-const toggleCategory = (cat: string) => {
-  if (category.value === cat) category.value = ''
-  else category.value = cat
-}
-
-const namespace = computed(() => {
-  return !collection.value || collection.value.id === 'all'
-    ? ''
-    : `${collection.value.id}:`
-})
-
-const onSelect = (icon: string) => {
-  if (selectingMode.value) toggleBag(icon)
-  else current.value = icon
-}
-
-watch(
-  namespace,
-  () => {
-    max.value = maxMap.get(namespace.value) || 200
-  },
-)
-
-const loadMore = () => {
-  max.value += 100
-  maxMap.set(namespace.value, max.value)
-}
-
-const loadAll = async() => {
-  if (!namespace.value)
-    return
-
-  await cacheCollection(collection.value!.id)
-  max.value = icons.value.length
-  maxMap.set(namespace.value, max.value)
-}
-
-const loading = isCurrentCollectionLoading()
-
-const route = useRoute()
-const router = useRouter()
-onMounted(() => {
-  search.value = route.query.s as string || ''
-  watch([search, collection], () => {
-    router.replace({ query: { s: search.value } })
-  })
-})
-
-</script>

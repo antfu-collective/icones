@@ -1,61 +1,3 @@
-<template>
-  <div class="text-xl flex">
-    <DarkSwitcher class="mx-2 opacity-25 align-middle" />
-
-    <!-- Download State -->
-    <IconButton
-      v-if="installed && !isElectron"
-      class="mx-2 opacity-25 align-middle"
-      icon="carbon:checkmark-outline"
-      title="Downloaded"
-      :none="true"
-    />
-
-    <!-- Menu -->
-    <div class="relative w-4">
-      <IconButton :active="true" icon="carbon:overflow-menu-vertical" title="Menu" />
-      <select
-        v-model="menu"
-        class="absolute dark:bg-dark-100 text-base top-0 bottom-0 left-0 right-0 opacity-0"
-      >
-        <optgroup label="Size">
-          <option value="small">
-            Small
-          </option>
-          <option value="large">
-            Large
-          </option>
-          <option value="list">
-            List
-          </option>
-        </optgroup>
-        <optgroup label="Actions">
-          <option value="select">
-            Select multiple
-          </option>
-        </optgroup>
-
-        <!--
-          TODO: due to this function requires to download and pack
-                the full set, we should make some UI to aware users
-                in browser version.
-        -->
-        <optgroup label="Downloads">
-          <option v-if="!isElectron && !installed" value="cache">
-            Cache in Browser
-          </option>
-          <option value="download_iconfont" :disabled="inProgress">
-            Iconfont
-          </option>
-          <option value="download_svgs" :disabled="inProgress">
-            SVGs Zip
-          </option>
-        </optgroup>
-      </select>
-    </div>
-  </div>
-</template>
-
 <script setup lang='ts'>
 import type { PropType } from 'vue'
 import { iconSize, inProgress, listType, progressMessage, selectingMode } from '../store'
@@ -160,3 +102,61 @@ const installed = computed(() => {
   return props.collection && isInstalled(props.collection.id)
 })
 </script>
+
+<template>
+  <div class="text-xl flex">
+    <DarkSwitcher class="mx-2 opacity-25 align-middle" />
+
+    <!-- Download State -->
+    <IconButton
+      v-if="installed && !isElectron"
+      class="mx-2 opacity-25 align-middle"
+      icon="carbon:checkmark-outline"
+      title="Downloaded"
+      :none="true"
+    />
+
+    <!-- Menu -->
+    <div class="relative w-4">
+      <IconButton :active="true" icon="carbon:overflow-menu-vertical" title="Menu" />
+      <select
+        v-model="menu"
+        class="absolute dark:bg-dark-100 text-base top-0 right-0 opacity-0"
+      >
+        <optgroup label="Size">
+          <option value="small">
+            Small
+          </option>
+          <option value="large">
+            Large
+          </option>
+          <option value="list">
+            List
+          </option>
+        </optgroup>
+        <optgroup label="Actions">
+          <option value="select">
+            Select multiple
+          </option>
+        </optgroup>
+
+        <!--
+          TODO: due to this function requires to download and pack
+                the full set, we should make some UI to aware users
+                in browser version.
+        -->
+        <optgroup label="Downloads">
+          <option v-if="!isElectron && !installed" value="cache">
+            Cache in Browser
+          </option>
+          <option value="download_iconfont" :disabled="inProgress">
+            Iconfont
+          </option>
+          <option value="download_svgs" :disabled="inProgress">
+            SVGs Zip
+          </option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+</template>

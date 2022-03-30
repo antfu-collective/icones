@@ -1,38 +1,3 @@
-<template>
-  <div
-    class="non-dragging flex flex-wrap select-none justify-center"
-    :class="`text-${size} ${colorClass}`"
-  >
-    <div
-      v-for="icon of icons"
-      :key="icon"
-      class="non-dragging icons-item flex tooltip"
-      :class="[spacing, selected.includes(namespace+icon) ? 'active': '']"
-      @click="$emit('select', namespace+icon)"
-    >
-      <Icon
-        class="tooltip-content non-dragging leading-none h-1em"
-        :icon="namespace+icon"
-      />
-      <span
-        v-if="display==='list'"
-        class="tooltip-content text-sm ml-1 px-1 m-auto"
-        v-html="getSearchHighlightHTML(icon, search)"
-      />
-      <span
-        v-else
-        class="
-          tooltip-text bg shadow leading-none whitespace-no-wrap
-          border border-transparent dark:border-dark-200"
-      >
-        <span class="opacity-75">
-          {{ icon }}
-        </span>
-      </span>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import { getSearchHighlightHTML } from '../hooks'
@@ -76,6 +41,41 @@ defineEmits<{
   (event: 'select', id: string): void
 }>()
 </script>
+
+<template>
+  <div
+    class="non-dragging flex flex-wrap select-none justify-center"
+    :class="`text-${size} ${colorClass}`"
+  >
+    <div
+      v-for="icon of icons"
+      :key="icon"
+      class="non-dragging icons-item flex tooltip"
+      :class="[spacing, selected.includes(namespace+icon) ? 'active': '']"
+      @click="$emit('select', namespace+icon)"
+    >
+      <Icon
+        class="tooltip-content non-dragging leading-none h-1em"
+        :icon="namespace+icon"
+      />
+      <span
+        v-if="display==='list'"
+        class="tooltip-content text-sm ml-1 px-1 m-auto"
+        v-html="getSearchHighlightHTML(icon, search)"
+      />
+      <span
+        v-else
+        class="
+          tooltip-text bg shadow leading-none whitespace-no-wrap
+          border border-transparent dark:border-dark-200"
+      >
+        <span class="opacity-75">
+          {{ icon }}
+        </span>
+      </span>
+    </div>
+  </div>
+</template>
 
 <style>
 .icons-item:hover, .icons-item.active {

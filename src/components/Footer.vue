@@ -1,3 +1,8 @@
+<script setup lang="ts">
+// eslint-disable-next-line no-undef
+const buildTime = __BUILD_TIME__
+</script>
+
 <template>
   <footer class="text-center text-sm pt-8 pb-6">
     <p class="text-gray-500">
@@ -27,8 +32,3 @@
     </div>
   </footer>
 </template>
-
-<script setup lang="ts">
-// eslint-disable-next-line no-undef
-const buildTime = __BUILD_TIME__
-</script>
