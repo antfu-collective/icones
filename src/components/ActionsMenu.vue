@@ -121,7 +121,7 @@ const installed = computed(() => {
       <IconButton :active="true" icon="carbon:overflow-menu-vertical" title="Menu" />
       <select
         v-model="menu"
-        class="absolute dark:bg-dark-100 text-base top-0 right-0 opacity-0"
+        class="absolute w-full dark:bg-dark-100 text-base top-0 right-0 opacity-0"
       >
         <optgroup label="Size">
           <option value="small">
