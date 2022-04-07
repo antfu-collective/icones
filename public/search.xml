@@ -1,4 +1,9 @@
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
   <ShortName>Icônes</ShortName>
+  <Description>⚡️ Iconify Icon Explorer</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="192" height="192">https://icones.js.org/android-chrome-192x192.png</Image>
+  <Image width="512" height="512">https://icones.js.org/android-chrome-192x192.png</Image>
+  <Image width="16" height="16">https://icones.js.org/favicon.svg</Image>
   <Url type="text/html" template="https://icones.js.org/collection/all?s={searchTerms}"/>
 </OpenSearchDescription>
