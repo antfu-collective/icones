@@ -40,9 +40,7 @@ const copy = async(type: string) => {
 }
 
 const copyPng = async () => {
-	console.log(color.value);
 	let svg = await getIconSnippet(props.icon, "svg", true, color.value);
-	console.log(svg);
 	let containerDiv = document.createElement("div");
 	containerDiv.innerHTML = svg;
 	//Now we have a DOM element:
@@ -54,7 +52,6 @@ const copyPng = async () => {
 	});
 	let src = URL.createObjectURL(svgBlob);
 	let image = await toPng(src);
-	console.log(image);
 	navigator.clipboard
 		.write([
 			new ClipboardItem({
@@ -115,7 +112,6 @@ const copyPng = async () => {
 					img.crossOrigin = "anonymous";
 					img.src = _this.imgPreview.src;
 					img.onload = function () {
-						console.log(img.naturalWidth, img.naturalHeight);
 						_this.canvasCtx.drawImage(
 							img,
 							0,
