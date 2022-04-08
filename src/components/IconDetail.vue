@@ -39,6 +39,125 @@ const copy = async(type: string) => {
   }, 2000)
 }
 
+const copyPng = async () => {
+	console.log(color.value);
+	let svg = await getIconSnippet(props.icon, "svg", true, color.value);
+	console.log(svg);
+	let containerDiv = document.createElement("div");
+	containerDiv.innerHTML = svg;
+	//Now we have a DOM element:
+	svg = containerDiv.querySelector("svg");
+	svg.setAttribute("style", `color: ${color.value};`);
+	let data = new XMLSerializer().serializeToString(svg);
+	let svgBlob = new Blob([data], {
+		type: "image/svg+xml;charset=utf-8",
+	});
+	let src = URL.createObjectURL(svgBlob);
+	let image = await toPng(src);
+	console.log(image);
+	navigator.clipboard
+		.write([
+			new ClipboardItem({
+				"image/png": toBlob(image),
+			}),
+		])
+		.then(
+			(...a) => (
+				(copied.value = "Copied"),
+				setTimeout(() => (copied.value = false), 2000)
+			),
+			(...a) => (
+				(copied.value = "Failed to copy"),
+				setTimeout(() => (copied.value = false), 2000)
+			)
+		);
+	function toBlob(dataurl) {
+		var arr = dataurl.split(","),
+			mime = arr[0].match(/:(.*?);/)[1],
+			bstr = atob(arr[1]),
+			n = bstr.length,
+			u8arr = new Uint8Array(n);
+		while (n--) {
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+		return new Blob([u8arr], { type: mime });
+	}
+	function toPng(svg) {
+		class SvgToPngConverter {
+			constructor() {
+				this._init = this._init.bind(this);
+				this._cleanUp = this._cleanUp.bind(this);
+				this.convertFromInput = this.convertFromInput.bind(this);
+			}
+
+			_init() {
+				this.canvas = document.createElement("canvas");
+				this.imgPreview = document.createElement("img");
+				this.imgPreview.style = "position: absolute; top: -9999px";
+
+				document.body.appendChild(this.imgPreview);
+				this.canvasCtx = this.canvas.getContext("2d");
+			}
+
+			_cleanUp() {
+				document.body.removeChild(this.imgPreview);
+			}
+
+			convertFromInput(input, { width, height, scaleFactor = 2 }, callback) {
+				this._init();
+				let _this = this;
+				this.imgPreview.onload = async function () {
+					const img = new Image();
+					const dimensions = await getDimensions(_this.imgPreview.src);
+
+					_this.canvas.width = width || dimensions.width * scaleFactor;
+					_this.canvas.height = height || dimensions.height * scaleFactor;
+					img.crossOrigin = "anonymous";
+					img.src = _this.imgPreview.src;
+					img.onload = function () {
+						console.log(img.naturalWidth, img.naturalHeight);
+						_this.canvasCtx.drawImage(
+							img,
+							0,
+							0,
+							_this.canvas.width,
+							_this.canvas.height
+						);
+						let imgData = _this.canvas.toDataURL("image/png");
+						if (typeof callback == "function") {
+							callback(imgData);
+						}
+						_this._cleanUp();
+					};
+
+					function getDimensions(src) {
+						return new Promise((resolve) => {
+							const _img = new Image();
+							_img.src = src;
+							_img.onload = () => {
+								resolve({
+									width: _img.naturalWidth,
+									height: _img.naturalHeight,
+								});
+							};
+						});
+					}
+				};
+
+				this.imgPreview.src = input;
+			}
+		}
+		return new Promise((resolve) => {
+			// Make a 32x32px icon be 256x256
+			new SvgToPngConverter().convertFromInput(
+				svg,
+				{ scaleFactor: 256 / 32 },
+				resolve
+			);
+		});
+	}
+};
+
 const download = async(type: string) => {
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
@@ -175,6 +294,9 @@ const collection = computed(() => {
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
             SVG
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copyPng()">
+            PNG
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg-symbol')">
             SVG Symbol
