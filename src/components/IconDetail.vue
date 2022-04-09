@@ -5,6 +5,7 @@ import { collections } from '../data'
 import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
+import Base64 from "../utils/base64"
 
 const emit = defineEmits(['close'])
 const props = defineProps({
@@ -71,7 +72,7 @@ const copyPng = async () => {
 	function toBlob(dataurl) {
 		var arr = dataurl.split(","),
 			mime = arr[0].match(/:(.*?);/)[1],
-			bstr = atob(arr[1]),
+			bstr = Base64.decode(arr[1]),
 			n = bstr.length,
 			u8arr = new Uint8Array(n);
 		while (n--) {
