@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { defineConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import PurgeIcons from 'vite-plugin-purge-icons'
@@ -7,6 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
+import fg from 'fast-glob'
 
 export default defineConfig({
   plugins: [
@@ -14,11 +16,8 @@ export default defineConfig({
     Pages({
       importMode: 'sync',
     }),
-    Components({
-      dts: true,
-    }),
+    Components(),
     AutoImport({
-      dts: true,
       imports: [
         'vue',
         'vue-router',
@@ -43,6 +42,7 @@ export default defineConfig({
           },
         ],
       },
+      includeAssets: fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true }),
     }),
     UnoCSS(),
   ],

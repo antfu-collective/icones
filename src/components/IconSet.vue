@@ -12,7 +12,8 @@ const current = ref('')
 const max = ref(isLocalMode ? 500 : 200)
 
 const toggleCategory = (cat: string) => {
-  if (category.value === cat) category.value = ''
+  if (category.value === cat)
+    category.value = ''
   else category.value = cat
 }
 
@@ -23,7 +24,8 @@ const namespace = computed(() => {
 })
 
 const onSelect = (icon: string) => {
-  if (selectingMode.value) toggleBag(icon)
+  if (selectingMode.value)
+    toggleBag(icon)
   else current.value = icon
 }
 

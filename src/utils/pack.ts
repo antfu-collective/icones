@@ -39,7 +39,8 @@ export async function Download(blob: Blob, name: string) {
 }
 
 export async function PackIconFont(icons: string[], options: any = {}) {
-  if (!icons.length) return
+  if (!icons.length)
+    return
   const data = await LoadIconSvgs(icons)
   const result = await window.SvgPacker({
     fontName: 'Iconify Explorer Font',
@@ -53,7 +54,8 @@ export async function PackIconFont(icons: string[], options: any = {}) {
 }
 
 export async function PackSvgZip(icons: string[], name: string) {
-  if (!icons.length) return
+  if (!icons.length)
+    return
   const data = await LoadIconSvgs(icons)
 
   const zip = new window.JSZip()
@@ -71,7 +73,8 @@ export async function PackZip(
   name: string,
   type: PackType = 'svg',
 ) {
-  if (!icons.length) return
+  if (!icons.length)
+    return
   const data = await LoadIconSvgs(icons)
 
   const zip = new window.JSZip()

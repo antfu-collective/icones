@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import type { CollectionInfo } from '../data'
 import { isFavorited } from '../store'
