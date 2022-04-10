@@ -65,7 +65,8 @@ async function copyLibs() {
     path.join(out, 'lib'),
     {
       filter: (src) => {
-        if (fs.lstatSync(src).isDirectory()) return true
+        if (fs.lstatSync(src).isDirectory())
+          return true
         const basename = path.basename(src)
         return basename.startsWith('iconify') && basename.endsWith('.min.js')
       },
