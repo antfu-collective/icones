@@ -90,15 +90,19 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
   if (!icon)
     return
 
+  let url = `${API_ENTRY}/${icon}.svg`
+  if (color !== 'currentColor')
+    url = `${url}?color=${encodeURIComponent(color)}`
+
   switch (type) {
     case 'id':
       return getTransformedId(icon)
     case 'url':
-      return `${API_ENTRY}/${icon}.svg?color=${encodeURIComponent(color)}`
+      return url
     case 'html':
       return `<span class="iconify" data-icon="${icon}" data-inline="false"${color === 'currentColor' ? '' : ` style="color: ${color}"`}></span>`
     case 'css':
-      return `background: url('${API_ENTRY}/${icon}.svg?color=${encodeURIComponent(color)}') no-repeat center center / contain;`
+      return `background: url('${url}') no-repeat center center / contain;`
     case 'svg':
       return await getSvg(icon, '32', color)
     case 'svg-symbol':

@@ -167,17 +167,14 @@ const collection = computed(() => {
           <div class="my-1 text-gray-500 text-sm">
             Snippets
           </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
-            HTML
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('css')">
-            CSS
-          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
             SVG
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg-symbol')">
             SVG Symbol
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
+            Iconify
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('pure-jsx')">
             JSX
