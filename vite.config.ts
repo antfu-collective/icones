@@ -8,6 +8,18 @@ import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 
+const { resolve } = require('path');
+const { readdirSync } = require('fs');
+
+function getFiles(dir) {
+  const dirents = readdirSync(dir, { withFileTypes: true });
+  const files = dirents.map((dirent) => {
+    const res = resolve(dir, dirent.name);
+    return dirent.isDirectory() ? getFiles(res) : res;
+  });
+  return Array.prototype.concat(...files);
+}
+
 export default defineConfig({
   plugins: [
     Vue(),
@@ -28,6 +40,7 @@ export default defineConfig({
     PurgeIcons(),
     VitePWA({
       manifest: {
+        includeAssets: [...getFiles("public")],
         name: 'Icônes',
         short_name: 'Icônes',
         icons: [
