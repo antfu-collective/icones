@@ -115,6 +115,11 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
     case 'svelte':
       return SvgToSvelte(await getSvg(icon, undefined, color))
+    case 'unplugin':
+      //Turn `ph:airplane-thin` into `ph:airplane`, then remove the `ph:` and uppercase to get `import Airplane`
+      // Other example: `ph:align-center-horizontal-duotone` -> import AlignCenterHorizantal from '~icons/ph/align-center-horizantal-duotone'
+      const notAllowed = ["thin", "bold", "baseline", "duotone", "simple", "light", "fill"].map(i => `-${i}`);
+      return `import ${icon.split(":")[1][0].toUpperCase()}${icon.replace(new RegExp(notAllowed.join("|"), "ig"), "").split(":")[1].replace(/-(.)/g, (_, one) => one.toUpperCase()).slice(1)} from '~icons/${icon.split(":")[0]}/${icon.split(":")[1]}'`
   }
 }
 

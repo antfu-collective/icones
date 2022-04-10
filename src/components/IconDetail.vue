@@ -199,6 +199,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svelte')">
             Svelte
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('unplugin')">
+            Unplugin Icons
+          </button>
         </div>
         <div class="mr-4">
           <div class="my-1 text-gray-500 text-sm">
