@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { themeColor } from './store'
 
-const style = computed(() => ({
+const style = computed<any>(() => ({
   '--theme-color': themeColor.value,
 }))
 </script>

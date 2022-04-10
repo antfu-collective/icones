@@ -35,13 +35,11 @@
   </div>
 </template>
 
-<style scoped lang="postcss">
-.help-page {
-  p {
-    @apply text-black/60 dark:text-white/60;
-  }
-  a {
-    @apply text-primary opacity-75 hover:opacity-100;
-  }
+<style lang="postcss">
+.help-page p {
+  @apply text-black/60 dark:text-white/60;
+}
+.help-page a {
+  @apply text-primary opacity-75 hover:opacity-100;
 }
 </style>

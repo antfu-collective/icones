@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "es2016",
+    "module": "esnext",
+    "target": "esnext",
     "lib": ["DOM", "ESNext"],
     "strict": true,
     "esModuleInterop": true,
-    "incremental": true,
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "vite/client",
+      "vite-plugin-pages/client"
+    ]
   },
   "exclude": [
     "dist",
