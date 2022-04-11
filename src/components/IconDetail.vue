@@ -4,7 +4,7 @@ import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
-import copyImage from "../utils/copyImage"
+import copyImage from '../utils/copyImage'
 import { idCases } from '../utils/case'
 
 const emit = defineEmits(['close'])
@@ -40,20 +40,21 @@ const copy = async(type: string) => {
   }, 2000)
 }
 
-const copyPng = async () => {
+const copyPng = async() => {
   copyImage(
-    await getIconSnippet(props.icon, "svg", true, color.value),
-    color.value
+    await getIconSnippet(props.icon, 'svg', true, color.value),
+    color.value,
   ).then(
-    (...a) => (
-      (copied.value = "Copied"), setTimeout(() => (copied.value = false), 2000)
-    ),
-    (...a) => (
-      (copied.value = "Failed to copy"),
+    (...a) => {
+      copied.value = true
       setTimeout(() => (copied.value = false), 2000)
-    )
-  );
-};
+    },
+    (...a) => {
+      copied.value = true
+      setTimeout(() => (copied.value = false), 2000)
+    },
+  )
+}
 
 const download = async(type: string) => {
   const text = await getIconSnippet(props.icon, type, false, color.value)
