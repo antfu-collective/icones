@@ -41,8 +41,11 @@ const copy = async(type: string) => {
 }
 
 const copyPng = async() => {
+  const svgString = await getIconSnippet(props.icon, 'svg', true, color.value)
+  if (!svgString)
+    return
   copyImage(
-    await getIconSnippet(props.icon, 'svg', true, color.value),
+    svgString,
     color.value,
   ).then(
     (...a) => {
