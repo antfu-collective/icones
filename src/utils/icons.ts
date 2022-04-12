@@ -14,7 +14,7 @@ export async function getSvgSymbol(icon: string, size = '1em', color = 'currentC
   const svgMarkup = Iconify.renderSVG(icon, { height: size })?.outerHTML?.replace('currentColor', color)
   || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
 
-  const symbolElem = document.createElement('symbol')
+  const symbolElem = document.createElementNS("http://www.w3.org/2000/svg",'symbol')
   const node = document.createElement('div') // Create any old element
   node.innerHTML = svgMarkup
 
