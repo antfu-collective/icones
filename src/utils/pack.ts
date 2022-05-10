@@ -9,7 +9,7 @@ export async function LoadIconSvgs(icons: string[]) {
     icons
       .filter(Boolean)
       .sort()
-      .map(async(name) => {
+      .map(async (name) => {
         return {
           name,
           svg: await getSvg(name),

@@ -51,15 +51,15 @@ defineEmits<{
       v-for="icon of icons"
       :key="icon"
       class="non-dragging icons-item flex tooltip"
-      :class="[spacing, selected.includes(namespace+icon) ? 'active': '']"
-      @click="$emit('select', namespace+icon)"
+      :class="[spacing, selected.includes(namespace + icon) ? 'active' : '']"
+      @click="$emit('select', namespace + icon)"
     >
       <Icon
         class="tooltip-content non-dragging leading-none h-1em"
-        :icon="namespace+icon"
+        :icon="namespace + icon"
       />
       <span
-        v-if="display==='list'"
+        v-if="display === 'list'"
         class="tooltip-content text-sm ml-1 px-1 m-auto"
         v-html="getSearchHighlightHTML(icon, search)"
       />

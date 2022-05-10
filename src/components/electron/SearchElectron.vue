@@ -26,7 +26,7 @@ watch(isSearchOpen, (v) => {
         ref="input"
         v-model="search"
         class="text-base outline-none py-1 px-4 flex-auto m-0 bg-transparent"
-        :placeholder="`Search...`"
+        placeholder="Search..."
         @keydown.esc="isSearchOpen = false"
       >
       <Icon icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="isSearchOpen = false" />

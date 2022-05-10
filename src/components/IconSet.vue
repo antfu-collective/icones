@@ -41,7 +41,7 @@ const loadMore = () => {
   maxMap.set(namespace.value, max.value)
 }
 
-const loadAll = async() => {
+const loadAll = async () => {
   if (!namespace.value)
     return
 
@@ -60,7 +60,6 @@ onMounted(() => {
     router.replace({ query: { s: search.value } })
   })
 })
-
 </script>
 
 <template>
@@ -208,7 +207,7 @@ onMounted(() => {
         <!-- Selecting Note -->
         <div
           class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
-          :style="selectingMode ? {} : {transform: 'translateX(120%)'}"
+          :style="selectingMode ? {} : { transform: 'translateX(120%)' }"
           @click="selectingMode = false"
         >
           Selecting Mode

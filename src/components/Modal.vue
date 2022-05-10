@@ -41,14 +41,14 @@ const transform = computed(() => {
 <template>
   <div
     class="fixed top-0 bottom-0 left-0 right-0 z-40"
-    :class="value ? '': 'pointer-events-none'"
+    :class="value ? '' : 'pointer-events-none'"
   >
     <div
       class="
         bg-white bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out
         dark:bg-dark-100
       "
-      :class="value ? 'opacity-85': 'opacity-0'"
+      :class="value ? 'opacity-85' : 'opacity-0'"
       @click="$emit('close')"
     />
     <div
@@ -57,7 +57,7 @@ const transform = computed(() => {
         dark:bg-dark-100 dark:border-dark-200
       "
       :class="positionClass"
-      :style="value ? {}: {transform}"
+      :style="value ? {} : { transform }"
     >
       <slot />
     </div>

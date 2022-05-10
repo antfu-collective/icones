@@ -21,7 +21,7 @@ const menu = ref(
       : 'small',
 )
 
-const packIconFont = async() => {
+const packIconFont = async () => {
   if (!props.collection)
     return
 
@@ -38,7 +38,7 @@ const packIconFont = async() => {
   inProgress.value = false
 }
 
-const packSvgs = async() => {
+const packSvgs = async () => {
   if (!props.collection)
     return
 
@@ -55,7 +55,7 @@ const packSvgs = async() => {
   inProgress.value = false
 }
 
-const cache = async() => {
+const cache = async () => {
   if (!props.collection)
     return
 
@@ -64,7 +64,7 @@ const cache = async() => {
 
 watch(
   menu,
-  async(current, prev) => {
+  async (current, prev) => {
     switch (current) {
       case 'small':
         iconSize.value = 'text-2xl'

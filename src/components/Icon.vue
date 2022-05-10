@@ -10,7 +10,7 @@ const props = defineProps({
 
 const el = ref<HTMLElement | null>(null)
 
-const update = async() => {
+const update = async () => {
   await nextTick()
   if (el.value) {
     const svg = Iconify.renderSVG(props.icon, {})

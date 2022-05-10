@@ -18,14 +18,14 @@ const clear = () => {
   }
 }
 
-const packIconFont = async() => {
+const packIconFont = async () => {
   // TODO: customzie
   await PackIconFont(
     bags.value,
   )
 }
 
-const PackSvgs = async(type: PackType = 'svg') => {
+const PackSvgs = async (type: PackType = 'svg') => {
   await PackZip(
     bags.value.map(i => i.replace(':', '-')),
     'icones-bags',

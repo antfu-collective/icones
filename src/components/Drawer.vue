@@ -54,7 +54,7 @@ const collections = computed(() => {
           v-if="collection.id != 'all'"
           class="flex-none text-lg p-1 -mr-1"
           :icon="isFavorited(collection.id) ? 'carbon:bookmark' : 'carbon:up-to-top'"
-          @click="()=>toggleFavorite(collection.id)"
+          @click="() => toggleFavorite(collection.id)"
         />
       </div>
     </router-link>

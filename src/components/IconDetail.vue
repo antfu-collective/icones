@@ -6,7 +6,6 @@ import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor,
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
 
-const emit = defineEmits(['close'])
 const props = defineProps({
   icon: {
     type: String,
@@ -18,6 +17,7 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['close'])
 const copied = ref(false)
 
 const caseSelector = ref<HTMLDivElement>()
@@ -28,7 +28,7 @@ onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
 })
 
-const copy = async(type: string) => {
+const copy = async (type: string) => {
   const text = await getIconSnippet(props.icon, type, true, color.value)
   if (!text)
     return
@@ -39,7 +39,7 @@ const copy = async(type: string) => {
   }, 2000)
 }
 
-const download = async(type: string) => {
+const download = async (type: string) => {
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
@@ -65,7 +65,7 @@ const collection = computed(() => {
 <template>
   <div class="p-2 flex flex-col md:flex-row md:text-left relative">
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
-    <div :style="{color: previewColor}">
+    <div :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">
         <Icon class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
@@ -89,7 +89,7 @@ const collection = computed(() => {
           class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100"
         >
           <div
-            v-for="[k,v] of Object.entries(idCases)"
+            v-for="[k, v] of Object.entries(idCases)"
             :key="k"
             class="flex items-center p-1 cursor-pointer"
             :class="k === preferredCase ? 'text-primary' : ''"

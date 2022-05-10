@@ -9,7 +9,7 @@ serve({ directory: DEV ? '../../../dist' : 'app' })
 
 let mainWindow
 
-const createMainWindow = async() => {
+const createMainWindow = async () => {
   const win = new BrowserWindow({
     title: app.name,
     show: false,
@@ -50,12 +50,12 @@ app.on('window-all-closed', () => {
   app.quit()
 })
 
-app.on('activate', async() => {
+app.on('activate', async () => {
   if (!mainWindow)
     mainWindow = await createMainWindow()
 })
 
-;(async() => {
+;(async () => {
   await app.whenReady()
 
   mainWindow = await createMainWindow()
