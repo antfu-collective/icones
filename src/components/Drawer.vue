@@ -51,7 +51,7 @@ const collections = computed(() => {
         :class="isFavorited(collection.id) ? '' : 'opacity-0 hover:opacity-50' "
       >
         <IconButton
-          v-if="collection.id != 'all'"
+          v-if="collection.id !== 'all'"
           class="flex-none text-lg p-1 -mr-1"
           :icon="isFavorited(collection.id) ? 'carbon:bookmark' : 'carbon:up-to-top'"
           @click="() => toggleFavorite(collection.id)"
