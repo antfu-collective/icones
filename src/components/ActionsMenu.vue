@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import type { PropType } from 'vue'
-import { iconSize, inProgress, listType, progressMessage, selectingMode } from '../store'
+import { activeMode, iconSize, inProgress, listType, progressMessage } from '../store'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
@@ -79,7 +79,10 @@ watch(
         listType.value = 'list'
         return
       case 'select':
-        selectingMode.value = !selectingMode.value
+        activeMode.value = 'selecting'
+        break
+      case 'copy':
+        activeMode.value = 'copying'
         break
       case 'download_iconfont':
         packIconFont()
@@ -137,6 +140,9 @@ const installed = computed(() => {
         <optgroup label="Actions">
           <option value="select">
             Select multiple
+          </option>
+          <option value="copy">
+            Copy to clipboard
           </option>
         </optgroup>
 

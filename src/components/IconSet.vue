@@ -1,15 +1,24 @@
 <script setup lang='ts'>
+import copyText from 'copy-text-to-clipboard'
 import { useRoute, useRouter } from 'vue-router'
-import { bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, selectingMode, showHelp, toggleBag } from '../store'
+import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 
 const { search, icons, category, collection } = getSearchResults()
 const showBag = ref(false)
+const copied = ref(false)
 
 const maxMap = new Map<string, number>()
 const current = ref('')
 const max = ref(isLocalMode ? 500 : 200)
+
+const onCopy = (status: boolean) => {
+  copied.value = status
+  setTimeout(() => {
+    copied.value = false
+  }, 2000)
+}
 
 const toggleCategory = (cat: string) => {
   if (category.value === cat)
@@ -24,9 +33,17 @@ const namespace = computed(() => {
 })
 
 const onSelect = (icon: string) => {
-  if (selectingMode.value)
-    toggleBag(icon)
-  else current.value = icon
+  switch (activeMode.value) {
+    case 'selecting':
+      toggleBag(icon)
+      break
+    case 'copying':
+      onCopy(copyText(icon))
+      break
+    default:
+      current.value = icon
+      break
+  }
 }
 
 watch(
@@ -190,13 +207,13 @@ onMounted(() => {
         <Modal :value="showBag" direction="right" @close="showBag = false">
           <Bag
             @close="showBag = false"
-            @select="e => current = e"
+            @select="onSelect"
           />
         </Modal>
 
         <!-- Details -->
         <Modal :value="!!current" @close="current = ''">
-          <IconDetail :icon="current" :show-collection="collection.id === 'all'" @close="current = ''" />
+          <IconDetail :icon="current" :show-collection="collection.id === 'all'" @close="current = ''" @copy="onCopy" />
         </Modal>
 
         <!-- Help -->
@@ -207,14 +224,19 @@ onMounted(() => {
         <!-- Selecting Note -->
         <div
           class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
-          :style="selectingMode ? {} : { transform: 'translateX(120%)' }"
-          @click="selectingMode = false"
+          :style="activeMode !== 'normal' ? {} : { transform: 'translateX(120%)' }"
+          @click="activeMode = 'normal'"
         >
-          Selecting Mode
+          {{ activeMode.replace(/^[a-z](?=[a-z]*)/, (i) => i.toUpperCase()) }} Mode
           <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
         </div>
 
         <SearchElectron />
+
+        <Notification :value="copied">
+          <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
+          <span class="align-middle">Copied</span>
+        </Notification>
       </div>
     </div>
   </WithNavbar>

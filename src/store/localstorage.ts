@@ -1,6 +1,8 @@
 import type { IdCase } from '../utils/case'
 import { idCases } from '../utils/case'
 
+export type ActiveMode = 'normal' | 'selecting' | 'copying'
+
 export const themeColor = useStorage('icones-theme-color', '#329672')
 export const iconSize = useStorage('icones-icon-size', '2xl')
 export const previewColor = useStorage('icones-preview-color', '#888888')
@@ -8,7 +10,7 @@ export const copyPreviewColor = useStorage('icones-copy-preview-color', false)
 export const listType = useStorage('icones-list-type', 'grid')
 export const favoritedCollections = useStorage<string[]>('icones-fav-collections', [])
 export const bags = useStorage<string[]>('icones-bags', [])
-export const selectingMode = ref(false)
+export const activeMode = useStorage<ActiveMode>('active-mode', 'normal')
 export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
 
 export function getTransformedId(icon: string) {

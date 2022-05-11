@@ -2,7 +2,7 @@
 import copyText from 'copy-text-to-clipboard'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
+import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
 
@@ -17,8 +17,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['close'])
-const copied = ref(false)
+const emit = defineEmits(['close', 'copy'])
 
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
@@ -33,10 +32,7 @@ const copy = async (type: string) => {
   if (!text)
     return
 
-  copied.value = copyText(text)
-  setTimeout(() => {
-    copied.value = false
-  }, 2000)
+  emit('copy', copyText(text))
 }
 
 const download = async (type: string) => {
@@ -51,9 +47,15 @@ const download = async (type: string) => {
 }
 
 const toggleSelectingMode = () => {
-  selectingMode.value = !selectingMode.value
-  if (selectingMode.value)
-    emit('close')
+  switch (activeMode.value) {
+    case 'selecting':
+      activeMode.value = 'normal'
+      break
+    default:
+      activeMode.value = 'selecting'
+      emit('close')
+      break
+  }
 }
 
 const collection = computed(() => {
@@ -141,7 +143,7 @@ const collection = computed(() => {
             inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
             dark:border-dark-200 dark:hover:bg-dark-200
           "
-          :class="selectingMode ? 'text-primary' : 'text-gray-500'"
+          :class="activeMode === 'selecting' ? 'text-primary' : 'text-gray-500'"
           @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
@@ -233,9 +235,5 @@ const collection = computed(() => {
         </div>
       </div>
     </div>
-    <Notification :value="copied">
-      <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
-      <span class="align-middle">Copied</span>
-    </Notification>
   </div>
 </template>
