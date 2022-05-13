@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
+import { getIconSnippet } from '../utils/icons'
 
 const { search, icons, category, collection } = getSearchResults()
 const showBag = ref(false)
@@ -32,13 +33,13 @@ const namespace = computed(() => {
     : `${collection.value.id}:`
 })
 
-const onSelect = (icon: string) => {
+const onSelect = async (icon: string) => {
   switch (activeMode.value) {
-    case 'selecting':
+    case 'select':
       toggleBag(icon)
       break
-    case 'copying':
-      onCopy(copyText(icon))
+    case 'copy':
+      onCopy(copyText(await getIconSnippet(icon, 'id', true) || icon))
       break
     default:
       current.value = icon
@@ -221,13 +222,13 @@ onMounted(() => {
           <HelpPage />
         </ModalDialog>
 
-        <!-- Selecting Note -->
+        <!-- Mode -->
         <div
           class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
           :style="activeMode !== 'normal' ? {} : { transform: 'translateX(120%)' }"
           @click="activeMode = 'normal'"
         >
-          {{ activeMode.replace(/^[a-z](?=[a-z]*)/, (i) => i.toUpperCase()) }} Mode
+          {{ activeMode === 'select' ? 'Multiple select' : 'Name copying mode' }}
           <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
         </div>
 

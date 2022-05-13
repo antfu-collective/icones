@@ -1,7 +1,7 @@
 import type { IdCase } from '../utils/case'
 import { idCases } from '../utils/case'
 
-export type ActiveMode = 'normal' | 'selecting' | 'copying'
+export type ActiveMode = 'normal' | 'select' | 'copy'
 
 export const themeColor = useStorage('icones-theme-color', '#329672')
 export const iconSize = useStorage('icones-icon-size', '2xl')

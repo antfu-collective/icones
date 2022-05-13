@@ -79,10 +79,10 @@ watch(
         listType.value = 'list'
         return
       case 'select':
-        activeMode.value = 'selecting'
+        activeMode.value = 'select'
         break
       case 'copy':
-        activeMode.value = 'copying'
+        activeMode.value = 'copy'
         break
       case 'download_iconfont':
         packIconFont()
@@ -137,12 +137,12 @@ const installed = computed(() => {
             List
           </option>
         </optgroup>
-        <optgroup label="Actions">
+        <optgroup label="Modes">
           <option value="select">
-            Select multiple
+            Multiple select
           </option>
           <option value="copy">
-            Copy to clipboard
+            Name copying mode
           </option>
         </optgroup>
 

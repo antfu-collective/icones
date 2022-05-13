@@ -48,11 +48,11 @@ const download = async (type: string) => {
 
 const toggleSelectingMode = () => {
   switch (activeMode.value) {
-    case 'selecting':
+    case 'select':
       activeMode.value = 'normal'
       break
     default:
-      activeMode.value = 'selecting'
+      activeMode.value = 'select'
       emit('close')
       break
   }
@@ -81,14 +81,13 @@ const collection = computed(() => {
       </button>
       <div class="flex text-gray-700 relative font-mono dark:text-dark-900">
         {{ transformedId }}
-
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
         <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
         <div class="flex-auto" />
         <div
           v-if="showCaseSelect"
           ref="caseSelector"
-          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100"
+          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100 dark:border dark:border-dark-200"
         >
           <div
             v-for="[k, v] of Object.entries(idCases)"
@@ -143,7 +142,7 @@ const collection = computed(() => {
             inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
             dark:border-dark-200 dark:hover:bg-dark-200
           "
-          :class="activeMode === 'selecting' ? 'text-primary' : 'text-gray-500'"
+          :class="activeMode === 'select' ? 'text-primary' : 'text-gray-500'"
           @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
