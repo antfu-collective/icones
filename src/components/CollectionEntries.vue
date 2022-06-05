@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import type { CollectionInfo } from '../data'
+import type { CollectionInfo, PresentType } from '../data'
 
-defineProps<{ collections: CollectionInfo[] }>()
+defineProps<{
+  collections: CollectionInfo[]
+  type?: PresentType
+}>()
 </script>
 
 <template>
-  <div class="collections-list grid overflow-y-overly">
+  <div class="collections-list grid gap2" p2>
     <CollectionEntry
       v-for="collection of collections"
       :key="collection.id"
-      class="border-r border-b border-gray-200 dark:border-dark-200"
+      :type="type"
       :collection="collection"
     />
   </div>
@@ -17,6 +20,6 @@ defineProps<{ collections: CollectionInfo[] }>()
 
 <style>
 .collections-list {
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 </style>

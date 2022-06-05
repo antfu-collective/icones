@@ -191,7 +191,7 @@ onMounted(() => {
           <button v-if="icons.length > max && namespace" class="btn mx-1 my-3" @click="loadAll">
             Load All ({{ icons.length - max }})
           </button>
-          <p class="text-gray-500 text-sm pt-4">
+          <p class="color-fade text-sm pt-4">
             {{ icons.length }} icons
           </p>
         </div>
