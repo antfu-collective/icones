@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// eslint-disable-next-line no-undef
 const buildTime = __BUILD_TIME__
 </script>
 

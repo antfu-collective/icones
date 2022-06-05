@@ -16,13 +16,16 @@ export default defineConfig({
     Pages({
       importMode: 'sync',
     }),
-    Components(),
+    Components({
+      dts: 'src/components.d.ts',
+    }),
     AutoImport({
       imports: [
         'vue',
         'vue-router',
         '@vueuse/core',
       ],
+      dts: 'src/auto-imports.d.ts',
     }),
     PurgeIcons(),
     VitePWA({
