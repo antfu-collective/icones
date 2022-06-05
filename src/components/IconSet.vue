@@ -27,11 +27,13 @@ const toggleCategory = (cat: string) => {
   else category.value = cat
 }
 
-const namespace = computed(() => {
-  return !collection.value || collection.value.id === 'all'
+const namespace = computed(() =>
+  !collection.value || collection.value.id === 'all'
     ? ''
-    : `${collection.value.id}:`
-})
+    : `${collection.value.id}:`,
+)
+
+const url = computed(() => collection.value?.url || collection.value?.author?.url)
 
 const onSelect = async (icon: string) => {
   switch (activeMode.value) {
@@ -105,9 +107,9 @@ onMounted(() => {
                 {{ collection.name }}
               </div>
               <a
-                v-if="collection.url"
+                v-if="url"
                 class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
-                :href="collection.url"
+                :href="url"
                 target="_blank"
               >
                 <Icon icon="la:external-link-square-alt-solid" />

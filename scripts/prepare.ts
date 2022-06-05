@@ -12,7 +12,7 @@ function ObjectPick(source: Record<string, any>, keys: string[]) {
 
 function humanFileSize(size: number) {
   const i = Math.floor(Math.log(size) / Math.log(1024))
-  const v = (size / Math.pow(1024, i))
+  const v = (size / 1024 ** i)
   return `${v.toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB'][i]}`
 }
 
