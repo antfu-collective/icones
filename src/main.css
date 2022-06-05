@@ -110,3 +110,10 @@ html.dark .bg {
     opacity: 1;
   }
 }
+
+/* fallback black svg in dark mode */
+.dark .icons-item svg,
+.dark .icons-item [fill="#000"] {
+  fill: currentColor;
+}
+
