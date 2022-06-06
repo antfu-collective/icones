@@ -44,7 +44,7 @@ async function prepareJSON() {
 
     info.sampleIcons = icons.slice(0, 7)
     if (info.id === 'logos')
-      info.sampleIcons = ['vue', 'vueuse', 'vitejs', 'vitest', 'unocss', 'nuxt-icon', 'typescript-icon']
+      info.sampleIcons = ['vue', 'vitejs', 'vitest', 'vueuse', 'unocss', 'esbuild', 'typescript-icon', 'netlify']
     info.prepacked = {
       prefix: setData.prefix,
       width: setData.width,
