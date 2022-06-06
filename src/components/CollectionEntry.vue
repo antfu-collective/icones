@@ -18,21 +18,21 @@ function onAction() {
 <template>
   <RouterLink
     :key="collection.id"
-    px-2 py-4 relative
+    p2 relative
     border="~ base"
-    class="flex flex-col text-gray-900 transition-all text-center justify-center dark:text-gray-300"
+    class="grid grid-cols-[1fr_90px] items-center color-base transition-all"
     hover="text-primary !border-primary shadow"
     :to="`/collection/${collection.id}`"
   >
-    <div class="flex-auto text-lg">
-      {{ collection.name }}
-    </div>
-    <div class="flex-auto opacity-50 text-xs">
-      <span>{{ collection.author?.name }}</span>
-      <span class="px-1 opacity-25">/</span>
-      <span>{{ collection.license?.title }}</span>
-      <span class="px-1 opacity-25">/</span>
-      <span>{{ collection.total }} icons</span>
+    <div ml2>
+      <div class="flex-auto text-lg leading-1em my1">
+        {{ collection.name }}
+      </div>
+      <div class="flex-auto opacity-50 text-xs flex flex-col">
+        <span>{{ collection.author?.name }}</span>
+        <span>{{ collection.license?.title }}</span>
+        <span>{{ collection.total }} icons</span>
+      </div>
     </div>
     <Icons
       :icons="collection.sampleIcons"
@@ -40,11 +40,12 @@ function onAction() {
       color-class=""
       size="xl"
       spacing="m-1"
-      class="mt-2 mb-1 justify-center opacity-75 overflow-hidden flex-none pointer-events-none"
+      class="ma justify-center opacity-75 flex-wrap pointer-events-none"
     />
     <button
       class="group"
-      absolute top-1 right-1 p2 hover="bg-gray/10" rounded
+      absolute top--1px right--1px p2 border="~ transparent" hover="bg-base border-primary"
+      :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavorited(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
       @click.prevent="onAction"
     >
       <div
@@ -53,11 +54,11 @@ function onAction() {
       />
       <div
         v-else-if="type === 'favorite' || isFavorited(collection.id)"
-        i-carbon-bookmark-filled op50 group-hover="op100 i-carbon-bookmark"
+        i-carbon-bookmark-filled op0 group-hover="op100"
       />
       <div
         v-else
-        i-carbon-bookmark-filled op0 group-hover="op100"
+        i-carbon-bookmark op0 group-hover="op100"
       />
     </button>
   </RouterLink>

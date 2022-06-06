@@ -38,7 +38,8 @@ export const sortedCollectionsInfo = computed(() =>
 )
 
 export const favoritedCollections = computed(() =>
-  sortedCollectionsInfo.value.filter(i => isFavorited(i.id)),
+  collections.filter(i => isFavorited(i.id))
+    .sort((a, b) => favoritedIds.value.indexOf(b.id) - favoritedIds.value.indexOf(a.id)),
 )
 
 export const recentCollections = computed(() =>

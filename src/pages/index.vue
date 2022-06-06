@@ -29,7 +29,7 @@ const categorized = computed(() => [
       </div>
     </NavPlaceholder>
     <template v-for="c of categorized" :key="c.name">
-      <div v-if="c.collections.length">
+      <div v-if="c.collections.length" px4>
         <div px-2 op50 mt6 text-lg>
           {{ c.name }}
         </div>
