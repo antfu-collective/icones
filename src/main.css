@@ -112,8 +112,11 @@ html.dark .bg {
 }
 
 /* fallback black svg in dark mode */
-.dark .icons-item svg,
-.dark .icons-item [fill="#000"] {
+.icons-item svg,
+.icons-item [fill="none"],
+.dark .icons-item [fill="#000"],
+.dark .icons-item [fill="#000000"],
+.dark .icons-item [fill="black"] {
   fill: currentColor;
 }
 
