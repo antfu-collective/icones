@@ -4,7 +4,7 @@ import { categories, collections, favoritedCollections, recentCollections } from
 
 const categorized = computed(() => [
   {
-    name: 'Favorite',
+    name: 'Favorites',
     type: 'favorite' as PresentType,
     collections: favoritedCollections.value,
   },

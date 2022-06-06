@@ -27,6 +27,7 @@ function onAction() {
     <div ml2>
       <div class="flex-auto text-lg leading-1em my1">
         {{ collection.name }}
+        <span v-if="isFavorited(collection.id)" m="l--0.5" op80 text-xs inline-block align-top i-carbon-star-filled />
       </div>
       <div class="flex-auto opacity-50 text-xs flex flex-col">
         <span>{{ collection.author?.name }}</span>
@@ -54,11 +55,11 @@ function onAction() {
       />
       <div
         v-else-if="type === 'favorite' || isFavorited(collection.id)"
-        i-carbon-bookmark-filled op0 group-hover="op100"
+        i-carbon-star-filled op0 group-hover="op100"
       />
       <div
         v-else
-        i-carbon-bookmark op0 group-hover="op100"
+        i-carbon-star op0 group-hover="op100"
       />
     </button>
   </RouterLink>

@@ -47,16 +47,14 @@ const collections = computed(() => {
           {{ collection.id !== 'all' ? `${collection.total} icons` : `${collections.length} iconsets` }}
         </div>
       </div>
-      <div
-        :class="isFavorited(collection.id) ? '' : 'opacity-0 hover:opacity-50' "
+      <button
+        v-if="collection.id !== 'all'"
+        :class="isFavorited(collection.id) ? 'op50 hover:op100' : 'op0 hover:op50' "
+        class="flex-none text-lg p0.5 -mr-1 hover:text-primary flex"
+        @click="() => toggleFavorite(collection.id)"
       >
-        <IconButton
-          v-if="collection.id !== 'all'"
-          class="flex-none text-lg p-1 -mr-1"
-          :icon="isFavorited(collection.id) ? 'carbon:bookmark' : 'carbon:up-to-top'"
-          @click="() => toggleFavorite(collection.id)"
-        />
-      </div>
+        <div :class="isFavorited(collection.id) ? 'i-carbon-star-filled' : 'i-carbon-star'" ma />
+      </button>
     </router-link>
   </div>
 </template>
