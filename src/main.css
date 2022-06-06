@@ -113,10 +113,14 @@ html.dark .bg {
 
 /* fallback black svg in dark mode */
 .icons-item svg,
-.icons-item [fill="none"],
 .dark .icons-item [fill="#000"],
 .dark .icons-item [fill="#000000"],
 .dark .icons-item [fill="black"] {
   fill: currentColor;
 }
 
+.dark .icons-item [stroke="#000"],
+.dark .icons-item [stroke="#000000"],
+.dark .icons-item [stroke="black"] {
+  stroke: currentColor;
+}

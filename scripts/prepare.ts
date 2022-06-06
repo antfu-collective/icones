@@ -43,6 +43,8 @@ async function prepareJSON() {
     collectionsMeta.push(meta)
 
     info.sampleIcons = icons.slice(0, 7)
+    if (info.id === 'logos')
+      info.sampleIcons = ['vue', 'vueuse', 'vitejs', 'vitest', 'unocss', 'nuxt-icon', 'typescript-icon']
     info.prepacked = {
       prefix: setData.prefix,
       width: setData.width,
