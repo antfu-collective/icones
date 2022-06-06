@@ -18,9 +18,9 @@ function onAction() {
 <template>
   <RouterLink
     :key="collection.id"
-    p2 relative
+    p3 relative
     border="~ base"
-    class="grid grid-cols-[1fr_90px] items-center color-base transition-all"
+    class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all"
     hover="text-primary !border-primary shadow"
     :to="`/collection/${collection.id}`"
   >
