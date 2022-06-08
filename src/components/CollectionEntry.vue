@@ -1,45 +1,66 @@
 <script setup lang="ts">
-import type { CollectionInfo } from '../data'
-import { isFavorited } from '../store'
+import type { CollectionInfo, PresentType } from '../data'
+import { isFavorited, removeRecent, toggleFavorite } from '../store'
 
-defineProps<{
+const props = defineProps<{
   collection: CollectionInfo
+  type?: PresentType
 }>()
+
+function onAction() {
+  if (props.type === 'recent')
+    removeRecent(props.collection.id)
+  else
+    toggleFavorite(props.collection.id)
+}
 </script>
 
 <template>
-  <div
+  <RouterLink
     :key="collection.id"
-    class="px-2 py-4 relative bg"
+    p3 relative
+    border="~ base"
+    class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all"
+    hover="text-primary !border-primary shadow"
+    :to="`/collection/${collection.id}`"
   >
-    <router-link
-      class="flex flex-col text-gray-900 transition-all text-center justify-center dark:text-gray-300"
-      hover="text-primary"
-      :to="`/collection/${collection.id}`"
-    >
-      <div class="flex-auto text-lg">
+    <div ml2>
+      <div class="flex-auto text-lg leading-1em my1">
         {{ collection.name }}
+        <span v-if="isFavorited(collection.id)" m="l--0.5" op80 text-xs inline-block align-top i-carbon-star-filled />
       </div>
-      <div class="flex-auto opacity-50 text-xs">
+      <div class="flex-auto opacity-50 text-xs flex flex-col">
         <span>{{ collection.author?.name }}</span>
-        <span class="px-1 opacity-25">/</span>
         <span>{{ collection.license?.title }}</span>
-        <span class="px-1 opacity-25">/</span>
         <span>{{ collection.total }} icons</span>
       </div>
-      <Icons
-        :icons="collection.sampleIcons"
-        :namespace="`${collection.id}:`"
-        color-class=""
-        size="xl"
-        spacing="m-1"
-        class="mt-2 mb-1 justify-center opacity-75 overflow-hidden flex-none pointer-events-none"
-      />
-    </router-link>
-    <IconButton
-      v-if="isFavorited(collection.id)"
-      class="absolute top-0 right-0 p-2 text-lg dark:text-gray-100"
-      icon="carbon:bookmark"
+    </div>
+    <Icons
+      :icons="collection.sampleIcons"
+      :namespace="`${collection.id}:`"
+      color-class=""
+      size="xl"
+      spacing="m-1"
+      class="ma justify-center opacity-75 flex-wrap pointer-events-none"
     />
-  </div>
+    <button
+      class="group"
+      absolute top--1px right--1px p2 border="~ transparent" hover="bg-base border-primary"
+      :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavorited(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
+      @click.prevent="onAction"
+    >
+      <div
+        v-if="type === 'recent'"
+        i-carbon-delete op0 group-hover="op100"
+      />
+      <div
+        v-else-if="type === 'favorite' || isFavorited(collection.id)"
+        i-carbon-star-filled op0 group-hover="op100"
+      />
+      <div
+        v-else
+        i-carbon-star op0 group-hover="op100"
+      />
+    </button>
+  </RouterLink>
 </template>

@@ -3,18 +3,18 @@
   "version": "0.0.0",
   "appname": "Icônes",
   "description": "Explorer for Iconify with Instant searching.",
-  "license": "MIT",
   "author": "Anthony Fu<https://github.com/antfu>",
+  "license": "MIT",
+  "homepage": "https://github.com/antfu/icones#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antfu/icones.git"
   },
-  "main": "dist/main/main.js",
-  "copyright": "Copyright © 2020 Anthony Fu",
   "bugs": {
     "url": "https://github.com/antfu/icones/issues"
   },
-  "homepage": "https://github.com/antfu/icones#readme",
+  "main": "dist/main/main.js",
+  "copyright": "Copyright © 2020 Anthony Fu",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",

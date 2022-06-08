@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { setCurrentCollection, useCurrentCollection } from '../../store'
+import { pushRecent, setCurrentCollection, useCurrentCollection } from '../../store'
 
 const props = defineProps<{
   id: string
@@ -14,6 +14,10 @@ watch(
 onUnmounted(() => setCurrentCollection(''))
 
 const collection = useCurrentCollection()
+
+onMounted(() => {
+  pushRecent(props.id)
+})
 </script>
 
 <template>

@@ -1,10 +1,12 @@
 import type { IconifyJSON } from '@iconify/iconify'
 import { notNullish } from '@antfu/utils'
 import Iconify from '@purge-icons/generated'
-import { favoritedCollections, inProgress, isFavorited, progressMessage } from '../store'
+import { favoritedIds, inProgress, isFavorited, isRecent, progressMessage, recentIds } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
+
+export type PresentType = 'favorite' | 'recent' | 'normal'
 
 export interface CollectionInfo {
   id: string
@@ -29,29 +31,21 @@ const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
-export const categoryFilter = ref<string | undefined>(undefined)
 
-export const sortedCollectionsInfo = computed(() => {
-  return collections
-    .filter((c) => {
-      if (!categoryFilter.value)
-        return true
-      return c.category === categoryFilter.value
-    })
-    .sort(
-      (a, b) =>
-        favoritedCollections.value.indexOf(b.id)
-      - favoritedCollections.value.indexOf(a.id),
-    )
-})
+export const sortedCollectionsInfo = computed(() =>
+  collections
+    .sort((a, b) => favoritedIds.value.indexOf(b.id) - favoritedIds.value.indexOf(a.id)),
+)
 
-export const favoritedCollectionsIcons = computed(() => {
-  return sortedCollectionsInfo.value.filter(i => isFavorited(i.id))
-})
+export const favoritedCollections = computed(() =>
+  collections.filter(i => isFavorited(i.id))
+    .sort((a, b) => favoritedIds.value.indexOf(b.id) - favoritedIds.value.indexOf(a.id)),
+)
 
-export const otherCollectionsIcons = computed(() => {
-  return sortedCollectionsInfo.value.filter(i => !isFavorited(i.id))
-})
+export const recentCollections = computed(() =>
+  collections.filter(i => isRecent(i.id))
+    .sort((a, b) => recentIds.value.indexOf(b.id) - recentIds.value.indexOf(a.id)),
+)
 
 export const isInstalled = (id: string) => installed.value.includes(id)
 export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id === id)

@@ -9,7 +9,7 @@ const style = computed<any>(() => ({
 <template>
   <div class="flex flex-col h-screen overflow-hidden bg" :style="style">
     <div class="h-full flex-auto overflow-overlay">
-      <router-view />
+      <RouterView />
     </div>
     <Progress />
   </div>

@@ -1,20 +1,16 @@
 <script lang="ts">
 import { getSearchResults, isDark } from '../store'
-import { categories, categoryFilter } from '../data'
 
 export default defineComponent(() => ({
   ...getSearchResults(),
   isDark,
-  categories,
-  categoryFilter,
 }))
 </script>
 
 <template>
   <nav
     class="
-      dragging p-2 relative bg-white z-10 flex border-b border-gray-200 flex-none
-      dark:bg-dark-100 dark:border-dark-200
+      dragging p-2 relative bg-base z-10 flex border-b border-base flex-none
     "
     :class="$route.path !== '/' ? 'md:hidden' : ''"
   >
@@ -29,25 +25,19 @@ export default defineComponent(() => ({
 
     <!-- Homepage Only -->
     <template v-else>
-      <div class="mx-3 mr-4 my-auto flex-none">
-        <select v-model="categoryFilter" class="opacity-50 text-current bg-white dark:bg-dark-100 font-normal w-auto outline-none focus:outline-none">
-          <option :value="undefined">
-            All
-          </option>
-          <option v-for="category of categories" :key="category" :value="category">
-            {{ category.split('/')[0].trim() }}
-          </option>
-        </select>
-      </div>
-      <h1 class="text-xl py-1 m-auto flex-auto text-center font-light" style="letter-spacing: 2px">
-        Icônes
-      </h1>
-      <router-link
-        class="non-dragging text-xl mx-3 my-auto flex-none"
+      <RouterLink
+        class="non-dragging text-xl mx-3 my-auto"
         to="/collection/all"
       >
         <IconButton icon="carbon:search" style="padding-bottom: 3px" />
-      </router-link>
+      </RouterLink>
+      <div flex-auto />
+      <h1
+        absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center
+        text-xl font-light tracking-2px pointer-events-none
+      >
+        Icônes
+      </h1>
       <a
         class="non-dragging text-xl mx-3 my-auto flex-none"
         href="https://github.com/antfu/icones"
@@ -66,7 +56,7 @@ export default defineComponent(() => ({
         <input
           v-model="search"
           aria-label="Search"
-          class="text-base outline-none py-2 px-4 flex-auto m-0 w-full bg-transparent"
+          class="color-base text-base outline-none py-2 px-4 flex-auto m-0 w-full bg-transparent"
           name="s"
           placeholder="Search..."
         >

@@ -65,7 +65,7 @@ const collection = computed(() => {
 </script>
 
 <template>
-  <div class="p-2 flex flex-col md:flex-row md:text-left relative">
+  <div class="p-2 flex flex-col flex-wrap md:flex-row md:text-left relative">
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
     <div :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">

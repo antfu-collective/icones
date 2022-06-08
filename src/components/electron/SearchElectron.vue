@@ -20,7 +20,7 @@ watch(isSearchOpen, (v) => {
 
 <template>
   <Notification v-if="isElectron" class="text-right md:hidden" :value="isSearchOpen">
-    <div v-if="collection" class="flex text-gray-500">
+    <div v-if="collection" class="flex text-base">
       <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
       <input
         ref="input"
