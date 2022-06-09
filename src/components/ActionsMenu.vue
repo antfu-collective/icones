@@ -113,6 +113,7 @@ const favorited = computed(() => isFavorited(props.collection.id))
     <DarkSwitcher />
 
     <button
+      v-if="collection.id !== 'all'"
       icon-button
       :class="favorited ? 'i-carbon:star-filled' : 'i-carbon:star'"
       title="Toggle Favorite"
@@ -158,7 +159,7 @@ const favorited = computed(() => isFavorited(props.collection.id))
                   the full set, we should make some UI to aware users
                   in browser version.
           -->
-        <optgroup label="Downloads">
+        <optgroup v-if="collection.id !== 'all'" label="Downloads">
           <option v-if="!isElectron && !installed" value="cache">
             Cache in Browser
           </option>
