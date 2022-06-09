@@ -34,7 +34,7 @@ export function ClearSvg(svgCode: string) {
   const el = document.createElement('div')
   el.innerHTML = svgCode
   const svg = el.getElementsByTagName('svg')[0]
-  const keep = ['viewBox', 'width', 'height', 'focusable']
+  const keep = ['viewBox', 'width', 'height', 'focusable', 'xmlns', 'xlink']
   for (const key of Object.values(svg.attributes)) {
     if (keep.includes(key.localName))
       continue
