@@ -108,13 +108,13 @@ const collection = computed(() => {
 
       <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
         Collection:
-        <router-link
+        <RouterLink
           class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
           :to="`/collection/${collection.id}`"
           @click="$emit('close')"
         >
           {{ collection.name }}
-        </router-link>
+        </RouterLink>
       </p>
 
       <div>

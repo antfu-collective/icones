@@ -29,9 +29,10 @@ function onAction() {
         {{ collection.name }}
         <span v-if="isFavorited(collection.id)" m="l--0.5" op80 text-xs inline-block align-top i-carbon-star-filled />
       </div>
-      <div class="flex-auto opacity-50 text-xs flex flex-col">
+      <div flex="~ col auto" opacity-50 text-xs>
         <span>{{ collection.author?.name }}</span>
-        <span>{{ collection.license?.title }}</span>
+        <span op50>{{ collection.license?.title }}</span>
+        <span m1 />
         <span>{{ collection.total }} icons</span>
       </div>
     </div>

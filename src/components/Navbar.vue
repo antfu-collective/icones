@@ -9,16 +9,17 @@ export default defineComponent(() => ({
 
 <template>
   <nav
-    class="
-      dragging p-2 relative bg-base z-10 flex border-b border-base flex-none
-    "
+    class="dragging"
+    flex="~ gap4 none"
+    p4 relative bg-base z-10 border="b base" text-xl
     :class="$route.path !== '/' ? 'md:hidden' : ''"
   >
     <!-- In Collections -->
     <template v-if="$route.path !== '/'">
-      <IconButton
-        class="non-dragging text-xl mx-3 my-auto flex-none"
-        icon="carbon:arrow-left"
+      <div
+        class="non-dragging"
+        icon-button flex-none
+        i-carbon:arrow-left
         @click="$router.replace('/')"
       />
     </template>
@@ -26,11 +27,10 @@ export default defineComponent(() => ({
     <!-- Homepage Only -->
     <template v-else>
       <RouterLink
-        class="non-dragging text-xl mx-3 my-auto"
+        class="non-dragging"
+        i-carbon:search icon-button flex-none
         to="/collection/all"
-      >
-        <IconButton icon="carbon:search" style="padding-bottom: 3px" />
-      </RouterLink>
+      />
       <div flex-auto />
       <h1
         absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center
@@ -39,15 +39,12 @@ export default defineComponent(() => ({
         Icônes
       </h1>
       <a
-        class="non-dragging text-xl mx-3 my-auto flex-none"
+        class="non-dragging"
+        i-carbon-logo-github icon-button flex-none
         href="https://github.com/antfu/icones"
         target="_blank"
-      >
-        <IconButton icon="codicon:github" style="padding-bottom: 3px" />
-      </a>
-      <div class="non-dragging text-xl mx-3 my-auto flex-none">
-        <DarkSwitcher />
-      </div>
+      />
+      <DarkSwitcher flex-none />
     </template>
 
     <!-- Searching -->
