@@ -1,10 +1,10 @@
 <script setup lang='ts'>
-import copyText from 'copy-text-to-clipboard'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
+import { copyName } from '../utils/copy'
 
 const props = defineProps({
   icon: {
@@ -32,7 +32,7 @@ const copy = async (type: string) => {
   if (!text)
     return
 
-  emit('copy', copyText(text))
+  emit('copy', copyName(text))
 }
 
 const download = async (type: string) => {

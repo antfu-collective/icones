@@ -1,10 +1,10 @@
 <script setup lang='ts'>
-import copyText from 'copy-text-to-clipboard'
 import { useRoute, useRouter } from 'vue-router'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 import { getIconSnippet } from '../utils/icons'
+import { copyName } from '../utils/copy'
 
 const { search, icons, category, collection } = getSearchResults()
 const showBag = ref(false)
@@ -41,7 +41,7 @@ const onSelect = async (icon: string) => {
       toggleBag(icon)
       break
     case 'copy':
-      onCopy(copyText(await getIconSnippet(icon, 'id', true) || icon))
+      onCopy(copyName(await getIconSnippet(icon, 'id', true) || icon))
       break
     default:
       current.value = icon

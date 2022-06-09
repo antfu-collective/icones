@@ -1,9 +1,12 @@
 <script lang="ts">
 import { getSearchResults, isDark } from '../store'
 
+const showNavPages = ['/', '/config']
+
 export default defineComponent(() => ({
   ...getSearchResults(),
   isDark,
+  showNavPages,
 }))
 </script>
 
@@ -12,14 +15,14 @@ export default defineComponent(() => ({
     class="
       dragging p-2 relative bg-base z-10 flex border-b border-base flex-none
     "
-    :class="$route.path !== '/' ? 'md:hidden' : ''"
+    :class="showNavPages.includes($route.path) ? '' : 'md:hidden'"
   >
     <!-- In Collections -->
     <template v-if="$route.path !== '/'">
       <IconButton
         class="non-dragging text-xl mx-3 my-auto flex-none"
         icon="carbon:arrow-left"
-        @click="$router.replace('/')"
+        @click="$router.back()"
       />
     </template>
 
@@ -38,6 +41,12 @@ export default defineComponent(() => ({
       >
         Icônes
       </h1>
+      <RouterLink
+        class="non-dragging text-xl mx-3 my-auto"
+        to="/config"
+      >
+        <IconButton icon="carbon:settings" style="padding-bottom: 3px" />
+      </RouterLink>
       <a
         class="non-dragging text-xl mx-3 my-auto flex-none"
         href="https://github.com/antfu/icones"

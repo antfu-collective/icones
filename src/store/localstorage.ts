@@ -1,5 +1,6 @@
 import type { IdCase } from '../utils/case'
 import { idCases } from '../utils/case'
+import { defaultConfig } from '../utils/config'
 
 const RECENT_CAPACITY = 10
 
@@ -15,6 +16,7 @@ export const recentIds = useStorage<string[]>('icones-recent-collections', [])
 export const bags = useStorage<string[]>('icones-bags', [])
 export const activeMode = useStorage<ActiveMode>('active-mode', 'normal')
 export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
+export const userConfig = useStorage('icones-config', defaultConfig)
 
 export function getTransformedId(icon: string) {
   return idCases[preferredCase.value]?.(icon) || icon

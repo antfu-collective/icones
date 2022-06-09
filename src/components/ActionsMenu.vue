@@ -108,6 +108,12 @@ const installed = computed(() => {
 
 <template>
   <div class="text-xl flex">
+    <RouterLink
+      class="non-dragging text-xl mx-3 my-auto"
+      to="/config"
+    >
+      <IconButton icon="carbon:settings" style="padding-bottom: 3px" />
+    </RouterLink>
     <DarkSwitcher class="mx-2 opacity-25 align-middle" />
 
     <!-- Download State -->
