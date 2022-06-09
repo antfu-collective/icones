@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const buildTime = __BUILD_TIME__
+
+const timeAgo = useTimeAgo(new Date(buildTime))
 </script>
 
 <template>
@@ -18,16 +20,8 @@ const buildTime = __BUILD_TIME__
         target="_blank"
       >Iconify</a>
     </p>
-    <a
-      class="color-fade font-light hover:opacity-100"
-      href="https://github.com/antfu/icones"
-      target="_blank"
-    >
-      <Icon icon="carbon:code" class="inline-block text-lg align-middle" />
-      Source Code
-    </a>
-    <div class="color-fade mt-1 font-light opacity-75 hover:opacity-100 italic">
-      Last update: {{ buildTime }}
+    <div color-fade mt-1 op50 italic>
+      Last update: {{ buildTime }} ({{ timeAgo }})
     </div>
   </footer>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import type { PropType } from 'vue'
-import { activeMode, iconSize, inProgress, listType, progressMessage } from '../store'
+import { activeMode, iconSize, inProgress, isFavorited, listType, progressMessage, toggleFavorite } from '../store'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
 import { PackIconFont, PackSvgZip } from '../utils/pack'
@@ -104,33 +104,41 @@ watch(
 const installed = computed(() => {
   return props.collection && isInstalled(props.collection.id)
 })
+
+const favorited = computed(() => isFavorited(props.collection.id))
 </script>
 
 <template>
-  <div class="text-xl flex">
+  <div flex="~ gap3" text-xl items-center>
     <RouterLink
       class="non-dragging text-xl mx-3 my-auto"
       to="/config"
     >
       <IconButton icon="carbon:settings" style="padding-bottom: 3px" />
     </RouterLink>
-    <DarkSwitcher class="mx-2 opacity-25 align-middle" />
+    <DarkSwitcher />
+
+    <button
+      v-if="collection.id !== 'all'"
+      icon-button
+      :class="favorited ? 'i-carbon:star-filled' : 'i-carbon:star'"
+      title="Toggle Favorite"
+      @click="toggleFavorite(collection.id)"
+    />
 
     <!-- Download State -->
-    <IconButton
+    <div
       v-if="installed && !isElectron"
-      class="mx-2 opacity-25 align-middle"
-      icon="carbon:checkmark-outline"
-      title="Downloaded"
-      :none="true"
+      icon-button class="!op50"
+      i-carbon-cloud-auditing
+      title="Cached in browser"
     />
 
     <!-- Menu -->
-    <div class="relative w-4">
-      <IconButton :active="true" icon="carbon:overflow-menu-vertical" title="Menu" />
+    <div icon-button cursor-pointer relative i-carbon-menu title="Menu">
       <select
         v-model="menu"
-        class="absolute w-full dark:bg-dark-100 text-base top-0 right-0 opacity-0"
+        absolute w-full dark:bg-dark-100 text-base top-0 right-0 opacity-0 z-10
       >
         <optgroup label="Size">
           <option value="small">
@@ -153,11 +161,11 @@ const installed = computed(() => {
         </optgroup>
 
         <!--
-          TODO: due to this function requires to download and pack
-                the full set, we should make some UI to aware users
-                in browser version.
-        -->
-        <optgroup label="Downloads">
+            TODO: due to this function requires to download and pack
+                  the full set, we should make some UI to aware users
+                  in browser version.
+          -->
+        <optgroup v-if="collection.id !== 'all'" label="Downloads">
           <option v-if="!isElectron && !installed" value="cache">
             Cache in Browser
           </option>

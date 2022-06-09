@@ -6,6 +6,7 @@ export default defineConfig({
     'bg-base': 'bg-white dark:bg-dark-100',
     'color-base': 'text-gray-900 dark:text-gray-300',
     'color-fade': 'text-gray-900:50 dark:text-gray-300:50',
+    'icon-button': 'op50 hover:op100 my-auto',
   },
   presets: [
     presetUno(),

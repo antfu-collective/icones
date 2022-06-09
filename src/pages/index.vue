@@ -34,6 +34,7 @@ const categorized = computed(() => [
           {{ c.name }}
         </div>
         <CollectionEntries
+          of-hidden
           :collections="c.collections"
           :type="c.type"
         />

@@ -15,22 +15,23 @@ const collections = computed(() => {
 </script>
 
 <template>
-  <div class="border-r border-gray-200 dark:border-dark-200">
+  <div border="r base">
     <NavPlaceholder class="mb-4" />
     <div
       v-if="!isElectron"
-      class="sticky top-0 bg-white dark:bg-dark-100 z-1 border-b border-gray-200 dark:border-dark-200"
+      sticky top-0 bg-base z-1 border="b base"
     >
-      <IconButton
+      <button
         v-show="$route.path !== '/'"
-        class="text-xl my-auto px-4 py-3 align-middle inline-block"
-        icon="carbon:arrow-left"
+        icon-button text-xl px-4 py-4
         @click="$router.replace('/')"
-      />
+      >
+        <div i-carbon:arrow-left />
+      </button>
     </div>
 
     <!-- Collections -->
-    <router-link
+    <RouterLink
       v-for="collection in collections"
       :key="collection.id"
       class="px-4 py-2 flex border-b border-gray-200 dark:border-dark-200"
@@ -49,12 +50,13 @@ const collections = computed(() => {
       </div>
       <button
         v-if="collection.id !== 'all'"
+        icon-button
         :class="isFavorited(collection.id) ? 'op50 hover:op100' : 'op0 hover:op50' "
         class="flex-none text-lg p0.5 -mr-1 hover:text-primary flex"
-        @click="() => toggleFavorite(collection.id)"
+        @click="toggleFavorite(collection.id)"
       >
         <div :class="isFavorited(collection.id) ? 'i-carbon-star-filled' : 'i-carbon-star'" ma />
       </button>
-    </router-link>
+    </RouterLink>
   </div>
 </template>

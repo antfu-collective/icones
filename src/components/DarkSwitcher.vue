@@ -3,9 +3,9 @@ import { isDark } from '../store'
 </script>
 
 <template>
-  <IconButton
-    :icon="isDark ? 'carbon:moon' : 'carbon:sun'"
-    style="padding-bottom: 3px"
+  <button
+    icon-button
+    dark:i-carbon-moon i-carbon:sun
     @click="isDark = !isDark"
   />
 </template>
