@@ -1,9 +1,9 @@
 export function HtmlToJSX(html: string) {
   const jsx = html.replace(/([\w-]+)=/g, (i) => {
-    if (i === 'viewBox=')
+    const words = i.split('-')
+    if (words.length === 1)
       return i
-    return i
-      .split('-')
+    return words
       .map((i, idx) =>
         idx === 0
           ? i.toLowerCase()
