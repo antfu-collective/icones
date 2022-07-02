@@ -232,6 +232,27 @@ const collection = computed(() => {
             Svelte
           </button>
         </div>
+        <div class="mr-4">
+          <div class="my-1 text-gray-500 text-sm">
+            View on
+          </div>
+          <a
+            v-if="collection"
+            class="btn small mr-1 mb-1 opacity-75"
+            :href="`https://icon-sets.iconify.design/${collection.id}/?query=${icon.split(':')[1]}`"
+            target="_blank"
+          >
+            Iconify
+          </a>
+          <a
+            v-if="collection"
+            class="btn small mr-1 mb-1 opacity-75"
+            :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`"
+            target="_blank"
+          >
+            UnoCSS
+          </a>
+        </div>
       </div>
     </div>
   </div>
