@@ -30,7 +30,7 @@ export function toComponentName(icon: string) {
   return icon.split(/:|-|_/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
 
-export function ClearSvg(svgCode: string) {
+export function ClearSvg(svgCode: string, reactJSX?: boolean) {
   const el = document.createElement('div')
   el.innerHTML = svgCode
   const svg = el.getElementsByTagName('svg')[0]
@@ -40,14 +40,14 @@ export function ClearSvg(svgCode: string) {
       continue
     svg.removeAttributeNode(key)
   }
-  return HtmlToJSX(el.innerHTML)
+  return HtmlToJSX(el.innerHTML, reactJSX)
 }
 
 export function SvgToJSX(svg: string, name: string, snippet: boolean) {
   const code = `
 export function ${name}(props) {
   return (
-    ${ClearSvg(svg).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
+    ${ClearSvg(svg, true).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
   )
 }`
   if (snippet)
@@ -60,7 +60,7 @@ export function SvgToTSX(svg: string, name: string, snippet: boolean) {
   const code = `
 export function ${name}(props: SVGProps<SVGSVGElement>) {
   return (
-    ${ClearSvg(svg).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
+    ${ClearSvg(svg, true).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
   )
 }`
   if (snippet)
