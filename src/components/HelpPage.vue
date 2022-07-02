@@ -5,10 +5,17 @@
     </p>
 
     <h2 class="bold text-lg mb-1">
+      Copy per Icon
+    </h2>
+    <p>
+      You can copy the icon as SVG to paste in almost any editor (Figma, Sketch, Illustrator, etc.), or copy as component to use in your web apps.
+    </p>
+
+    <h2 class="bold text-lg mt-5 mb-1">
       Iconify Runtime
     </h2>
     <p>
-      Iconify provides a runtime solution that fetchs icons on the go.
+      Iconify provides a runtime solution that fetches icons on the go.
       Refer its <a href="https://iconify.design/" target="_blank">documentation</a> for more details.
     </p>
 

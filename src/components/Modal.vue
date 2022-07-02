@@ -49,7 +49,7 @@ const transform = computed(() => {
       @click="$emit('close')"
     />
     <div
-      bg-base border-base absolute transition-all duration-200 ease-out
+      bg-base border border-base absolute transition-all duration-200 ease-out
       :class="positionClass"
       :style="value ? {} : { transform }"
     >

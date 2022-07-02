@@ -1,9 +1,9 @@
 export const idCases = {
-  barePascal(id: string) {
-    return id.replace(/^.*:/, '').replace(/(?:^|[-_:]+)(\w)/g, (_, c) => c.toUpperCase())
-  },
   bare(id: string) {
     return id.replace(/^.*:/, '')
+  },
+  barePascal(id: string) {
+    return id.replace(/^.*:/, '').replace(/(?:^|[-_:]+)(\w)/g, (_, c) => c.toUpperCase())
   },
   iconify(id: string) {
     return id
@@ -19,6 +19,9 @@ export const idCases = {
   },
   component(id: string) {
     return `<${id.replace(/(?:^|[-_:]+)(\w)/g, (_, c) => c.toUpperCase())}/>`
+  },
+  componentKebab(id: string) {
+    return `<${id.replace(/:/g, '-')}/>`
   },
   unocss(id: string) {
     return `i-${id.replace(/:/g, '-')}`
