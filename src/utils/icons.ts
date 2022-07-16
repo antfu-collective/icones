@@ -121,6 +121,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToSvelte(await getSvg(icon, undefined, color))
     case 'unplugin':
       return `import ${toComponentName(icon)} from '~icons/${icon.split(':')[0]}/${icon.split(':')[1]}'`
+    case 'edge':
+      return `@svg('${icon}')`
   }
 }
 
