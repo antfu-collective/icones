@@ -1,6 +1,7 @@
 <script setup lang='ts'>
 import copyText from 'copy-text-to-clipboard'
 import { useRoute, useRouter } from 'vue-router'
+import hotkeys from 'hotkeys-js'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
@@ -13,6 +14,7 @@ const copied = ref(false)
 const maxMap = new Map<string, number>()
 const current = ref('')
 const max = ref(isLocalMode ? 500 : 200)
+const input = ref<HTMLInputElement>()
 
 const onCopy = (status: boolean) => {
   copied.value = status
@@ -79,6 +81,19 @@ onMounted(() => {
   watch([search, collection], () => {
     router.replace({ query: { s: search.value } })
   })
+  hotkeys('esc', () => {
+    if (current.value !== '') {
+      current.value = ''
+      input.value!.focus()
+    }
+  })
+  hotkeys('/', (e) => {
+    e.preventDefault()
+    input.value!.focus()
+  })
+})
+onUnmounted(() => {
+  hotkeys.unbind('esc, /')
 })
 </script>
 
@@ -163,11 +178,14 @@ onMounted(() => {
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
             <input
-              v-model="search"
+              :value="search"
+              @input="e => search = (e.target as HTMLInputElement).value"
               aria-label="Search"
               class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
               name="s"
               placeholder="Search..."
+              ref="input"
+              autofocus
             >
           </form>
 

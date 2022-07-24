@@ -1,4 +1,6 @@
 <script setup lang='ts'>
+import hotkeys from 'hotkeys-js'
+import { useRouter } from 'vue-router'
 import type { PresentType } from '../data'
 import { categories, collections, favoritedCollections, recentCollections } from '../data'
 
@@ -19,6 +21,16 @@ const categorized = computed(() => [
     collections: collections.filter(collection => collection.category === category),
   })),
 ])
+
+onMounted(() =>{
+  const router = useRouter()
+  hotkeys('/', () => {
+    router.replace('/collection/all')
+  })
+})
+onUnmounted(() => {
+  hotkeys.unbind('/')
+})
 </script>
 
 <template>
