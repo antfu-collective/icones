@@ -17,7 +17,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['close', 'copy'])
+const emit = defineEmits(['close', 'copy', 'next', 'prev'])
 
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
@@ -25,6 +25,20 @@ const color = computed(() => copyPreviewColor.value ? previewColor.value : 'curr
 
 onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
+})
+
+onKeyStroke('ArrowLeft', (e) => {
+  if (!props.icon)
+    return
+  emit('prev')
+  e.preventDefault()
+})
+
+onKeyStroke('ArrowRight', (e) => {
+  if (!props.icon)
+    return
+  emit('next')
+  e.preventDefault()
 })
 
 const copy = async (type: string) => {

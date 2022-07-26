@@ -4,6 +4,7 @@ import {
   SvgToJSX, SvgToTSX, SvgToVue,
   getSvg, toComponentName,
 } from './icons'
+
 export async function LoadIconSvgs(icons: string[]) {
   return await Promise.all(
     icons

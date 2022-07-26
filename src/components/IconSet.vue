@@ -6,37 +6,40 @@ import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
 import { getIconSnippet } from '../utils/icons'
 
+const showBag = $ref(false)
+let copied = $ref(false)
+let current = $ref('')
+let max = $ref(isLocalMode ? 500 : 200)
+const input = $ref<HTMLInputElement>()
+
+const route = useRoute()
+const router = useRouter()
+
 const { search, icons, category, collection } = getSearchResults()
-const showBag = ref(false)
-const copied = ref(false)
+const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
-const current = ref('')
-const max = ref(isLocalMode ? 500 : 200)
-const input = ref<HTMLInputElement>()
+const url = $computed(() => collection.value?.url || collection.value?.author?.url)
+const namespace = $computed(() => !collection.value || collection.value.id === 'all'
+  ? ''
+  : `${collection.value.id}:`,
+)
 
-const onCopy = (status: boolean) => {
-  copied.value = status
+function onCopy(status: boolean) {
+  copied = status
   setTimeout(() => {
-    copied.value = false
+    copied = false
   }, 2000)
 }
 
-const toggleCategory = (cat: string) => {
+function toggleCategory(cat: string) {
   if (category.value === cat)
     category.value = ''
-  else category.value = cat
+  else
+    category.value = cat
 }
 
-const namespace = computed(() =>
-  !collection.value || collection.value.id === 'all'
-    ? ''
-    : `${collection.value.id}:`,
-)
-
-const url = computed(() => collection.value?.url || collection.value?.author?.url)
-
-const onSelect = async (icon: string) => {
+async function onSelect(icon: string) {
   switch (activeMode.value) {
     case 'select':
       toggleBag(icon)
@@ -45,36 +48,40 @@ const onSelect = async (icon: string) => {
       onCopy(copyText(await getIconSnippet(icon, 'id', true) || icon))
       break
     default:
-      current.value = icon
+      current = icon
       break
   }
 }
 
-watch(
-  namespace,
-  () => {
-    max.value = maxMap.get(namespace.value) || 200
-  },
-)
-
-const loadMore = () => {
-  max.value += 100
-  maxMap.set(namespace.value, max.value)
+function loadMore() {
+  max += 100
+  maxMap.set(namespace, max)
 }
 
-const loadAll = async () => {
-  if (!namespace.value)
+async function loadAll() {
+  if (!namespace)
     return
 
   await cacheCollection(collection.value!.id)
-  max.value = icons.value.length
-  maxMap.set(namespace.value, max.value)
+  max = icons.value.length
+  maxMap.set(namespace, max)
 }
 
-const loading = isCurrentCollectionLoading()
+function next(delta = 1) {
+  const name = current.startsWith(namespace) ? current.slice(namespace.length) : current
+  const index = icons.value.indexOf(name)
+  if (index === -1)
+    return
+  const newOne = icons.value[index + delta]
+  if (newOne)
+    current = namespace + newOne
+}
 
-const route = useRoute()
-const router = useRouter()
+watch(
+  () => namespace,
+  () => max = maxMap.get(namespace) || 200,
+)
+
 onMounted(() => {
   search.value = route.query.s as string || ''
   watch([search, collection], () => {
@@ -84,13 +91,13 @@ onMounted(() => {
 
 onKeyStroke('/', (e) => {
   e.preventDefault()
-  input.value!.focus()
+  input?.focus()
 })
 
 onKeyStroke('Escape', () => {
-  if (current.value !== '') {
-    current.value = ''
-    input.value!.focus()
+  if (current !== '') {
+    current = ''
+    input?.focus()
   }
 })
 </script>
@@ -232,7 +239,13 @@ onKeyStroke('Escape', () => {
 
         <!-- Details -->
         <Modal :value="!!current" @close="current = ''">
-          <IconDetail :icon="current" :show-collection="collection.id === 'all'" @close="current = ''" @copy="onCopy" />
+          <IconDetail
+            :icon="current" :show-collection="collection.id === 'all'"
+            @close="current = ''"
+            @copy="onCopy"
+            @next="next(1)"
+            @prev="next(-1)"
+          />
         </Modal>
 
         <!-- Help -->

@@ -12,7 +12,9 @@ import fg from 'fast-glob'
 
 export default defineConfig({
   plugins: [
-    Vue(),
+    Vue({
+      reactivityTransform: true,
+    }),
     Pages({
       importMode: 'sync',
     }),
@@ -22,6 +24,7 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
+        'vue/macros',
         'vue-router',
         '@vueuse/core',
       ],
