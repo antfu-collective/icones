@@ -19,6 +19,11 @@ const categorized = computed(() => [
     collections: collections.filter(collection => collection.category === category),
   })),
 ])
+
+const router = useRouter()
+onKeyStroke('/', () => {
+  router.replace('/collection/all')
+})
 </script>
 
 <template>

@@ -13,6 +13,7 @@ const copied = ref(false)
 const maxMap = new Map<string, number>()
 const current = ref('')
 const max = ref(isLocalMode ? 500 : 200)
+const input = ref<HTMLInputElement>()
 
 const onCopy = (status: boolean) => {
   copied.value = status
@@ -79,6 +80,18 @@ onMounted(() => {
   watch([search, collection], () => {
     router.replace({ query: { s: search.value } })
   })
+})
+
+onKeyStroke('/', (e) => {
+  e.preventDefault()
+  input.value!.focus()
+})
+
+onKeyStroke('Escape', () => {
+  if (current.value !== '') {
+    current.value = ''
+    input.value!.focus()
+  }
 })
 </script>
 
@@ -163,11 +176,14 @@ onMounted(() => {
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
             <input
+              ref="input"
               v-model="search"
               aria-label="Search"
               class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
               name="s"
               placeholder="Search..."
+              autofocus
+              autocomplete="off"
             >
           </form>
 
