@@ -1,7 +1,6 @@
 <script setup lang='ts'>
 import copyText from 'copy-text-to-clipboard'
 import { useRoute, useRouter } from 'vue-router'
-import hotkeys from 'hotkeys-js'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection } from '../data'
@@ -81,20 +80,19 @@ onMounted(() => {
   watch([search, collection], () => {
     router.replace({ query: { s: search.value } })
   })
-  hotkeys('esc', () => {
-    if (current.value !== '') {
-      current.value = ''
-      input.value!.focus()
-    }
-  })
-  hotkeys('/', (e) => {
-    e.preventDefault()
-    input.value!.focus()
-  })
 })
-onUnmounted(() => {
-  hotkeys.unbind('esc, /')
-})
+
+ onKeyStroke('/', (e) => {
+   e.preventDefault()
+   input.value!.focus()
+ })
+
+ onKeyStroke('Escape', () => {
+   if (current.value !== '') {
+     current.value = ''
+     input.value!.focus()
+   }
+ })
 </script>
 
 <template>
