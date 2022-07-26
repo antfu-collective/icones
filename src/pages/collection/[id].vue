@@ -26,5 +26,5 @@ onMounted(() => {
       Loading...
     </div>
   </WithNavbar>
-  <IconSet v-else :collection="collection" />
+  <IconSet v-else />
 </template>
