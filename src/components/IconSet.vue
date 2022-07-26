@@ -82,17 +82,17 @@ onMounted(() => {
   })
 })
 
- onKeyStroke('/', (e) => {
-   e.preventDefault()
-   input.value!.focus()
- })
+onKeyStroke('/', (e) => {
+  e.preventDefault()
+  input.value!.focus()
+})
 
- onKeyStroke('Escape', () => {
-   if (current.value !== '') {
-     current.value = ''
-     input.value!.focus()
-   }
- })
+onKeyStroke('Escape', () => {
+  if (current.value !== '') {
+    current.value = ''
+    input.value!.focus()
+  }
+})
 </script>
 
 <template>
@@ -176,14 +176,14 @@ onMounted(() => {
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
           <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
             <input
+              ref="input"
               :value="search"
-              @input="e => search = (e.target as HTMLInputElement).value"
               aria-label="Search"
               class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
               name="s"
               placeholder="Search..."
-              ref="input"
               autofocus
+              @input="e => search = (e.target as HTMLInputElement).value"
             >
           </form>
 
