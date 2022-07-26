@@ -177,13 +177,13 @@ onKeyStroke('Escape', () => {
           <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
             <input
               ref="input"
-              :value="search"
+              v-model="search"
               aria-label="Search"
               class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
               name="s"
               placeholder="Search..."
               autofocus
-              @input="e => search = (e.target as HTMLInputElement).value"
+              autocomplete="off"
             >
           </form>
 
