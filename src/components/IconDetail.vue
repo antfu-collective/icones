@@ -83,7 +83,7 @@ const collection = computed(() => {
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
     <div :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">
-        <Icon class="p-4 text-8xl" :icon="icon" />
+        <Icon class="p-4 text-8xl" :icon="icon" width="100%" height="1em" />
       </ColorPicker>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">

@@ -6,6 +6,14 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  width: {
+    type: String,
+    required: false,
+  },
+  height: {
+    type: String,
+    required: false,
+  },
 })
 
 const el = ref<HTMLElement | null>(null)
@@ -13,7 +21,10 @@ const el = ref<HTMLElement | null>(null)
 const update = async () => {
   await nextTick()
   if (el.value) {
-    const svg = Iconify.renderSVG(props.icon, {})
+    const svg = Iconify.renderSVG(props.icon, {
+      width: props.width,
+      height: props.height,
+    })
     if (svg) {
       el.value.textContent = ''
       el.value.appendChild(svg)
