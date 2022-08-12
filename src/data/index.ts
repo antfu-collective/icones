@@ -1,6 +1,6 @@
-import type { IconifyJSON } from '@iconify/iconify'
+import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
-import Iconify from '@purge-icons/generated'
+import { addCollection } from 'iconify-icon'
 import { favoritedIds, inProgress, isFavorited, isRecent, progressMessage, recentIds } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
@@ -54,7 +54,7 @@ export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id ==
 export function preInstall() {
   for (const collection of collections) {
     if (collection.prepacked)
-      Iconify.addCollection(collection.prepacked as any)
+      addCollection(collection.prepacked as any)
   }
 }
 
@@ -73,7 +73,7 @@ export async function tryInstallFromLocal(id: string) {
     return false
 
   const data = result.data
-  Iconify.addCollection(data)
+  addCollection(data)
   installed.value.push(id)
 
   return true
@@ -89,7 +89,7 @@ export async function downloadAndInstall(id: string) {
 
   const data = Object.freeze(await fetch(`${staticPath}/collections/${id}-raw.json`).then(r => r.json()))
 
-  Iconify.addCollection(data)
+  addCollection(data)
   installed.value.push(id)
 
   if (!isLocalMode)

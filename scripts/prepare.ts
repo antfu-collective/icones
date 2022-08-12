@@ -67,18 +67,6 @@ async function copyLibs() {
   const modules = path.resolve(__dirname, '../node_modules')
 
   await fs.copy(
-    path.join(modules, '@iconify/iconify/dist/'),
-    path.join(out, 'lib'),
-    {
-      filter: (src) => {
-        if (fs.lstatSync(src).isDirectory())
-          return true
-        const basename = path.basename(src)
-        return basename.startsWith('iconify') && basename.endsWith('.min.js')
-      },
-    },
-  )
-  await fs.copy(
     path.join(modules, 'svg-packer/dist/index.browser.js'),
     path.join(out, 'lib/svg-packer.js'),
   )

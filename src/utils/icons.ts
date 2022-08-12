@@ -1,18 +1,27 @@
-import Iconify from '@purge-icons/generated'
+import { buildIcon, loadIcon } from 'iconify-icon'
 import { getTransformedId } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
 
 const API_ENTRY = 'https://api.iconify.design'
 
+export async function getSvgLocal(icon: string, size = '1em', color = 'currentColor') {
+  const data = await loadIcon(icon)
+  if (!data)
+    return
+  const built = buildIcon(data, { height: size })
+  if (!built)
+    return
+  return `<svg ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${built.body}</svg>`.replace('currentColor', color)
+}
+
 export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
-  return Iconify.renderSVG(icon, { height: size })?.outerHTML?.replace('currentColor', color)
+  return await getSvgLocal(icon, size, color)
    || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
 }
 
 export async function getSvgSymbol(icon: string, size = '1em', color = 'currentColor') {
-  const svgMarkup = Iconify.renderSVG(icon, { height: size })?.outerHTML?.replace('currentColor', color)
-  || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
+  const svgMarkup = await getSvg(icon, size, color)
 
   const symbolElem = document.createElementNS('http://www.w3.org/2000/svg', 'symbol')
   const node = document.createElement('div') // Create any old element

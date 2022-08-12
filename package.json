@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@antfu/utils": "^0.5.2",
-    "@iconify/iconify": "^2.2.1",
     "@vueuse/core": "^9.1.0",
     "copy-text-to-clipboard": "^3.0.1",
     "dexie": "^3.2.2",
     "file-saver": "^2.0.5",
     "fuse.js": "^6.6.2",
     "hotkeys-js": "^3.9.4",
+    "iconify-icon": "1.0.0-beta.2",
     "vue": "3.2.37",
     "vue-chemistry": "^0.2.2",
     "vue-router": "4.1.3"
