@@ -7,7 +7,7 @@ neverBuiltDependencies:
 specifiers:
   '@antfu/eslint-config': ^0.26.1
   '@antfu/utils': ^0.5.2
-  '@iconify/json': ^2.1.91
+  '@iconify/json': ^2.1.92
   '@purge-icons/generated': ^0.9.0
   '@types/file-saver': ^2.0.5
   '@types/fs-extra': ^9.0.13
@@ -56,7 +56,7 @@ dependencies:
 
 devDependencies:
   '@antfu/eslint-config': 0.26.1_qugx7qdu5zevzvxaiqyxfiwquq
-  '@iconify/json': 2.1.91
+  '@iconify/json': 2.1.92
   '@purge-icons/generated': 0.9.0
   '@types/file-saver': 2.0.5
   '@types/fs-extra': 9.0.13
@@ -1426,8 +1426,8 @@ packages:
     resolution: {integrity: sha512-WJzw+3iicrF/tbjbxxRinSgy5FHdJoz/egTqwi3xCDkNRJPq482RX1iyaWrjNuY2vMNSPkQMuqHvZDXgA+WnwQ==}
     dev: true
 
-  /@iconify/json/2.1.91:
-    resolution: {integrity: sha512-GjvdX5E09r0hjRp6woaR2bUPpziMboqk3Cdb1cVi4bZTQT4hdHOBJ8IxV9LNgBTfeNgbxWIf1w+IhFG1xawvrg==}
+  /@iconify/json/2.1.92:
+    resolution: {integrity: sha512-8JiOBg3UXpl4Rf6m0H+lxDzLU/3dGeqNhbKcFbXgK9wr1MMDxFK4w0Bzi3bzRDRcc169OI8fQ1/2JHc7Idt66w==}
     dependencies:
       '@iconify/types': 1.1.0
       pathe: 0.3.4
