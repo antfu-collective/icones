@@ -1,13 +1,11 @@
-import Fuse from 'fuse.js'
+import { AsyncFzf, asyncExtendedMatch } from 'fzf'
 import type { Ref } from 'vue'
 import { computed, markRaw, ref, watch } from 'vue'
-import { useThrottle } from '@vueuse/core'
 import type { CollectionMeta } from '../data'
 
 export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategory = '', defaultSearch = '') {
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
-  const throttledSearch = useThrottle(search, 300)
   const isAll = computed(() => collection.value && collection.value.id === 'all')
 
   const iconSource = computed(() => {
@@ -20,22 +18,44 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       return collection.value.icons
   })
 
-  const fuse = computed(() => {
-    const icons = iconSource.value.map(icon => ({ icon }))
-    return markRaw(new Fuse(icons, {
-      includeScore: false,
-      keys: ['icon'],
+  const fzf = computed(() => {
+    return markRaw(new AsyncFzf(iconSource.value, {
+      casing: 'case-insensitive',
+      match: asyncExtendedMatch,
+    }))
+  })
+  
+  const fzfFast = computed(() => {
+    return markRaw(new AsyncFzf(iconSource.value, {
+      casing: 'case-insensitive',
+      // v1 is faster
+      // https://fzf.netlify.app/docs/latest#async-finder-considering-other-options-first
+      fuzzy: 'v1',
     }))
   })
 
-  const icons = computed(() => {
-    const searchString = throttledSearch.value.trim().toLowerCase()
-    if (!searchString)
-      return iconSource.value
-    else if (isAll.value) // disable fuse when search in all collections
-      return iconSource.value.filter(i => i.includes(searchString))
-    else
-      return fuse.value.search(searchString).map(i => i.item.icon)
+  const icons = ref<string[]>([])
+
+  watchEffect(async () => {
+    if (!search.value) {
+      icons.value = iconSource.value
+      return
+    }
+
+    // Matching any character used in extended match
+    // https://github.com/junegunn/fzf#search-syntax
+    const useExtendedMatch = /[ '^$!]/.test(search.value)
+
+    if (isAll.value && !useExtendedMatch) {
+      icons.value = iconSource.value.filter(i => i.includes(search.value))
+      return
+    }
+
+    try {
+      const finder = useExtendedMatch ? fzf : fzfFast
+      const result = await finder.value.find(search.value)
+      icons.value = result.map(i => i.item)
+    } catch (error) {}
   })
 
   watch(collection, () => { category.value = defaultCategory })

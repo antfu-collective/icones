@@ -85,8 +85,12 @@ watch(
 onMounted(() => {
   search.value = route.query.s as string || ''
   watch([search, collection], () => {
-    router.replace({ query: { s: search.value } })
+    if (search.value) router.replace({ query: { s: search.value } })
   })
+})
+
+router.afterEach((to) => {
+  if (to.path === '/') search.value = ''
 })
 
 onKeyStroke('/', (e) => {
