@@ -1,55 +1,14 @@
 <script setup lang="ts">
-import Iconify from '@purge-icons/generated'
-
-const props = defineProps({
+const { icon } = defineProps({
   icon: {
     type: String,
     required: true,
   },
-  width: {
-    type: String,
-    required: false,
-  },
-  height: {
-    type: String,
-    required: false,
-  },
 })
-
-const el = ref<HTMLElement | null>(null)
-
-const update = async () => {
-  await nextTick()
-  if (el.value) {
-    const svg = Iconify.renderSVG(props.icon, {
-      width: props.width,
-      height: props.height,
-    })
-    if (svg) {
-      el.value.textContent = ''
-      el.value.appendChild(svg)
-    }
-    else {
-      const span = document.createElement('span')
-      span.className = 'iconify'
-      span.dataset.icon = props.icon
-      el.value.textContent = ''
-      el.value.appendChild(span)
-    }
-  }
-}
-
-watch(
-  () => props.icon,
-  update,
-  { flush: 'post' },
-)
-
-onMounted(update)
 </script>
 
 <template>
-  <div ref="el" :class="$attrs.class" />
+  <iconify-icon :icon="icon" :class="$attrs.class" mode="style" />
 </template>
 
 <style>
