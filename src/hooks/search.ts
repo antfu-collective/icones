@@ -55,7 +55,8 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       const finder = useExtendedMatch ? fzf : fzfFast
       const result = await finder.value.find(search.value)
       icons.value = result.map(i => i.item)
-    } catch (error) {
+    }
+    catch (error) {
       // The search is canceled
     }
   })
