@@ -24,7 +24,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       match: asyncExtendedMatch,
     }))
   })
-  
+
   const fzfFast = computed(() => {
     return markRaw(new AsyncFzf(iconSource.value, {
       casing: 'case-insensitive',
@@ -55,7 +55,9 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       const finder = useExtendedMatch ? fzf : fzfFast
       const result = await finder.value.find(search.value)
       icons.value = result.map(i => i.item)
-    } catch (error) {}
+    } catch (error) {
+      // The search is canceled
+    }
   })
 
   watch(collection, () => { category.value = defaultCategory })
