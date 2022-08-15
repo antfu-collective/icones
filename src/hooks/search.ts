@@ -36,7 +36,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
 
   const icons = ref<string[]>([])
 
-  watchEffect(async () => {
+  watchEffect(() => {
     if (!search.value) {
       icons.value = iconSource.value
       return
@@ -51,14 +51,12 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       return
     }
 
-    try {
-      const finder = useExtendedMatch ? fzf : fzfFast
-      const result = await finder.value.find(search.value)
+    const finder = useExtendedMatch ? fzf : fzfFast
+    finder.value.find(search.value).then((result) => {
       icons.value = result.map(i => i.item)
-    }
-    catch (error) {
+    }).catch(() => {
       // The search is canceled
-    }
+    })
   })
 
   watch(collection, () => { category.value = defaultCategory })
