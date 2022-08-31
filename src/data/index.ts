@@ -1,7 +1,7 @@
 import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
 import { addCollection } from 'iconify-icon'
-import { favoritedIds, inProgress, isFavorited, isRecent, progressMessage, recentIds } from '../store'
+import { categorySearch, favoritedIds, inProgress, isFavorited, isRecent, progressMessage, recentIds, sortAlphabetically } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
@@ -29,21 +29,34 @@ export interface CollectionMeta extends CollectionInfo {
 const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
+const sanitize = (q: string) => q.toLowerCase().replaceAll(' ', '')
+
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 
-export const sortedCollectionsInfo = computed(() =>
+export const filteredCollections = computed(() =>
   collections
+    .filter(collection => sanitize(collection.name).includes(sanitize(categorySearch.value)))
+    .sort((a, b) => {
+      if (sortAlphabetically.value)
+        return sanitize(a.name).localeCompare(sanitize(b.name))
+
+      return 0
+    }),
+)
+
+export const sortedCollectionsInfo = computed(() =>
+  filteredCollections.value
     .sort((a, b) => favoritedIds.value.indexOf(b.id) - favoritedIds.value.indexOf(a.id)),
 )
 
 export const favoritedCollections = computed(() =>
-  collections.filter(i => isFavorited(i.id))
+  filteredCollections.value.filter(i => isFavorited(i.id))
     .sort((a, b) => favoritedIds.value.indexOf(b.id) - favoritedIds.value.indexOf(a.id)),
 )
 
 export const recentCollections = computed(() =>
-  collections.filter(i => isRecent(i.id))
+  filteredCollections.value.filter(i => isRecent(i.id))
     .sort((a, b) => recentIds.value.indexOf(b.id) - recentIds.value.indexOf(a.id)),
 )
 
