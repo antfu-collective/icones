@@ -93,6 +93,7 @@ onMounted(() => {
 router.afterEach((to) => {
   if (to.path === '/')
     search.value = ''
+  input?.focus()
 })
 
 onKeyStroke('/', (e) => {
