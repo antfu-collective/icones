@@ -90,10 +90,17 @@ onMounted(() => {
   })
 })
 
+function focusSearch() {
+  input?.focus()
+}
+
+onMounted(focusSearch)
+watch(router.currentRoute, focusSearch, { immediate: true })
+
 router.afterEach((to) => {
   if (to.path === '/')
     search.value = ''
-  input?.focus()
+  focusSearch()
 })
 
 onKeyStroke('/', (e) => {
