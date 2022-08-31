@@ -15,6 +15,7 @@ export const recentIds = useStorage<string[]>('icones-recent-collections', [])
 export const bags = useStorage<string[]>('icones-bags', [])
 export const activeMode = useStorage<ActiveMode>('active-mode', 'normal')
 export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
+export const sortAlphabetically = useStorage('icones-alpha-sort-collections', false)
 
 export function getTransformedId(icon: string) {
   return idCases[preferredCase.value]?.(icon) || icon

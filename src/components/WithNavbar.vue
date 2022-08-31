@@ -6,7 +6,7 @@ import { isElectron } from '../env'
   <div class="flex h-screen flex-col overflow-hidden">
     <Navbar v-if="!isElectron" />
     <NavElectron v-if="isElectron" />
-    <div class="flex-auto overflow-overlay">
+    <div class="flex-auto overflow-overlay flex flex-col">
       <slot />
     </div>
   </div>

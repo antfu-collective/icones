@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { sortedCollectionsInfo } from '../data'
-import { isFavorited, toggleFavorite } from '../store'
+import { categorySearch, isFavorited, sortAlphabetically, toggleFavorite } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
@@ -27,6 +27,37 @@ const collections = computed(() => {
         @click="$router.replace('/')"
       >
         <div i-carbon:arrow-left />
+      </button>
+    </div>
+
+    <!-- Searching -->
+    <div class="hidden py-2 md:flex border-b rounded outline-none py-1 px-4 dark:border-dark-200">
+      <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
+      <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
+        <input
+          ref="input"
+          v-model="categorySearch"
+          aria-label="Search"
+          class="text-xs outline-none w-full py-1 px-4 m-0 bg-transparent font-normal"
+          name="s"
+          placeholder="Search category..."
+          autofocus
+          autocomplete="off"
+        >
+      </form>
+
+      <button
+        class="flex items-center transition"
+        :class="{
+          'text-gray-500 hover:text-gray-600': sortAlphabetically,
+          'text-gray-300 hover:text-gray-400': !sortAlphabetically,
+        }"
+        @click="sortAlphabetically = !sortAlphabetically"
+      >
+        <Icon
+          icon="mdi:sort-alphabetical-ascending"
+          class="m-auto text-lg -mr-1 "
+        />
       </button>
     </div>
 
