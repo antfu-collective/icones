@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { sortedCollectionsInfo } from '../data'
-import { categorySearch, isFavorited, sortAlphabetically, toggleAlphabeticalSort, toggleFavorite } from '../store'
+import { categorySearch, isFavorited, sortAlphabetically, toggleFavorite } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
@@ -52,7 +52,7 @@ const collections = computed(() => {
           'text-gray-500 hover:text-gray-600': sortAlphabetically,
           'text-gray-300 hover:text-gray-400': !sortAlphabetically,
         }"
-        @click="toggleAlphabeticalSort()"
+        @click="sortAlphabetically = !sortAlphabetically"
       >
         <Icon
           icon="mdi:sort-alphabetical-ascending"

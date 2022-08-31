@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import type { PresentType } from '../data'
-import { categorySearch, sortAlphabetically, toggleAlphabeticalSort } from '../store'
+import { categorySearch, sortAlphabetically } from '../store'
 import { categories, favoritedCollections, filteredCollections, recentCollections } from '../data'
 
 const input = ref<HTMLInputElement>()
@@ -60,7 +60,7 @@ onMounted(() => input.value?.focus())
           'opacity-50 hover:opacity-70': sortAlphabetically,
           'opacity-30 hover:opacity-50': !sortAlphabetically,
         }"
-        @click="toggleAlphabeticalSort()"
+        @click="sortAlphabetically = !sortAlphabetically"
       >
         <Icon
           icon="mdi:sort-alphabetical-ascending"
