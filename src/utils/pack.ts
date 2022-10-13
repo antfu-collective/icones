@@ -67,6 +67,18 @@ export async function PackSvgZip(icons: string[], name: string) {
   Download(blob, `${name}.zip`)
 }
 
+export async function PackJsonZip(icons: string[], name: string) {
+  if (!icons.length)
+    return
+  const data = await LoadIconSvgs(icons)
+
+  const zip = new window.JSZip()
+  zip.file(`${name}.json`, JSON.stringify(data, null, 2))
+
+  const blob = await zip.generateAsync({ type: 'blob' })
+  Download(blob, `${name}.zip`)
+}
+
 export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue'
 
 export async function PackZip(

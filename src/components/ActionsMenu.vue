@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import { activeMode, iconSize, inProgress, isFavorited, listType, progressMessage, toggleFavorite } from '../store'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
-import { PackIconFont, PackSvgZip } from '../utils/pack'
+import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
 import { isElectron } from '../env'
 
 const props = defineProps({
@@ -55,6 +55,23 @@ const packSvgs = async () => {
   inProgress.value = false
 }
 
+const packJson = async () => {
+  if (!props.collection)
+    return
+
+  progressMessage.value = 'Downloading...'
+  inProgress.value = true
+  await nextTick()
+  await downloadAndInstall(props.collection.id)
+  progressMessage.value = 'Packing up...'
+  await nextTick()
+  await PackJsonZip(
+    props.collection.icons.map(i => `${props.collection!.id}:${i}`),
+    props.collection.id,
+  )
+  inProgress.value = false
+}
+
 const cache = async () => {
   if (!props.collection)
     return
@@ -89,6 +106,9 @@ watch(
         break
       case 'download_svgs':
         packSvgs()
+        break
+      case 'download_json':
+        packJson()
         break
       case 'cache':
         cache()
@@ -168,6 +188,9 @@ const favorited = computed(() => isFavorited(props.collection.id))
           </option>
           <option value="download_svgs" :disabled="inProgress">
             SVGs Zip
+          </option>
+          <option value="download_json" :disabled="inProgress">
+            JSON
           </option>
         </optgroup>
       </select>
