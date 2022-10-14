@@ -82,6 +82,9 @@ const PackSvgs = async (type: PackType = 'svg') => {
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('tsx')">
           React<sup class="opacity-50 -mr-1">TS</sup>
         </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('json')">
+          JSON
+        </button>
       </div>
 
       <div
