@@ -27,7 +27,6 @@
   "dependencies": {
     "@antfu/utils": "^0.5.2",
     "@vueuse/core": "^9.3.0",
-    "copy-text-to-clipboard": "^3.0.1",
     "dexie": "^3.2.2",
     "file-saver": "^2.0.5",
     "fzf": "^0.5.1",

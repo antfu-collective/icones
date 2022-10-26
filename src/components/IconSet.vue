@@ -1,5 +1,4 @@
 <script setup lang='ts'>
-import copyText from 'copy-text-to-clipboard'
 import { useRoute, useRouter } from 'vue-router'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
@@ -39,13 +38,25 @@ function toggleCategory(cat: string) {
     category.value = cat
 }
 
+async function copyText(text?: string) {
+  if (text) {
+    try {
+      await navigator.clipboard.writeText(text)
+      return true
+    }
+    catch (err) {
+    }
+  }
+  return false
+}
+
 async function onSelect(icon: string) {
   switch (activeMode.value) {
     case 'select':
       toggleBag(icon)
       break
     case 'copy':
-      onCopy(copyText(await getIconSnippet(icon, 'id', true) || icon))
+      onCopy(await copyText(await getIconSnippet(icon, 'id', true) || icon))
       break
     default:
       current = icon
