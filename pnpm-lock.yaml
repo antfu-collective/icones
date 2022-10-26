@@ -7,7 +7,7 @@ neverBuiltDependencies:
 specifiers:
   '@antfu/eslint-config': ^0.27.0
   '@antfu/utils': ^0.5.2
-  '@iconify/json': ^2.1.115
+  '@iconify/json': ^2.1.129
   '@purge-icons/generated': ^0.9.0
   '@types/file-saver': ^2.0.5
   '@types/fs-extra': ^9.0.13
@@ -54,7 +54,7 @@ dependencies:
 
 devDependencies:
   '@antfu/eslint-config': 0.27.0_ypn2ylkkyfa5i233caldtndbqa
-  '@iconify/json': 2.1.115
+  '@iconify/json': 2.1.129
   '@purge-icons/generated': 0.9.0
   '@types/file-saver': 2.0.5
   '@types/fs-extra': 9.0.13
@@ -1431,15 +1431,11 @@ packages:
     resolution: {integrity: sha512-WJzw+3iicrF/tbjbxxRinSgy5FHdJoz/egTqwi3xCDkNRJPq482RX1iyaWrjNuY2vMNSPkQMuqHvZDXgA+WnwQ==}
     dev: true
 
-  /@iconify/json/2.1.115:
-    resolution: {integrity: sha512-yfLP+5b2d2k4HQDaE3PGBojl9XgifKEh9Tytpkui8jshgDjQZ3NXbE/nKr4Dxtz+zw7kvq1XWzlsCKsyyJ8TqQ==}
+  /@iconify/json/2.1.129:
+    resolution: {integrity: sha512-kL+50AlX9GDjV7/hpKqJjpMN0bpcRsu6XLCSXXzRCEzkG6V0m03dsoZxd/g8lhko/1yg3QaRRj23QachM4gkCA==}
     dependencies:
-      '@iconify/types': 1.1.0
-      pathe: 0.3.4
-    dev: true
-
-  /@iconify/types/1.1.0:
-    resolution: {integrity: sha512-Jh0llaK2LRXQoYsorIH8maClebsnzTcve+7U3rQUSnC11X4jtPnFuyatqFLvMxZ8MLG8dB4zfHsbPfuvxluONw==}
+      '@iconify/types': 2.0.0
+      pathe: 0.3.8
     dev: true
 
   /@iconify/types/2.0.0:
@@ -5075,10 +5071,6 @@ packages:
   /path-type/4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
-    dev: true
-
-  /pathe/0.3.4:
-    resolution: {integrity: sha512-YWgqEdxf36R6vcsyj0A+yT/rDRPe0wui4J9gRR7T4whjU5Lx/jZOr75ckEgTNaLVQABAwsrlzHRpIKcCdXAQ5A==}
     dev: true
 
   /pathe/0.3.8:
