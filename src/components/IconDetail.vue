@@ -94,7 +94,7 @@ const collection = computed(() => {
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
     <div :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">
-        <Icon class="p-4 text-8xl" :icon="icon" />
+        <Icon :key="icon" outer-class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
@@ -123,7 +123,8 @@ const collection = computed(() => {
           >
             <Icon
               icon="carbon:checkmark"
-              class="text-primary mr-1 text-lg"
+              class="text-primary text-lg"
+              outer-class="mr-1"
               :class="k === preferredCase ? '' : 'opacity-0'"
             />
             <span class="flex-auto mr-2">{{ v(icon) }}</span>

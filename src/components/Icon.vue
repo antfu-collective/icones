@@ -1,23 +1,26 @@
 <script setup lang="ts">
 import { getIcon } from '../store/icon-cache'
 
-const { icon, cache } = defineProps({
+const props = defineProps({
   icon: {
     type: String,
     required: true,
   },
-  cache: {
-    type: Boolean,
-    default: false,
+  class: {
+    type: String,
+    default: '',
+  },
+  outerClass: {
+    type: String,
+    default: '',
   },
 })
 
-const attrs = useAttrs()
 const el = ref<HTMLDivElement>()
 
-const node = getIcon(icon, cache)
+const node = getIcon(props.icon)
 watchEffect(() => {
-  node.className = attrs.class as string
+  node.className = props.class
 })
 
 onMounted(() => {
@@ -26,13 +29,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="el" class="icon-container" />
+  <div ref="el" class="icon-container" :class="[props.class, props.outerClass]" />
 </template>
 
 <style>
-.icon-container {
+iconify-icon {
   min-width: 1em;
   min-height: 1em;
   display: block;
+}
+
+.icon-container {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em !important;
 }
 </style>

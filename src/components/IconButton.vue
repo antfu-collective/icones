@@ -25,6 +25,7 @@ defineProps({
     :class="none ? '' : active ? 'opacity-100 hover:opacity-100' : 'opacity-25 hover:opacity-50'"
   >
     <Icon
+      :key="icon"
       :icon="icon"
       class="inline-block align-middle"
     />

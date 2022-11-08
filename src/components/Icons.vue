@@ -55,6 +55,7 @@ defineEmits<{
       @click="$emit('select', namespace + icon)"
     >
       <Icon
+        :key="icon"
         class="tooltip-content non-dragging leading-none h-1em"
         :cache="true"
         :icon="namespace + icon"
