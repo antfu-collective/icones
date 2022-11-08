@@ -1,33 +1,36 @@
 <script setup lang="ts">
 import { getIcon } from '../store/icon-cache'
 
-const { icon } = defineProps({
+const { icon, cache } = defineProps({
   icon: {
     type: String,
     required: true,
+  },
+  cache: {
+    type: Boolean,
+    default: false,
   },
 })
 
 const attrs = useAttrs()
 const el = ref<HTMLDivElement>()
 
-onMounted(() => {
-  const node = getIcon(icon)
-  el.value?.appendChild(node)
+const node = getIcon(icon, cache)
+watchEffect(() => {
   node.className = attrs.class as string
+})
 
-  watch(() => attrs.class, (val) => {
-    node.className = val as string
-  })
+onMounted(() => {
+  el.value?.appendChild(node)
 })
 </script>
 
 <template>
-  <div ref="el" />
+  <div ref="el" class="icon-container" />
 </template>
 
 <style>
-iconify-icon {
+.icon-container {
   min-width: 1em;
   min-height: 1em;
   display: block;
