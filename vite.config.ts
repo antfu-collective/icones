@@ -16,6 +16,11 @@ export default defineConfig({
       customElement: [
         'iconify-icon',
       ],
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => tag === 'iconify-icon',
+        },
+      },
     }),
     Pages({
       importMode: 'sync',
