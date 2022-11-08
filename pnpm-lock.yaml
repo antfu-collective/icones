@@ -25,6 +25,7 @@ specifiers:
   hotkeys-js: ^3.10.0
   iconify-icon: 1.0.1
   jszip: ^3.10.1
+  lru-cache: ^7.14.1
   pnpm: ^7.14.2
   svg-packer: ^0.0.3
   typescript: ^4.8.4
@@ -66,6 +67,7 @@ devDependencies:
   fast-glob: 3.2.12
   fs-extra: 10.1.0
   jszip: 3.10.1
+  lru-cache: 7.14.1
   pnpm: 7.14.2
   svg-packer: 0.0.3
   typescript: 4.8.4
@@ -4664,6 +4666,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+    dev: true
+
+  /lru-cache/7.14.1:
+    resolution: {integrity: sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==}
+    engines: {node: '>=12'}
     dev: true
 
   /magic-string/0.25.9:
