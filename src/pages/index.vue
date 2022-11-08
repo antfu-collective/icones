@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import type { PresentType } from '../data'
-import { categorySearch, sortAlphabetically } from '../store'
-import { categories, favoritedCollections, filteredCollections, recentCollections } from '../data'
+import { sortAlphabetically } from '../store'
+import { categories, categorySearch, favoritedCollections, filteredCollections, recentCollections } from '../data'
 
 const input = ref<HTMLInputElement>()
 const categorized = computed(() => [

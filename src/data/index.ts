@@ -1,7 +1,8 @@
 import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
 import { addCollection } from 'iconify-icon'
-import { categorySearch, favoritedIds, inProgress, isFavorited, isRecent, progressMessage, recentIds, sortAlphabetically } from '../store'
+import { AsyncFzf } from 'fzf'
+import { favoritedIds, inProgress, isFavorited, isRecent, progressMessage, recentIds, sortAlphabetically } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
@@ -29,21 +30,38 @@ export interface CollectionMeta extends CollectionInfo {
 const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
-const sanitize = (q: string) => q.toLowerCase().replaceAll(' ', '')
-
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 
-export const filteredCollections = computed(() =>
-  collections
-    .filter(collection => sanitize(collection.name).includes(sanitize(categorySearch.value)))
-    .sort((a, b) => {
-      if (sortAlphabetically.value)
-        return sanitize(a.name).localeCompare(sanitize(b.name))
+export const isSearchOpen = ref(false)
+export const categorySearch = ref('')
 
-      return 0
-    }),
-)
+const fzf = new AsyncFzf(collections, {
+  casing: 'case-insensitive',
+  fuzzy: 'v1',
+  selector: v => `${v.name} ${v.id} ${v.category} ${v.author}`,
+})
+
+export const filteredCollections = ref<CollectionInfo[]>(collections)
+
+watch(categorySearch, (q) => {
+  if (!q) {
+    filteredCollections.value = collections
+  }
+  else {
+    fzf.find(q).then((result) => {
+      filteredCollections.value = result
+        .map(i => i.item)
+        .sort((a, b) => {
+          if (sortAlphabetically.value)
+            return a.name.localeCompare(b.name)
+          return 0
+        })
+    }).catch(() => {
+      // The search is canceled
+    })
+  }
+})
 
 export const sortedCollectionsInfo = computed(() =>
   filteredCollections.value

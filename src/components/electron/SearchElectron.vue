@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { getSearchResults, isSearchOpen } from '../../store'
+import { getSearchResults } from '../../store'
 import { isElectron } from '../../env'
+import { isSearchOpen } from '../../data'
 
 const { search, collection } = getSearchResults()
 const input = ref<HTMLInputElement | null>(null)

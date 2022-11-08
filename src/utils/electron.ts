@@ -1,6 +1,6 @@
 import hotkeys from 'hotkeys-js'
+import { isSearchOpen } from '../data'
 import { isElectron } from '../env'
-import { isSearchOpen } from '../store/search'
 
 if (isElectron) {
   hotkeys('ctrl+f, command+f', (e) => {
