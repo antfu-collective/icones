@@ -56,7 +56,7 @@ defineEmits<{
     >
       <Icon
         :key="icon"
-        class="tooltip-content non-dragging leading-none h-1em translate-z-0"
+        class="tooltip-content non-dragging leading-none h-1em"
         :cache="true"
         :icon="namespace + icon"
       />
