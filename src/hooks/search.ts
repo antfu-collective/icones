@@ -37,22 +37,37 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
   const icons = ref<string[]>([])
 
   watchEffect(() => {
-    if (!search.value) {
+    const searchQuery = search.value.toLowerCase()
+    
+    if (!searchQuery) {
       icons.value = iconSource.value
       return
     }
 
     // Matching any character used in extended match
     // https://github.com/junegunn/fzf#search-syntax
-    const useExtendedMatch = /[ '^$!]/.test(search.value)
+    const useExtendedMatch = /[ '^$!]/.test(searchQuery)
+
+    const aliases = [
+      ['cog', 'gear'],
+    ]
+
+    const aliasSet = useExtendedMatch ? null : aliases.find(set => set.includes(searchQuery))
 
     if (isAll.value && !useExtendedMatch) {
-      icons.value = iconSource.value.filter(i => i.includes(search.value))
+      icons.value = iconSource.value.filter(i => {
+        if (aliasSet) {
+          return aliasSet.some(alias => i.includes(alias))
+        }
+        return i.includes(searchQuery)
+      })
       return
     }
 
-    const finder = useExtendedMatch ? fzf : fzfFast
-    finder.value.find(search.value).then((result) => {
+    const finder = useExtendedMatch || aliasSet ? fzf : fzfFast
+    const query = aliasSet ? aliasSet.join(' | ') : searchQuery
+
+    finder.value.find(query).then((result) => {
       icons.value = result.map(i => i.item)
     }).catch(() => {
       // The search is canceled
