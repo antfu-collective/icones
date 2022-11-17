@@ -19,6 +19,7 @@ const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
 const url = $computed(() => collection.value?.url || collection.value?.author?.url)
+const npm = $computed(() => `https://www.npmjs.com/package/@iconify-json/${collection.value?.id}`)
 const namespace = $computed(() => !collection.value || collection.value.id === 'all'
   ? ''
   : `${collection.value.id}:`,
@@ -158,6 +159,14 @@ onKeyStroke('Escape', () => {
                 target="_blank"
               >
                 <Icon icon="la:external-link-square-alt-solid" />
+              </a>
+              <a
+                v-if="npm"
+                class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
+                :href="npm"
+                target="_blank"
+              >
+                <Icon icon="la:npm" />
               </a>
               <div class="flex-auto" />
             </div>
