@@ -190,13 +190,13 @@ onKeyStroke('Escape', () => {
         </div>
 
         <!-- Categories -->
-        <div class="py-2 px-7 overflow-x-overlay flex flex-no-wrap select-none">
+        <div class="py-3 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
           <template v-if="collection.categories">
             <div
               v-for="c of Object.keys(collection.categories)"
               :key="c"
               class="
-                whitespace-nowrap text-sm inline-block px-2 border border-gray-200 rounded-full m-1 hover:bg-gray-50 cursor-pointer
+                whitespace-nowrap text-sm inline-block px-2 border border-gray-200 rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
               "
               :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
