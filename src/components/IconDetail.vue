@@ -214,6 +214,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue')">
             Vue
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue-ts')">
+            Vue<sup class="opacity-50 -mr-1">TS</sup>
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('jsx')">
             React
           </button>

@@ -91,6 +91,19 @@ export default {
 </script>`
 }
 
+export function SvgToVueTs(svg: string, name: string) {
+  return `
+<template>
+  ${ClearSvg(svg)}
+</template>
+
+<script lang='ts'>
+export default {
+  name: '${name}'
+}
+</script>`
+}
+
 export function SvgToSvelte(svg: string) {
   return ClearSvg(svg)
 }
@@ -126,6 +139,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'vue':
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
+    case 'vue-ts':
+      return SvgToVueTs(await getSvg(icon, undefined, color), toComponentName(icon))
     case 'svelte':
       return SvgToSvelte(await getSvg(icon, undefined, color))
     case 'unplugin':
