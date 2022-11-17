@@ -18,12 +18,10 @@ const { search, icons, category, collection } = getSearchResults()
 const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
+const id = $computed(()=> collection.value?.id)
 const url = $computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = $computed(() => `https://www.npmjs.com/package/@iconify-json/${collection.value?.id}`)
-const namespace = $computed(() => !collection.value || collection.value.id === 'all'
-  ? ''
-  : `${collection.value.id}:`,
-)
+const npm = $computed(() => id != null && id !== 'all' ? `https://www.npmjs.com/package/@iconify-json/${id}` : '')
+const namespace = $computed(() => id != null && id !== 'all' ? `${id}:` : '')
 
 function onCopy(status: boolean) {
   copied = status
