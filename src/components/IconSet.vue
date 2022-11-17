@@ -18,7 +18,7 @@ const { search, icons, category, collection } = getSearchResults()
 const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
-const id = $computed(()=> collection.value?.id)
+const id = $computed(() => collection.value?.id)
 const url = $computed(() => collection.value?.url || collection.value?.author?.url)
 const npm = $computed(() => id != null && id !== 'all' ? `https://www.npmjs.com/package/@iconify-json/${id}` : '')
 const namespace = $computed(() => id != null && id !== 'all' ? `${id}:` : '')
