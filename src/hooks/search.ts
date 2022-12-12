@@ -59,7 +59,10 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
     })
   })
 
-  watch(collection, () => { category.value = defaultCategory })
+  watch(
+    collection,
+    () => { category.value = defaultCategory },
+  )
 
   return {
     collection,
