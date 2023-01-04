@@ -12,7 +12,8 @@ export async function getSvgLocal(icon: string, size = '1em', color = 'currentCo
   const built = buildIcon(data, { height: size })
   if (!built)
     return
-  return `<svg ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${built.body}</svg>`.replace('currentColor', color)
+  const xlink = built.body.includes('xlink:') ? ' xmlns:xlink="http://www.w3.org/1999/xlink"' : ''
+  return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${built.body}</svg>`.replace('currentColor', color)
 }
 
 export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
