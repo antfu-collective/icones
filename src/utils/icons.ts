@@ -79,8 +79,8 @@ export function ${name}(props: SVGProps<SVGSVGElement>) {
     return `import React, { SVGProps } from 'react'\n${code}\nexport default ${name}`
 }
 
-export function SvgToVue(svg: string, name: string) {
-  return `
+export function SvgToVue(svg: string, name: string, isTs?: boolean) {
+  const contet = `
 <template>
   ${ClearSvg(svg)}
 </template>
@@ -90,6 +90,7 @@ export default {
   name: '${name}'
 }
 </script>`
+  return isTs ? contet.replace('<script>', '<script lang="ts">') : contet
 }
 
 export function SvgToSvelte(svg: string) {
@@ -127,6 +128,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'vue':
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
+    case 'vue-ts':
+      return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon), true)
     case 'svelte':
       return SvgToSvelte(await getSvg(icon, undefined, color))
     case 'unplugin':
