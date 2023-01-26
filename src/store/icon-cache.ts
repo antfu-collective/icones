@@ -21,4 +21,3 @@ export function unmountIcon(name: string, icon: HTMLElement) {
   mounted.delete(icon)
   cache.set(name, icon)
 }
-

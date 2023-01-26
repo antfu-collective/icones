@@ -45,7 +45,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
         // The search is canceled
       })
   }
-  
+
   const debouncedSearch = useDebounceFn(runSearch, 200)
 
   watchEffect(() => {
