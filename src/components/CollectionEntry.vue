@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CollectionInfo, PresentType } from '../data'
-import { isFavorited, removeRecent, toggleFavorite } from '../store'
+import { isFavoritedCollection, removeRecentCollection, toggleFavoriteCollection } from '../store'
 
 const props = defineProps<{
   collection: CollectionInfo
@@ -9,9 +9,9 @@ const props = defineProps<{
 
 function onAction() {
   if (props.type === 'recent')
-    removeRecent(props.collection.id)
+    removeRecentCollection(props.collection.id)
   else
-    toggleFavorite(props.collection.id)
+    toggleFavoriteCollection(props.collection.id)
 }
 </script>
 
@@ -27,7 +27,7 @@ function onAction() {
     <div ml2>
       <div class="flex-auto text-lg leading-1em my1">
         {{ collection.name }}
-        <span v-if="isFavorited(collection.id)" m="l--0.5" op80 text-xs inline-block align-top i-carbon-star-filled />
+        <span v-if="isFavoritedCollection(collection.id)" m="l--0.5" op80 text-xs inline-block align-top i-carbon-star-filled />
       </div>
       <div flex="~ col auto" opacity-50 text-xs>
         <span>{{ collection.author?.name }}</span>
@@ -47,7 +47,7 @@ function onAction() {
     <button
       class="group"
       absolute top--1px right--1px p2 border="~ transparent" hover="bg-base border-primary"
-      :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavorited(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
+      :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
       @click.prevent="onAction"
     >
       <div
@@ -55,7 +55,7 @@ function onAction() {
         i-carbon-delete op0 group-hover="op100"
       />
       <div
-        v-else-if="type === 'favorite' || isFavorited(collection.id)"
+        v-else-if="type === 'favorite' || isFavoritedCollection(collection.id)"
         i-carbon-star-filled op0 group-hover="op100"
       />
       <div

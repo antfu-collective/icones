@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, showCaseSelect, showHelp, toggleBag } from '../store'
+import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
 import { idCases } from '../utils/case'
 
@@ -53,6 +53,7 @@ async function copyText(text?: string) {
 }
 
 const copy = async (type: string) => {
+  pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, true, color.value)
   if (!text)
     return
@@ -61,6 +62,7 @@ const copy = async (type: string) => {
 }
 
 const download = async (type: string) => {
+  pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return

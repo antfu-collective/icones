@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import type { PropType } from 'vue'
-import { activeMode, iconSize, inProgress, isFavorited, listType, progressMessage, toggleFavorite } from '../store'
+import { activeMode, iconSize, inProgress, isFavoritedCollection, listType, progressMessage, toggleFavoriteCollection } from '../store'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
 import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
@@ -125,7 +125,7 @@ const installed = computed(() => {
   return props.collection && isInstalled(props.collection.id)
 })
 
-const favorited = computed(() => isFavorited(props.collection.id))
+const favorited = computed(() => isFavoritedCollection(props.collection.id))
 </script>
 
 <template>
@@ -137,7 +137,7 @@ const favorited = computed(() => isFavorited(props.collection.id))
       icon-button
       :class="favorited ? 'i-carbon:star-filled' : 'i-carbon:star'"
       title="Toggle Favorite"
-      @click="toggleFavorite(collection.id)"
+      @click="toggleFavoriteCollection(collection.id)"
     />
 
     <!-- Download State -->

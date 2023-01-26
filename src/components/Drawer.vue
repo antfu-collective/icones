@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { categorySearch, sortedCollectionsInfo } from '../data'
-import { isFavorited, sortAlphabetically, toggleFavorite } from '../store'
+import { isFavoritedCollection, sortAlphabetically, toggleFavoriteCollection } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
@@ -82,11 +82,11 @@ const collections = computed(() => {
       <button
         v-if="collection.id !== 'all'"
         icon-button
-        :class="isFavorited(collection.id) ? 'op50 hover:op100' : 'op0 hover:op50' "
+        :class="isFavoritedCollection(collection.id) ? 'op50 hover:op100' : 'op0 hover:op50' "
         class="flex-none text-lg p0.5 -mr-1 hover:text-primary flex"
-        @click="toggleFavorite(collection.id)"
+        @click="toggleFavoriteCollection(collection.id)"
       >
-        <div :class="isFavorited(collection.id) ? 'i-carbon-star-filled' : 'i-carbon-star'" ma />
+        <div :class="isFavoritedCollection(collection.id) ? 'i-carbon-star-filled' : 'i-carbon-star'" ma />
       </button>
     </RouterLink>
   </div>
