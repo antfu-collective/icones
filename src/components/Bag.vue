@@ -38,8 +38,7 @@ const PackSvgs = async (type: PackType = 'svg') => {
   <div class="h-full flex flex-col w-screen md:w-96 xl:w-128">
     <div
       class="
-        py-3 px-6 flex flex-none border-b border-gray-200
-        dark:border-dark-200
+        py-3 px-6 flex flex-none border-b border-base
       "
     >
       <div>
@@ -63,11 +62,7 @@ const PackSvgs = async (type: PackType = 'svg') => {
 
       <div
         v-show="showPackOption"
-        class="
-        relative
-          flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
-          dark:border-dark-200
-        "
+        class="relative flex-none border-t border-base py-3 px-6 text-2xl opacity-75"
       >
         <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="showPackOption = false" />
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svg')">
@@ -89,8 +84,7 @@ const PackSvgs = async (type: PackType = 'svg') => {
 
       <div
         class="
-          flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
-          dark:border-dark-200
+          flex-none border-t border-base py-3 px-6 text-2xl opacity-75
         "
       >
         <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:download" text="Download Zip" :active="true" @click="showPackOption = true" />

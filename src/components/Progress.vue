@@ -4,7 +4,8 @@ import { inProgress, progressMessage } from '../store'
 
 <template>
   <div
-    class="fixed bottom-0 left-0 border-gray-200 border bg-white rounded-tr shadow px-3 py-1 text-gray-700 text-sm flex"
+    border="~ base"
+    class="fixed bottom-0 left-0 bg-base rounded-tr shadow px-3 py-1 text-gray-700 text-sm flex"
     :style="inProgress ? {} : { transform: 'translateY(120%)' }"
   >
     <Icon icon="carbon:circle-dash" class="rotating m-auto mr-1 text-lg" />

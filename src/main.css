@@ -15,7 +15,7 @@ html.dark .bg {
 
 .btn {
   @apply 
-    border border-gray-200 rounded shadow-sm outline-none
+    border border-base rounded shadow-sm outline-none
     bg-white px-4 py-1 text-gray-600 text-sm transition-all
     hover:(bg-gray-50 shadow)
     dark:(border-dark-200 text-gray-300 bg-dark-100)

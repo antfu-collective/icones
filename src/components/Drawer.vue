@@ -65,7 +65,7 @@ const collections = computed(() => {
     <RouterLink
       v-for="collection in collections"
       :key="collection.id"
-      class="px-4 py-2 flex border-b border-gray-200 dark:border-dark-200"
+      class="px-4 py-2 flex border-b border-base"
       :to="`/collection/${collection.id}`"
     >
       <div

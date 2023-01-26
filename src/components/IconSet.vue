@@ -194,7 +194,7 @@ onKeyStroke('Escape', () => {
               v-for="c of Object.keys(collection.categories)"
               :key="c"
               class="
-                whitespace-nowrap text-sm inline-block px-2 border border-gray-200 rounded-full hover:bg-gray-50 cursor-pointer
+                whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
               "
               :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
@@ -209,7 +209,7 @@ onKeyStroke('Escape', () => {
         <div
           class="
             mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4
-            border border-transparent dark:border-dark-200
+            border border-base
           "
         >
           <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />

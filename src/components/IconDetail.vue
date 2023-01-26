@@ -146,8 +146,8 @@ const collection = computed(() => {
       <div>
         <button
           class="
-            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
-            dark:border-dark-200 dark:hover:bg-dark-200
+            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer 
+            hover:bg-gray-50 dark:hover:bg-dark-200
           "
           :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
           @click="toggleBag(icon)"
@@ -165,8 +165,8 @@ const collection = computed(() => {
         <button
           v-if="inBag(icon)"
           class="
-            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
-            dark:border-dark-200 dark:hover:bg-dark-200
+            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer 
+            hover:bg-gray-50 dark:hover:bg-dark-200
           "
           :class="activeMode === 'select' ? 'text-primary' : 'text-gray-500'"
           @click="toggleSelectingMode"
@@ -177,8 +177,8 @@ const collection = computed(() => {
 
         <button
           class="
-            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
-            dark:border-dark-200 dark:hover:bg-dark-200
+            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
+            hover:bg-gray-50 dark:hover:bg-dark-200
           "
           :class="copyPreviewColor ? 'text-primary' : 'text-gray-500'"
           @click="copyPreviewColor = !copyPreviewColor"
