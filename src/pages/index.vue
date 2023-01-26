@@ -36,7 +36,7 @@ onMounted(() => input.value?.focus())
     </NavPlaceholder>
 
     <!-- Searching -->
-    <div class="border-b py-3 md:mx-6 mb-2 md:mt-6 flex md:shadow md:rounded outline-none md:py-1 px-4 md:border md:border-transparent dark:border-dark-200">
+    <div class="border-b py-3 md:mx-6 mb-2 md:mt-6 flex md:shadow md:rounded outline-none md:py-1 px-4 border-x border-b md:border-t border-base">
       <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
       <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
         <input
