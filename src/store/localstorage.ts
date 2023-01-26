@@ -50,7 +50,6 @@ export function removeRecentIcon(id: string) {
   recentIconIds.value = recentIconIds.value.filter(i => i !== id)
 }
 
-
 export function toggleFavoriteCollection(id: string) {
   const index = favoritedCollectionIds.value.indexOf(id)
   if (index >= 0)
