@@ -29,7 +29,7 @@ onMounted(() => {
   el.value?.appendChild(node.value)
 })
 
-onBeforeUnmount(()=>{
+onBeforeUnmount(() => {
   if (node.value)
     unmountIcon(props.icon, node.value)
 })
