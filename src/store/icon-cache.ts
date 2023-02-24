@@ -4,7 +4,7 @@ const cache = new LRU<string, HTMLElement>({
   max: 1_000,
 })
 
-const mounted = new Set<HTMLElement>()
+const mounted = new WeakSet<HTMLElement>()
 
 export function getIcon(name: string) {
   if (cache.has(name) && !mounted.has(cache.get(name)!))
