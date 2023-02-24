@@ -10,7 +10,6 @@ export function getIcon(name: string) {
   if (cache.has(name) && !mounted.has(cache.get(name)!))
     return cache.get(name)!
   const icon = document.createElement('iconify-icon')
-  icon.setAttribute('mode', 'style')
   icon.setAttribute('icon', name)
   cache.set(name, icon)
   mounted.add(icon)

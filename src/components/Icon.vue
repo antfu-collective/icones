@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getIcon } from '../store/icon-cache'
+import { getIcon, unmountIcon } from '../store/icon-cache'
 
 const props = defineProps({
   icon: {
@@ -17,14 +17,21 @@ const props = defineProps({
 })
 
 const el = ref<HTMLDivElement>()
+const node = ref<HTMLElement>()
 
-const node = getIcon(props.icon)
 watchEffect(() => {
-  node.className = props.class
+  if (node.value)
+    node.value.className = props.class
 })
 
 onMounted(() => {
-  el.value?.appendChild(node)
+  node.value = getIcon(props.icon)
+  el.value?.appendChild(node.value)
+})
+
+onBeforeUnmount(()=>{
+  if (node.value)
+    unmountIcon(props.icon, node.value)
 })
 </script>
 
