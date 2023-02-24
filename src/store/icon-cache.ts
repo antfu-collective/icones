@@ -1,7 +1,7 @@
 import LRU from 'lru-cache'
 
 const cache = new LRU<string, HTMLElement>({
-  max: 10_000,
+  max: 1_000,
 })
 
 const mounted = new Set<HTMLElement>()
