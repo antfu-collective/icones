@@ -23,8 +23,8 @@
       Components
     </h2>
     <p>
-      Created by the author of <b>Icônes</b>, <a href="https://github.com/antfu/unplugin-icons" target="_blank"><code>unplugin-icons</code></a> is a band new
-      solution to use generate icons on-demand as components.
+      Created by the author of <b>Icônes</b>, <a href="https://github.com/antfu/unplugin-icons" target="_blank"><code>unplugin-icons</code></a> is a brand new
+      solution to generate icons on-demand as components.
     </p>
     <p class="mt-2">
       Check out <a href="https://antfu.me/posts/journey-with-icons-continues" target="_blank">this blog post</a> for the story behind.
