@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
       isElectron
         ? electron([
           {
-            entry: 'src/main/index.js',
+            entry: 'src/main/index.ts',
             vite: {
               build: {
                 minify: isBuild,

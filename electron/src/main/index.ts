@@ -1,7 +1,7 @@
 import { join } from 'path'
 import { BrowserWindow, app, shell } from 'electron'
 
-let mainWindow
+let mainWindow: BrowserWindow | null = null
 
 const createMainWindow = async () => {
   const win = new BrowserWindow({
@@ -24,12 +24,12 @@ const createMainWindow = async () => {
   })
 
   win.on('closed', () => {
-    mainWindow = undefined
+    mainWindow = null
   })
 
   win.removeMenu()
 
-  const handleRedirect = (e, url) => {
+  const handleRedirect = (e: Event, url: string) => {
     if (url !== win.webContents.getURL()) {
       e.preventDefault()
       shell.openExternal(url)
@@ -37,7 +37,7 @@ const createMainWindow = async () => {
   }
 
   win.webContents.on('will-navigate', handleRedirect)
-  win.webContents.on('new-window', handleRedirect)
+  // win.webContents.on('new-window', handleRedirect)
 
   return win
 }
