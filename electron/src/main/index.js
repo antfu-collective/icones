@@ -1,11 +1,5 @@
+import { join } from 'path'
 import { BrowserWindow, app, shell } from 'electron'
-import serve from 'electron-serve'
-import debug from 'electron-debug'
-
-const DEV = process.env.NODE_ENV !== 'production'
-
-debug({ showDevTools: false })
-serve({ directory: DEV ? '../../../dist' : 'app' })
 
 let mainWindow
 
@@ -19,6 +13,11 @@ const createMainWindow = async () => {
     minHeight: 200,
     titleBarStyle: 'hiddenInset',
   })
+
+  if (app.isPackaged)
+    win.loadFile(join(__dirname, '../../dist/index.html'))
+  else
+    win.loadURL('http://localhost:3333/')
 
   win.on('ready-to-show', () => {
     win.show()
@@ -55,11 +54,10 @@ app.on('activate', async () => {
     mainWindow = await createMainWindow()
 })
 
-;(async () => {
+; (async () => {
   await app.whenReady()
 
   mainWindow = await createMainWindow()
-  mainWindow.loadURL(DEV ? 'http://localhost:3333/' : 'app://-')
   mainWindow.focus()
 })()
   .catch(console.error)

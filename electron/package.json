@@ -13,47 +13,16 @@
   "bugs": {
     "url": "https://github.com/antfu/icones/issues"
   },
-  "main": "dist/main/main.js",
+  "main": "dist-electron/main/index.js",
   "copyright": "Copyright © 2020 Anthony Fu",
   "scripts": {
-    "dev": "electron-webpack dev",
-    "compile": "electron-webpack",
-    "copy": "cp -r ../dist ./dist/main/app",
-    "build:vite": "cd .. && yarn build && cd electron",
-    "build": "cd .. && yarn build && cd electron && yarn compile && yarn copy && electron-builder build",
-    "package": "yarn copy && electron-builder build -c.mac.identity=null"
-  },
-  "build": {
-    "productName": "Icônes",
-    "appId": "me.antfu.icones",
-    "directories": {
-      "output": "release"
-    },
-    "mac": {
-      "target": "dmg"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "antfu",
-      "repo": "icones",
-      "private": false
-    },
-    "files": [
-      "dist",
-      "build"
-    ]
-  },
-  "dependencies": {
-    "babel-loader": "^8.2.5",
-    "electron-debug": "^3.2.0",
-    "electron-serve": "^1.1.0",
-    "electron-util": "^0.17.2",
-    "source-map-support": "^0.5.21"
+    "dev": "vite ../ --port 3333 --mode electron",
+    "copy": "cp -r ../dist ./",
+    "build": "vite build ../ --mode electron && yarn copy && electron-builder"
   },
   "devDependencies": {
-    "electron": "17.1.2",
-    "electron-builder": "^23.0.2",
-    "electron-webpack": "^2.8.2",
-    "webpack": "~5.74.0"
+    "electron": "^23.1.2",
+    "electron-builder": "^23.6.0",
+    "vite-plugin-electron": "^0.11.1"
   }
 }

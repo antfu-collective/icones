@@ -1,6 +1,8 @@
-export const isElectron = location.protocol === 'app:' || (process.env.NODE_ENV === 'development' && navigator.userAgent.includes('Electron'))
+export const isElectron = import.meta.env.MODE === 'electron'
 export const isVSCode = location.protocol === 'vscode-webview:'
 export const isLocalMode = isElectron || isVSCode
 
 export const basePath = isVSCode ? window.baseURI : '/'
-export const staticPath = isVSCode ? window.staticURI : ''
+export const staticPath = isVSCode
+  ? window.staticURI
+  : (isElectron && import.meta.env.PROD) ? '../../app.asar/dist' : ''
