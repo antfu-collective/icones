@@ -1,5 +1,6 @@
 import { join } from 'path'
 import { BrowserWindow, app, shell } from 'electron'
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -14,10 +15,15 @@ const createMainWindow = async () => {
     titleBarStyle: 'hiddenInset',
   })
 
-  if (app.isPackaged)
+  if (app.isPackaged) {
     win.loadFile(join(__dirname, '../../dist/index.html'))
-  else
+    win.removeMenu()
+  }
+  else {
     win.loadURL('http://localhost:3333/')
+    win.webContents.openDevTools()
+    await installExtension(VUEJS_DEVTOOLS)
+  }
 
   win.on('ready-to-show', () => {
     win.show()
@@ -27,8 +33,6 @@ const createMainWindow = async () => {
     mainWindow = null
   })
 
-  win.removeMenu()
-
   const handleRedirect = (e: Event, url: string) => {
     if (url !== win.webContents.getURL()) {
       e.preventDefault()
@@ -37,7 +41,11 @@ const createMainWindow = async () => {
   }
 
   win.webContents.on('will-navigate', handleRedirect)
-  // win.webContents.on('new-window', handleRedirect)
+
+  win.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url)
+    return { action: 'deny' }
+  })
 
   return win
 }

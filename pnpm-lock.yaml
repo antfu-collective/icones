@@ -86,10 +86,12 @@ importers:
     specifiers:
       electron: ^23.1.2
       electron-builder: ^23.6.0
+      electron-devtools-installer: ^3.2.0
       vite-plugin-electron: ^0.11.1
     devDependencies:
       electron: 23.1.2
       electron-builder: 23.6.0
+      electron-devtools-installer: 3.2.0
       vite-plugin-electron: 0.11.1
 
 packages:
@@ -3822,6 +3824,15 @@ packages:
       - supports-color
     dev: true
 
+  /electron-devtools-installer/3.2.0:
+    resolution: {integrity: sha512-t3UczsYugm4OAbqvdImMCImIMVdFzJAHgbwHpkl5jmfu1izVgUcP/mnrPqJIpEeCK1uZGpt+yHgWEN+9EwoYhQ==}
+    dependencies:
+      rimraf: 3.0.2
+      semver: 7.3.8
+      tslib: 2.5.0
+      unzip-crx-3: 0.2.0
+    dev: true
+
   /electron-osx-sign/0.6.0:
     resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}
     engines: {node: '>=4.0.0'}
@@ -7533,6 +7544,10 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tslib/2.5.0:
+    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
+    dev: true
+
   /tsutils/3.21.0_typescript@4.9.5:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
     engines: {node: '>= 6'}
@@ -7854,6 +7869,14 @@ packages:
       - supports-color
     dev: true
 
+  /unzip-crx-3/0.2.0:
+    resolution: {integrity: sha512-0+JiUq/z7faJ6oifVB5nSwt589v1KCduqIJupNVDoWSXZtWDmjDGO3RAEOvwJ07w90aoXoP4enKsR7ecMrJtWQ==}
+    dependencies:
+      jszip: 3.10.1
+      mkdirp: 0.5.6
+      yaku: 0.16.7
+    dev: true
+
   /upath/1.2.0:
     resolution: {integrity: sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==}
     engines: {node: '>=4'}
@@ -7906,7 +7929,7 @@ packages:
     dev: true
 
   /verror/1.10.0:
-    resolution: {integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=}
+    resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
     dependencies:
       assert-plus: 1.0.0
@@ -8352,6 +8375,10 @@ packages:
   /y18n/5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
     engines: {node: '>=10'}
+    dev: true
+
+  /yaku/0.16.7:
+    resolution: {integrity: sha512-Syu3IB3rZvKvYk7yTiyl1bo/jiEFaaStrgv1V2TIJTqYPStSMQVO8EQjg/z+DRzLq/4LIIharNT3iH1hylEIRw==}
     dev: true
 
   /yallist/3.1.1:
