@@ -25,5 +25,8 @@
     "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
     "vite-plugin-electron": "^0.11.1"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
   }
 }
