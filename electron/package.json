@@ -20,13 +20,15 @@
     "copy": "cp -r ../dist ./",
     "build": "vite build ../ --mode electron && yarn copy && electron-builder"
   },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
   "devDependencies": {
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
-    "vite-plugin-electron": "^0.11.1"
-  },
-  "dependencies": {
-    "electron-store": "^8.1.0"
+    "vite-plugin-electron": "^0.11.1",
+    "vite-plugin-electron-renderer": "^0.12.1",
+    "vite-plugin-esmodule": "^1.4.4"
   }
 }

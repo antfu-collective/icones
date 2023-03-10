@@ -86,6 +86,10 @@ const createMainWindow = async () => {
     minWidth: 200,
     minHeight: 200,
     titleBarStyle: 'hiddenInset',
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   })
 
   if (app.isPackaged) {

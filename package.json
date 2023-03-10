@@ -32,6 +32,7 @@
     "fzf": "^0.5.1",
     "hotkeys-js": "^3.10.1",
     "iconify-icon": "1.0.7",
+    "prettier": "^2.8.4",
     "vue": "3.2.47",
     "vue-chemistry": "^0.2.2",
     "vue-router": "4.1.6"
@@ -42,6 +43,7 @@
     "@purge-icons/generated": "^0.9.0",
     "@types/file-saver": "^2.0.5",
     "@types/fs-extra": "^11.0.1",
+    "@types/prettier": "^2.7.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.7",
@@ -67,7 +69,9 @@
     "neverBuiltDependencies": [
       "electron",
       "electron-builder",
-      "vite-plugin-electron"
+      "vite-plugin-electron",
+      "vite-plugin-electron-renderer",
+      "vite-plugin-esmodule"
     ]
   }
 }

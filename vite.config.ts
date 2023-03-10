@@ -10,6 +10,8 @@ import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import fg from 'fast-glob'
 import electron from 'vite-plugin-electron'
+import renderer from 'vite-plugin-electron-renderer'
+import esmodule from 'vite-plugin-esmodule'
 
 rmSync('dist-electron', { recursive: true, force: true })
 const isBuild = process.argv.slice(2).includes('build')
@@ -19,19 +21,26 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      isElectron
-        ? electron([
-          {
-            entry: 'src/main/index.ts',
-            vite: {
-              build: {
-                minify: isBuild,
-                outDir: 'dist-electron/main',
+      ...isElectron
+        ? [
+            electron([
+              {
+                entry: 'src/main/index.ts',
+                vite: {
+                  build: {
+                    minify: isBuild,
+                    outDir: 'dist-electron/main',
+                  },
+                },
               },
-            },
-          },
-        ])
-        : null,
+            ]),
+            renderer({
+              nodeIntegration: true,
+            }),
+
+          ]
+        : [],
+      esmodule(['prettier']),
       Vue({
         reactivityTransform: true,
         customElement: [
