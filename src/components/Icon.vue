@@ -8,8 +8,13 @@ const cache = new LRU<string, HTMLElement>({
 const mounted = new WeakSet<HTMLElement>()
 
 function getIcon(name: string) {
-  if (cache.has(name) && !mounted.has(cache.get(name)!))
-    return cache.get(name)!
+  const el = cache.get(name)
+  if (el) {
+    if (!mounted.has(el)) {
+      mounted.add(el)
+      return el
+    }
+  }
   const icon = document.createElement('iconify-icon')
   icon.setAttribute('icon', name)
   cache.set(name, icon)
@@ -40,21 +45,21 @@ const props = defineProps({
 })
 
 const el = ref<HTMLDivElement>()
-const node = ref<HTMLElement>()
+let node: HTMLElement | undefined
 
 watchEffect(() => {
-  if (node.value)
-    node.value.className = props.class
+  if (node)
+    node.className = props.class
 })
 
 onMounted(() => {
-  node.value = getIcon(props.icon)
-  el.value?.appendChild(node.value)
+  node = getIcon(props.icon)
+  el.value?.appendChild(node)
 })
 
 onBeforeUnmount(() => {
-  if (node.value)
-    unmountIcon(props.icon, node.value)
+  if (node)
+    unmountIcon(props.icon, node)
 })
 </script>
 
