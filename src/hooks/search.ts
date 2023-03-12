@@ -2,13 +2,15 @@ import { AsyncFzf, asyncExtendedMatch } from 'fzf'
 import type { Ref } from 'vue'
 import { computed, markRaw, ref, watch } from 'vue'
 import type { CollectionMeta } from '../data'
+import { specialTabs } from '../data'
 import { searchAlias } from '../data/search-alias'
 
 export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategory = '', defaultSearch = '') {
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
-  const isAll = computed(() => collection.value && collection.value.id === 'all')
+  const isAll = computed(() => collection.value && specialTabs.includes(collection.value.id))
   const searchParts = computed(() => search.value.trim().toLowerCase().split(' ').filter(Boolean))
+
   const aliasedSearchCandidates = computed(() => {
     const options = new Set([
       searchParts.value.join(' '),
