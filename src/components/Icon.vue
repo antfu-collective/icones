@@ -1,6 +1,29 @@
-<script setup lang="ts">
-import { getIcon, unmountIcon } from '../store/icon-cache'
+<script lang="ts">
+import LRU from 'lru-cache'
 
+const cache = new LRU<string, HTMLElement>({
+  max: 1_000,
+})
+
+const mounted = new WeakSet<HTMLElement>()
+
+function getIcon(name: string) {
+  if (cache.has(name) && !mounted.has(cache.get(name)!))
+    return cache.get(name)!
+  const icon = document.createElement('iconify-icon')
+  icon.setAttribute('icon', name)
+  cache.set(name, icon)
+  mounted.add(icon)
+  return icon
+}
+
+function unmountIcon(name: string, icon: HTMLElement) {
+  mounted.delete(icon)
+  cache.set(name, icon)
+}
+</script>
+
+<script setup lang="ts">
 const props = defineProps({
   icon: {
     type: String,
