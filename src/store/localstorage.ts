@@ -1,7 +1,8 @@
 import type { IdCase } from '../utils/case'
 import { idCases } from '../utils/case'
 
-const RECENT_CAPACITY = 10
+const RECENT_COLLECTION_CAPACITY = 10
+const RECENT_ICONS_CAPACITY = 100
 
 export type ActiveMode = 'normal' | 'select' | 'copy'
 
@@ -31,7 +32,7 @@ export function isRecentCollection(id: string) {
 }
 
 export function pushRecentCollection(id: string) {
-  recentCollectionIds.value = [id, ...recentCollectionIds.value.filter(i => i !== id)].slice(0, RECENT_CAPACITY)
+  recentCollectionIds.value = [id, ...recentCollectionIds.value.filter(i => i !== id)].slice(0, RECENT_COLLECTION_CAPACITY)
 }
 
 export function removeRecentCollection(id: string) {
@@ -43,7 +44,7 @@ export function isRecentIcon(id: string) {
 }
 
 export function pushRecentIcon(id: string) {
-  recentIconIds.value = [id, ...recentIconIds.value.filter(i => i !== id)].slice(0, RECENT_CAPACITY)
+  recentIconIds.value = [id, ...recentIconIds.value.filter(i => i !== id)].slice(0, RECENT_ICONS_CAPACITY)
 }
 
 export function removeRecentIcon(id: string) {
