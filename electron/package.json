@@ -20,9 +20,6 @@
     "copy": "cp -r ../dist ./",
     "build": "vite build ../ --mode electron && yarn copy && electron-builder"
   },
-  "dependencies": {
-    "electron-store": "^8.1.0"
-  },
   "devDependencies": {
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
