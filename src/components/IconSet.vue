@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
-import { cacheCollection } from '../data'
+import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
 
 const showBag = $ref(false)
@@ -20,8 +20,8 @@ const loading = isCurrentCollectionLoading()
 const maxMap = new Map<string, number>()
 const id = $computed(() => collection.value?.id)
 const url = $computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = $computed(() => (id != null && id !== 'all') ? `https://www.npmjs.com/package/@iconify-json/${id}` : '')
-const namespace = $computed(() => (id != null && id !== 'all') ? `${id}:` : '')
+const npm = $computed(() => (id != null && !specialTabs.includes(id)) ? `https://www.npmjs.com/package/@iconify-json/${id}` : '')
+const namespace = $computed(() => (id != null && !specialTabs.includes(id)) ? `${id}:` : '')
 
 function onCopy(status: boolean) {
   copied = status
@@ -272,7 +272,7 @@ onKeyStroke('Escape', () => {
         <!-- Details -->
         <Modal :value="!!current" @close="current = ''">
           <IconDetail
-            :icon="current" :show-collection="collection.id === 'all'"
+            :icon="current" :show-collection="specialTabs.includes(collection.id)"
             @close="current = ''"
             @copy="onCopy"
             @next="next(1)"

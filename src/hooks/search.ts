@@ -2,11 +2,35 @@ import { AsyncFzf, asyncExtendedMatch } from 'fzf'
 import type { Ref } from 'vue'
 import { computed, markRaw, ref, watch } from 'vue'
 import type { CollectionMeta } from '../data'
+import { specialTabs } from '../data'
+import { searchAlias } from '../data/search-alias'
 
 export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategory = '', defaultSearch = '') {
   const category = ref(defaultCategory)
   const search = ref(defaultSearch)
-  const isAll = computed(() => collection.value && collection.value.id === 'all')
+  const isAll = computed(() => collection.value && specialTabs.includes(collection.value.id))
+  const searchParts = computed(() => search.value.trim().toLowerCase().split(' ').filter(Boolean))
+
+  const aliasedSearchCandidates = computed(() => {
+    const options = new Set([
+      searchParts.value.join(' '),
+    ])
+
+    searchParts.value.forEach((i, idx, arr) => {
+      const alias = searchAlias.find(a => a.includes(i))
+      if (alias?.length) {
+        alias.forEach((a) => {
+          options.add([...arr.slice(0, idx), a, arr.slice(idx + 1)].filter(Boolean).join(' ').trim())
+        })
+      }
+    })
+
+    return [...options]
+  })
+
+  // Matching any character used in extended match
+  // https://github.com/junegunn/fzf#search-syntax
+  const useExtendedMatch = computed(() => /[ '^$!]/.test(search.value))
 
   const iconSource = computed(() => {
     if (!collection.value)
@@ -36,9 +60,14 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
 
   const icons = ref<string[]>([])
 
-  function runSearch(useExtendedMatch: boolean) {
-    const finder = useExtendedMatch ? fzf : fzfFast
-    finder.value.find(search.value)
+  function runSearch() {
+    const finder = (useExtendedMatch.value || aliasedSearchCandidates.value.length > 1)
+      ? fzf
+      : fzfFast
+
+    const searchString = aliasedSearchCandidates.value.join(' | ')
+
+    finder.value.find(searchString)
       .then((result) => {
         icons.value = result.map(i => i.item)
       }).catch(() => {
@@ -54,16 +83,13 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
       return
     }
 
-    // Matching any character used in extended match
-    // https://github.com/junegunn/fzf#search-syntax
-    const useExtendedMatch = /[ '^$!]/.test(search.value)
-
-    if (isAll.value && !useExtendedMatch) {
-      icons.value = iconSource.value.filter(i => i.includes(search.value))
+    if (isAll.value && !useExtendedMatch.value) {
+      icons.value = iconSource.value
+        .filter(i => aliasedSearchCandidates.value.some(s => i.includes(s)))
       return
     }
 
-    debouncedSearch(useExtendedMatch)
+    debouncedSearch()
   })
 
   watch(

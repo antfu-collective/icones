@@ -7,6 +7,8 @@ import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
 
+export const specialTabs = ['all', 'recent']
+
 export type PresentType = 'favorite' | 'recent' | 'normal'
 
 export interface CollectionInfo {
@@ -90,7 +92,7 @@ export function preInstall() {
 }
 
 export async function tryInstallFromLocal(id: string) {
-  if (id === 'all')
+  if (specialTabs.includes(id))
     return false
 
   if (isLocalMode)
@@ -112,7 +114,7 @@ export async function tryInstallFromLocal(id: string) {
 
 // load full iconset
 export async function downloadAndInstall(id: string) {
-  if (id === 'all')
+  if (specialTabs.includes(id))
     return false
 
   if (installed.value.includes(id))

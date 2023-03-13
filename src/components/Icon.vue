@@ -1,6 +1,34 @@
-<script setup lang="ts">
-import { getIcon, unmountIcon } from '../store/icon-cache'
+<script lang="ts">
+import LRU from 'lru-cache'
 
+const cache = new LRU<string, HTMLElement>({
+  max: 1_000,
+})
+
+const mounted = new WeakSet<HTMLElement>()
+
+function getIcon(name: string) {
+  const el = cache.get(name)
+  if (el) {
+    if (!mounted.has(el)) {
+      mounted.add(el)
+      return el
+    }
+  }
+  const icon = document.createElement('iconify-icon')
+  icon.setAttribute('icon', name)
+  cache.set(name, icon)
+  mounted.add(icon)
+  return icon
+}
+
+function unmountIcon(name: string, icon: HTMLElement) {
+  mounted.delete(icon)
+  cache.set(name, icon)
+}
+</script>
+
+<script setup lang="ts">
 const props = defineProps({
   icon: {
     type: String,
@@ -17,21 +45,21 @@ const props = defineProps({
 })
 
 const el = ref<HTMLDivElement>()
-const node = ref<HTMLElement>()
+let node: HTMLElement | undefined
 
 watchEffect(() => {
-  if (node.value)
-    node.value.className = props.class
+  if (node)
+    node.className = props.class
 })
 
 onMounted(() => {
-  node.value = getIcon(props.icon)
-  el.value?.appendChild(node.value)
+  node = getIcon(props.icon)
+  el.value?.appendChild(node)
 })
 
 onBeforeUnmount(() => {
-  if (node.value)
-    unmountIcon(props.icon, node.value)
+  if (node)
+    unmountIcon(props.icon, node)
 })
 </script>
 
