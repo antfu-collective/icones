@@ -126,6 +126,40 @@ const installed = computed(() => {
 })
 
 const favorited = computed(() => isFavoritedCollection(props.collection.id))
+
+const options = computed(() => [
+  {
+    label: 'Size',
+    children: [
+      { label: 'Small', value: 'small' },
+      { label: 'Large', value: 'large' },
+      { label: 'List', value: 'list' },
+    ],
+  },
+  {
+    label: 'Modes',
+    children: [
+      { label: 'Multiple select', value: 'select' },
+      { label: 'Name copying mode', value: 'copy' },
+    ],
+  },
+  /*
+   TODO: due to this function requires to download and pack
+                  the full set, we should make some UI to aware users
+                  in browser version.
+  */
+  props.collection.id !== 'all'
+    ? {
+        label: 'Downloads',
+        children: [
+          (!isElectron && !installed) ? { label: 'Cache in Browser', value: 'cache' } : null,
+          { label: 'Iconfont', value: 'download_iconfont', disabled: inProgress.value },
+          { label: 'SVGs Zip', value: 'download_svgs', disabled: inProgress.value },
+          { label: 'JSON', value: 'download_json', disabled: inProgress.value },
+        ].filter(Boolean),
+      }
+    : null,
+].filter(Boolean))
 </script>
 
 <template>
@@ -149,51 +183,8 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
     />
 
     <!-- Menu -->
-    <div icon-button cursor-pointer relative i-carbon-menu title="Menu">
-      <select
-        v-model="menu"
-        absolute w-full dark:bg-dark-100 text-base top-0 right-0 opacity-0 z-10
-      >
-        <optgroup label="Size">
-          <option value="small">
-            Small
-          </option>
-          <option value="large">
-            Large
-          </option>
-          <option value="list">
-            List
-          </option>
-        </optgroup>
-        <optgroup label="Modes">
-          <option value="select">
-            Multiple select
-          </option>
-          <option value="copy">
-            Name copying mode
-          </option>
-        </optgroup>
-
-        <!--
-            TODO: due to this function requires to download and pack
-                  the full set, we should make some UI to aware users
-                  in browser version.
-          -->
-        <optgroup v-if="collection.id !== 'all'" label="Downloads">
-          <option v-if="!isElectron && !installed" value="cache">
-            Cache in Browser
-          </option>
-          <option value="download_iconfont" :disabled="inProgress">
-            Iconfont
-          </option>
-          <option value="download_svgs" :disabled="inProgress">
-            SVGs Zip
-          </option>
-          <option value="download_json" :disabled="inProgress">
-            JSON
-          </option>
-        </optgroup>
-      </select>
-    </div>
+    <CustomSelect v-model="menu" :options="options">
+      <div icon-button cursor-pointer relative i-carbon-menu title="Menu" />
+    </CustomSelect>
   </div>
 </template>
