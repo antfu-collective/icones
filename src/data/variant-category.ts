@@ -1,4 +1,4 @@
-export const variantCategories: Record<string, [string, string][]> = {
+export const variantCategories: Record<string, [string, string | RegExp][]> = {
   'ph': [
     ['Bold', '-bold'],
     ['Duetone', '-duotone'],
@@ -99,5 +99,12 @@ export const variantCategories: Record<string, [string, string][]> = {
     ['Regular 12', '-12-regular'],
     ['Filled 10', '-10-filled'],
     ['Regular 10', '-10-regular'],
+  ],
+  'ic': [
+    ['Outline', /^outline-/],
+    ['Round', /^round-/],
+    ['Sharp', /^sharp-/],
+    ['Twotone', /^twotone-/],
+    ['Baseline', /^baseline-/],
   ],
 }

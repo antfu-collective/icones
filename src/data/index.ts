@@ -168,7 +168,7 @@ function getVariantCategories(collection: CollectionMeta) {
   const variants: Record<string, string[]> = {}
 
   for (const icon of collection.icons) {
-    const name = variantsRule.find(i => icon.endsWith(i[1]))?.[0] || 'Regular'
+    const name = variantsRule.find(i => typeof i[1] === 'string' ? icon.endsWith(i[1]) : i[1].test(icon))?.[0] || 'Regular'
     if (!variants[name])
       variants[name] = []
     variants[name].push(icon)
