@@ -9,6 +9,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
   const category = ref('')
   const variant = ref('')
   const search = ref('')
+
   const isAll = computed(() => collection.value && specialTabs.includes(collection.value.id))
   const searchParts = computed(() => search.value.trim().toLowerCase().split(' ').filter(Boolean))
 
@@ -83,6 +84,10 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
   }
 
   const debouncedSearch = useDebounceFn(runSearch, 200)
+
+  watch([category, variant], () => {
+    runSearch()
+  })
 
   watchEffect(() => {
     if (!search.value) {
