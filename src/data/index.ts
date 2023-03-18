@@ -2,7 +2,7 @@ import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
 import { addCollection } from 'iconify-icon'
 import { AsyncFzf } from 'fzf'
-import { favoritedCollectionIds, inProgress, isFavoritedCollection, isRecentCollection, progressMessage, recentCollectionIds, sortAlphabetically } from '../store'
+import { favoritedCollectionIds, inProgress, isExcludedCollection, isFavoritedCollection, isRecentCollection, progressMessage, recentCollectionIds, sortAlphabetically } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
@@ -35,6 +35,7 @@ const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
+export const enabledCollections = computed(() => collections.filter(c => !isExcludedCollection(c)))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 
 export const isSearchOpen = ref(false)
@@ -46,11 +47,11 @@ const fzf = new AsyncFzf(collections, {
   selector: v => `${v.name} ${v.id} ${v.category} ${v.author}`,
 })
 
-export const filteredCollections = ref<CollectionInfo[]>(collections)
+export const filteredCollections = ref<CollectionInfo[]>(enabledCollections.value)
 
-watch(categorySearch, (q) => {
+watch([categorySearch, enabledCollections], ([q]) => {
   if (!q) {
-    filteredCollections.value = collections
+    filteredCollections.value = enabledCollections.value
   }
   else {
     fzf.find(q).then((result) => {

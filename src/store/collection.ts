@@ -10,7 +10,7 @@ import {
 } from '../data'
 import { useSearch } from '../hooks'
 import { isLocalMode } from '../env'
-import { recentIconIds } from './localstorage'
+import { isExcludedCollection, recentIconIds } from './localstorage'
 
 const currentCollectionId = ref('')
 const loaded = ref(false)
@@ -66,7 +66,11 @@ export async function setCurrentCollection(id: string) {
     collection.value = {
       id: 'all',
       name: 'All',
-      icons: meta.flatMap(c => c.icons.map(i => `${c.id}:${i}`)),
+      icons: meta.flatMap((c) => {
+        if (isExcludedCollection(c))
+          return []
+        return c.icons.map(i => `${c.id}:${i}`)
+      }),
     }
     loaded.value = true
   }

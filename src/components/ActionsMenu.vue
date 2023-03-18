@@ -132,6 +132,13 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
   <div flex="~ gap3" text-xl items-center>
     <DarkSwitcher />
 
+    <RouterLink
+      icon-button
+      i-carbon-settings
+      title="Settings"
+      to="/settings"
+    />
+
     <button
       v-if="collection.id !== 'all'"
       icon-button

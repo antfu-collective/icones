@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchElectron: typeof import('./components/electron/SearchElectron.vue')['default']
+    SettingsCollectionsList: typeof import('./components/SettingsCollectionsList.vue')['default']
     WithNavbar: typeof import('./components/WithNavbar.vue')['default']
   }
 }
