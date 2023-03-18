@@ -1,5 +1,5 @@
 export const searchAlias: string[][] = [
-  ['cog', 'gear', 'setting', 'adjust'],
+  ['cog', 'gear', 'setting', 'settings', 'adjust'],
   ['close', 'cross'],
   ['person', 'account', 'people', 'user'],
   ['plus', 'add'],
@@ -8,4 +8,11 @@ export const searchAlias: string[][] = [
   ['check', 'tick', 'done'],
   ['arrow', 'direction'],
   ['globe', 'global', 'earth', 'world'],
+  ['search', 'find', 'magnify', 'magnifier'],
+  ['file', 'document', 'paper'],
+  ['folder', 'directory'],
+  ['download', 'save'],
+  ['upload', 'import'],
+  ['accessibility', 'a11y'],
+  ['alert', 'warning', 'warn'],
 ]

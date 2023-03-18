@@ -5,9 +5,10 @@ import type { CollectionMeta } from '../data'
 import { specialTabs } from '../data'
 import { searchAlias } from '../data/search-alias'
 
-export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategory = '', defaultSearch = '') {
-  const category = ref(defaultCategory)
-  const search = ref(defaultSearch)
+export function useSearch(collection: Ref<CollectionMeta | null>) {
+  const category = ref('')
+  const variant = ref('')
+  const search = ref('')
   const isAll = computed(() => collection.value && specialTabs.includes(collection.value.id))
   const searchParts = computed(() => search.value.trim().toLowerCase().split(' ').filter(Boolean))
 
@@ -36,10 +37,16 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
     if (!collection.value)
       return []
 
-    if (category.value)
-      return (collection.value.categories && collection.value.categories[category.value]) || []
-    else
-      return collection.value.icons
+    return (category.value && variant.value)
+      ? arrayIntersection(
+        collection.value.categories?.[category.value] || [],
+        collection.value.variants?.[variant.value] || [],
+      )
+      : category.value
+        ? (collection.value.categories?.[category.value] || [])
+        : variant.value
+          ? (collection.value.variants?.[variant.value] || [])
+          : collection.value.icons
   })
 
   const fzf = computed(() => {
@@ -94,13 +101,17 @@ export function useSearch(collection: Ref<CollectionMeta | null>, defaultCategor
 
   watch(
     collection,
-    () => { category.value = defaultCategory },
+    () => {
+      category.value = ''
+      variant.value = ''
+    },
   )
 
   return {
     collection,
     search,
     category,
+    variant,
     icons,
   }
 }
@@ -113,4 +124,8 @@ export function getSearchHighlightHTML(text: string, search: string, baseClass =
 
   const end = start + search.length
   return `<span class="${baseClass}">${text.slice(0, start)}<b class="${activeClass}">${text.slice(start, end)}</b>${text.slice(end)}</span>`
+}
+
+export function arrayIntersection<T>(a: T[], b: T[]) {
+  return a.filter(i => b.includes(i))
 }

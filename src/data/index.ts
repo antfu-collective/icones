@@ -6,6 +6,7 @@ import { favoritedCollectionIds, inProgress, isFavoritedCollection, isRecentColl
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
+import { variantCategories } from './variant-category'
 
 export const specialTabs = ['all', 'recent']
 
@@ -27,6 +28,7 @@ export interface CollectionInfo {
 export interface CollectionMeta extends CollectionInfo {
   icons: string[]
   categories?: Record<string, string[]>
+  variants?: Record<string, string[]>
 }
 
 const loadedMeta = ref<CollectionMeta[]>([])
@@ -139,21 +141,40 @@ export async function cacheCollection(id: string) {
   inProgress.value = false
 }
 
-export async function getMeta(id: string): Promise<CollectionMeta | null> {
+export async function getCollectionMeta(id: string): Promise<CollectionMeta | null> {
   let meta = loadedMeta.value.find(i => i.id === id)
   if (meta)
     return meta
 
-  meta = Object.freeze(
-    await fetch(`${staticPath}/collections/${id}-meta.json`).then(r => r.json()),
-  )
+  meta = await fetch(`${staticPath}/collections/${id}-meta.json`).then(r => r.json())
 
   if (!meta)
     return null
 
+  meta.variants ||= getVariantCategories(meta)
+
+  meta = Object.freeze(meta)
+
   loadedMeta.value.push(meta)
 
   return meta
+}
+
+function getVariantCategories(collection: CollectionMeta) {
+  const variantsRule = variantCategories[collection.id]
+  if (!variantsRule)
+    return
+
+  const variants: Record<string, string[]> = {}
+
+  for (const icon of collection.icons) {
+    const name = variantsRule.find(i => icon.endsWith(i[1]))?.[0] || 'Regular'
+    if (!variants[name])
+      variants[name] = []
+    variants[name].push(icon)
+  }
+
+  return variants
 }
 
 export async function getFullMeta() {

@@ -14,7 +14,7 @@ const input = $ref<HTMLInputElement>()
 const route = useRoute()
 const router = useRouter()
 
-const { search, icons, category, collection } = getSearchResults()
+const { search, icons, category, collection, variant } = getSearchResults()
 const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
@@ -35,6 +35,13 @@ function toggleCategory(cat: string) {
     category.value = ''
   else
     category.value = cat
+}
+
+function toggleVariant(v: string) {
+  if (variant.value === v)
+    variant.value = ''
+  else
+    variant.value = v
 }
 
 async function copyText(text?: string) {
@@ -188,21 +195,19 @@ onKeyStroke('Escape', () => {
         </div>
 
         <!-- Categories -->
-        <div class="py-3 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
-          <template v-if="collection.categories">
-            <div
-              v-for="c of Object.keys(collection.categories)"
-              :key="c"
-              class="
+        <div v-if="collection.categories" class="py-1 mt2 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
+          <div
+            v-for="c of Object.keys(collection.categories)"
+            :key="c"
+            class="
                 whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
               "
-              :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
-              @click="toggleCategory(c)"
-            >
-              {{ c }}
-            </div>
-          </template>
+            :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
+            @click="toggleCategory(c)"
+          >
+            {{ c }}
+          </div>
         </div>
 
         <!-- Searching -->
@@ -227,6 +232,25 @@ onKeyStroke('Escape', () => {
           </form>
 
           <Icon v-if="search" icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="search = ''" />
+        </div>
+
+        <!-- Variants --->
+        <div v-if="collection.variants" class="py1 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none items-center">
+          <div text-sm op50>
+            Variants
+          </div>
+          <div
+            v-for="c of Object.keys(collection.variants)"
+            :key="c"
+            class="
+                whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
+                dark:border-dark-200 dark:hover:bg-dark-200
+              "
+            :class="c === variant ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
+            @click="toggleVariant(c)"
+          >
+            {{ c }}
+          </div>
         </div>
 
         <!-- Icons -->

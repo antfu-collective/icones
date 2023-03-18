@@ -2,8 +2,8 @@ import type { CollectionMeta } from '../data'
 import {
   collections,
   downloadAndInstall,
+  getCollectionMeta,
   getFullMeta,
-  getMeta,
   isInstalled,
   isMetaLoaded,
   tryInstallFromLocal,
@@ -15,7 +15,7 @@ import { recentIconIds } from './localstorage'
 const currentCollectionId = ref('')
 const loaded = ref(false)
 const installed = ref(false)
-const collection = ref<CollectionMeta | null>(null)
+const collection = shallowRef<CollectionMeta | null>(null)
 const searchResult = useSearch(collection)
 
 export function getSearchResults() {
@@ -75,7 +75,7 @@ export async function setCurrentCollection(id: string) {
     loaded.value = true
   }
   else {
-    collection.value = await getMeta(id)
+    collection.value = await getCollectionMeta(id)
     loaded.value = true
   }
 
