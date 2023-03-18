@@ -197,7 +197,7 @@ onKeyStroke('Escape', () => {
         <!-- Categories -->
         <div v-if="collection.categories" class="py-1 mt2 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
           <div
-            v-for="c of Object.keys(collection.categories)"
+            v-for="c of Object.keys(collection.categories).sort()"
             :key="c"
             class="
                 whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
@@ -240,7 +240,7 @@ onKeyStroke('Escape', () => {
             Variants
           </div>
           <div
-            v-for="c of Object.keys(collection.variants)"
+            v-for="c of Object.keys(collection.variants).sort()"
             :key="c"
             class="
                 whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
