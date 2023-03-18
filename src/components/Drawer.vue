@@ -37,7 +37,6 @@ const collections = computed(() => {
         <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
         <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
           <input
-            ref="input"
             v-model="categorySearch"
             aria-label="Search"
             class="text-xs outline-none w-full py-1 px-4 m-0 bg-transparent font-normal"
