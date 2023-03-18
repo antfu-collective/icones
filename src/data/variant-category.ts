@@ -20,6 +20,7 @@ export const variantCategories: Record<string, [string, string][]> = {
   ],
   'tabler': [
     ['Filled', '-filled'],
+    ['Lines', '-lines'],
   ],
   'mingcute': [
     ['Filled', '-filled'],
@@ -46,5 +47,17 @@ export const variantCategories: Record<string, [string, string][]> = {
   'heroicons': [
     ['20 Solid', '-20-solid'],
     ['Solid', '-solid'],
+  ],
+  'ri': [
+    ['Fill', '-fill'],
+    ['Line', '-line'],
+  ],
+  'material-symbols': [
+    ['Outline', '-outline'],
+    ['Rounded', '-rounded'],
+    ['Sharp', '-sharp'],
+  ],
+  'mdi': [
+    ['Outline', '-outline'],
   ],
 }
