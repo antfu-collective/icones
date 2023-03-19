@@ -133,10 +133,14 @@ onKeyStroke('Escape', () => {
 })
 
 const categoriesContainer = ref<HTMLElement | null>(null)
-const { x } = useScroll(categoriesContainer, { behavior: 'smooth' })
+const { x } = useScroll(categoriesContainer)
 useEventListener(categoriesContainer, 'wheel', (e) => {
   e.preventDefault()
-  x.value += e.deltaY
+  if (e.deltaX) {
+    x.value += e.deltaX
+  } else {
+    x.value += e.deltaY
+  }
 }, {
   pasive: false,
 })
