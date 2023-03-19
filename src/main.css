@@ -4,21 +4,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.bg {
-  background: white;
-}
-
-html.dark,
-html.dark .bg {
-  background: #222;
+html.dark {
+  background: #181818;
 }
 
 .btn {
   @apply 
     border border-base rounded shadow-sm outline-none
-    bg-white px-4 py-1 text-gray-600 text-sm transition-all
+    px-4 py-1 text-gray-600 text-sm transition-all bg-base
     hover:(bg-gray-50 shadow)
-    dark:(border-dark-200 text-gray-300 bg-dark-100)
+    dark:(border-dark-200 text-gray-300)
     dark:hover:(border-primary bg-dark-100 text-primary)
     focus:(shadow outline-none);
 }

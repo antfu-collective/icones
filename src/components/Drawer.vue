@@ -33,7 +33,7 @@ const collections = computed(() => {
       </div>
 
       <!-- Searching -->
-      <div class="hidden py-2 md:flex border-b rounded outline-none py-1 px-4 dark:border-dark-200">
+      <div class="flex outline-none py-1 px-4" border="b base">
         <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
         <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
           <input
