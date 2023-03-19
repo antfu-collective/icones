@@ -134,7 +134,7 @@ onKeyStroke('Escape', () => {
 
 const categoriesContainer = ref<HTMLElement | null>(null)
 const { x } = useScroll(categoriesContainer)
-useEventListener(categoriesContainer, 'wheel', (e) => {
+useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
   e.preventDefault()
   if (e.deltaX)
     x.value += e.deltaX
