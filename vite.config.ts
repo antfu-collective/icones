@@ -1,5 +1,5 @@
-import { join, resolve } from 'path'
-import { rmSync } from 'fs'
+import { join, resolve } from 'node:path'
+import { rmSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'

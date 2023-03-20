@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import fs from 'fs-extra'
 
 const out = path.resolve(__dirname, '../public')

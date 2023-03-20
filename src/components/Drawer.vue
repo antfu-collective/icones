@@ -20,46 +20,47 @@ const collections = computed(() => {
     <NavPlaceholder class="mb-4" />
     <div
       v-if="!isElectron"
-      sticky top-0 bg-base z-1 border="b base"
+      sticky top-0 bg-base z-1
     >
-      <button
-        v-show="$route.path !== '/'"
-        icon-button text-xl px-4 py-4
-        @click="$router.replace('/')"
-      >
-        <div i-carbon:arrow-left />
-      </button>
-    </div>
-
-    <!-- Searching -->
-    <div class="hidden py-2 md:flex border-b rounded outline-none py-1 px-4 dark:border-dark-200">
-      <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
-      <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
-        <input
-          ref="input"
-          v-model="categorySearch"
-          aria-label="Search"
-          class="text-xs outline-none w-full py-1 px-4 m-0 bg-transparent font-normal"
-          name="s"
-          placeholder="Search category..."
-          autofocus
-          autocomplete="off"
+      <div border="b base">
+        <button
+          v-show="$route.path !== '/'"
+          icon-button text-xl px-4 py-3
+          @click="$router.replace('/')"
         >
-      </form>
+          <div i-carbon:arrow-left />
+        </button>
+      </div>
 
-      <button
-        class="flex items-center transition"
-        :class="{
-          'text-gray-500 hover:text-gray-600': sortAlphabetically,
-          'text-gray-300 hover:text-gray-400': !sortAlphabetically,
-        }"
-        @click="sortAlphabetically = !sortAlphabetically"
-      >
-        <Icon
-          icon="mdi:sort-alphabetical-ascending"
-          class="m-auto text-lg -mr-1 "
-        />
-      </button>
+      <!-- Searching -->
+      <div class="flex outline-none py-1 px-4" border="b base">
+        <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
+        <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
+          <input
+            v-model="categorySearch"
+            aria-label="Search"
+            class="text-xs outline-none w-full py-1 px-4 m-0 bg-transparent font-normal"
+            name="s"
+            placeholder="Search category..."
+            autofocus
+            autocomplete="off"
+          >
+        </form>
+
+        <button
+          class="flex items-center transition"
+          :class="{
+            'text-gray-500 hover:text-gray-600': sortAlphabetically,
+            'text-gray-300 hover:text-gray-400': !sortAlphabetically,
+          }"
+          @click="sortAlphabetically = !sortAlphabetically"
+        >
+          <Icon
+            icon="mdi:sort-alphabetical-ascending"
+            class="m-auto text-lg -mr-1 "
+          />
+        </button>
+      </div>
     </div>
 
     <!-- Collections -->

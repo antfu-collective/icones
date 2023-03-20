@@ -2,20 +2,20 @@ import type { CollectionMeta } from '../data'
 import {
   collections,
   downloadAndInstall,
+  getCollectionMeta,
   getFullMeta,
-  getMeta,
   isInstalled,
   isMetaLoaded,
   tryInstallFromLocal,
 } from '../data'
 import { useSearch } from '../hooks'
 import { isLocalMode } from '../env'
-import { recentIconIds } from './localstorage'
+import { isExcludedCollection, recentIconIds } from './localstorage'
 
 const currentCollectionId = ref('')
 const loaded = ref(false)
 const installed = ref(false)
-const collection = ref<CollectionMeta | null>(null)
+const collection = shallowRef<CollectionMeta | null>(null)
 const searchResult = useSearch(collection)
 
 export function getSearchResults() {
@@ -66,7 +66,11 @@ export async function setCurrentCollection(id: string) {
     collection.value = {
       id: 'all',
       name: 'All',
-      icons: meta.flatMap(c => c.icons.map(i => `${c.id}:${i}`)),
+      icons: meta.flatMap((c) => {
+        if (isExcludedCollection(c))
+          return []
+        return c.icons.map(i => `${c.id}:${i}`)
+      }),
     }
     loaded.value = true
   }
@@ -75,7 +79,7 @@ export async function setCurrentCollection(id: string) {
     loaded.value = true
   }
   else {
-    collection.value = await getMeta(id)
+    collection.value = await getCollectionMeta(id)
     loaded.value = true
   }
 

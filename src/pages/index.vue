@@ -29,8 +29,10 @@ onMounted(() => input.value?.focus())
 const isMacOS = navigator.platform.toUpperCase().includes('MAC')
 
 function onKeydown(e: KeyboardEvent) {
-  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey))
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
     router.replace(`/collection/all?s=${categorySearch.value}`)
+    categorySearch.value = ''
+  }
 }
 </script>
 

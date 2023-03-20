@@ -1,3 +1,4 @@
+import type { CollectionInfo } from '../data'
 import type { IdCase } from '../utils/case'
 import { idCases } from '../utils/case'
 
@@ -19,12 +20,25 @@ export const activeMode = useStorage<ActiveMode>('active-mode', 'normal')
 export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
 export const sortAlphabetically = useStorage('icones-alpha-sort-collections', false)
 
+export const excludedCollectionIds = useStorage<string[]>('icones-excluded-collections', [])
+export const excludedCategories = useStorage<string[]>('icones-excluded-categories', [
+  'Archive / Unmaintained',
+])
+
 export function getTransformedId(icon: string) {
   return idCases[preferredCase.value]?.(icon) || icon
 }
 
 export function isFavoritedCollection(id: string) {
   return favoritedCollectionIds.value.includes(id)
+}
+
+export function isExcludedCollection(collection: CollectionInfo) {
+  return excludedCollectionIds.value.includes(collection.id) || excludedCategories.value.includes(collection.category || '')
+}
+
+export function isExcludedCategory(category: string | undefined) {
+  return category && excludedCategories.value.includes(category)
 }
 
 export function isRecentCollection(id: string) {
@@ -57,6 +71,22 @@ export function toggleFavoriteCollection(id: string) {
     favoritedCollectionIds.value.splice(index, 1)
   else
     favoritedCollectionIds.value.push(id)
+}
+
+export function toggleExcludedCollection(id: string) {
+  const index = excludedCollectionIds.value.indexOf(id)
+  if (index >= 0)
+    excludedCollectionIds.value.splice(index, 1)
+  else
+    excludedCollectionIds.value.push(id)
+}
+
+export function toggleExcludedCategory(category: string) {
+  const index = excludedCategories.value.indexOf(category)
+  if (index >= 0)
+    excludedCategories.value.splice(index, 1)
+  else
+    excludedCategories.value.push(category)
 }
 
 export function addToBag(id: string) {

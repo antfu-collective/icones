@@ -67,9 +67,8 @@ defineEmits<{
       />
       <span
         v-else
-        class="
-          tooltip-text bg shadow leading-none whitespace-no-wrap
-          border border-transparent dark:border-dark-200"
+        border="~ dark-only"
+        class="tooltip-text bg-base shadow leading-none whitespace-nowrap z-100"
       >
         <span class="opacity-75">
           {{ icon }}
