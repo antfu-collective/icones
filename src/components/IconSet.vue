@@ -131,6 +131,18 @@ onKeyStroke('Escape', () => {
     input?.focus()
   }
 })
+
+const categoriesContainer = ref<HTMLElement | null>(null)
+const { x } = useScroll(categoriesContainer)
+useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
+  e.preventDefault()
+  if (e.deltaX)
+    x.value += e.deltaX
+  else
+    x.value += e.deltaY
+}, {
+  passive: false,
+})
 </script>
 
 <template>
@@ -195,7 +207,7 @@ onKeyStroke('Escape', () => {
         </div>
 
         <!-- Categories -->
-        <div v-if="collection.categories" class="py-1 mt2 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
+        <div v-if="collection.categories" ref="categoriesContainer" class="py-1 mt2 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
           <div
             v-for="c of Object.keys(collection.categories).sort()"
             :key="c"
