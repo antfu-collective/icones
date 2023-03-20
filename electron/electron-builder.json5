@@ -1,0 +1,41 @@
+/**
+ * @see https://www.electron.build/configuration/configuration
+ */
+{
+  "productName": "Icônes",
+  "appId": "me.antfu.icones",
+  "directories": {
+    "output": "release"
+  },
+  "icon": "build/icon.png",
+  "mac": {
+    "target": "dmg"
+  },
+  "extraResources": [
+    {
+      "from": "build/icon.png",
+      "to": "icon.png"
+    }
+  ],
+  "publish": {
+    "provider": "github",
+    "owner": "antfu",
+    "repo": "icones",
+    "private": false
+  },
+  "files": ["dist-electron", "dist"],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ]
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "deleteAppDataOnUninstall": false
+  }
+}

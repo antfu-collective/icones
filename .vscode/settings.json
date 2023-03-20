@@ -3,5 +3,10 @@
   "cSpell.words": [
     "icones"
   ],
-  "i18n-ally.enabledFramework": []
+  "i18n-ally.enabledFramework": [],
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

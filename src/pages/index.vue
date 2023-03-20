@@ -38,12 +38,6 @@ function onKeydown(e: KeyboardEvent) {
 
 <template>
   <WithNavbar>
-    <NavPlaceholder class="sm:border-b border-base text-center m-auto flex font-light h-37px">
-      <div class="m-auto">
-        Icônes
-      </div>
-    </NavPlaceholder>
-
     <!-- Searching -->
     <div mb--3 md:mx-6 md:mt-6>
       <div class="border-b py-3  flex md:shadow md:rounded outline-none md:py-1 px-4 border-x border-b md:border-t border-base">

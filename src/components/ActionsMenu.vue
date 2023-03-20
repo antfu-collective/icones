@@ -126,6 +126,40 @@ const installed = computed(() => {
 })
 
 const favorited = computed(() => isFavoritedCollection(props.collection.id))
+
+// const options = computed(() => [
+//   {
+//     label: 'Size',
+//     children: [
+//       { label: 'Small', value: 'small' },
+//       { label: 'Large', value: 'large' },
+//       { label: 'List', value: 'list' },
+//     ],
+//   },
+//   {
+//     label: 'Modes',
+//     children: [
+//       { label: 'Multiple select', value: 'select' },
+//       { label: 'Name copying mode', value: 'copy' },
+//     ],
+//   },
+//   /*
+//    TODO: due to this function requires to download and pack
+//                   the full set, we should make some UI to aware users
+//                   in browser version.
+//   */
+//   props.collection.id !== 'all'
+//     ? {
+//         label: 'Downloads',
+//         children: [
+//           (!isElectron && !installed) ? { label: 'Cache in Browser', value: 'cache' } : null,
+//           { label: 'Iconfont', value: 'download_iconfont', disabled: inProgress.value },
+//           { label: 'SVGs Zip', value: 'download_svgs', disabled: inProgress.value },
+//           { label: 'JSON', value: 'download_json', disabled: inProgress.value },
+//         ].filter(Boolean),
+//       }
+//     : null,
+// ].filter(Boolean))
 </script>
 
 <template>
@@ -202,5 +236,9 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
         </optgroup>
       </select>
     </div>
+    <!-- TODO: improve design of custom select -->
+    <!-- <CustomSelect v-model="menu" :options="options">
+      <div icon-button cursor-pointer relative i-carbon-menu title="Menu" />
+    </CustomSelect> -->
   </div>
 </template>

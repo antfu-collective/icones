@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     CollectionEntries: typeof import('./components/CollectionEntries.vue')['default']
     CollectionEntry: typeof import('./components/CollectionEntry.vue')['default']
     ColorPicker: typeof import('./components/ColorPicker.vue')['default']
+    CustomSelect: typeof import('./components/CustomSelect.vue')['default']
     DarkSwitcher: typeof import('./components/DarkSwitcher.vue')['default']
     Drawer: typeof import('./components/Drawer.vue')['default']
     FAB: typeof import('./components/FAB.vue')['default']

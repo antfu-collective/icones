@@ -1,13 +1,12 @@
+import path from 'path'
 import { BrowserWindow, app, shell } from 'electron'
-import serve from 'electron-serve'
-import debug from 'electron-debug'
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 
-const DEV = process.env.NODE_ENV !== 'production'
+let mainWindow: BrowserWindow | null = null
 
-debug({ showDevTools: false })
-serve({ directory: DEV ? '../../../dist' : 'app' })
+app.disableHardwareAcceleration()
 
-let mainWindow
+const PROJECT_ROOT = path.resolve(__dirname, '../..')
 
 const createMainWindow = async () => {
   const win = new BrowserWindow({
@@ -18,19 +17,31 @@ const createMainWindow = async () => {
     minWidth: 200,
     minHeight: 200,
     titleBarStyle: 'hiddenInset',
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   })
+
+  if (app.isPackaged) {
+    win.loadFile(path.join(PROJECT_ROOT, 'dist/index.html'))
+    win.removeMenu()
+  }
+  else {
+    win.loadURL('http://localhost:3333/')
+    win.webContents.openDevTools()
+    await installExtension(VUEJS_DEVTOOLS)
+  }
 
   win.on('ready-to-show', () => {
     win.show()
   })
 
   win.on('closed', () => {
-    mainWindow = undefined
+    mainWindow = null
   })
 
-  win.removeMenu()
-
-  const handleRedirect = (e, url) => {
+  const handleRedirect = (e: Event, url: string) => {
     if (url !== win.webContents.getURL()) {
       e.preventDefault()
       shell.openExternal(url)
@@ -38,7 +49,11 @@ const createMainWindow = async () => {
   }
 
   win.webContents.on('will-navigate', handleRedirect)
-  win.webContents.on('new-window', handleRedirect)
+
+  win.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url)
+    return { action: 'deny' }
+  })
 
   return win
 }
@@ -55,11 +70,10 @@ app.on('activate', async () => {
     mainWindow = await createMainWindow()
 })
 
-;(async () => {
+; (async () => {
   await app.whenReady()
 
   mainWindow = await createMainWindow()
-  mainWindow.loadURL(DEV ? 'http://localhost:3333/' : 'app://-')
   mainWindow.focus()
 })()
   .catch(console.error)
