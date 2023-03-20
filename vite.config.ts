@@ -13,34 +13,30 @@ import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
 import esmodule from 'vite-plugin-esmodule'
 
-rmSync('dist-electron', { recursive: true, force: true })
-const isBuild = process.argv.slice(2).includes('build')
-
 export default defineConfig(({ mode }) => {
   const isElectron = mode === 'electron'
+  const isBuild = process.argv.slice(2).includes('build')
+
+  if (isElectron)
+    rmSync('dist-electron', { recursive: true, force: true })
 
   return {
     plugins: [
-      ...isElectron
-        ? [
-            electron([
-              {
-                entry: 'src/main/index.ts',
-                vite: {
-                  build: {
-                    minify: isBuild,
-                    outDir: 'dist-electron/main',
-                  },
-                },
-              },
-            ]),
-            renderer({
-              nodeIntegration: true,
-            }),
-
-          ]
-        : [],
-      esmodule(['prettier']),
+      isElectron && electron([
+        {
+          entry: 'src/main/index.ts',
+          vite: {
+            build: {
+              minify: isBuild,
+              outDir: 'dist-electron/main',
+            },
+          },
+        },
+      ]),
+      isElectron && renderer({
+        nodeIntegration: true,
+      }),
+      isElectron && esmodule(['prettier']),
       Vue({
         reactivityTransform: true,
         customElement: [
@@ -67,27 +63,25 @@ export default defineConfig(({ mode }) => {
         ],
         dts: 'src/auto-imports.d.ts',
       }),
-      isElectron
-        ? null
-        : VitePWA({
-          manifest: {
-            name: 'Icônes',
-            short_name: 'Icônes',
-            icons: [
-              {
-                src: '/android-chrome-192x192.png',
-                sizes: '192x192',
-                type: 'image/png',
-              },
-              {
-                src: '/android-chrome-512x512.png',
-                sizes: '512x512',
-                type: 'image/png',
-              },
-            ],
-          },
-          includeAssets: fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true }),
-        }),
+      !isElectron && VitePWA({
+        manifest: {
+          name: 'Icônes',
+          short_name: 'Icônes',
+          icons: [
+            {
+              src: '/android-chrome-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+            },
+            {
+              src: '/android-chrome-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+            },
+          ],
+        },
+        includeAssets: fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true }),
+      }),
       UnoCSS(),
     ],
     define: {
