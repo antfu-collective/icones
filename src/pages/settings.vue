@@ -12,7 +12,7 @@ const categorizedCollections = computed(() => categories.map(category => ({
 
 <template>
   <WithNavbar>
-    <div p4>
+    <div p4 h-screen grid pb-20>
       <!-- <h1 text-xl>
         Features
       </h1>
