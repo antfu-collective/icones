@@ -80,7 +80,12 @@ export default defineConfig(({ mode }) => {
             },
           ],
         },
-        includeAssets: fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true }),
+        integration: {
+          configureOptions(viteConfig, options) {
+            if (viteConfig.command === 'build')
+              options.includeAssets = fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true })
+          },
+        },
       }),
       UnoCSS(),
     ],
