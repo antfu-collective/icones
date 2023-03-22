@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import { BrowserWindow, app, shell } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 

@@ -12,23 +12,25 @@ const categorizedCollections = computed(() => categories.map(category => ({
 
 <template>
   <WithNavbar>
-    <div p4>
+    <div py4>
       <!-- <h1 text-xl>
         Features
       </h1>
 
       <input id="toggle-dark-mode" v-model="darkMode" type="checkbox"> -->
 
-      <h1 text-xl>
-        Collections
-      </h1>
-      <p op50 mb5>
-        Manage collections to be listed in the home page and search results.
-      </p>
+      <div px4>
+        <h1 text-xl>
+          Collections
+        </h1>
+        <p op50 mb5>
+          Manage collections to be listed in the home page and search results.
+        </p>
+      </div>
 
-      <div flex="~ gap-4" w-full of-auto>
-        <div v-for="c of categorizedCollections" :key="c.name">
-          <div flex py1 px2>
+      <div w-full px4 pb4 class="masonry">
+        <div v-for="c of categorizedCollections" :key="c.name" mb-10>
+          <div flex py1 px2 break-inside-avoid>
             <h1 font-bold op75 flex-auto>
               {{ c.name }}
             </h1>
@@ -40,9 +42,37 @@ const categorizedCollections = computed(() => categories.map(category => ({
             />
           </div>
 
-          <SettingsCollectionsList :collections="c.collections" w-70 />
+          <SettingsCollectionsList :collections="c.collections" />
         </div>
       </div>
     </div>
   </WithNavbar>
 </template>
+
+<style>
+.masonry {
+  list-style: none;
+  column-gap: 1em;
+  column-count: 1;
+}
+@screen sm {
+  .masonry {
+    column-count: 2;
+  }
+}
+@screen md {
+  .masonry {
+    column-count: 3;
+  }
+}
+@screen lg {
+  .masonry {
+    column-count: 4;
+  }
+}
+@screen xl {
+  .masonry {
+    column-count: 5;
+  }
+}
+</style>
