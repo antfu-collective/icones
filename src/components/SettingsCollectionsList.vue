@@ -13,7 +13,7 @@ defineProps<{
   <div>
     <div
       v-for="c, idx of collections" :key="c.id" flex="~ gap-2" py1 px2 items-center
-      border="b l r base"
+      border="~ base" mt--1px break-inside-avoid
       :class="idx === 0 ? 'border-t' : ''"
     >
       <RouterLink
