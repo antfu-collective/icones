@@ -25,7 +25,7 @@ const categorized = computed(() => [
 const router = useRouter()
 onKeyStroke('/', (e) => {
   e.preventDefault()
-  router.replace('/collection/all'))
+  router.replace('/collection/all')
 })
 onMounted(() => input.value?.focus())
 
