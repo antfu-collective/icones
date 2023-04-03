@@ -23,7 +23,10 @@ const categorized = computed(() => [
 ])
 
 const router = useRouter()
-onKeyStroke('/', () => router.replace('/collection/all'))
+onKeyStroke('/', (e) => {
+  e.preventDefault()
+  router.replace('/collection/all')
+})
 onMounted(() => input.value?.focus())
 
 const isMacOS = navigator.platform.toUpperCase().includes('MAC')
