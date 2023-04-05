@@ -21,7 +21,7 @@ const menu = ref(
       : 'small',
 )
 
-const packIconFont = async () => {
+async function packIconFont() {
   if (!props.collection)
     return
 
@@ -38,7 +38,7 @@ const packIconFont = async () => {
   inProgress.value = false
 }
 
-const packSvgs = async () => {
+async function packSvgs() {
   if (!props.collection)
     return
 
@@ -55,7 +55,7 @@ const packSvgs = async () => {
   inProgress.value = false
 }
 
-const packJson = async () => {
+async function packJson() {
   if (!props.collection)
     return
 
@@ -72,7 +72,7 @@ const packJson = async () => {
   inProgress.value = false
 }
 
-const cache = async () => {
+async function cache() {
   if (!props.collection)
     return
 

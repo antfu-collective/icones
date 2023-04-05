@@ -33,9 +33,7 @@ export default defineConfig(({ mode }) => {
           },
         },
       ]),
-      isElectron && renderer({
-        nodeIntegration: true,
-      }),
+      isElectron && renderer(),
       isElectron && esmodule(['prettier']),
       Vue({
         reactivityTransform: true,

@@ -10,7 +10,7 @@ const emit = defineEmits<{
 
 const showPackOption = ref(false)
 
-const clear = () => {
+function clear() {
   // eslint-disable-next-line no-alert
   if (confirm('Are you sure to remove all icons from the bag?')) {
     clearBag()
@@ -18,14 +18,14 @@ const clear = () => {
   }
 }
 
-const packIconFont = async () => {
+async function packIconFont() {
   // TODO: customzie
   await PackIconFont(
     bags.value,
   )
 }
 
-const PackSvgs = async (type: PackType = 'svg') => {
+async function PackSvgs(type: PackType = 'svg') {
   await PackZip(
     bags.value.map(i => i.replace(':', '-')),
     'icones-bags',

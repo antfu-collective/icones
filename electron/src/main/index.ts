@@ -8,7 +8,7 @@ app.disableHardwareAcceleration()
 
 const PROJECT_ROOT = path.resolve(__dirname, '../..')
 
-const createMainWindow = async () => {
+async function createMainWindow() {
   const win = new BrowserWindow({
     title: app.name,
     show: false,

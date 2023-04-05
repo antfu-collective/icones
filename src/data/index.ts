@@ -83,8 +83,12 @@ export const recentCollections = computed(() =>
     .sort((a, b) => recentCollectionIds.value.indexOf(b.id) - recentCollectionIds.value.indexOf(a.id)),
 )
 
-export const isInstalled = (id: string) => installed.value.includes(id)
-export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id === id)
+export function isInstalled(id: string) {
+  return installed.value.includes(id)
+}
+export function isMetaLoaded(id: string) {
+  return !!loadedMeta.value.find(i => i.id === id)
+}
 
 // install the preview icons on the homepage
 export function preInstall() {

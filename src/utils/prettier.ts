@@ -1,7 +1,7 @@
 import type { BuiltInParserName } from 'prettier'
 import { isElectron } from '../env'
 
-export const prettierCode = async (code: string, parser: BuiltInParserName) => {
+export async function prettierCode(code: string, parser: BuiltInParserName) {
   if (!isElectron)
     return code
   try {

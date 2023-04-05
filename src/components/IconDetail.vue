@@ -52,7 +52,7 @@ async function copyText(text?: string) {
   return false
 }
 
-const copy = async (type: string) => {
+async function copy(type: string) {
   pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, true, color.value)
   if (!text)
@@ -61,7 +61,7 @@ const copy = async (type: string) => {
   emit('copy', await copyText(text))
 }
 
-const download = async (type: string) => {
+async function download(type: string) {
   pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
@@ -73,7 +73,7 @@ const download = async (type: string) => {
   Download(blob, name)
 }
 
-const toggleSelectingMode = () => {
+function toggleSelectingMode() {
   switch (activeMode.value) {
     case 'select':
       activeMode.value = 'normal'
