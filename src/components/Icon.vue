@@ -1,7 +1,7 @@
 <script lang="ts">
-import LRU from 'lru-cache'
+import { LRUCache } from 'lru-cache'
 
-const cache = new LRU<string, HTMLElement>({
+const cache = new LRUCache<string, HTMLElement>({
   max: 1_000,
 })
 
