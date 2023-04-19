@@ -67,11 +67,11 @@ export function ${name}(props) {
     return prettierCode(`import React from 'react'\n${code}\nexport default ${name}`, 'babel-ts')
 }
 
-export function SvgToTSX(svg: string, name: string, snippet: boolean) {
+export function SvgToTSX(svg: string, name: string, snippet: boolean, reactJSX = true) {
   let code = `
 export function ${name}(props: SVGProps<SVGSVGElement>) {
   return (
-    ${ClearSvg(svg, true).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
+    ${ClearSvg(svg, reactJSX).replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
   )
 }`
 
@@ -127,6 +127,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToJSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'tsx':
       return SvgToTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
+    case 'qwik':
+      return SvgToTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet, false)
     case 'vue':
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
     case 'vue-ts':
