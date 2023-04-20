@@ -91,7 +91,6 @@ export function ${name}(props: QwikIntrinsicElements['svg'], key: string) {
   return prettierCode(code, 'babel-ts')
 }
 
-
 export function SvgToVue(svg: string, name: string, isTs?: boolean) {
   const contet = `
 <template>
