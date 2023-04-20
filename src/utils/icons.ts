@@ -79,7 +79,7 @@ export function ${name}(props: SVGProps<SVGSVGElement>) {
   return prettierCode(code, 'babel-ts')
 }
 
-export function SvgToQwikTSX(svg: string, name: string, snippet: boolean) {
+export function SvgToQwik(svg: string, name: string, snippet: boolean) {
   let code = `
 export function ${name}(props: QwikIntrinsicElements['svg'], key: string) {
   return (
@@ -141,7 +141,7 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
     case 'tsx':
       return SvgToTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'qwik':
-      return SvgToQwikTSX(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
+      return SvgToQwik(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'vue':
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
     case 'vue-ts':
