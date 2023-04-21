@@ -62,6 +62,10 @@ export default defineConfig(({ mode }) => {
         dts: 'src/auto-imports.d.ts',
       }),
       !isElectron && VitePWA({
+        strategies: 'injectManifest',
+        srcDir: 'src',
+        filename: 'sw.ts',
+        registerType: 'autoUpdate',
         manifest: {
           name: 'Icônes',
           short_name: 'Icônes',
@@ -84,11 +88,18 @@ export default defineConfig(({ mode }) => {
               options.includeAssets = fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true })
           },
         },
+        devOptions: {
+          enabled: process.env.SW_DEV === 'true',
+          /* when using generateSW the PWA plugin will switch to classic */
+          type: 'module',
+          navigateFallback: 'index.html',
+        },
       }),
       UnoCSS(),
     ],
     define: {
       __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),
+      PWA: !isElectron && (process.env.NODE_ENV === 'production' || process.env.SW_DEV === 'true'),
     },
     resolve: {
       alias: {

@@ -19,6 +19,7 @@
     "postbuild": "esno scripts/postbuild.ts",
     "lint": "eslint .",
     "dev": "vite --port 3333 --open",
+    "dev-pwa": "SW_DEV=true vite --port 3333",
     "typecheck": "vue-tsc --noEmit",
     "dev:electron": "npm -C ./electron run dev",
     "build": "NODE_ENV=production vite build",
