@@ -21,16 +21,16 @@ clientsClaim()
 
 self.addEventListener('fetch', (e) => {
   const url = e.request.url
-  const match = url.match(/^https:\/\/(api\.iconify\.design|api\.simplesvg\.com|api\.unisvg\.com)\/(.*)\.json\?icons=(.*)?/)
+  const match = url.match(/^https:\/\/(api.iconify.design|api.simplesvg.com|api.unisvg.com)\/(.*)\.json\?icons=(.*)?/)
   if (match) {
     e.respondWith(
-      fetch(`/collections/${match[1]}-raw.json`)
+      fetch(`/collections/${match[2]}-raw.json`)
         .then((response) => {
           return response.json()
         }).then((collection) => {
           return new Response(JSON.stringify(getIcons(
             collection,
-            match[2].replaceAll('%2C', ',').split(','),
+            match[3].replaceAll('%2C', ',').split(','),
           )), {
             headers: {
               'Content-Type': 'application/json',
