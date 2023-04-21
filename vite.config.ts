@@ -99,6 +99,7 @@ export default defineConfig(({ mode }) => {
     ],
     define: {
       __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),
+      PWA: !isElectron && (process.env.NODE_ENV === 'production' || process.env.SW_DEV === 'true'),
     },
     resolve: {
       alias: {

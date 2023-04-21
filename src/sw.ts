@@ -21,7 +21,7 @@ clientsClaim()
 
 self.addEventListener('fetch', (e) => {
   const url = e.request.url
-  const match = url.match(/^https:\/\/api.iconify.design\/(.*)\.json\?icons=(.*)?/)
+  const match = url.match(/^https:\/\/(api\.iconify\.design|api\.simplesvg\.com|api\.unisvg\.com)\/(.*)\.json\?icons=(.*)?/)
   if (match) {
     e.respondWith(
       fetch(`/collections/${match[1]}-raw.json`)
