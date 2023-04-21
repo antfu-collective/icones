@@ -13,7 +13,8 @@
     "forceConsistentCasingInFileNames": true,
     "types": [
       "vite/client",
-      "vite-plugin-pages/client"
+      "vite-plugin-pages/client",
+      "vite-plugin-pwa/client"
     ]
   },
   "exclude": [

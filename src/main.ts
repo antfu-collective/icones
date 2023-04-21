@@ -10,17 +10,22 @@ import 'uno.css'
 import { basePath, isElectron } from './env'
 import routes from '~pages'
 
-// disable local storage cache when there is PWA:
-// we need to keep local storage when running dev server without PWA
-if (!isElectron && PWA)
-  disableCache('all')
-
 const app = createApp(App)
 
 const router = createRouter({
   history: isElectron ? createWebHashHistory(basePath) : createWebHistory(basePath),
   routes,
 })
+
+if (!isElectron && PWA) {
+  // disable local storage cache when there is PWA:
+  // we need to keep local storage when running dev server without PWA
+  disableCache('all')
+  router.isReady().then(async () => {
+    const { registerSW } = await import('virtual:pwa-register')
+    registerSW({ immediate: true })
+  })
+}
 
 app.use(router)
 app.mount('#app')
