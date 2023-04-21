@@ -21,8 +21,8 @@
     "dev": "vite --port 3333 --open",
     "typecheck": "vue-tsc --noEmit",
     "dev:electron": "npm -C ./electron run dev",
-    "build": "cross-env NODE_ENV=production vite build",
-    "build:electron": "cross-env NODE_ENV=production npm -C ./electron run build"
+    "build": "NODE_ENV=production vite build",
+    "build:electron": "NODE_ENV=production npm -C ./electron run build"
   },
   "dependencies": {
     "@antfu/utils": "^0.7.2",
@@ -45,7 +45,6 @@
     "@types/fs-extra": "^11.0.1",
     "@types/prettier": "^2.7.2",
     "@vitejs/plugin-vue": "^4.1.0",
-    "cross-env": "^7.0.3",
     "dayjs": "^1.11.7",
     "eslint": "^8.38.0",
     "esno": "^0.16.3",
