@@ -20,7 +20,7 @@ const router = createRouter({
 if (!isElectron && PWA) {
   // disable local storage cache when there is PWA:
   // we need to keep local storage when running dev server without PWA
-  // to avoid call iconify server api
+  // to avoid send requests to iconify server api
   disableCache('all')
   router.isReady().then(async () => {
     const { registerSW } = await import('virtual:pwa-register')
