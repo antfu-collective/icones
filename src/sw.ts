@@ -73,7 +73,6 @@ async function getCollection(request: Request, name: string, icons: string[]) {
     const cache = await caches.open(cacheNames.precache)
     const collectionUrl = `/collections/${name}-raw.json`
     const url = swManifestMap.get(collectionUrl) ?? collectionUrl
-    console.log('getCollection', collectionUrl, url)
     let cachedResponse = await cache.match(url)
     if (!cachedResponse) {
       cachedResponse = await fetch(url)
