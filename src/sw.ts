@@ -19,32 +19,40 @@ registerRoute(new NavigationRoute(
 self.skipWaiting()
 clientsClaim()
 
-function openCaches(e: FetchEvent) {
-  e.waitUntil(caches.open(cacheNames.precache))
-  return Promise.resolve()
+async function getCollection(request: Request, name: string, icons: string[]) {
+  try {
+    const cache = await caches.open(cacheNames.precache)
+    const url = `/collections/${name}-raw.json`
+    let cachedResponse = await cache.match(url)
+    if (!cachedResponse) {
+      cachedResponse = await fetch(url)
+      await cache.put(url, cachedResponse.clone())
+    }
+    const collection = await cachedResponse.json()
+    return new Response(JSON.stringify(getIcons(
+      collection,
+      icons,
+    )), {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    })
+  }
+  catch {
+    return await fetch(request)
+  }
 }
+
+const fetchRegex = /^https:\/\/(api\.iconify\.design|api\.simplesvg\.com|api\.unisvg\.com)\/(.*)\.json\?icons=(.*)$/
 
 self.addEventListener('fetch', (e) => {
   const url = e.request.url
-  const match = url.match(/^https:\/\/(api\.iconify\.design|api\.simplesvg\.com|api\.unisvg\.com)\/(.*)\.json\?icons=(.*)?/)
+  const match = url.match(fetchRegex)
   if (match) {
-    e.respondWith(
-      openCaches(e)
-        .then(() => {
-          return fetch(`/collections/${match[2]}-raw.json`)
-            .then(response => response.json())
-            .then((collection) => {
-              return new Response(JSON.stringify(getIcons(
-                collection,
-                match[3].replaceAll('%2C', ',').split(','),
-              )), {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              })
-            })
-            .catch(() => fetch(e.request))
-        }),
-    )
+    e.respondWith(getCollection(
+      e.request,
+      match[2],
+      match[3].replaceAll('%2C', ',').split(','),
+    ))
   }
 })
