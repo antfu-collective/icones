@@ -62,14 +62,15 @@ async function copy(type: string) {
 }
 
 async function download(type: string) {
+  let name
   pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
-
-  const name = `${toComponentName(props.icon)}.${type}`
+  if (type === 'solid' || type === 'qwik')
+    name = `${toComponentName(props.icon)}.tsx`
+  else name = `${toComponentName(props.icon)}.${type}`
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
-
   Download(blob, name)
 }
 
