@@ -225,6 +225,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
+            Solid
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svelte')">
             Svelte
           </button>
@@ -261,6 +264,9 @@ const collection = computed(() => {
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
+            Solid
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('svelte')">
             Svelte
