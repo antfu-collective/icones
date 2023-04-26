@@ -62,14 +62,12 @@ async function copy(type: string) {
 }
 
 async function download(type: string) {
-  let name
   pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
-  if (type === 'solid' || type === 'qwik')
-    name = `${toComponentName(props.icon)}.tsx`
-  else name = `${toComponentName(props.icon)}.${type}`
+  const ext = (type === 'solid' || type === 'qwik') ? 'tsx' : type
+  const name = `${toComponentName(props.icon)}.${ext}`
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
   Download(blob, name)
 }
@@ -226,14 +224,14 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
           </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
-            Solid
-          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svelte')">
             Svelte
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('qwik')">
             Qwik
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
+            Solid
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('unplugin')">
             Unplugin Icons
@@ -266,14 +264,14 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">
             React<sup class="opacity-50 -mr-1">TS</sup>
           </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
-            Solid
-          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('svelte')">
             Svelte
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('qwik')">
             Qwik
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
+            Solid
           </button>
         </div>
         <div class="mr-4">
