@@ -66,10 +66,9 @@ async function download(type: string) {
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
-
-  const name = `${toComponentName(props.icon)}.${type}`
+  const ext = (type === 'solid' || type === 'qwik') ? 'tsx' : type
+  const name = `${toComponentName(props.icon)}.${ext}`
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
-
   Download(blob, name)
 }
 
@@ -231,6 +230,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('qwik')">
             Qwik
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
+            Solid
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('unplugin')">
             Unplugin Icons
           </button>
@@ -267,6 +269,9 @@ const collection = computed(() => {
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('qwik')">
             Qwik
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
+            Solid
           </button>
         </div>
         <div class="mr-4">

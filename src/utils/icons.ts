@@ -106,6 +106,18 @@ export default {
   return prettierCode(code, 'vue')
 }
 
+export function SvgToSolid(svg: string, name: string, snippet: boolean) {
+  let code = `
+export function ${name}(props: JSX.IntrinsicElements['svg'], key: string) {
+  return (
+    ${ClearSvg(svg, false).replace(/<svg (.*?)>/, '<svg $1 {...props} key={key}>')}
+  )
+}`
+
+  code = snippet ? code : `import type { JSX } from 'solid-js'\n${code}\nexport default ${name}`
+  return prettierCode(code, 'babel-ts')
+}
+
 export function SvgToSvelte(svg: string) {
   return ClearSvg(svg)
 }
@@ -145,6 +157,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon))
     case 'vue-ts':
       return SvgToVue(await getSvg(icon, undefined, color), toComponentName(icon), true)
+    case 'solid':
+      return SvgToSolid(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'svelte':
       return SvgToSvelte(await getSvg(icon, undefined, color))
     case 'unplugin':
