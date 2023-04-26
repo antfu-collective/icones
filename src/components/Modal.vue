@@ -7,7 +7,12 @@ const props = withDefaults(defineProps<{
   direction: 'bottom',
 })
 
+const { width, height } = useWindowSize()
+const isSmall = computed(() => width.value < 700 || height.value < 700)
+
 const positionClass = computed(() => {
+  if (isSmall.value)
+    return 'bottom-0 left-0 right-0 top-0 of-auto'
   switch (props.direction) {
     case 'bottom':
       return 'bottom-0 left-0 right-0 border-t'
