@@ -66,16 +66,12 @@ export default defineComponent(() => {
     </template>
 
     <!-- Searching -->
-    <div v-if="collection" class="flex w-full">
-      <form action="/collection/all" role="search" method="get" class="w-full" @submit.prevent>
-        <input
-          v-model="search"
-          aria-label="Search"
-          class="color-base text-base outline-none px-4 flex-auto m-0 w-full bg-transparent"
-          name="s"
-          placeholder="Search..."
-        >
-      </form>
-    </div>
+    <SearchBar
+      v-if="collection"
+      v-model:search="search"
+      class="flex w-full"
+      :style="false"
+      :icon="false"
+    />
   </nav>
 </template>

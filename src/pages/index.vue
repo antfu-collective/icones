@@ -3,7 +3,7 @@ import type { PresentType } from '../data'
 import { sortAlphabetically } from '../store'
 import { categories, categorySearch, favoritedCollections, filteredCollections, recentCollections } from '../data'
 
-const input = ref<HTMLInputElement>()
+const searchbar = ref<{ input: HTMLElement }>()
 const categorized = computed(() => [
   {
     name: 'Favorites',
@@ -27,7 +27,7 @@ onKeyStroke('/', (e) => {
   e.preventDefault()
   router.replace('/collection/all')
 })
-onMounted(() => input.value?.focus())
+onMounted(() => searchbar.value?.input.focus())
 
 const isMacOS = navigator.platform.toUpperCase().includes('MAC')
 
@@ -43,39 +43,29 @@ function onKeydown(e: KeyboardEvent) {
   <WithNavbar>
     <!-- Searching -->
     <div mb--3 md:mx-6 md:mt-6>
-      <div class="border-b py-3  flex md:shadow md:rounded outline-none md:py-1 px-4 border-x border-b md:border-t border-base">
-        <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
-        <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
-          <input
-            ref="input"
-            v-model="categorySearch"
-            aria-label="Search"
-            class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
-            name="s"
-            placeholder="Search category..."
-            autofocus
-            autocomplete="off"
-            @keydown="onKeydown"
+      <SearchBar
+        ref="searchbar"
+        v-model:search="categorySearch"
+        placeholder="Search category..."
+        flex
+        @on-keydown="onKeydown"
+      >
+        <template #actions>
+          <button
+            class="flex items-center transition ml-4"
+            :class="{
+              'text-gray-500 hover:text-gray-600': sortAlphabetically,
+              'text-gray-300 hover:text-gray-400': !sortAlphabetically,
+            }"
+            @click="sortAlphabetically = !sortAlphabetically"
           >
-        </form>
-
-        <button class="flex items-center opacity-60 hover:opacity-80">
-          <Icon v-if="categorySearch" icon="carbon:close" class="m-auto text-lg -mr-1" @click="categorySearch = ''" />
-        </button>
-        <button
-          class="flex items-center transition ml-4"
-          :class="{
-            'opacity-50 hover:opacity-70': sortAlphabetically,
-            'opacity-30 hover:opacity-50': !sortAlphabetically,
-          }"
-          @click="sortAlphabetically = !sortAlphabetically"
-        >
-          <Icon
-            icon="mdi:sort-alphabetical-ascending"
-            class="m-auto text-lg -mr-1 "
-          />
-        </button>
-      </div>
+            <Icon
+              icon="mdi:sort-alphabetical-ascending"
+              class="m-auto text-lg -mr-1"
+            />
+          </button>
+        </template>
+      </SearchBar>
       <RouterLink
         :class="categorySearch ? '' : 'op0 pointer-events-none'"
         px4 py2 w-full mt--1px text-sm z--1 h-10

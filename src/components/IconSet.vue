@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script setup lang='ts'>
 import { useRoute, useRouter } from 'vue-router'
 import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
@@ -9,7 +10,7 @@ const showBag = $ref(false)
 let copied = $ref(false)
 let current = $ref('')
 let max = $ref(isLocalMode ? 500 : 200)
-const input = $ref<HTMLInputElement>()
+const searchbar = ref<{ input: HTMLElement }>()
 
 const route = useRoute()
 const router = useRouter()
@@ -108,7 +109,7 @@ onMounted(() => {
 })
 
 function focusSearch() {
-  input?.focus()
+  searchbar.value?.input.focus()
 }
 
 onMounted(focusSearch)
@@ -122,13 +123,13 @@ router.afterEach((to) => {
 
 onKeyStroke('/', (e) => {
   e.preventDefault()
-  input?.focus()
+  focusSearch()
 })
 
 onKeyStroke('Escape', () => {
   if (current !== '') {
     current = ''
-    input?.focus()
+    focusSearch()
   }
 })
 
@@ -223,28 +224,11 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
 
         <!-- Searching -->
-        <div
-          class="
-            mx-8 my-2 hidden md:flex shadow rounded outline-none py-1 px-4
-            border border-base
-          "
-        >
-          <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
-          <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
-            <input
-              ref="input"
-              v-model="search"
-              aria-label="Search"
-              class="text-base outline-none w-full py-1 px-4 m-0 bg-transparent"
-              name="s"
-              placeholder="Search..."
-              autofocus
-              autocomplete="off"
-            >
-          </form>
-
-          <Icon v-if="search" icon="carbon:close" class="m-auto text-lg -mr-1 opacity-60" @click="search = ''" />
-        </div>
+        <SearchBar
+          ref="searchbar"
+          v-model:search="search"
+          class="mx-8 my-2 hidden md:flex"
+        />
 
         <!-- Variants --->
         <div v-if="collection.variants" class="py1 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none items-center">
