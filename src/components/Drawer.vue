@@ -1,17 +1,22 @@
 <script setup lang='ts'>
-import { categorySearch, sortedCollectionsInfo, specialTabs } from '../data'
-import { isFavoritedCollection, recentIconIds, sortAlphabetically, toggleFavoriteCollection } from '../store'
+import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
+import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
 const current = computed(() => route.path.split('/').slice(-1)[0])
 
 const collections = computed(() => {
-  return [
-    { id: 'all', name: 'All' },
-    { id: 'recent', name: 'Recent' },
-    ...sortedCollectionsInfo.value,
-  ]
+  if (categorySearch.value) {
+    return filteredCollections.value
+  }
+  else {
+    return [
+      { id: 'all', name: 'All' },
+      { id: 'recent', name: 'Recent' },
+      ...sortedCollectionsInfo.value,
+    ]
+  }
 })
 </script>
 
@@ -39,23 +44,7 @@ const collections = computed(() => {
         input-class="text-xs"
         :border="false"
         class="border-b border-base"
-      >
-        <template #actions>
-          <button
-            class="flex items-center ml2 transition"
-            :class="{
-              'text-gray-500 hover:text-gray-600': sortAlphabetically,
-              'text-gray-300 hover:text-gray-400': !sortAlphabetically,
-            }"
-            @click="sortAlphabetically = !sortAlphabetically"
-          >
-            <Icon
-              icon="mdi:sort-alphabetical-ascending"
-              class="m-auto text-lg -mr-1 "
-            />
-          </button>
-        </template>
-      </SearchBar>
+      />
     </div>
 
     <!-- Collections -->

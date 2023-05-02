@@ -2,7 +2,7 @@ import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
 import { addCollection } from 'iconify-icon'
 import { AsyncFzf } from 'fzf'
-import { favoritedCollectionIds, inProgress, isExcludedCollection, isFavoritedCollection, isRecentCollection, progressMessage, recentCollectionIds, sortAlphabetically } from '../store'
+import { favoritedCollectionIds, inProgress, isExcludedCollection, isFavoritedCollection, isRecentCollection, progressMessage, recentCollectionIds } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
@@ -55,13 +55,7 @@ watch([categorySearch, enabledCollections], ([q]) => {
   }
   else {
     fzf.find(q).then((result) => {
-      filteredCollections.value = result
-        .map(i => i.item)
-        .sort((a, b) => {
-          if (sortAlphabetically.value)
-            return a.name.localeCompare(b.name)
-          return 0
-        })
+      filteredCollections.value = result.map(i => i.item)
     }).catch(() => {
       // The search is canceled
     })

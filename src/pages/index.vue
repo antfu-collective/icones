@@ -1,26 +1,38 @@
 <script setup lang='ts'>
 import type { PresentType } from '../data'
-import { sortAlphabetically } from '../store'
 import { categories, categorySearch, favoritedCollections, filteredCollections, recentCollections } from '../data'
 
 const searchbar = ref<{ input: HTMLElement }>()
-const categorized = computed(() => [
-  {
-    name: 'Favorites',
-    type: 'favorite' as PresentType,
-    collections: favoritedCollections.value,
-  },
-  {
-    name: 'Recent',
-    type: 'recent' as PresentType,
-    collections: recentCollections.value,
-  },
-  ...categories.map(category => ({
-    name: category,
-    type: 'normal' as PresentType,
-    collections: filteredCollections.value.filter(collection => collection.category === category),
-  })),
-])
+const categorized = computed(() => {
+  if (categorySearch.value) {
+    return [
+      {
+        name: 'Result',
+        type: 'result' as PresentType,
+        collections: filteredCollections.value,
+      },
+    ]
+  }
+  else {
+    return [
+      {
+        name: 'Favorites',
+        type: 'favorite' as PresentType,
+        collections: favoritedCollections.value,
+      },
+      {
+        name: 'Recent',
+        type: 'recent' as PresentType,
+        collections: recentCollections.value,
+      },
+      ...categories.map(category => ({
+        name: category,
+        type: 'normal' as PresentType,
+        collections: filteredCollections.value.filter(collection => collection.category === category),
+      })),
+    ]
+  }
+})
 
 const router = useRouter()
 onKeyStroke('/', (e) => {
@@ -49,23 +61,7 @@ function onKeydown(e: KeyboardEvent) {
         placeholder="Search category..."
         flex
         @on-keydown="onKeydown"
-      >
-        <template #actions>
-          <button
-            class="flex items-center transition ml-4"
-            :class="{
-              'text-gray-500 hover:text-gray-600': sortAlphabetically,
-              'text-gray-300 hover:text-gray-400': !sortAlphabetically,
-            }"
-            @click="sortAlphabetically = !sortAlphabetically"
-          >
-            <Icon
-              icon="mdi:sort-alphabetical-ascending"
-              class="m-auto text-lg -mr-1"
-            />
-          </button>
-        </template>
-      </SearchBar>
+      />
       <RouterLink
         :class="categorySearch ? '' : 'op0 pointer-events-none'"
         px4 py2 w-full mt--1px text-sm z--1 h-10
