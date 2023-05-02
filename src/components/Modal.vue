@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
 })
 
 const { width, height } = useWindowSize()
-const isSmall = computed(() => width.value < 700 || height.value < 700)
+const isSmall = computed(() => width.value < 600 || height.value < 450)
 
 const positionClass = computed(() => {
   if (isSmall.value)
