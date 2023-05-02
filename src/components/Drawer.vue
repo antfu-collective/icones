@@ -1,17 +1,22 @@
 <script setup lang='ts'>
-import { categorySearch, sortedCollectionsInfo, specialTabs } from '../data'
-import { isFavoritedCollection, recentIconIds, sortAlphabetically, toggleFavoriteCollection } from '../store'
+import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
+import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
 const current = computed(() => route.path.split('/').slice(-1)[0])
 
 const collections = computed(() => {
-  return [
-    { id: 'all', name: 'All' },
-    { id: 'recent', name: 'Recent' },
-    ...sortedCollectionsInfo.value,
-  ]
+  if (categorySearch.value) {
+    return filteredCollections.value
+  }
+  else {
+    return [
+      { id: 'all', name: 'All' },
+      { id: 'recent', name: 'Recent' },
+      ...sortedCollectionsInfo.value,
+    ]
+  }
 })
 </script>
 
@@ -33,34 +38,13 @@ const collections = computed(() => {
       </div>
 
       <!-- Searching -->
-      <div class="flex outline-none py-1 px-4" border="b base">
-        <Icon icon="carbon:search" class="m-auto flex-none opacity-60" />
-        <form action="/collection/all" class="flex-auto" role="search" method="get" @submit.prevent>
-          <input
-            v-model="categorySearch"
-            aria-label="Search"
-            class="text-xs outline-none w-full py-1 px-4 m-0 bg-transparent font-normal"
-            name="s"
-            placeholder="Search category..."
-            autofocus
-            autocomplete="off"
-          >
-        </form>
-
-        <button
-          class="flex items-center transition"
-          :class="{
-            'text-gray-500 hover:text-gray-600': sortAlphabetically,
-            'text-gray-300 hover:text-gray-400': !sortAlphabetically,
-          }"
-          @click="sortAlphabetically = !sortAlphabetically"
-        >
-          <Icon
-            icon="mdi:sort-alphabetical-ascending"
-            class="m-auto text-lg -mr-1 "
-          />
-        </button>
-      </div>
+      <SearchBar
+        v-model:search="categorySearch"
+        placeholder="Search category..."
+        input-class="text-xs"
+        :border="false"
+        class="border-b border-base"
+      />
     </div>
 
     <!-- Collections -->

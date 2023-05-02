@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     Progress: typeof import('./components/Progress.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchBar: typeof import('./components/SearchBar.vue')['default']
     SearchElectron: typeof import('./components/electron/SearchElectron.vue')['default']
     SettingsCollectionsList: typeof import('./components/SettingsCollectionsList.vue')['default']
     WithNavbar: typeof import('./components/WithNavbar.vue')['default']
