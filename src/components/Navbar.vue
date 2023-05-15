@@ -2,15 +2,17 @@
 import { getSearchResults, isDark } from '../store'
 import { isElectron } from '../env'
 
-export default defineComponent(() => {
-  const route = useRoute()
+export default defineComponent({
+  setup() {
+    const route = useRoute()
 
-  return {
-    ...getSearchResults(),
-    isElectron,
-    isDark,
-    showNav: computed(() => !route.path.startsWith('/collection')),
-    isHomepage: computed(() => route.path === '/'),
+    return {
+      ...getSearchResults(),
+      isElectron,
+      isDark,
+      showNav: computed(() => !route.path.startsWith('/collection')),
+      isHomepage: computed(() => route.path === '/'),
+    }
   }
 })
 </script>
