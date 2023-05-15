@@ -9,6 +9,8 @@ import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import fg from 'fast-glob'
+
+// eslint-disable-next-line import/default
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
 import esmodule from 'vite-plugin-esmodule'

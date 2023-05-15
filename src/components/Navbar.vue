@@ -13,7 +13,7 @@ export default defineComponent({
       showNav: computed(() => !route.path.startsWith('/collection')),
       isHomepage: computed(() => route.path === '/'),
     }
-  }
+  },
 })
 </script>
 
