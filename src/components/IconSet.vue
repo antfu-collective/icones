@@ -208,7 +208,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
 
         <!-- Categories -->
-        <div v-if="collection.categories" ref="categoriesContainer" class="py-1 mt2 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none">
+        <div v-if="collection.categories" ref="categoriesContainer" class="py-1 mt2 mx-8 flex flex-wrap gap-2 select-none">
           <div
             v-for="c of Object.keys(collection.categories).sort()"
             :key="c"
@@ -231,7 +231,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         />
 
         <!-- Variants --->
-        <div v-if="collection.variants" class="py1 mx-8 overflow-x-overlay flex flex-nowrap gap-2 select-none items-center">
+        <div v-if="collection.variants" class="py1 mx-8 flex flex-wrap gap-2 select-none items-center">
           <div text-sm op50>
             Variants
           </div>
