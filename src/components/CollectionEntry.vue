@@ -47,40 +47,25 @@ function onAction() {
     <div
       absolute top--1px right--1px
       flex="~ items-center"
+      op0 hover="op100 transition-all"
     >
       <button
-        v-if="type === 'recent'"
         class="group"
-        border="~ transparent" p2 hover="bg-base border-primary"
+        border="~ primary" p2 bg-base
         :title="isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
         @click.prevent="toggleFavoriteCollection(collection.id)"
       >
-        <div
-          v-if="isFavoritedCollection(collection.id)"
-          i-carbon-star-filled op0 group-hover="op100"
-        />
-        <div
-          v-else
-          i-carbon-star op0 group-hover="op100"
-        />
+        <div v-if="isFavoritedCollection(collection.id)" i-carbon-star-filled op50 group-hover="op100" />
+        <div v-else i-carbon-star op50 group-hover="op100" />
       </button>
       <button
-        class="group" border="~ transparent" p2 hover="bg-base border-primary"
+        v-if="type === 'recent'"
+        class="group"
+        border="~ primary" p2 bg-base ml--1px
         :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
         @click.prevent="onAction"
       >
-        <div
-          v-if="type === 'recent'"
-          i-carbon-delete op0 group-hover="op100"
-        />
-        <div
-          v-else-if="type === 'favorite' || isFavoritedCollection(collection.id)"
-          i-carbon-star-filled op0 group-hover="op100"
-        />
-        <div
-          v-else
-          i-carbon-star op0 group-hover="op100"
-        />
+        <div i-carbon-delete op50 group-hover="op100" />
       </button>
     </div>
   </RouterLink>
