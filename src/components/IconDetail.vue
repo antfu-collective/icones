@@ -58,6 +58,8 @@ async function copy(type: string) {
   if (!text)
     return
 
+  window.parent.postMessage({ eventType: 'copy', text }, '*')
+
   emit('copy', await copyText(text))
 }
 
