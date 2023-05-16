@@ -2,17 +2,10 @@
 import type { CollectionInfo, PresentType } from '../data'
 import { isFavoritedCollection, removeRecentCollection, toggleFavoriteCollection } from '../store'
 
-const props = defineProps<{
+defineProps<{
   collection: CollectionInfo
   type?: PresentType
 }>()
-
-function onAction() {
-  if (props.type === 'recent')
-    removeRecentCollection(props.collection.id)
-  else
-    toggleFavoriteCollection(props.collection.id)
-}
 </script>
 
 <template>
@@ -63,7 +56,7 @@ function onAction() {
         class="group"
         border="~ primary" p2 bg-base ml--1px
         :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
-        @click.prevent="onAction"
+        @click.prevent="removeRecentCollection(collection.id)"
       >
         <div i-carbon-delete op50 group-hover="op100" />
       </button>
