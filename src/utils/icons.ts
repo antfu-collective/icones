@@ -14,7 +14,7 @@ export async function getSvgLocal(icon: string, size = '1em', color = 'currentCo
   if (!built)
     return
   const xlink = built.body.includes('xlink:') ? ' xmlns:xlink="http://www.w3.org/1999/xlink"' : ''
-  return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${built.body}</svg>`.replace('currentColor', color)
+  return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${built.body}</svg>`.replaceAll('currentColor', color)
 }
 
 export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
@@ -125,7 +125,7 @@ export function SvgToSvelte(svg: string) {
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
   if (!icon)
     return
-
+  debugger
   let url = `${API_ENTRY}/${icon}.svg`
   if (color !== 'currentColor')
     url = `${url}?color=${encodeURIComponent(color)}`
