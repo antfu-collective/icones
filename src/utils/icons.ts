@@ -125,7 +125,7 @@ export function SvgToSvelte(svg: string) {
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
   if (!icon)
     return
-  debugger
+
   let url = `${API_ENTRY}/${icon}.svg`
   if (color !== 'currentColor')
     url = `${url}?color=${encodeURIComponent(color)}`
