@@ -11,6 +11,9 @@ export const idCases = {
   dash(id: string) {
     return id.replace(/:/g, '-')
   },
+  slash(id: string) {
+    return id.replace(/:/g, '/')
+  },
   camel(id: string) {
     return id.replace(/[-_:]+(\w)/g, (_, c) => c.toUpperCase())
   },
