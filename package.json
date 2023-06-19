@@ -52,7 +52,7 @@
     "fast-glob": "^3.2.12",
     "fs-extra": "^11.1.1",
     "jszip": "^3.10.1",
-    "lru-cache": "^9.1.1",
+    "lru-cache": "^10.0.0",
     "pnpm": "^8.5.1",
     "svg-packer": "^0.0.3",
     "typescript": "^5.0.4",
