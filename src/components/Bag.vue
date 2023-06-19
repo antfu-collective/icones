@@ -27,7 +27,7 @@ async function packIconFont() {
 
 async function PackSvgs(type: PackType = 'svg') {
   await PackZip(
-    bags.value.map(i => i.replace(':', '-')),
+    bags.value,
     'icones-bags',
     type,
   )
