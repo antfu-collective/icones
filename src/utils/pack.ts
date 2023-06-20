@@ -81,6 +81,10 @@ export async function PackJsonZip(icons: string[], name: string) {
 
 export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue' | 'json'
 
+function normalizeZipFleName(svgName: string): string {
+  return svgName.replace(':', '-')
+}
+
 export async function PackZip(
   icons: string[],
   name: string,
@@ -119,7 +123,7 @@ export async function PackZip(
   }
   else {
     for (const { name, svg } of data)
-      action(name, svg)
+      action(normalizeZipFleName(name), svg)
   }
   const blob = await zip.generateAsync({ type: 'blob' })
   Download(blob, `${name}-${type}.zip`)
