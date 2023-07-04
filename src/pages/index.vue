@@ -3,8 +3,22 @@ import type { PresentType } from '../data'
 import { categories, categorySearch, favoritedCollections, filteredCollections, recentCollections } from '../data'
 
 const searchbar = ref<{ input: HTMLElement }>()
-const categorized = computed(() => {
-  if (categorySearch.value) {
+
+const categorized = ref(getIconList(categorySearch.value))
+
+let categorizeDebounceTimer: NodeJS.Timeout | null = null
+
+watch(categorySearch, (newVal) => {
+  if (categorizeDebounceTimer)
+    clearTimeout(categorizeDebounceTimer)
+  categorizeDebounceTimer = setTimeout(() => {
+    categorizeDebounceTimer = null
+    categorized.value = getIconList(newVal)
+  }, 500)
+})
+
+function getIconList(searchString: string) {
+  if (searchString) {
     return [
       {
         name: 'Result',
@@ -32,7 +46,7 @@ const categorized = computed(() => {
       })),
     ]
   }
-})
+}
 
 const router = useRouter()
 onKeyStroke('/', (e) => {
