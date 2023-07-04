@@ -53,14 +53,6 @@ html.dark {
   scrollbar-color: transparent;
 }
 
-*::-webkit-scrollbar {
-  display: none;
-}
-
-*:hover::-webkit-scrollbar {
-  display: block;
-}
-
 ::-webkit-scrollbar {
   height: 6px;
   width: 6px;
