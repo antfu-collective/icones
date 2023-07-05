@@ -36,7 +36,7 @@
     "prettier": "^3.0.0",
     "vue": "3.3.4",
     "vue-chemistry": "^0.2.2",
-    "vue-router": "4.2.2"
+    "vue-router": "4.2.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.7",
