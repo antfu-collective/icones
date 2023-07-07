@@ -148,131 +148,137 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
 
 <template>
   <WithNavbar>
-    <div class="flex flex-auto h-full overflow-hidden ">
-      <Drawer class="h-full overflow-y-overlay flex-none hidden md:block" style="width:220px" />
-      <div v-if="collection" class="py-5 h-full flex-auto relative">
-        <!-- Loading -->
-        <div
-          class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
-          :class="loading ? '' : 'opacity-0 pointer-events-none'"
-        >
-          <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">
-            Loading...
-          </div>
+    <div class="flex flex-auto h-full overflow-hidden">
+      <Drawer h-full overflow-y-overlay flex-none hidden md:block w-220px />
+      <!-- Loading -->
+      <div
+        v-if="collection && loading"
+        class="h-full w-full flex-auto relative bg-base bg-opacity-75 content-center transition-opacity duration-100"
+        :class="loading ? '' : 'opacity-0 pointer-events-none'"
+      >
+        <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">
+          Loading...
         </div>
+      </div>
 
-        <div class="flex px-8">
-          <!-- Left -->
-          <div class="flex-auto px-2">
-            <NavPlaceholder class="md:hidden" />
+      <div v-else-if="collection" h-full w-full relative max-h-full grid="~ rows-[max-content_1fr]" of-hidden>
+        <div pt-5 flex="~ col gap-2">
+          <div class="flex px-8">
+            <!-- Left -->
+            <div class="flex-auto px-2">
+              <NavPlaceholder class="md:hidden" />
 
-            <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
-              <div class="whitespace-no-wrap overflow-hidden">
-                {{ collection.name }}
+              <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
+                <div class="whitespace-no-wrap overflow-hidden">
+                  {{ collection.name }}
+                </div>
+                <a
+                  v-if="url"
+                  class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
+                  :href="url"
+                  target="_blank"
+                >
+                  <Icon icon="la:external-link-square-alt-solid" />
+                </a>
+                <a
+                  v-if="npm"
+                  class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
+                  :href="npm"
+                  target="_blank"
+                >
+                  <Icon icon="la:npm" />
+                </a>
+                <div class="flex-auto" />
               </div>
-              <a
-                v-if="url"
-                class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
-                :href="url"
-                target="_blank"
-              >
-                <Icon icon="la:external-link-square-alt-solid" />
-              </a>
-              <a
-                v-if="npm"
-                class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
-                :href="npm"
-                target="_blank"
-              >
-                <Icon icon="la:npm" />
-              </a>
+              <div class="text-xs block opacity-50">
+                {{ collection.author?.name }}
+              </div>
+              <div v-if="collection.license">
+                <a
+                  class="text-xs opacity-50 hover:opacity-100"
+                  :href="collection.license.url"
+                  target="_blank"
+                >{{ collection.license.title }}</a>
+              </div>
+            </div>
+
+            <!-- Right -->
+            <div class="flex flex-col">
+              <ActionsMenu :collection="collection" />
               <div class="flex-auto" />
             </div>
-            <div class="text-xs block opacity-50">
-              {{ collection.author?.name }}
-            </div>
-            <div v-if="collection.license">
-              <a
-                class="text-xs opacity-50 hover:opacity-100"
-                :href="collection.license.url"
-                target="_blank"
-              >{{ collection.license.title }}</a>
-            </div>
           </div>
 
-          <!-- Right -->
-          <div class="flex flex-col">
-            <ActionsMenu :collection="collection" />
-            <div class="flex-auto" />
-          </div>
-        </div>
-
-        <!-- Categories -->
-        <div v-if="collection.categories" ref="categoriesContainer" class="py-1 mt2 mx-8 flex flex-wrap gap-2 select-none">
-          <div
-            v-for="c of Object.keys(collection.categories).sort()"
-            :key="c"
-            class="
+          <!-- Categories -->
+          <div v-if="collection.categories" ref="categoriesContainer" class="mx-8 flex flex-wrap gap-2 select-none">
+            <div
+              v-for="c of Object.keys(collection.categories).sort()"
+              :key="c"
+              class="
                 whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
               "
-            :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
-            @click="toggleCategory(c)"
-          >
-            {{ c }}
+              :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
+              @click="toggleCategory(c)"
+            >
+              {{ c }}
+            </div>
           </div>
-        </div>
 
-        <!-- Searching -->
-        <SearchBar
-          ref="searchbar"
-          v-model:search="search"
-          class="mx-8 my-2 hidden md:flex"
-        />
-
-        <!-- Variants --->
-        <div v-if="collection.variants" class="py1 mx-8 flex flex-wrap gap-2 select-none items-center">
-          <div text-sm op50>
-            Variants
-          </div>
-          <div
-            v-for="c of Object.keys(collection.variants).sort()"
-            :key="c"
-            class="
-                whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
-                dark:border-dark-200 dark:hover:bg-dark-200
-              "
-            :class="c === variant ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
-            @click="toggleVariant(c)"
-          >
-            {{ c }}
-          </div>
-        </div>
-
-        <!-- Icons -->
-        <div class="px-4 pt-2 pb-4 text-center">
-          <Icons
-            :icons="icons.slice(0, max)"
-            :selected="bags"
-            :class="iconSize"
-            :display="listType"
-            :search="search"
-            :namespace="namespace"
-            @select="onSelect"
+          <!-- Searching -->
+          <SearchBar
+            ref="searchbar"
+            v-model:search="search"
+            class="mx-8 hidden md:flex"
           />
-          <button v-if="icons.length > max" class="btn mx-1 my-3" @click="loadMore">
-            Load More
-          </button>
-          <button v-if="icons.length > max && namespace" class="btn mx-1 my-3" @click="loadAll">
-            Load All ({{ icons.length - max }})
-          </button>
-          <p class="color-fade text-sm pt-4">
-            {{ icons.length }} icons
-          </p>
+
+          <!-- Variants --->
+          <div v-if="collection.variants" class="mx-8 mb-2 flex flex-wrap gap-2 select-none items-center">
+            <div text-sm op50>
+              Variants
+            </div>
+            <div
+              v-for="c of Object.keys(collection.variants).sort()"
+              :key="c"
+              class="
+                whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
+                dark:border-dark-200 dark:hover:bg-dark-200
+              "
+              :class="c === variant ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
+              @click="toggleVariant(c)"
+            >
+              {{ c }}
+            </div>
+          </div>
         </div>
+        <div of-y-scroll of-x-hidden>
+          <!-- Icons -->
+          <div class="px-4 pt-2 pb-4 text-center">
+            <Icons
+              :icons="icons.slice(0, max)"
+              :selected="bags"
+              :class="iconSize"
+              :display="listType"
+              :search="search"
+              :namespace="namespace"
+              @select="onSelect"
+            />
+            <button v-if="icons.length > max" class="btn mx-1 my-3" @click="loadMore">
+              Load More
+            </button>
+            <button v-if="icons.length > max && namespace" class="btn mx-1 my-3" @click="loadAll">
+              Load All ({{ icons.length - max }})
+            </button>
+            <p class="color-fade text-sm pt-4">
+              {{ icons.length }} icons
+            </p>
+          </div>
 
-        <Footer />
+          <Footer />
+        </div>
+      </div>
 
+      <template v-if="collection">
         <!-- Bag Fab -->
         <FAB
           v-if="bags.length"
@@ -321,7 +327,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
           <span class="align-middle">Copied</span>
         </Notification>
-      </div>
+      </template>
     </div>
   </WithNavbar>
 </template>
