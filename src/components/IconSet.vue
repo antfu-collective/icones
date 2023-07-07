@@ -250,7 +250,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
 
         <!-- Icons -->
-        <!-- <div class="px-4 pt-2 pb-4 text-center overflow-hidden overflow-y-auto h-[calc(100%-18rem)]"> -->
+
         <div class="px-4 pt-2 pb-4 text-center flex-grow flex-shrink overflow-hide overflow-y-auto min-h-0 [&>div]:overflow-hidden">
           <Icons
             :icons="icons.slice(0, max)"
