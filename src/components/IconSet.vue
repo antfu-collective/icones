@@ -150,7 +150,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden ">
       <Drawer class="h-full overflow-y-overlay flex-none hidden md:block" style="width:220px" />
-      <div v-if="collection" class="py-5 h-full flex-auto relative">
+      <div v-if="collection" class="py-5 overflow-y-overlay h-full flex-auto relative">
         <!-- Loading -->
         <div
           class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
