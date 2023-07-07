@@ -150,7 +150,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden ">
       <Drawer class="h-full overflow-y-overlay flex-none hidden md:block" style="width:220px" />
-      <div v-if="collection" class="py-5 h-full flex-auto relative">
+      <div v-if="collection" class="py-5 h-full flex-auto relative flex flex-col">
         <!-- Loading -->
         <div
           class="absolute top-0 left-0 right-0 bottom-0 bg-white bg-opacity-75 content-center transition-opacity duration-100 z-50 dark:bg-dark-100"
@@ -250,7 +250,8 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
 
         <!-- Icons -->
-        <div class="px-4 pt-2 pb-4 text-center">
+        <!-- <div class="px-4 pt-2 pb-4 text-center overflow-hidden overflow-y-auto h-[calc(100%-18rem)]"> -->
+        <div class="px-4 pt-2 pb-4 text-center flex-grow flex-shrink overflow-hide overflow-y-auto min-h-0 [&>div]:overflow-hidden">
           <Icons
             :icons="icons.slice(0, max)"
             :selected="bags"
