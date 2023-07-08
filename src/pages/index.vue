@@ -67,52 +67,56 @@ function onKeydown(e: KeyboardEvent) {
 
 <template>
   <WithNavbar>
-    <!-- Searching -->
-    <div mb--3 md:mx-6 md:mt-6>
-      <SearchBar
-        ref="searchbar"
-        v-model:search="categorySearch"
-        placeholder="Search category..."
-        flex
-        @on-keydown="onKeydown"
-      />
-      <RouterLink
-        :class="categorySearch ? '' : 'op0 pointer-events-none'"
-        px4 py2 w-full mt--1px text-sm z--1 h-10
-        flex="~ gap-2" items-center
-        border="~ base rounded-b"
-        hover="text-primary !border-primary shadow"
-        :to="`/collection/all?s=${categorySearch}`"
-      >
-        <div i-carbon-direction-right-01 scale-y--100 op50 />
-        Search for all icons...
-        <div>
-          <kbd text-sm border="~ base rounded" px1>{{ isMacOS ? '⌘' : 'Ctrl' }}</kbd> + <kbd text-sm border="~ base rounded" px1>Enter</kbd>
-        </div>
-      </RouterLink>
-    </div>
-
-    <!-- Category listing -->
-    <template v-for="c of categorized" :key="c.name">
-      <div v-if="(c.collections).length" px4>
-        <div px-2 op50 mt6 text-lg>
-          {{ c.name }}
-        </div>
-        <CollectionEntries
-          of-hidden
-          :collections="c.collections"
-          :type="c.type"
+    <div of-hidden grid="~ rows-[max-content_1fr]">
+      <!-- Searching -->
+      <div md:mx-6 md:mt-6>
+        <SearchBar
+          ref="searchbar"
+          v-model:search="categorySearch"
+          placeholder="Search category..."
+          flex
+          @on-keydown="onKeydown"
         />
+        <RouterLink
+          :class="categorySearch ? '' : 'op0 pointer-events-none'"
+          px4 py2 w-full mt--1px text-sm z--1 h-10
+          flex="~ gap-2" items-center
+          border="~ base rounded-b"
+          hover="text-primary !border-primary shadow"
+          :to="`/collection/all?s=${categorySearch}`"
+        >
+          <div i-carbon-direction-right-01 scale-y--100 op50 />
+          Search for all icons...
+          <div>
+            <kbd text-sm border="~ base rounded" px1>{{ isMacOS ? '⌘' : 'Ctrl' }}</kbd> + <kbd text-sm border="~ base rounded" px1>Enter</kbd>
+          </div>
+        </RouterLink>
       </div>
-    </template>
 
-    <div
-      v-if="categorized.every(c => !c.collections.length)"
-      class="flex flex-col flex-grow w-full py-6 justify-center items-center"
-    >
-      <Icon icon="ph:x-circle-bold" class="text-4xl mb-2 opacity-20" />
-      <span class="text-lg opacity-60">There is no result corresponding to your search query.</span>
+      <div of-y-auto>
+        <!-- Category listing -->
+        <template v-for="c of categorized" :key="c.name">
+          <div v-if="(c.collections).length" px4>
+            <div px-2 op50 mt6 text-lg>
+              {{ c.name }}
+            </div>
+            <CollectionEntries
+              of-hidden
+              :collections="c.collections"
+              :type="c.type"
+            />
+          </div>
+        </template>
+
+        <div
+          v-if="categorized.every(c => !c.collections.length)"
+          class="flex flex-col flex-grow w-full py-6 justify-center items-center"
+        >
+          <Icon icon="ph:x-circle-bold" class="text-4xl mb-2 opacity-20" />
+          <span class="text-lg opacity-60">There is no result corresponding to your search query.</span>
+        </div>
+        <Footer />
+      </div>
     </div>
-    <Footer />
   </WithNavbar>
 </template>
