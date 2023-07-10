@@ -2,7 +2,7 @@
   "name": "icones",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@8.6.6",
+  "packageManager": "pnpm@8.6.7",
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
   "homepage": "https://github.com/antfu/icones#readme",
@@ -36,7 +36,7 @@
     "prettier": "^3.0.0",
     "vue": "3.3.4",
     "vue-chemistry": "^0.2.2",
-    "vue-router": "4.2.3"
+    "vue-router": "4.2.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.7",
