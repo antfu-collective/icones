@@ -12,7 +12,7 @@ const categorizedCollections = computed(() => categories.map(category => ({
 
 <template>
   <WithNavbar>
-    <div py4>
+    <div py-4 of-hidden grid="~ rows-[max-content_1fr]">
       <!-- <h1 text-xl>
         Features
       </h1>
@@ -28,7 +28,7 @@ const categorizedCollections = computed(() => categories.map(category => ({
         </p>
       </div>
 
-      <div w-full px4 pb4 class="masonry">
+      <div of-y-auto w-full px4 pb4 class="masonry">
         <div v-for="c of categorizedCollections" :key="c.name" mb-10>
           <div flex py1 px2 break-inside-avoid>
             <h1 font-bold op75 flex-auto>
