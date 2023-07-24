@@ -119,7 +119,7 @@ export function ${name}(props: JSX.IntrinsicElements['svg'], key: string) {
 }
 
 export function SvgToSvelte(svg: string) {
-  return ClearSvg(svg)
+  return `${svg.replace(/<svg (.*?)>/, '<svg $1 {...$$$props}>')}`
 }
 
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
