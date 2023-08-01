@@ -92,8 +92,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
       pnpm:
-        specifier: ^8.6.6
-        version: 8.6.6
+        specifier: ^8.6.8
+        version: 8.6.8
       svg-packer:
         specifier: ^0.0.3
         version: 0.0.3
@@ -2937,7 +2937,7 @@ packages:
       minimatch: 5.1.1
       read-config-file: 6.3.2
       sanitize-filename: 1.6.3
-      semver: 7.3.8
+      semver: 7.5.3
       tar: 6.1.13
       temp-file: 3.4.0
     transitivePeerDependencies:
@@ -6514,8 +6514,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pnpm@8.6.6:
-    resolution: {integrity: sha512-a51bIJyCmvstgCvsWf6SgZnsXfWmwAW1pHWEaH2gN3vqQGC58yLFL/oKBwcZWH0mjpMzBWRXdS9dLdN6GAK2Rw==}
+  /pnpm@8.6.8:
+    resolution: {integrity: sha512-OtrCRUE7VqRyKly9E3gfExZHOAHtFDpmulyVFKrnl3v/n2xJckdueVumWJqUA5FHxcRP/T42r8P8CDr9duPP9w==}
     engines: {node: '>=16.14'}
     hasBin: true
     dev: true
