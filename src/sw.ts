@@ -71,7 +71,7 @@ const swManifestMap = new Map<string, string>(
 async function getCollection(request: Request, name: string, icons: string[]) {
   try {
     const cache = await caches.open(cacheNames.precache)
-    const collectionUrl = `/collections/${name}-raw.json`
+    const collectionUrl = `/collections/${name}.json`
     const url = swManifestMap.get(collectionUrl) ?? collectionUrl
     let cachedResponse = await cache.match(url)
     if (!cachedResponse) {

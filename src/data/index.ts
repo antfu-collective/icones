@@ -121,7 +121,7 @@ export async function downloadAndInstall(id: string) {
   if (installed.value.includes(id))
     return true
 
-  const data = Object.freeze(await fetch(`${staticPath}/collections/${id}-raw.json`).then(r => r.json()))
+  const data = Object.freeze(await fetch(`${staticPath}/collections/${id}.json`).then(r => r.json()))
 
   addCollection(data)
   installed.value.push(id)

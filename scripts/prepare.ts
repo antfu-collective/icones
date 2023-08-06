@@ -35,7 +35,7 @@ async function prepareJSON() {
     const icons = Object.keys(setData.icons)
     const categories = setData.categories
     const meta = { ...info, icons, categories }
-    const rawFilePath = path.join(collectionsDir, `${info.id}-raw.json`)
+    const rawFilePath = path.join(collectionsDir, `${info.id}.json`)
     const metaFilePath = path.join(collectionsDir, `${info.id}-meta.json`)
 
     await fs.writeJSON(rawFilePath, setData)
