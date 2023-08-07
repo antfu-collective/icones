@@ -2,7 +2,7 @@
   "name": "icones",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@8.6.11",
+  "packageManager": "pnpm@8.6.12",
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
   "homepage": "https://github.com/antfu/icones#readme",
