@@ -13,7 +13,7 @@
       "packageNames": ["@iconify/json"],
       "automerge": true,
       "stabilityDays": 1,
-      "schedule": "daily"  // Override the schedule for @iconify/json to daily
+      "extends": ["schedule:daily"]
     }
   ]
 }
