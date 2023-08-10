@@ -2,18 +2,22 @@
   "automerge": true,
   "rangeStrategy": "replace",
   "extends": [
-    "config:base",
-    ":preserveSemverRanges",
-    "schedule:weekly",
-    "group:allNonMajor"
+    "config:recommended",
+    "group:allNonMajor",
+    ":preserveSemverRanges"
   ],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
-      "packageNames": ["@iconify/json"],
+      "matchPackageNames": ["@iconify/json"],
       "automerge": true,
-      "stabilityDays": 1,
+      "minimumReleaseAge": "1 day",
       "extends": ["schedule:daily"]
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": "^(?!@iconify/json).*$",
+      "extends": ["schedule:weekly"]
     }
   ]
 }
