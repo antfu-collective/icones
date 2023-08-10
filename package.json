@@ -56,7 +56,7 @@
     "pnpm": "^8.6.11",
     "svg-packer": "^0.0.3",
     "typescript": "^5.1.6",
-    "unocss": "^0.54.1",
+    "unocss": "^0.55.0",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.8",
