@@ -9,15 +9,15 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchPackagePatterns": [ "^@iconify/json" ],
-      "extends": [ "schedule:daily" ],
+      "matchPackagePatterns": ["^@iconify/json"],
+      "extends": ["schedule:daily"],
       "minimumReleaseAge": "1 day",
       "automerge": true
     },
     {
-      "matchUpdateTypes": [ "minor", "patch" ],
-      "excludePackagePatterns": [ "^@iconify/json" ],
-      "extends": [ "schedule:weekly" ]
+      "matchUpdateTypes": ["minor", "patch"],
+      "excludePackagePatterns": ["^@iconify/json"],
+      "extends": ["schedule:weekly"]
     }
   ]
 }
