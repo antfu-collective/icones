@@ -8,7 +8,7 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "matchPackagePatterns": [ "^@iconify/json" ],
       "extends": [ "schedule:daily" ],
       "minimumReleaseAge": "1 day",
