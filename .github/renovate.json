@@ -8,16 +8,16 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchPackageNames": ["@iconify/json"],
-      "automerge": true,
+      "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ],
+      "matchPackagePatterns": [ "^@iconify/json" ],
+      "extends": [ "schedule:daily" ],
       "minimumReleaseAge": "1 day",
-      "extends": ["schedule:daily"]
+      "automerge": true
     },
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchPackageNames": "^(?!@iconify/json).*$",
-      "extends": ["schedule:weekly"]
+      "matchUpdateTypes": [ "minor", "patch" ],
+      "excludePackagePatterns": [ "^@iconify/json" ],
+      "extends": [ "schedule:weekly" ]
     }
   ]
 }
