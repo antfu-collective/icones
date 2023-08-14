@@ -12,7 +12,8 @@
       "matchPackagePatterns": ["^@iconify/json"],
       "extends": ["schedule:daily"],
       "minimumReleaseAge": "1 day",
-      "automerge": true
+      "automerge": true,
+      "matchDatasources": ["npm"]
     },
     {
       "matchUpdateTypes": ["minor", "patch"],
