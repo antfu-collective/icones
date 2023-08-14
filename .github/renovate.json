@@ -10,7 +10,7 @@
     {
       "matchUpdateTypes": ["pin"],
       "matchPackagePatterns": ["^@iconify/json"],
-      "extends": ["schedule:daily"] 
+      "extends": ["schedule:daily"]
     },
     {
       "matchUpdateTypes": ["minor", "patch"],
