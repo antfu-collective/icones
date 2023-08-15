@@ -1,24 +1,28 @@
 {
-  "automerge": true,
-  "rangeStrategy": "replace",
   "extends": [
-    "config:recommended",
-    "group:allNonMajor",
-    ":preserveSemverRanges"
+    "config:recommended"
   ],
+  "rangeStrategy": "pin",
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchPackagePatterns": ["^@iconify/json"],
-      "extends": ["schedule:daily"],
-      "minimumReleaseAge": "1 day",
-      "automerge": true,
-      "matchDatasources": ["npm"]
+      "description": "Group all non-major updates weekly except @iconify/json",
+      "extends": ["schedule:weekly"],
+      "matchPackagePatterns": ["*"],
+      "excludePackageNames": ["@iconify/json"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
     },
     {
+      "description": "Create non-major @iconify/json updates daily",
       "matchUpdateTypes": ["minor", "patch"],
-      "excludePackagePatterns": ["^@iconify/json"],
-      "extends": ["schedule:weekly"]
+      "matchPackagePatterns": ["^@iconify/json"],
+      "extends": ["schedule:daily"]
+    },
+    {
+      "description": "Suppress major updates using Dependency Dashboard",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
     }
   ]
 }
