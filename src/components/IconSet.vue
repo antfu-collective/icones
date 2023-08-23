@@ -190,6 +190,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
                 </a>
                 <div class="flex-auto" />
               </div>
+              <InstallGuide :collection="collection" />
               <div class="text-xs block opacity-50">
                 {{ collection.author?.name }}
               </div>
