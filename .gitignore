@@ -14,3 +14,4 @@ collections-meta.json
 
 dist-electron
 dev-dist
+src-tauri/target/
