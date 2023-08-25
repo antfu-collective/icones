@@ -3,6 +3,7 @@ interface Window {
   SvgPacker: (options: any) => Promise<any>
 
   // for vscode
+  location?: Location
   baseURI?: string
   staticURI?: string
 }

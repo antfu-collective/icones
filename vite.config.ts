@@ -1,5 +1,4 @@
 import { join, resolve } from 'node:path'
-import { rmSync } from 'node:fs'
 import process from 'node:process'
 import { defineConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
@@ -10,34 +9,11 @@ import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import fg from 'fast-glob'
+import { isTauri } from './src/env'
 
-// eslint-disable-next-line import/default
-import electron from 'vite-plugin-electron'
-import renderer from 'vite-plugin-electron-renderer'
-import esmodule from 'vite-plugin-esmodule'
-
-export default defineConfig(({ mode }) => {
-  const isElectron = mode === 'electron'
-  const isBuild = process.argv.slice(2).includes('build')
-
-  if (isElectron)
-    rmSync('dist-electron', { recursive: true, force: true })
-
+export default defineConfig(() => {
   return {
     plugins: [
-      isElectron && electron([
-        {
-          entry: 'src/main/index.ts',
-          vite: {
-            build: {
-              minify: isBuild,
-              outDir: 'dist-electron/main',
-            },
-          },
-        },
-      ]),
-      isElectron && renderer(),
-      isElectron && esmodule(['prettier']),
       Vue({
         reactivityTransform: true,
         customElement: [
@@ -64,7 +40,7 @@ export default defineConfig(({ mode }) => {
         ],
         dts: 'src/auto-imports.d.ts',
       }),
-      !isElectron && VitePWA({
+      VitePWA({
         strategies: 'injectManifest',
         srcDir: 'src',
         filename: 'sw.ts',
@@ -102,7 +78,7 @@ export default defineConfig(({ mode }) => {
     ],
     define: {
       __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),
-      PWA: !isElectron && (process.env.NODE_ENV === 'production' || process.env.SW_DEV === 'true'),
+      PWA: !isTauri && (process.env.NODE_ENV === 'production' || process.env.SW_DEV === 'true'),
     },
     resolve: {
       alias: {

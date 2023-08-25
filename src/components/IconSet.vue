@@ -166,7 +166,6 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           <div class="flex px-8">
             <!-- Left -->
             <div class="flex-auto px-2">
-              <NavPlaceholder class="md:hidden" />
 
               <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
                 <div class="whitespace-no-wrap overflow-hidden">
@@ -321,7 +320,6 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
         </div>
 
-        <SearchElectron />
 
         <Notification :value="copied">
           <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />

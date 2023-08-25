@@ -1,8 +1,8 @@
 import type { BuiltInParserName } from 'prettier'
-import { isElectron } from '../env'
+import { isTauri } from '../env'
 
 export async function prettierCode(code: string, parser: BuiltInParserName) {
-  if (!isElectron)
+  if (!isTauri)
     return code
   try {
     const prettier = await import('prettier')

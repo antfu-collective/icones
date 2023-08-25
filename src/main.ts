@@ -7,17 +7,17 @@ import './utils/electron'
 import './main.css'
 import 'uno.css'
 
-import { basePath, isElectron } from './env'
+import { basePath, isTauri } from './env'
 import routes from '~pages'
 
 const app = createApp(App)
 
 const router = createRouter({
-  history: isElectron ? createWebHashHistory(basePath) : createWebHistory(basePath),
+  history: isTauri ? createWebHashHistory(basePath) : createWebHistory(basePath),
   routes,
 })
 
-if (!isElectron && PWA) {
+if (!isTauri && PWA) {
   // disable local storage cache when there is PWA:
   // we need to keep local storage when running dev server without PWA
   // to avoid send requests to iconify server api

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CollectionMeta } from '../data'
 import { isInstalled } from '../data'
-import { isElectron } from '../env'
+import { isTauri } from '../env'
 import { isExcludedCategory, isExcludedCollection, isFavoritedCollection, toggleExcludedCollection, toggleFavoriteCollection } from '../store'
 
 defineProps<{
@@ -25,7 +25,7 @@ defineProps<{
       </RouterLink>
       <div />
       <div
-        v-if="isInstalled(c.id) && !isElectron"
+        v-if="isInstalled(c.id) && !isTauri"
         icon-button class="!op50"
         i-carbon-cloud-auditing
         title="Cached in browser"

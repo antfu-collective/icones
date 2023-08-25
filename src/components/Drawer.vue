@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
 import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
-import { isElectron } from '../env'
+import { isTauri } from '../env'
 
 const route = useRoute()
 const current = computed(() => route.path.split('/').slice(-1)[0])
@@ -22,9 +22,8 @@ const collections = computed(() => {
 
 <template>
   <div border="r base">
-    <NavPlaceholder class="mb-4" />
     <div
-      v-if="!isElectron"
+      v-if="!isTauri"
       sticky top-0 bg-base z-1
     >
       <div border="b base">
