@@ -16,134 +16,134 @@ importers:
   .:
     dependencies:
       '@antfu/utils':
-        specifier: ^0.7.5
+        specifier: 0.7.5
         version: 0.7.5
       '@vueuse/core':
-        specifier: ^10.3.0
+        specifier: 10.3.0
         version: 10.3.0(vue@3.3.4)
       dexie:
-        specifier: ^3.2.4
+        specifier: 3.2.4
         version: 3.2.4
       file-saver:
-        specifier: ^2.0.5
+        specifier: 2.0.5
         version: 2.0.5
       fzf:
-        specifier: ^0.5.2
+        specifier: 0.5.2
         version: 0.5.2
       hotkeys-js:
-        specifier: ^3.12.0
+        specifier: 3.12.0
         version: 3.12.0
       iconify-icon:
         specifier: 1.0.8
         version: 1.0.8
       prettier:
-        specifier: ^3.0.1
+        specifier: 3.0.1
         version: 3.0.1
       vue:
         specifier: 3.3.4
         version: 3.3.4
       vue-chemistry:
-        specifier: ^0.2.2
+        specifier: 0.2.2
         version: 0.2.2(vue@3.3.4)
       vue-router:
         specifier: 4.2.4
         version: 4.2.4(vue@3.3.4)
     devDependencies:
       '@antfu/eslint-config':
-        specifier: ^0.41.0
+        specifier: 0.41.0
         version: 0.41.0(eslint@8.48.0)(typescript@5.1.6)
       '@iconify/json':
-        specifier: ^2.2.98
+        specifier: 2.2.98
         version: 2.2.98
       '@purge-icons/generated':
-        specifier: ^0.9.0
+        specifier: 0.9.0
         version: 0.9.0
       '@types/file-saver':
-        specifier: ^2.0.5
+        specifier: 2.0.5
         version: 2.0.5
       '@types/fs-extra':
-        specifier: ^11.0.1
+        specifier: 11.0.1
         version: 11.0.1
       '@types/prettier':
-        specifier: ^3.0.0
+        specifier: 3.0.0
         version: 3.0.0
       '@vitejs/plugin-vue':
-        specifier: ^4.2.3
+        specifier: 4.2.3
         version: 4.2.3(vite@4.4.8)(vue@3.3.4)
       dayjs:
-        specifier: ^1.11.9
+        specifier: 1.11.9
         version: 1.11.9
       eslint:
         specifier: 8.48.0
         version: 8.48.0
       esno:
-        specifier: ^0.17.0
+        specifier: 0.17.0
         version: 0.17.0
       fast-glob:
-        specifier: ^3.3.1
+        specifier: 3.3.1
         version: 3.3.1
       fs-extra:
-        specifier: ^11.1.1
+        specifier: 11.1.1
         version: 11.1.1
       jszip:
-        specifier: ^3.10.1
+        specifier: 3.10.1
         version: 3.10.1
       lru-cache:
-        specifier: ^10.0.0
+        specifier: 10.0.0
         version: 10.0.0
       pnpm:
-        specifier: ^8.6.11
+        specifier: 8.6.11
         version: 8.6.11
       svg-packer:
-        specifier: ^0.0.3
+        specifier: 0.0.3
         version: 0.0.3
       typescript:
-        specifier: ^5.1.6
+        specifier: 5.1.6
         version: 5.1.6
       unocss:
-        specifier: ^0.55.0
+        specifier: 0.55.0
         version: 0.55.0(postcss@8.4.27)(rollup@2.79.1)(vite@4.4.8)
       unplugin-auto-import:
-        specifier: ^0.16.6
+        specifier: 0.16.6
         version: 0.16.6(@vueuse/core@10.3.0)(rollup@2.79.1)
       unplugin-vue-components:
-        specifier: ^0.25.1
+        specifier: 0.25.1
         version: 0.25.1(rollup@2.79.1)(vue@3.3.4)
       vite:
-        specifier: ^4.4.8
+        specifier: 4.4.8
         version: 4.4.8
       vite-plugin-pages:
-        specifier: ^0.31.0
+        specifier: 0.31.0
         version: 0.31.0(vite@4.4.8)
       vite-plugin-purge-icons:
-        specifier: ^0.9.2
+        specifier: 0.9.2
         version: 0.9.2(vite@4.4.8)
       vite-plugin-pwa:
-        specifier: ^0.16.4
+        specifier: 0.16.4
         version: 0.16.4(vite@4.4.8)(workbox-build@7.0.0)(workbox-window@7.0.0)
       vue-tsc:
-        specifier: ^1.8.8
+        specifier: 1.8.8
         version: 1.8.8(typescript@5.1.6)
 
   electron:
     devDependencies:
       electron:
-        specifier: ^24.6.1
+        specifier: 24.6.1
         version: 24.6.1
       electron-builder:
-        specifier: ^24.4.0
+        specifier: 24.6.3
         version: 24.6.3
       electron-devtools-installer:
-        specifier: ^3.2.0
+        specifier: 3.2.0
         version: 3.2.0
       vite-plugin-electron:
-        specifier: ^0.12.0
+        specifier: 0.12.0
         version: 0.12.0
       vite-plugin-electron-renderer:
-        specifier: ^0.14.5
+        specifier: 0.14.5
         version: 0.14.5
       vite-plugin-esmodule:
-        specifier: ^1.5.0
+        specifier: 1.5.0
         version: 1.5.0
 
 packages:
@@ -2882,7 +2882,7 @@ packages:
   /@vueuse/shared@4.11.2(vue@3.3.4):
     resolution: {integrity: sha512-vTbTi6ou7ljH3CkKVoaIaCAoWB5T1ewSogpL6VnO1duMPNuiv7x8K/LunMbnTg4tVyt6QwaiCuEq/kyS6AUBRg==}
     dependencies:
-      vue-demi: 0.14.5(vue@3.3.4)
+      vue-demi: 0.14.6(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -7613,7 +7613,7 @@ packages:
     resolution: {integrity: sha512-hemcHzSb/RKqxJudn/m0Afq1awNjkaKspezFFlYXXzH7kKvchvqYq6SedhKNgDl/4AY1k1vcHfNcKVKgFzZXCw==}
     dependencies:
       '@vueuse/shared': 4.11.2(vue@3.3.4)
-      vue-demi: 0.14.5(vue@3.3.4)
+      vue-demi: 0.14.6(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -7632,6 +7632,21 @@ packages:
         optional: true
     dependencies:
       vue: 3.3.4
+
+  /vue-demi@0.14.6(vue@3.3.4):
+    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.3.4
+    dev: false
 
   /vue-eslint-parser@9.3.1(eslint@8.48.0):
     resolution: {integrity: sha512-Clr85iD2XFZ3lJ52/ppmUDG/spxQu6+MAeHXjjyI4I1NUYZ9xmenQp4N0oaHJhrA8OOxltCVxMRfANGa70vU0g==}
