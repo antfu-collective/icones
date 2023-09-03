@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "0.41.0",
-    "@iconify/json": "2.2.98",
+    "@iconify/json": "2.2.110",
     "@purge-icons/generated": "0.9.0",
     "@types/file-saver": "2.0.5",
     "@types/fs-extra": "11.0.1",
