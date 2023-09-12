@@ -128,8 +128,8 @@ importers:
   electron:
     devDependencies:
       electron:
-        specifier: 24.8.2
-        version: 24.8.2
+        specifier: 26.2.1
+        version: 26.2.1
       electron-builder:
         specifier: 24.6.4
         version: 24.6.4
@@ -3906,8 +3906,8 @@ packages:
     resolution: {integrity: sha512-iX8GbAMij7cOtJPZo02CClpaPMWjvN5meqXiJXkBgwvraNWTNH0Z7F9tkznI34JRPtWASoPM/xWamq3oNb49GA==}
     dev: true
 
-  /electron@24.8.2:
-    resolution: {integrity: sha512-wzJgxwMz/xxuQTituZw4Uoa5M5r8PfC8abkMVqGKztPgnzYvjGz+zoQcRwuXwtKBXyHf2yee7yXTDLbenoM3kA==}
+  /electron@26.2.1:
+    resolution: {integrity: sha512-SNT24Cf/wRvfcFZQoERXjzswUlg5ouqhIuA2t9x2L7VdTn+2Jbs0QXRtOfzcnOV/raVMz3e8ICyaU2GGeciKLg==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     dependencies:
