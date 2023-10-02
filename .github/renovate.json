@@ -17,7 +17,8 @@
       "description": "Create non-major @iconify/json updates daily",
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackagePatterns": ["^@iconify/json"],
-      "extends": ["schedule:daily"]
+      "extends": ["schedule:daily"],
+      "automerge": true
     },
     {
       "description": "Suppress major updates using Dependency Dashboard",
