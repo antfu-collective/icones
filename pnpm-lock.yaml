@@ -102,7 +102,7 @@ importers:
         version: 5.2.2
       unocss:
         specifier: 0.55.6
-        version: 0.55.6(postcss@8.4.27)(rollup@2.79.1)(vite@4.4.9)
+        version: 0.55.6(postcss@8.4.31)(rollup@2.79.1)(vite@4.4.9)
       unplugin-auto-import:
         specifier: 0.16.6
         version: 0.16.6(@vueuse/core@10.4.1)(rollup@2.79.1)
@@ -2623,7 +2623,7 @@ packages:
       sirv: 2.0.3
     dev: true
 
-  /@unocss/postcss@0.55.6(postcss@8.4.27):
+  /@unocss/postcss@0.55.6(postcss@8.4.31):
     resolution: {integrity: sha512-7/+nBNLGN0okZPfxCR115b5EQunWrtjyEC0nRS9/Ls5u8fwwkq05X5qUeqDLzVR/iSpQpk+4Ij9cKjsMD540ig==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2634,7 +2634,7 @@ packages:
       css-tree: 2.3.1
       fast-glob: 3.3.1
       magic-string: 0.30.3
-      postcss: 8.4.27
+      postcss: 8.4.31
     dev: true
 
   /@unocss/preset-attributify@0.55.6:
@@ -2808,7 +2808,7 @@ packages:
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       magic-string: 0.30.2
-      postcss: 8.4.27
+      postcss: 8.4.31
       source-map-js: 1.0.2
 
   /@vue/compiler-ssr@3.3.4:
@@ -2834,7 +2834,7 @@ packages:
       '@vue/compiler-dom': 3.3.4
       '@vue/reactivity': 3.3.4
       '@vue/shared': 3.3.4
-      minimatch: 9.0.2
+      minimatch: 9.0.3
       muggle-string: 0.3.1
       typescript: 5.2.2
       vue-template-compiler: 2.7.14
@@ -6237,8 +6237,8 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss@8.4.27:
-    resolution: {integrity: sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==}
+  /postcss@8.4.31:
+    resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.6
@@ -7390,7 +7390,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
-  /unocss@0.55.6(postcss@8.4.27)(rollup@2.79.1)(vite@4.4.9):
+  /unocss@0.55.6(postcss@8.4.31)(rollup@2.79.1)(vite@4.4.9):
     resolution: {integrity: sha512-Wg1pWeWleb/U6cpL0R1CjbyQVKkFpxygPwQYfvUAAg2BP5ocXrw2TLURY/giMXHPUWzZfChdJFBs4XSVHe+3aQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -7406,7 +7406,7 @@ packages:
       '@unocss/cli': 0.55.6(rollup@2.79.1)
       '@unocss/core': 0.55.6
       '@unocss/extractor-arbitrary-variants': 0.55.6
-      '@unocss/postcss': 0.55.6(postcss@8.4.27)
+      '@unocss/postcss': 0.55.6(postcss@8.4.31)
       '@unocss/preset-attributify': 0.55.6
       '@unocss/preset-icons': 0.55.6
       '@unocss/preset-mini': 0.55.6
@@ -7685,7 +7685,7 @@ packages:
         optional: true
     dependencies:
       esbuild: 0.18.18
-      postcss: 8.4.27
+      postcss: 8.4.31
       rollup: 3.27.2
     optionalDependencies:
       fsevents: 2.3.2
