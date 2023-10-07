@@ -53,8 +53,8 @@ importers:
         specifier: 0.41.0
         version: 0.41.0(eslint@8.48.0)(typescript@5.2.2)
       '@iconify/json':
-        specifier: 2.2.124
-        version: 2.2.124
+        specifier: 2.2.125
+        version: 2.2.125
       '@purge-icons/generated':
         specifier: 0.9.0
         version: 0.9.0
@@ -1996,8 +1996,8 @@ packages:
     resolution: {integrity: sha512-WJzw+3iicrF/tbjbxxRinSgy5FHdJoz/egTqwi3xCDkNRJPq482RX1iyaWrjNuY2vMNSPkQMuqHvZDXgA+WnwQ==}
     dev: true
 
-  /@iconify/json@2.2.124:
-    resolution: {integrity: sha512-5Jus7MwFnatCZJq0aN7pJKqkE6FUQJLo+8nTrBZ3c+9UxzjUKiaoMfBvzk8pcbfutC1fMDy5JE/1fi+iZ6xlWw==}
+  /@iconify/json@2.2.125:
+    resolution: {integrity: sha512-FtazQikTTUrM4OvaLtzu+yi8htSf1nnjsHJ7SAR501i4o2b+OcvUmjaBJ1Z6DzfoAyHXuDkuF+mjEeLy64F3wg==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.1
