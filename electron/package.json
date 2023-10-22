@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "vite ../ --port 3333 --mode electron",
     "copy": "cp -r ../dist ./",
-    "build": "vite build ../ --mode electron && yarn copy && electron-builder"
+    "build": "vite build ../ --mode electron && pnpm copy && electron-builder"
   },
   "devDependencies": {
     "electron": "24.8.2",
