@@ -15,7 +15,7 @@ function transformToReactJSX(jsx: string) {
 export function HtmlToJSX(html: string, reactJSX = false) {
   const jsx = html.replace(/([\w-]+)=/g, (i) => {
     const words = i.split('-')
-    if (words.length === 1)
+    if (words.length === 1 || words[0] === 'stroke')
       return i
     return words
       .map((i, idx) =>
