@@ -4,12 +4,13 @@ import antfu from '@antfu/eslint-config'
 export default antfu(
   {
     ignores: [
-      // eslint ignore globs here
+      '**/src/assets/collections.json',
+      '**/public/collections',
+      '**/public/lib',
+      '**/release',
+      '**/collections-info.json',
+      '**/collections-meta.json',
+      '**/dist-electron',
     ],
-  },
-  {
-    rules: {
-      // overrides
-    },
   },
 )
