@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "module": "esnext",
     "target": "esnext",
-    "lib": ["DOM", "ESNext", "WebWorker"],
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "jsx": "preserve",
-    "noUnusedLocals": true,
+    "lib": ["DOM", "ESNext", "WebWorker"],
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
     "types": [
       "vite/client",
       "vite-plugin-pages/client",
       "vite-plugin-pwa/client"
-    ]
+    ],
+    "strict": true,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "dist",

@@ -5,12 +5,11 @@ export async function prettierCode(code: string, parser: BuiltInParserName) {
   if (!isElectron)
     return code
   try {
-    const prettier = await import('prettier')
-    return prettier.format(code, {
+    const format = await import('prettier').then(r => r.format)
+    return format(code, {
       parser,
       semi: false,
       singleQuote: true,
-      //   ...TODO: add user settings
     })
   }
   catch (e) {

@@ -6,6 +6,8 @@ withDefaults(defineProps<{
   value: false,
   direction: 'bottom',
 })
+
+const emit = defineEmits(['close'])
 </script>
 
 <template>
@@ -18,7 +20,7 @@ withDefaults(defineProps<{
         bg-base bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out
       "
       :class="value ? 'opacity-85' : 'opacity-0'"
-      @click="$emit('close')"
+      @click="emit('close')"
     />
     <div
       class="

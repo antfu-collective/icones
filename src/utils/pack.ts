@@ -1,8 +1,12 @@
 import { isVSCode } from '../env'
 import { bufferToString } from './bufferToSring'
 import {
-  SvgToJSX, SvgToTSX, SvgToVue,
-  getSvg, getSvgSymbol, toComponentName,
+  SvgToJSX,
+  SvgToTSX,
+  SvgToVue,
+  getSvg,
+  getSvgSymbol,
+  toComponentName,
 } from './icons'
 
 export async function LoadIconSvgs(icons: string[]) {

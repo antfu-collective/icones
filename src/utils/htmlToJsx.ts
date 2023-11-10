@@ -3,10 +3,9 @@ function transformToReactJSX(jsx: string) {
     if (i === 'class=')
       return 'className='
     return i.split(':')
-      .map((i, idx) =>
-        idx === 0
-          ? i.toLowerCase()
-          : i[0].toUpperCase() + i.slice(1).toLowerCase())
+      .map((i, idx) => idx === 0
+        ? i.toLowerCase()
+        : i[0].toUpperCase() + i.slice(1).toLowerCase())
       .join('')
   })
   return reactJSX
@@ -18,10 +17,9 @@ export function HtmlToJSX(html: string, reactJSX = false) {
     if (words.length === 1 || words[0] === 'stroke')
       return i
     return words
-      .map((i, idx) =>
-        idx === 0
-          ? i.toLowerCase()
-          : i[0].toUpperCase() + i.slice(1).toLowerCase())
+      .map((i, idx) => idx === 0
+        ? i.toLowerCase()
+        : i[0].toUpperCase() + i.slice(1).toLowerCase())
       .join('')
   })
   return reactJSX ? transformToReactJSX(jsx) : jsx
