@@ -2,7 +2,7 @@
   "extends": [
     "config:recommended"
   ],
-  "rangeStrategy": "pin",
+  "rangeStrategy": "bump",
   "packageRules": [
     {
       "description": "Group all non-major updates weekly except @iconify/json",
