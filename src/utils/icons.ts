@@ -92,7 +92,7 @@ export function ${name}(props: QwikIntrinsicElements['svg'], key: string) {
 }
 
 export function SvgToVue(svg: string, name: string, isTs?: boolean) {
-  const contet = `
+  const content = `
 <template>
   ${ClearSvg(svg)}
 </template>
@@ -102,7 +102,7 @@ export default {
   name: '${name}'
 }
 </script>`
-  const code = isTs ? contet.replace('<script>', '<script lang="ts">') : contet
+  const code = isTs ? content.replace('<script>', '<script lang="ts">') : content
   return prettierCode(code, 'vue')
 }
 
@@ -120,6 +120,16 @@ export function ${name}(props: JSX.IntrinsicElements['svg'], key: string) {
 
 export function SvgToSvelte(svg: string) {
   return `${svg.replace(/<svg (.*?)>/, '<svg $1 {...$$$props}>')}`
+}
+
+export function SvgToAstro(svg: string) {
+  return `
+---
+const props = Astro.props 
+---
+
+${svg.replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
+`
 }
 
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
@@ -161,6 +171,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToSolid(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'svelte':
       return SvgToSvelte(await getSvg(icon, undefined, color))
+    case 'astro':
+      return SvgToAstro(await getSvg(icon, undefined, color))
     case 'unplugin':
       return `import ${toComponentName(icon)} from '~icons/${icon.split(':')[0]}/${icon.split(':')[1]}'`
   }
