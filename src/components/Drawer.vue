@@ -29,7 +29,7 @@ const collections = computed(() => {
       v-if="!isElectron"
       sticky top-0 bg-base z-1
     >
-      <div :class="drawerCollapsed ? 'flex-col' : 'flex-1'" flex="~ justify-between" border="b base">
+      <div flex="~ justify-between" border="b base">
         <button
           icon-button text-xl px-4 py-3
           @click="$router.replace('/')"
