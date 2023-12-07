@@ -18,8 +18,6 @@ const collections = computed(() => {
     ]
   }
 })
-
-// const minimize = ref(false)
 </script>
 
 <template>
