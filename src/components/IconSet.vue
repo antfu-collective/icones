@@ -1,7 +1,7 @@
 <!-- eslint-disable no-console -->
 <script setup lang='ts'>
 import { useRoute, useRouter } from 'vue-router'
-import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
+import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
@@ -149,7 +149,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
 <template>
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden">
-      <Drawer h-full overflow-y-overlay flex-none hidden md:block w-220px />
+      <Drawer h-full overflow-y-overlay flex-none hidden md:block :w="drawerCollapsed ? '0px' : '220px'" transition-all />
       <!-- Loading -->
       <div
         v-if="collection && loading"
@@ -169,6 +169,15 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
               <NavPlaceholder class="md:hidden" />
 
               <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
+                <button
+                  v-show="drawerCollapsed"
+                  title="Open Sidebar"
+                  absolute left--1 top-3
+                  icon-button text-xl px-4 py-3
+                  @click="drawerCollapsed = !drawerCollapsed"
+                >
+                  <div i-carbon:side-panel-open />
+                </button>
                 <div class="whitespace-no-wrap overflow-hidden">
                   {{ collection.name }}
                 </div>

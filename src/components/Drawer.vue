@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
-import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
+import { drawerCollapsed, isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
@@ -18,6 +18,8 @@ const collections = computed(() => {
     ]
   }
 })
+
+// const minimize = ref(false)
 </script>
 
 <template>
@@ -27,13 +29,20 @@ const collections = computed(() => {
       v-if="!isElectron"
       sticky top-0 bg-base z-1
     >
-      <div border="b base">
+      <div :class="drawerCollapsed ? 'flex-col' : 'flex-1'" flex="~ justify-between" border="b base">
         <button
-          v-show="$route.path !== '/'"
           icon-button text-xl px-4 py-3
           @click="$router.replace('/')"
         >
           <div i-carbon:arrow-left />
+        </button>
+        <button
+          title="Hide Sidebar"
+          icon-button text-xl px-4 py-3
+          md:block hidden
+          @click="drawerCollapsed = !drawerCollapsed"
+        >
+          <div i-carbon:side-panel-close />
         </button>
       </div>
 

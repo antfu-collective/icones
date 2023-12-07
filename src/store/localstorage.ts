@@ -24,6 +24,8 @@ export const excludedCategories = useStorage<string[]>('icones-excluded-categori
   'Archive / Unmaintained',
 ])
 
+export const drawerCollapsed = useStorage<boolean>('icones-drawer-collapsed', false)
+
 export function getTransformedId(icon: string) {
   return idCases[preferredCase.value]?.(icon) || icon
 }
