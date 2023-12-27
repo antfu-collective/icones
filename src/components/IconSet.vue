@@ -1,7 +1,7 @@
 <!-- eslint-disable no-console -->
 <script setup lang='ts'>
 import { useRoute, useRouter } from 'vue-router'
-import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
+import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
@@ -151,7 +151,28 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
 <template>
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden">
-      <Drawer h-full overflow-y-overlay flex-none hidden md:block w-220px />
+      <Drawer
+        h-full overflow-y-overlay flex-none hidden md:block
+        :w="drawerCollapsed ? '0px' : '250px'"
+        transition-all duration-300
+      />
+
+      <button
+        fixed top="50%" flex="~ items-end justify-center" w-5 h-8
+        icon-button transition-all duration-300
+        border="t r b base rounded-r-full" z-100
+        title="Toggle Sidebar"
+        :style="{ left: drawerCollapsed ? '0px' : '250px' }"
+        @click="drawerCollapsed = !drawerCollapsed"
+      >
+        <div
+          i-carbon-chevron-left
+          icon-button ml--1
+          transition duration-300 ease-in-out
+          :class="drawerCollapsed ? 'transform rotate-180' : ''"
+        />
+      </button>
+
       <!-- Loading -->
       <div
         v-if="collection && loading"
@@ -255,7 +276,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
         <div of-y-scroll of-x-hidden>
           <!-- Icons -->
-          <div class="px-4 pt-2 pb-4 text-center">
+          <div class="px-5 pt-2 pb-4 text-center">
             <Icons
               :icons="icons.slice(0, max)"
               :selected="bags"
