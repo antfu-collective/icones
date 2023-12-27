@@ -19,7 +19,7 @@ export async function getSvgLocal(icon: string, size = '1em', color = 'currentCo
 
 export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
   return await getSvgLocal(icon, size, color)
-   || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
+    || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
 }
 
 export async function getSvgSymbol(icon: string, size = '1em', color = 'currentColor') {

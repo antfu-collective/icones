@@ -1,7 +1,8 @@
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname)
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const out = path.resolve(__dirname, '../public')
 
 function ObjectPick(source: Record<string, any>, keys: string[]) {

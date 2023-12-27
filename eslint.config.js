@@ -12,5 +12,6 @@ export default antfu(
       '**/collections-meta.json',
       '**/dist-electron',
     ],
+    formatters: true,
   },
 )

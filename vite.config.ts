@@ -57,7 +57,6 @@ export default defineConfig(({ mode }) => {
       AutoImport({
         imports: [
           'vue',
-          'vue/macros',
           'vue-router',
           '@vueuse/core',
         ],

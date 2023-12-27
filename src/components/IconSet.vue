@@ -6,10 +6,10 @@ import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
 
-const showBag = $ref(false)
-let copied = $ref(false)
-let current = $ref('')
-let max = $ref(isLocalMode ? 500 : 200)
+const showBag = ref(false)
+const copied = ref(false)
+const current = ref('')
+const max = ref(isLocalMode ? 500 : 200)
 const searchbar = ref<{ input: HTMLElement }>()
 
 const route = useRoute()
@@ -19,15 +19,15 @@ const { search, icons, category, collection, variant } = getSearchResults()
 const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
-const id = $computed(() => collection.value?.id)
-const url = $computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = $computed(() => (id != null && !specialTabs.includes(id)) ? `https://www.npmjs.com/package/@iconify-json/${id}` : '')
-const namespace = $computed(() => (id != null && !specialTabs.includes(id)) ? `${id}:` : '')
+const id = computed(() => collection.value?.id)
+const url = computed(() => collection.value?.url || collection.value?.author?.url)
+const npm = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `https://www.npmjs.com/package/@iconify-json/${id.value}` : '')
+const namespace = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `${id.value}:` : '')
 
 function onCopy(status: boolean) {
-  copied = status
+  copied.value = status
   setTimeout(() => {
-    copied = false
+    copied.value = false
   }, 2000)
 }
 
@@ -66,14 +66,14 @@ async function onSelect(icon: string) {
       onCopy(await copyText(await getIconSnippet(icon, 'id', true) || icon))
       break
     default:
-      current = icon
+      current.value = icon
       break
   }
 }
 
 function loadMore() {
-  max += 100
-  maxMap.set(namespace, max)
+  max.value += 100
+  maxMap.set(namespace.value, max.value)
 }
 
 async function loadAll() {
@@ -81,23 +81,25 @@ async function loadAll() {
     return
 
   await cacheCollection(collection.value!.id)
-  max = icons.value.length
-  maxMap.set(namespace, max)
+  max.value = icons.value.length
+  maxMap.set(namespace.value, max.value)
 }
 
 function next(delta = 1) {
-  const name = current.startsWith(namespace) ? current.slice(namespace.length) : current
+  const name = current.value.startsWith(namespace.value)
+    ? current.value.slice(namespace.value.length)
+    : current.value
   const index = icons.value.indexOf(name)
   if (index === -1)
     return
   const newOne = icons.value[index + delta]
   if (newOne)
-    current = namespace + newOne
+    current.value = namespace + newOne
 }
 
 watch(
-  () => namespace,
-  () => max = maxMap.get(namespace) || 200,
+  () => namespace.value,
+  () => max.value = maxMap.get(namespace.value) || 200,
 )
 
 onMounted(() => {
@@ -127,8 +129,8 @@ onKeyStroke('/', (e) => {
 })
 
 onKeyStroke('Escape', () => {
-  if (current !== '') {
-    current = ''
+  if (current.value !== '') {
+    current.value = ''
     focusSearch()
   }
 })

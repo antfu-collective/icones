@@ -9,17 +9,15 @@ html.dark {
 }
 
 .btn {
-  @apply 
-    border border-base rounded shadow-sm outline-none
-    px-4 py-1 text-gray-600 text-sm transition-all bg-base
-    hover:(bg-gray-50 shadow)
-    dark:(border-dark-200 text-gray-300)
-    dark:hover:(border-primary bg-dark-100 text-primary)
-    focus:(shadow outline-none);
+  --uno: border border-base rounded shadow-sm outline-none px-4 py-1
+    text-gray-600 text-sm transition-all bg-base hover-(bg-gray-50 shadow)
+    dark-(border-dark-200 text-gray-300)
+    dark-hover-(border-primary bg-dark-100 text-primary)
+    focus-(shadow outline-none);
 }
 
 .btn.small {
-  @apply px-2 py-1 text-sm;
+  --uno: px-2 py-1 text-sm;
 }
 
 .dragging {
@@ -102,14 +100,14 @@ html.dark {
 
 /* fallback black svg in dark mode */
 .icons-item svg,
-.dark .icons-item [fill="#000"],
-.dark .icons-item [fill="#000000"],
-.dark .icons-item [fill="black"] {
+.dark .icons-item [fill='#000'],
+.dark .icons-item [fill='#000000'],
+.dark .icons-item [fill='black'] {
   fill: currentColor;
 }
 
-.dark .icons-item [stroke="#000"],
-.dark .icons-item [stroke="#000000"],
-.dark .icons-item [stroke="black"] {
+.dark .icons-item [stroke='#000'],
+.dark .icons-item [stroke='#000000'],
+.dark .icons-item [stroke='black'] {
   stroke: currentColor;
 }

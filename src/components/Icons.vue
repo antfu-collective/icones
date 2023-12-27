@@ -79,12 +79,13 @@ defineEmits<{
 </template>
 
 <style>
-.icons-item:hover, .icons-item.active {
+.icons-item:hover,
+.icons-item.active {
   color: var(--theme-color);
   position: relative;
 }
 .icons-item.active::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -3px;
   left: -3px;
@@ -95,7 +96,7 @@ defineEmits<{
   opacity: 0.1;
 }
 .icons-item:hover::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -4px;
   left: -4px;
