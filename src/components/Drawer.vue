@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
-import { drawerCollapsed, isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
+import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 import { isElectron } from '../env'
 
 const route = useRoute()
@@ -21,7 +21,7 @@ const collections = computed(() => {
 </script>
 
 <template>
-  <div border="r base">
+  <div border="r base" relative>
     <NavPlaceholder class="mb-4" />
     <div
       v-if="!isElectron"
@@ -33,14 +33,6 @@ const collections = computed(() => {
           @click="$router.replace('/')"
         >
           <div i-carbon:arrow-left />
-        </button>
-        <button
-          title="Hide Sidebar"
-          icon-button text-xl px-4 py-3
-          md:block hidden
-          @click="drawerCollapsed = !drawerCollapsed"
-        >
-          <div i-carbon:side-panel-close />
         </button>
       </div>
 
@@ -58,7 +50,7 @@ const collections = computed(() => {
     <RouterLink
       v-for="collection in collections"
       :key="collection.id"
-      class="px-4 py-2 flex border-b border-base"
+      class="px-3 py-1 flex border-b border-base"
       :to="`/collection/${collection.id}`"
     >
       <div
