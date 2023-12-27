@@ -38,7 +38,6 @@ export default defineConfig(({ mode }) => {
       isElectron && renderer(),
       isElectron && esmodule(['prettier']),
       Vue({
-        reactivityTransform: true,
         customElement: [
           'iconify-icon',
         ],
