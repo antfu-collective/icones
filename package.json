@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.1",
-    "@iconify/json": "^2.2.166",
+    "@iconify/json": "^2.2.167",
     "@purge-icons/generated": "^0.10.0",
     "@types/file-saver": "^2.0.7",
     "@types/fs-extra": "^11.0.4",
