@@ -53,8 +53,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1(@vue/compiler-sfc@3.3.13)(eslint-plugin-format@0.1.0)(eslint@8.56.0)(typescript@5.3.3)
       '@iconify/json':
-        specifier: ^2.2.168
-        version: 2.2.168
+        specifier: ^2.2.169
+        version: 2.2.169
       '@purge-icons/generated':
         specifier: ^0.10.0
         version: 0.10.0
@@ -1872,8 +1872,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify/json@2.2.168:
-    resolution: {integrity: sha512-NuimrvW7/BfOK97Kx0YMWG8UMcqdfc0GZ0mZfewA90Qvl3+dchLmbyvNXnFraUFrrS8Luie3P6R0+3gHE9DnIA==}
+  /@iconify/json@2.2.169:
+    resolution: {integrity: sha512-hAvyagTw8ir5fX/xMcSKZI6bMipmac/k24FqAutbosgwx7YfamtkEjO3FE0Y0abOiBTposa2ETcRnTBLo6skEA==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.1
@@ -6532,11 +6532,6 @@ packages:
       once: 1.4.0
     dev: true
 
-  /punycode@2.1.1:
-    resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
-    engines: {node: '>=6'}
-    dev: true
-
   /punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
@@ -7872,7 +7867,7 @@ packages:
   /uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
-      punycode: 2.1.1
+      punycode: 2.3.1
     dev: true
 
   /utf8-byte-length@1.0.4:
