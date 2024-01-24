@@ -7,6 +7,7 @@ settings:
 neverBuiltDependencies:
   - electron
   - electron-builder
+  - ttf2woff2
   - vite-plugin-electron
   - vite-plugin-electron-renderer
   - vite-plugin-esmodule
@@ -7531,7 +7532,6 @@ packages:
     resolution: {integrity: sha512-5/Web6B0lF/STNAQ0d5vAlRRquuWsNj8wOmKQ9ql9Bsgbx8MsLnNzaBG9vBcSE4s4Ry1QOr/MyUrDUIVgVPEfw==}
     engines: {node: '>= 4.0.0'}
     hasBin: true
-    requiresBuild: true
     dependencies:
       bindings: 1.5.0
       bufferstreams: 2.0.1
