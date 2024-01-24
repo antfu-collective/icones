@@ -70,6 +70,7 @@
     "neverBuiltDependencies": [
       "electron",
       "electron-builder",
+      "ttf2woff2",
       "vite-plugin-electron",
       "vite-plugin-electron-renderer",
       "vite-plugin-esmodule"
