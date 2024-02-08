@@ -54,8 +54,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1(@vue/compiler-sfc@3.3.13)(eslint-plugin-format@0.1.0)(eslint@8.56.0)(typescript@5.3.3)
       '@iconify/json':
-        specifier: ^2.2.180
-        version: 2.2.180
+        specifier: ^2.2.181
+        version: 2.2.181
       '@purge-icons/generated':
         specifier: ^0.10.0
         version: 0.10.0
@@ -1873,8 +1873,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify/json@2.2.180:
-    resolution: {integrity: sha512-Kww6uD6fi+9qSeXAUGo6bQgTm5vprMEvTENVaZXL3qfa9KHICWZaGsVETpjn3WiTwcUPgN6P2/GXLzhuFulm7w==}
+  /@iconify/json@2.2.181:
+    resolution: {integrity: sha512-G7fQeyYVgnSDzPAftOkBH/mFjVXEGVRLMV21L8ilNuc/9HCVmqH+Nh0QMa5hV2Jl8UjTLBJ/B1rKCH8V1LdADg==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
