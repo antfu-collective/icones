@@ -54,8 +54,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1(@vue/compiler-sfc@3.3.13)(eslint-plugin-format@0.1.0)(eslint@8.56.0)(typescript@5.3.3)
       '@iconify/json':
-        specifier: ^2.2.181
-        version: 2.2.181
+        specifier: ^2.2.182
+        version: 2.2.182
       '@purge-icons/generated':
         specifier: ^0.10.0
         version: 0.10.0
@@ -1873,8 +1873,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify/json@2.2.181:
-    resolution: {integrity: sha512-G7fQeyYVgnSDzPAftOkBH/mFjVXEGVRLMV21L8ilNuc/9HCVmqH+Nh0QMa5hV2Jl8UjTLBJ/B1rKCH8V1LdADg==}
+  /@iconify/json@2.2.182:
+    resolution: {integrity: sha512-XlVgdHTuz83XOMSScIWFiQN1t/Vl00+JuOLLeY/vuTHu0UkmDYrujO4VwvrRMRsksCo70g6TZNiczHtqP958IA==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -2903,7 +2903,7 @@ packages:
   /@vueuse/shared@10.7.0(vue@3.3.13):
     resolution: {integrity: sha512-kc00uV6CiaTdc3i1CDC4a3lBxzaBE9AgYNtFN87B5OOscqeWElj/uza8qVDmk7/U8JbqoONLbtqiLJ5LGRuqlw==}
     dependencies:
-      vue-demi: 0.14.6(vue@3.3.13)
+      vue-demi: 0.14.7(vue@3.3.13)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -8071,7 +8071,6 @@ packages:
         optional: true
     dependencies:
       vue: 3.3.13(typescript@5.3.3)
-    dev: false
 
   /vue-eslint-parser@9.3.2(eslint@8.56.0):
     resolution: {integrity: sha512-q7tWyCVaV9f8iQyIA5Mkj/S6AoJ9KBN8IeUSf3XEmBrOtxOZnfTg5s4KClbZBCK3GtnT/+RyCLZyDHuZwTuBjg==}
@@ -8295,6 +8294,7 @@ packages:
 
   /workbox-google-analytics@7.0.0:
     resolution: {integrity: sha512-MEYM1JTn/qiC3DbpvP2BVhyIH+dV/5BjHk756u9VbwuAhu0QHyKscTnisQuz21lfRpOwiS9z4XdqeVAKol0bzg==}
+    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
     dependencies:
       workbox-background-sync: 7.0.0
       workbox-core: 7.0.0
