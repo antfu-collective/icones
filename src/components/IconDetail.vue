@@ -132,6 +132,13 @@ const collection = computed(() => {
           </div>
         </div>
       </div>
+      <div v-if="collection?.license">
+        <a
+          class="text-xs opacity-50 hover:opacity-100"
+          :href="collection.license.url"
+          target="_blank"
+        >{{ collection.license.title }}</a>
+      </div>
 
       <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
         Collection:
