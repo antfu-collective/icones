@@ -16,11 +16,10 @@ const currentCollectionId = ref('')
 const loaded = ref(false)
 const installed = ref(false)
 const collection = shallowRef<CollectionMeta | null>(null)
-const searchResult = useSearch(collection)
 
-export function getSearchResults() {
-  return searchResult
-}
+export const getSearchResults = createSharedComposable(() => {
+  return useSearch(collection)
+})
 
 export function useCurrentCollection() {
   return collection

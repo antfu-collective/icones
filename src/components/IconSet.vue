@@ -1,19 +1,27 @@
 <!-- eslint-disable no-console -->
 <script setup lang='ts'>
-import { useRoute, useRouter } from 'vue-router'
 import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
-
-const showBag = ref(false)
-const copied = ref(false)
-const current = ref('')
-const max = ref(isLocalMode ? 500 : 200)
-const searchbar = ref<{ input: HTMLElement }>()
+import {cleanupQuery} from '../utils/query'
 
 const route = useRoute()
 const router = useRouter()
+
+const showBag = ref(false)
+const copied = ref(false)
+const current = computed({
+  get() {
+    return (route.query.icon as string) || ''
+  },
+  set(value) {
+    router.replace({ query: cleanupQuery({ ...route.query, icon: value }) })
+  },
+})
+const max = ref(isLocalMode ? 500 : 200)
+const searchbar = ref<{ input: HTMLElement }>()
+
 
 const { search, icons, category, collection, variant } = getSearchResults()
 const loading = isCurrentCollectionLoading()
@@ -101,21 +109,6 @@ watch(
   () => namespace.value,
   () => max.value = maxMap.get(namespace.value) || 200,
 )
-
-onMounted(() => {
-  search.value = route.query.s as string || ''
-  watch([search], () => {
-    synchronizeSearchQuery()
-  })
-  watch([collection], () => {
-    if (search.value)
-      synchronizeSearchQuery()
-  })
-})
-
-function synchronizeSearchQuery() {
-  router.replace({ query: { s: search.value } })
-}
 
 function focusSearch() {
   searchbar.value?.input.focus()
