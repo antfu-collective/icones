@@ -4,7 +4,7 @@ import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurren
 import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
-import {cleanupQuery} from '../utils/query'
+import { cleanupQuery } from '../utils/query'
 
 const route = useRoute()
 const router = useRouter()
@@ -21,7 +21,6 @@ const current = computed({
 })
 const max = ref(isLocalMode ? 500 : 200)
 const searchbar = ref<{ input: HTMLElement }>()
-
 
 const { search, icons, category, collection, variant } = getSearchResults()
 const loading = isCurrentCollectionLoading()
@@ -85,7 +84,7 @@ function loadMore() {
 }
 
 async function loadAll() {
-  if (!namespace)
+  if (!namespace.value)
     return
 
   await cacheCollection(collection.value!.id)
@@ -102,7 +101,7 @@ function next(delta = 1) {
     return
   const newOne = icons.value[index + delta]
   if (newOne)
-    current.value = namespace + newOne
+    current.value = namespace.value + newOne
 }
 
 watch(
