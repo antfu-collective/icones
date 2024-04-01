@@ -104,11 +104,18 @@ watch(
 
 onMounted(() => {
   search.value = route.query.s as string || ''
-  watch([search, collection], () => {
+  watch([search], () => {
+    synchronizeSearchQuery()
+  })
+  watch([collection], () => {
     if (search.value)
-      router.replace({ query: { s: search.value } })
+      synchronizeSearchQuery()
   })
 })
+
+function synchronizeSearchQuery() {
+  router.replace({ query: { s: search.value } })
+}
 
 function focusSearch() {
   searchbar.value?.input.focus()
