@@ -108,9 +108,9 @@ export default {
 
 export function SvgToSolid(svg: string, name: string, snippet: boolean) {
   let code = `
-export function ${name}(props: JSX.IntrinsicElements['svg'], key: string) {
+export function ${name}(props: JSX.IntrinsicElements['svg']) {
   return (
-    ${ClearSvg(svg, false).replace(/<svg (.*?)>/, '<svg $1 {...props} key={key}>')}
+    ${svg.replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
   )
 }`
 
