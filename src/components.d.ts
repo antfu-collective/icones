@@ -30,6 +30,7 @@ declare module 'vue' {
     NavPlaceholder: typeof import('./components/electron/NavPlaceholder.vue')['default']
     Notification: typeof import('./components/Notification.vue')['default']
     Progress: typeof import('./components/Progress.vue')['default']
+    QueryRouterLink: typeof import('./components/QueryRouterLink.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBar: typeof import('./components/SearchBar.vue')['default']

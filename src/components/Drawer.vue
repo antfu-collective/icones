@@ -47,7 +47,7 @@ const collections = computed(() => {
     </div>
 
     <!-- Collections -->
-    <RouterLink
+    <QueryRouterLink
       v-for="collection in collections"
       :key="collection.id"
       class="px-3 py-1 flex border-b border-base"
@@ -79,6 +79,6 @@ const collections = computed(() => {
       >
         <div :class="isFavoritedCollection(collection.id) ? 'i-carbon-star-filled' : 'i-carbon-star'" ma />
       </button>
-    </RouterLink>
+    </QueryRouterLink>
   </div>
 </template>
