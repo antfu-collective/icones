@@ -1,16 +1,22 @@
-import type { IconifyJSON } from '@iconify/iconify'
+import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
-import Iconify from '@purge-icons/generated'
-import { favoritedCollections, inProgress, isFavorited, progressMessage } from '../store'
+import { addCollection } from 'iconify-icon'
+import { AsyncFzf } from 'fzf'
+import { favoritedCollectionIds, inProgress, isExcludedCollection, isFavoritedCollection, isRecentCollection, progressMessage, recentCollectionIds } from '../store'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
 import infoJSON from './collections-info.json'
+import { variantCategories } from './variant-category'
+
+export const specialTabs = ['all', 'recent']
+
+export type PresentType = 'favorite' | 'recent' | 'normal'
 
 export interface CollectionInfo {
   id: string
   name: string
-  author?: { name: string; url: string }
-  license?: { title: string; url: string }
+  author?: { name: string, url: string }
+  license?: { title: string, url: string }
   url?: string
   sampleIcons?: string[]
   category?: string
@@ -22,50 +28,72 @@ export interface CollectionInfo {
 export interface CollectionMeta extends CollectionInfo {
   icons: string[]
   categories?: Record<string, string[]>
+  variants?: Record<string, string[]>
 }
 
 const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
+export const enabledCollections = computed(() => collections.filter(c => !isExcludedCollection(c)))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
-export const categoryFilter = ref<string | undefined>(undefined)
 
-export const sortedCollectionsInfo = computed(() => {
-  return collections
-    .filter((c) => {
-      if (!categoryFilter.value)
-        return true
-      return c.category === categoryFilter.value
+export const isSearchOpen = ref(false)
+export const categorySearch = ref('')
+
+const fzf = new AsyncFzf(collections, {
+  casing: 'case-insensitive',
+  fuzzy: 'v1',
+  selector: v => `${v.name} ${v.id} ${v.category} ${v.author}`,
+})
+
+export const filteredCollections = ref<CollectionInfo[]>(enabledCollections.value)
+
+watch([categorySearch, enabledCollections], ([q]) => {
+  if (!q) {
+    filteredCollections.value = enabledCollections.value
+  }
+  else {
+    fzf.find(q).then((result) => {
+      filteredCollections.value = result.map(i => i.item)
+    }).catch(() => {
+      // The search is canceled
     })
-    .sort(
-      (a, b) =>
-        favoritedCollections.value.indexOf(b.id)
-      - favoritedCollections.value.indexOf(a.id),
-    )
+  }
 })
 
-export const favoritedCollectionsIcons = computed(() => {
-  return sortedCollectionsInfo.value.filter(i => isFavorited(i.id))
-})
+export const sortedCollectionsInfo = computed(() =>
+  filteredCollections.value
+    .sort((a, b) => favoritedCollectionIds.value.indexOf(b.id) - favoritedCollectionIds.value.indexOf(a.id)),
+)
 
-export const otherCollectionsIcons = computed(() => {
-  return sortedCollectionsInfo.value.filter(i => !isFavorited(i.id))
-})
+export const favoritedCollections = computed(() =>
+  filteredCollections.value.filter(i => isFavoritedCollection(i.id))
+    .sort((a, b) => favoritedCollectionIds.value.indexOf(b.id) - favoritedCollectionIds.value.indexOf(a.id)),
+)
 
-export const isInstalled = (id: string) => installed.value.includes(id)
-export const isMetaLoaded = (id: string) => !!loadedMeta.value.find(i => i.id === id)
+export const recentCollections = computed(() =>
+  filteredCollections.value.filter(i => isRecentCollection(i.id))
+    .sort((a, b) => recentCollectionIds.value.indexOf(b.id) - recentCollectionIds.value.indexOf(a.id)),
+)
+
+export function isInstalled(id: string) {
+  return installed.value.includes(id)
+}
+export function isMetaLoaded(id: string) {
+  return !!loadedMeta.value.find(i => i.id === id)
+}
 
 // install the preview icons on the homepage
 export function preInstall() {
   for (const collection of collections) {
     if (collection.prepacked)
-      Iconify.addCollection(collection.prepacked as any)
+      addCollection(collection.prepacked as any)
   }
 }
 
 export async function tryInstallFromLocal(id: string) {
-  if (id === 'all')
+  if (specialTabs.includes(id))
     return false
 
   if (isLocalMode)
@@ -79,7 +107,7 @@ export async function tryInstallFromLocal(id: string) {
     return false
 
   const data = result.data
-  Iconify.addCollection(data)
+  addCollection(data)
   installed.value.push(id)
 
   return true
@@ -87,15 +115,15 @@ export async function tryInstallFromLocal(id: string) {
 
 // load full iconset
 export async function downloadAndInstall(id: string) {
-  if (id === 'all')
+  if (specialTabs.includes(id))
     return false
 
   if (installed.value.includes(id))
     return true
 
-  const data = Object.freeze(await fetch(`${staticPath}/collections/${id}-raw.json`).then(r => r.json()))
+  const data = Object.freeze(await fetch(`${staticPath}/collections/${id}.json`).then(r => r.json()))
 
-  Iconify.addCollection(data)
+  addCollection(data)
   installed.value.push(id)
 
   if (!isLocalMode)
@@ -112,21 +140,40 @@ export async function cacheCollection(id: string) {
   inProgress.value = false
 }
 
-export async function getMeta(id: string): Promise<CollectionMeta | null> {
+export async function getCollectionMeta(id: string): Promise<CollectionMeta | null> {
   let meta = loadedMeta.value.find(i => i.id === id)
   if (meta)
     return meta
 
-  meta = Object.freeze(
-    await fetch(`${staticPath}/collections/${id}-meta.json`).then(r => r.json()),
-  )
+  meta = await fetch(`${staticPath}/collections/${id}-meta.json`).then(r => r.json())
 
   if (!meta)
     return null
 
+  meta.variants ||= getVariantCategories(meta)
+
+  meta = Object.freeze(meta)
+
   loadedMeta.value.push(meta)
 
   return meta
+}
+
+function getVariantCategories(collection: CollectionMeta) {
+  const variantsRule = variantCategories[collection.id]
+  if (!variantsRule)
+    return
+
+  const variants: Record<string, string[]> = {}
+
+  for (const icon of collection.icons) {
+    const name = variantsRule.find(i => typeof i[1] === 'string' ? icon.endsWith(i[1]) : i[1].test(icon))?.[0] || 'Regular'
+    if (!variants[name])
+      variants[name] = []
+    variants[name].push(icon)
+  }
+
+  return variants
 }
 
 export async function getFullMeta() {

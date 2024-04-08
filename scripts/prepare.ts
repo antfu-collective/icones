@@ -1,6 +1,8 @@
-import path from 'path'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const out = path.resolve(__dirname, '../public')
 
 function ObjectPick(source: Record<string, any>, keys: string[]) {
@@ -12,7 +14,7 @@ function ObjectPick(source: Record<string, any>, keys: string[]) {
 
 function humanFileSize(size: number) {
   const i = Math.floor(Math.log(size) / Math.log(1024))
-  const v = (size / Math.pow(1024, i))
+  const v = (size / 1024 ** i)
   return `${v.toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB'][i]}`
 }
 
@@ -35,14 +37,31 @@ async function prepareJSON() {
     const icons = Object.keys(setData.icons)
     const categories = setData.categories
     const meta = { ...info, icons, categories }
-    const rawFilePath = path.join(collectionsDir, `${info.id}-raw.json`)
+    const rawFilePath = path.join(collectionsDir, `${info.id}.json`)
     const metaFilePath = path.join(collectionsDir, `${info.id}-meta.json`)
 
     await fs.writeJSON(rawFilePath, setData)
     await fs.writeJSON(metaFilePath, meta)
     collectionsMeta.push(meta)
 
-    info.sampleIcons = icons.slice(0, 7)
+    info.sampleIcons = icons.slice(0, 9)
+    if (info.id === 'logos') {
+      info.sampleIcons = [
+        'vue',
+        'vitejs',
+        'vitest',
+        'rollupjs',
+        'github-icon',
+        'eslint',
+        'esbuild',
+        'typescript-icon',
+        'netlify-icon',
+      ]
+    }
+    // non-square icons
+    if (['flag', 'flagpack', 'cif', 'fa', 'fontisto', 'et', 'ps'].includes(info.id))
+      info.sampleIcons = info.sampleIcons.slice(0, 6)
+
     info.prepacked = {
       prefix: setData.prefix,
       width: setData.width,
@@ -60,18 +79,6 @@ async function prepareJSON() {
 async function copyLibs() {
   const modules = path.resolve(__dirname, '../node_modules')
 
-  await fs.copy(
-    path.join(modules, '@iconify/iconify/dist/'),
-    path.join(out, 'lib'),
-    {
-      filter: (src) => {
-        if (fs.lstatSync(src).isDirectory())
-          return true
-        const basename = path.basename(src)
-        return basename.startsWith('iconify') && basename.endsWith('.min.js')
-      },
-    },
-  )
   await fs.copy(
     path.join(modules, 'svg-packer/dist/index.browser.js'),
     path.join(out, 'lib/svg-packer.js'),

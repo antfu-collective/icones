@@ -1,13 +1,11 @@
 <script setup lang='ts'>
-import copyText from 'copy-text-to-clipboard'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
-import { copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, selectingMode, showCaseSelect, showHelp, toggleBag } from '../store'
+import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
-import copyImage from '../utils/copyImage'
+import { copyPng } from '../utils/copyPng'
 import { idCases } from '../utils/case'
 
-const emit = defineEmits(['close'])
 const props = defineProps({
   icon: {
     type: String,
@@ -19,7 +17,7 @@ const props = defineProps({
   },
 })
 
-const copied = ref(false)
+const emit = defineEmits(['close', 'copy', 'next', 'prev'])
 
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
@@ -29,51 +27,70 @@ onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
 })
 
-const copy = async(type: string) => {
-  const text = await getIconSnippet(props.icon, type, true, color.value)
-  if (!text)
+onKeyStroke('ArrowLeft', (e) => {
+  if (!props.icon)
     return
+  emit('prev')
+  e.preventDefault()
+})
 
-  copied.value = copyText(text)
-  setTimeout(() => {
-    copied.value = false
-  }, 2000)
+onKeyStroke('ArrowRight', (e) => {
+  if (!props.icon)
+    return
+  emit('next')
+  e.preventDefault()
+})
+
+async function copyText(text?: string) {
+  if (text) {
+    try {
+      await navigator.clipboard.writeText(text)
+      return true
+    }
+    catch (err) {
+    }
+  }
+  return false
 }
 
-const copyPng = async() => {
-  const svgString = await getIconSnippet(props.icon, 'svg', true, color.value)
-  if (!svgString)
-    return
-  copyImage(
-    svgString,
+async function copy(type: string) {
+  pushRecentIcon(props.icon)
+
+  const svg = await getIconSnippet(
+    props.icon,
+    type === 'png' ? 'svg' : type,
+    true,
     color.value,
-  ).then(
-    (...a) => {
-      copied.value = true
-      setTimeout(() => (copied.value = false), 2000)
-    },
-    (...a) => {
-      copied.value = true
-      setTimeout(() => (copied.value = false), 2000)
-    },
   )
+  if (!svg)
+    return
+
+  emit('copy', type === 'png'
+    ? await copyPng(svg, color.value)
+    : await copyText(svg))
 }
 
-const download = async(type: string) => {
+async function download(type: string) {
+  pushRecentIcon(props.icon)
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
-
-  const name = `${toComponentName(props.icon)}.${type}`
+  const ext = (type === 'solid' || type === 'qwik') ? 'tsx' : type
+  const name = `${toComponentName(props.icon)}.${ext}`
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
-
   Download(blob, name)
 }
 
-const toggleSelectingMode = () => {
-  selectingMode.value = !selectingMode.value
-  if (selectingMode.value)
-    emit('close')
+function toggleSelectingMode() {
+  switch (activeMode.value) {
+    case 'select':
+      activeMode.value = 'normal'
+      break
+    default:
+      activeMode.value = 'select'
+      emit('close')
+      break
+  }
 }
 
 const collection = computed(() => {
@@ -83,11 +100,11 @@ const collection = computed(() => {
 </script>
 
 <template>
-  <div class="p-2 flex flex-col md:flex-row md:text-left relative">
+  <div class="p-2 flex flex-col flex-wrap md:flex-row md:text-left relative">
     <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
-    <div :style="{color: previewColor}">
+    <div :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">
-        <Icon class="p-4 text-8xl" :icon="icon" />
+        <Icon :key="icon" outer-class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
@@ -99,17 +116,16 @@ const collection = computed(() => {
       </button>
       <div class="flex text-gray-700 relative font-mono dark:text-dark-900">
         {{ transformedId }}
-
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
         <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
         <div class="flex-auto" />
         <div
           v-if="showCaseSelect"
           ref="caseSelector"
-          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100"
+          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100 dark:border dark:border-dark-200"
         >
           <div
-            v-for="[k,v] of Object.entries(idCases)"
+            v-for="[k, v] of Object.entries(idCases)"
             :key="k"
             class="flex items-center p-1 cursor-pointer"
             :class="k === preferredCase ? 'text-primary' : ''"
@@ -117,30 +133,37 @@ const collection = computed(() => {
           >
             <Icon
               icon="carbon:checkmark"
-              class="text-primary mr-1 text-lg"
+              class="text-primary text-lg"
+              outer-class="mr-1"
               :class="k === preferredCase ? '' : 'opacity-0'"
             />
             <span class="flex-auto mr-2">{{ v(icon) }}</span>
           </div>
         </div>
       </div>
+      <div v-if="collection?.license">
+        <a
+          class="text-xs opacity-50 hover:opacity-100"
+          :href="collection.license.url"
+          target="_blank"
+        >{{ collection.license.title }}</a>
+      </div>
 
       <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
         Collection:
-        <router-link
+        <RouterLink
           class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
           :to="`/collection/${collection.id}`"
-          @click="$emit('close')"
         >
           {{ collection.name }}
-        </router-link>
+        </RouterLink>
       </p>
 
       <div>
         <button
           class="
-            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
-            dark:border-dark-200 dark:hover:bg-dark-200
+            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
+            hover:bg-gray-50 dark:hover:bg-dark-200
           "
           :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
           @click="toggleBag(icon)"
@@ -158,10 +181,10 @@ const collection = computed(() => {
         <button
           v-if="inBag(icon)"
           class="
-            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
-            dark:border-dark-200 dark:hover:bg-dark-200
+            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
+            hover:bg-gray-50 dark:hover:bg-dark-200
           "
-          :class="selectingMode ? 'text-primary' : 'text-gray-500'"
+          :class="activeMode === 'select' ? 'text-primary' : 'text-gray-500'"
           @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
@@ -170,8 +193,8 @@ const collection = computed(() => {
 
         <button
           class="
-            inline-block leading-1em border border-gray-200 my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer hover:bg-gray-50
-            dark:border-dark-200 dark:hover:bg-dark-200
+            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
+            hover:bg-gray-50 dark:hover:bg-dark-200
           "
           :class="copyPreviewColor ? 'text-primary' : 'text-gray-500'"
           @click="copyPreviewColor = !copyPreviewColor"
@@ -190,11 +213,11 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
             SVG
           </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copyPng()">
-            PNG
-          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg-symbol')">
             SVG Symbol
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('png')">
+            PNG
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
             Iconify
@@ -210,6 +233,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue')">
             Vue
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue-ts')">
+            Vue<sup class="opacity-50 -mr-1">TS</sup>
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('jsx')">
             React
           </button>
@@ -218,6 +244,15 @@ const collection = computed(() => {
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svelte')">
             Svelte
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('qwik')">
+            Qwik
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
+            Solid
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('astro')">
+            Astro
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('unplugin')">
             Unplugin Icons
@@ -253,12 +288,39 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('svelte')">
             Svelte
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('qwik')">
+            Qwik
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
+            Solid
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('astro')">
+            Astro
+          </button>
+        </div>
+        <div class="mr-4">
+          <div class="my-1 text-gray-500 text-sm">
+            View on
+          </div>
+          <a
+            v-if="collection"
+            class="btn small mr-1 mb-1 opacity-75"
+            :href="`https://icon-sets.iconify.design/${collection.id}/?query=${icon.split(':')[1]}`"
+            target="_blank"
+          >
+            Iconify
+          </a>
+          <a
+            v-if="collection"
+            class="btn small mr-1 mb-1 opacity-75"
+            :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`"
+            target="_blank"
+          >
+            UnoCSS
+          </a>
         </div>
       </div>
     </div>
-    <Notification :value="copied">
-      <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
-      <span class="align-middle">Copied</span>
-    </Notification>
   </div>
 </template>
+../utils/copyPng

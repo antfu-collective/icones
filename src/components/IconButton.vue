@@ -16,15 +16,22 @@ defineProps({
     type: String,
     default: '',
   },
+  to: {
+    type: String,
+    default: '',
+  },
 })
 </script>
 
 <template>
-  <div
+  <component
+    :is="to ? 'RouterLink' : 'button'"
+    :to="to"
     class="icon-button m-auto"
     :class="none ? '' : active ? 'opacity-100 hover:opacity-100' : 'opacity-25 hover:opacity-50'"
   >
     <Icon
+      :key="icon"
       :icon="icon"
       class="inline-block align-middle"
     />
@@ -34,5 +41,5 @@ defineProps({
     >
       {{ text }}
     </div>
-  </div>
+  </component>
 </template>

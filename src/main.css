@@ -1,28 +1,23 @@
 body {
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.bg {
-  background: white;
-}
-
-html.dark,
-html.dark .bg {
-  background: #222;
+html.dark {
+  background: #181818;
 }
 
 .btn {
-  @apply 
-    border border-gray-200 rounded shadow-sm outline-none
-    bg-white px-4 py-1 text-gray-600 text-sm transition-all
-    hover:(bg-gray-50 shadow)
-    dark:(border-dark-200 text-gray-300 bg-dark-100)
-    dark:hover:(border-primary bg-dark-100 text-primary)
-    focus:(shadow outline-none);
+  --uno: border border-base rounded shadow-sm outline-none px-4 py-1
+    text-gray-600 text-sm transition-all bg-base hover-(bg-gray-50 shadow)
+    dark-(border-dark-200 text-gray-300)
+    dark-hover-(border-primary bg-dark-100 text-primary)
+    focus-(shadow outline-none);
 }
 
 .btn.small {
-  @apply px-2 py-1 text-sm;
+  --uno: px-2 py-1 text-sm;
 }
 
 .dragging {
@@ -54,14 +49,6 @@ html.dark .bg {
   -ms-overflow-style: -ms-autohiding-scrollbar;
   scrollbar-width: 6px;
   scrollbar-color: transparent;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}
-
-*:hover::-webkit-scrollbar {
-  display: block;
 }
 
 ::-webkit-scrollbar {
@@ -109,4 +96,37 @@ html.dark .bg {
     visibility: visible;
     opacity: 1;
   }
+}
+
+/* fallback black svg in dark mode */
+.icons-item svg,
+.dark .icons-item [fill='#000'],
+.dark .icons-item [fill='#000000'],
+.dark .icons-item [fill='black'] {
+  fill: currentColor;
+}
+
+.dark .icons-item [stroke='#000'],
+.dark .icons-item [stroke='#000000'],
+.dark .icons-item [stroke='black'] {
+  stroke: currentColor;
+}
+
+/* Color Mode transition */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+.dark::view-transition-old(root) {
+  z-index: 2147483646;
+}
+.dark::view-transition-new(root) {
+  z-index: 1;
 }

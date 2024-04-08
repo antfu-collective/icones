@@ -24,19 +24,17 @@ Icônes
 
 ![](./screenshots/6.png)
 
-
 <p align="center">
   <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
     <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
   </a>
 </p>
 
-
 ### Features
 
-- **Instant Fuzzy Searching** *- all are done locally, no web queries!*
-- The **Bag** *- select your icons and pack them into a ready-to-use icon font!*
-  - *[svg-packer](https://github.com/antfu/svg-packer) was born from this XD*
+- **Instant Fuzzy Searching** _- all are done locally, no web queries!_
+- The **Bag** _- select your icons and pack them into a ready-to-use icon font!_
+  - _[svg-packer](https://github.com/antfu/svg-packer) was born from this XD_
 - Copy the usage scripts
 - SVGs direct download
 - Mobile friendly

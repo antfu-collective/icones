@@ -1,6 +1,0 @@
-{
-  "extends": "@antfu",
-  "rules": {
-    "vue/require-explicit-emits": "off"
-  }
-}

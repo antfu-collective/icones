@@ -1,76 +1,79 @@
 <script lang="ts">
 import { getSearchResults, isDark } from '../store'
-import { categories, categoryFilter } from '../data'
+import { isElectron } from '../env'
 
-export default defineComponent(() => ({
-  ...getSearchResults(),
-  isDark,
-  categories,
-  categoryFilter,
-}))
+export default defineComponent({
+  setup() {
+    const route = useRoute()
+
+    return {
+      ...getSearchResults(),
+      isElectron,
+      isDark,
+      showNav: computed(() => !route.path.startsWith('/collection')),
+      isHomepage: computed(() => route.path === '/'),
+    }
+  },
+})
 </script>
 
 <template>
+  <NavElectron
+    v-if="isElectron && !isHomepage"
+  />
   <nav
-    class="
-      dragging p-2 relative bg-white z-10 flex border-b border-gray-200 flex-none
-      dark:bg-dark-100 dark:border-dark-200
-    "
-    :class="$route.path !== '/' ? 'md:hidden' : ''"
+    class="dragging"
+    flex="~ gap4 none"
+    p4 relative bg-base z-10 border="b base" text-xl
+    :class="showNav ? '' : 'md:hidden'"
   >
     <!-- In Collections -->
-    <template v-if="$route.path !== '/'">
-      <IconButton
-        class="non-dragging text-xl mx-3 my-auto flex-none"
-        icon="carbon:arrow-left"
-        @click="$router.replace('/')"
+    <template v-if="!isHomepage && !isElectron">
+      <RouterLink
+        class="non-dragging"
+        icon-button flex-none
+        i-carbon:arrow-left
+        to="/"
       />
     </template>
 
     <!-- Homepage Only -->
-    <template v-else>
-      <div class="mx-3 mr-4 my-auto flex-none">
-        <select v-model="categoryFilter" class="opacity-50 text-current bg-white dark:bg-dark-100 font-normal w-auto outline-none focus:outline-none">
-          <option :value="undefined">
-            All
-          </option>
-          <option v-for="category of categories" :key="category" :value="category">
-            {{ category.split('/')[0].trim() }}
-          </option>
-        </select>
-      </div>
-      <h1 class="text-xl py-1 m-auto flex-auto text-center font-light" style="letter-spacing: 2px">
+    <template v-if="showNav">
+      <!-- <RouterLink
+        class="non-dragging"
+        i-carbon:search icon-button flex-none
+        to="/collection/all"
+      /> -->
+      <div flex-auto />
+      <h1
+        absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center
+        text-xl font-light tracking-2px pointer-events-none
+      >
         Icônes
       </h1>
-      <router-link
-        class="non-dragging text-xl mx-3 my-auto flex-none"
-        to="/collection/all"
-      >
-        <IconButton icon="carbon:search" style="padding-bottom: 3px" />
-      </router-link>
       <a
-        class="non-dragging text-xl mx-3 my-auto flex-none"
+        class="non-dragging"
+        i-carbon-logo-github icon-button flex-none
         href="https://github.com/antfu/icones"
         target="_blank"
-      >
-        <IconButton icon="codicon:github" style="padding-bottom: 3px" />
-      </a>
-      <div class="non-dragging text-xl mx-3 my-auto flex-none">
-        <DarkSwitcher />
-      </div>
+        title="GitHub"
+      />
+      <RouterLink
+        class="non-dragging"
+        i-carbon-settings icon-button flex-none
+        to="/settings"
+        title="Settings"
+      />
+      <DarkSwitcher flex-none />
     </template>
 
     <!-- Searching -->
-    <div v-if="collection" class="flex">
-      <form action="/collection/all" role="search" method="get" @submit.prevent>
-        <input
-          v-model="search"
-          aria-label="Search"
-          class="text-base outline-none py-2 px-4 flex-auto m-0 w-full bg-transparent"
-          name="s"
-          placeholder="Search..."
-        >
-      </form>
-    </div>
+    <SearchBar
+      v-if="collection"
+      v-model:search="search"
+      class="flex w-full"
+      :style="false"
+      :icon="false"
+    />
   </nav>
 </template>

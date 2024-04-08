@@ -1,52 +1,82 @@
-<script setup lang="ts">
-import Iconify from '@purge-icons/generated'
+<script lang="ts">
+import { LRUCache } from 'lru-cache'
 
+const cache = new LRUCache<string, HTMLElement>({
+  max: 1_000,
+})
+
+const mounted = new WeakSet<HTMLElement>()
+
+function getIcon(name: string) {
+  const el = cache.get(name)
+  if (el) {
+    if (!mounted.has(el)) {
+      mounted.add(el)
+      return el
+    }
+  }
+  const icon = document.createElement('iconify-icon')
+  icon.setAttribute('icon', name)
+  cache.set(name, icon)
+  mounted.add(icon)
+  return icon
+}
+
+function unmountIcon(name: string, icon: HTMLElement) {
+  mounted.delete(icon)
+  cache.set(name, icon)
+}
+</script>
+
+<script setup lang="ts">
 const props = defineProps({
   icon: {
     type: String,
     required: true,
   },
+  class: {
+    type: String,
+    default: '',
+  },
+  outerClass: {
+    type: String,
+    default: '',
+  },
 })
 
-const el = ref<HTMLElement | null>(null)
+const el = ref<HTMLDivElement>()
+let node: HTMLElement | undefined
 
-const update = async() => {
-  await nextTick()
-  if (el.value) {
-    const svg = Iconify.renderSVG(props.icon, {})
-    if (svg) {
-      el.value.textContent = ''
-      el.value.appendChild(svg)
-    }
-    else {
-      const span = document.createElement('span')
-      span.className = 'iconify'
-      span.dataset.icon = props.icon
-      el.value.textContent = ''
-      el.value.appendChild(span)
-    }
-  }
-}
+watchEffect(() => {
+  if (node)
+    node.className = props.class
+})
 
-watch(
-  () => props.icon,
-  update,
-  { flush: 'post' },
-)
+onMounted(() => {
+  node = getIcon(props.icon)
+  el.value?.appendChild(node)
+})
 
-onMounted(update)
+onBeforeUnmount(() => {
+  if (node)
+    unmountIcon(props.icon, node)
+})
 </script>
 
 <template>
-  <div ref="el" :class="$attrs.class" />
+  <div ref="el" class="icon-container" :class="[props.class, props.outerClass]" />
 </template>
 
 <style>
-span.iconify {
-  background: #5551;
-  border-radius: 100%;
+iconify-icon {
   min-width: 1em;
   min-height: 1em;
   display: block;
+}
+
+.icon-container {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1em !important;
 }
 </style>

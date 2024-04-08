@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { bags, clearBag } from '../store'
-import { PackIconFont, PackZip } from '../utils/pack'
+import { PackIconFont, PackSVGSprite, PackZip } from '../utils/pack'
 import type { PackType } from '../utils/pack'
 
 const emit = defineEmits<{
@@ -10,7 +10,7 @@ const emit = defineEmits<{
 
 const showPackOption = ref(false)
 
-const clear = () => {
+function clear() {
   // eslint-disable-next-line no-alert
   if (confirm('Are you sure to remove all icons from the bag?')) {
     clearBag()
@@ -18,16 +18,22 @@ const clear = () => {
   }
 }
 
-const packIconFont = async() => {
+async function packIconFont() {
   // TODO: customzie
   await PackIconFont(
     bags.value,
   )
 }
 
-const PackSvgs = async(type: PackType = 'svg') => {
+async function packSVGSprite() {
+  await PackSVGSprite(
+    bags.value,
+  )
+}
+
+async function PackSvgs(type: PackType = 'svg') {
   await PackZip(
-    bags.value.map(i => i.replace(':', '-')),
+    bags.value,
     'icones-bags',
     type,
   )
@@ -38,8 +44,7 @@ const PackSvgs = async(type: PackType = 'svg') => {
   <div class="h-full flex flex-col w-screen md:w-96 xl:w-128">
     <div
       class="
-        py-3 px-6 flex flex-none border-b border-gray-200
-        dark:border-dark-200
+        py-3 px-6 flex flex-none border-b border-base
       "
     >
       <div>
@@ -58,16 +63,12 @@ const PackSvgs = async(type: PackType = 'svg') => {
 
     <template v-if="bags.length">
       <div class="flex-auto overflow-y-overflow py-3 px-1">
-        <Icons :icons="bags" @select="e => $emit('select', e)" />
+        <Icons :icons="bags" @select="(e: any) => $emit('select', e)" />
       </div>
 
       <div
         v-show="showPackOption"
-        class="
-        relative
-          flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
-          dark:border-dark-200
-        "
+        class="relative flex-none border-t border-base py-3 px-6 text-2xl opacity-75"
       >
         <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="showPackOption = false" />
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svg')">
@@ -82,16 +83,19 @@ const PackSvgs = async(type: PackType = 'svg') => {
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('tsx')">
           React<sup class="opacity-50 -mr-1">TS</sup>
         </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('json')">
+          JSON
+        </button>
       </div>
 
       <div
         class="
-          flex-none border-t border-gray-200 py-3 px-6 text-2xl opacity-75
-          dark:border-dark-200
+          flex-none border-t border-base py-3 px-6 text-2xl opacity-75
         "
       >
         <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:download" text="Download Zip" :active="true" @click="showPackOption = true" />
         <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
+        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:apps" text="Download SVG Sprite" :active="true" @click="packSVGSprite" />
       </div>
     </template>
 

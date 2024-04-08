@@ -7,7 +7,14 @@ const props = withDefaults(defineProps<{
   direction: 'bottom',
 })
 
+const emit = defineEmits(['close'])
+
+const { width, height } = useWindowSize()
+const isSmall = computed(() => width.value < 600 || height.value < 450)
+
 const positionClass = computed(() => {
+  if (isSmall.value)
+    return 'bottom-0 left-0 right-0 top-0 of-auto'
   switch (props.direction) {
     case 'bottom':
       return 'bottom-0 left-0 right-0 border-t'
@@ -40,24 +47,18 @@ const transform = computed(() => {
 
 <template>
   <div
-    class="fixed top-0 bottom-0 left-0 right-0 z-40"
-    :class="value ? '': 'pointer-events-none'"
+    fixed top-0 bottom-0 left-0 right-0 z-40
+    :class="value ? '' : 'pointer-events-none'"
   >
     <div
-      class="
-        bg-white bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out
-        dark:bg-dark-100
-      "
-      :class="value ? 'opacity-85': 'opacity-0'"
-      @click="$emit('close')"
+      bg-base bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out
+      :class="value ? 'opacity-85' : 'opacity-0'"
+      @click="emit('close')"
     />
     <div
-      class="
-        bg-white absolute transition-all duration-200 ease-out
-        dark:bg-dark-100 dark:border-dark-200
-      "
+      bg-base border border-base absolute transition-all duration-200 ease-out
       :class="positionClass"
-      :style="value ? {}: {transform}"
+      :style="value ? {} : { transform }"
     >
       <slot />
     </div>

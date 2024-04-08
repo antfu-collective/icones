@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { setCurrentCollection, useCurrentCollection } from '../../store'
+import { pushRecentCollection, setCurrentCollection, useCurrentCollection } from '../../store'
 
 const props = defineProps<{
   id: string
@@ -14,6 +14,10 @@ watch(
 onUnmounted(() => setCurrentCollection(''))
 
 const collection = useCurrentCollection()
+
+onMounted(() => {
+  pushRecentCollection(props.id)
+})
 </script>
 
 <template>
@@ -22,5 +26,5 @@ const collection = useCurrentCollection()
       Loading...
     </div>
   </WithNavbar>
-  <IconSet v-else :collection="collection" />
+  <IconSet v-else />
 </template>
