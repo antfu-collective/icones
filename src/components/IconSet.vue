@@ -116,9 +116,7 @@ function focusSearch() {
 onMounted(focusSearch)
 watch(router.currentRoute, focusSearch, { immediate: true })
 
-router.afterEach((to) => {
-  if (to.path === '/')
-    search.value = ''
+router.afterEach(() => {
   focusSearch()
 })
 

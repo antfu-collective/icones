@@ -145,7 +145,6 @@ const collection = computed(() => {
         <RouterLink
           class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
           :to="`/collection/${collection.id}`"
-          @click="$emit('close')"
         >
           {{ collection.name }}
         </RouterLink>

@@ -129,14 +129,6 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
     debouncedSearch()
   })
 
-  watch(
-    collection,
-    () => {
-      category.value = ''
-      variant.value = ''
-    },
-  )
-
   return {
     collection,
     search,
