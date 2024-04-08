@@ -1,4 +1,4 @@
-const copyImage = (svg: string, color: string): Promise<void> => {
+export function copyPng(svg: string, color: string): Promise<void> {
   return new Promise((resolve) => {
     const containerDiv = document.createElement('div')
     containerDiv.innerHTML = svg
@@ -10,7 +10,7 @@ const copyImage = (svg: string, color: string): Promise<void> => {
       type: 'image/svg+xml;charset=utf-8',
     })
     const src = URL.createObjectURL(svgBlob)
-    toPng(src).then(async(image) => {
+    toPng(src).then(async (image) => {
       navigator.clipboard
         .write([
           new ClipboardItem({
@@ -69,7 +69,7 @@ const copyImage = (svg: string, color: string): Promise<void> => {
         ) {
           this._init()
           if (this.imgPreview) {
-            this.imgPreview.onload = async() => {
+            this.imgPreview.onload = async () => {
               if (
                 !this.imgPreview
                 || !this.canvas
@@ -78,7 +78,7 @@ const copyImage = (svg: string, color: string): Promise<void> => {
                 return
 
               const img = new Image()
-              const dimensions: { width: number; height: number }
+              const dimensions: { width: number, height: number }
                 = await getDimensions(this.imgPreview.src)
 
               if (scaleFactor) {
@@ -112,7 +112,7 @@ const copyImage = (svg: string, color: string): Promise<void> => {
 
               function getDimensions(
                 src: string,
-              ): Promise<{ width: number; height: number }> {
+              ): Promise<{ width: number, height: number }> {
                 return new Promise((resolve) => {
                   const _img = new Image()
                   _img.src = src
@@ -141,5 +141,3 @@ const copyImage = (svg: string, color: string): Promise<void> => {
     }
   })
 }
-
-export default copyImage
