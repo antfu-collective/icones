@@ -21,10 +21,10 @@
     "build": "vite build ../ --mode electron && pnpm copy && electron-builder"
   },
   "devDependencies": {
-    "electron": "27.0.4",
-    "electron-builder": "24.6.4",
+    "electron": "27.3.9",
+    "electron-builder": "24.13.3",
     "electron-devtools-installer": "3.2.0",
-    "vite-plugin-electron": "0.15.4",
+    "vite-plugin-electron": "0.28.4",
     "vite-plugin-electron-renderer": "0.14.5",
     "vite-plugin-esmodule": "1.5.0"
   }

@@ -54,7 +54,7 @@
     "fs-extra": "^11.2.0",
     "jszip": "^3.10.1",
     "lru-cache": "^10.2.0",
-    "pnpm": "8.10.2",
+    "pnpm": "8.15.6",
     "svg-packer": "^0.0.3",
     "typescript": "^5.4.4",
     "unocss": "^0.59.0",
