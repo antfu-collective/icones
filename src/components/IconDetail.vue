@@ -3,7 +3,7 @@ import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
-import { copyPng } from '../utils/copyPng'
+import { dataUrlToBlob } from '../utils/dataUrlToBlob'
 import { idCases } from '../utils/case'
 
 const props = defineProps({
@@ -53,21 +53,32 @@ async function copyText(text?: string) {
   return false
 }
 
+async function copyPng(dataUrl: string): Promise<boolean> {
+  try {
+    const blob = dataUrlToBlob(dataUrl)
+    const item = new ClipboardItem({ 'image/png': blob })
+    await navigator.clipboard.write([item])
+    return true
+  }
+  catch (e) {
+    console.error('Failed to copy png error', e)
+    return false
+  }
+}
+
 async function copy(type: string) {
   pushRecentIcon(props.icon)
 
-  const svg = await getIconSnippet(
-    props.icon,
-    type === 'png' ? 'svg' : type,
-    true,
-    color.value,
-  )
+  const svg = await getIconSnippet(props.icon, type, true, color.value)
   if (!svg)
     return
 
-  emit('copy', type === 'png'
-    ? await copyPng(svg, color.value)
-    : await copyText(svg))
+  emit(
+    'copy',
+    type === 'png'
+      ? await copyPng(svg)
+      : await copyText(svg),
+  )
 }
 
 async function download(type: string) {
@@ -77,7 +88,9 @@ async function download(type: string) {
     return
   const ext = (type === 'solid' || type === 'qwik') ? 'tsx' : type
   const name = `${toComponentName(props.icon)}.${ext}`
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+  const blob = type === 'png'
+    ? dataUrlToBlob(text)
+    : new Blob([text], { type: 'text/plain;charset=utf-8' })
   Download(blob, name)
 }
 
@@ -276,6 +289,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">
             SVG
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('png')">
+            PNG
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">
             Vue
           </button>
@@ -324,3 +340,4 @@ const collection = computed(() => {
   </div>
 </template>
 ../utils/copyPng
+../utils/svgToPng

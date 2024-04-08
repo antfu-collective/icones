@@ -3,6 +3,7 @@ import { getTransformedId } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
 import { prettierCode } from './prettier'
+import { svgToPngDataUrl } from './svgToPng'
 
 const API_ENTRY = 'https://api.iconify.design'
 
@@ -151,6 +152,8 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return `background: url('${url}') no-repeat center center / contain;`
     case 'svg':
       return await getSvg(icon, '32', color)
+    case 'png':
+      return await svgToPngDataUrl(await getSvg(icon, '32', color))
     case 'svg-symbol':
       return await getSvgSymbol(icon, '32', color)
     case 'data_url':
