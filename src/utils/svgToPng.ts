@@ -1,5 +1,3 @@
-import { dataUrlToBlob } from './dataUrlToBlob'
-
 export async function svgToPngDataUrl(svg: string) {
   const scaleFactor = 16
 
