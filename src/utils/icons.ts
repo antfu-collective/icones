@@ -133,32 +133,32 @@ ${svg.replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
 `
 }
 
-function replaceTags(svg: string, replacements: {
-  from: string
-  to: string
-}[]): string {
-  let result = svg
-  replacements.forEach(({ from, to }) => {
-    result = result.replace(new RegExp(`<${from}(.*?)>`, 'g'), `<${to}$1>`)
-      .replace(new RegExp(`</${from}>`, 'g'), `</${to}>`)
-  })
-  return result
-}
-
-function generateImports(usedComponents: string[]): string {
-  // Separate Svg from the other components
-  const svgIndex = usedComponents.indexOf('Svg')
-  if (svgIndex !== -1)
-    usedComponents.splice(svgIndex, 1)
-
-  // Join all other component names with a comma and wrap them in curly braces
-  const componentsString = usedComponents.length > 0 ? `{ ${usedComponents.join(', ')} }` : ''
-
-  // Return the consolidated import statement, ensuring Svg is imported as a default import
-  return `import Svg, ${componentsString} from 'react-native-svg';`
-}
-
 export function SvgToReactNative(svg: string, name: string, snippet: boolean) {
+  function replaceTags(svg: string, replacements: {
+    from: string
+    to: string
+  }[]): string {
+    let result = svg
+    replacements.forEach(({ from, to }) => {
+      result = result.replace(new RegExp(`<${from}(.*?)>`, 'g'), `<${to}$1>`)
+        .replace(new RegExp(`</${from}>`, 'g'), `</${to}>`)
+    })
+    return result
+  }
+
+  function generateImports(usedComponents: string[]): string {
+  // Separate Svg from the other components
+    const svgIndex = usedComponents.indexOf('Svg')
+    if (svgIndex !== -1)
+      usedComponents.splice(svgIndex, 1)
+
+    // Join all other component names with a comma and wrap them in curly braces
+    const componentsString = usedComponents.length > 0 ? `{ ${usedComponents.join(', ')} }` : ''
+
+    // Return the consolidated import statement, ensuring Svg is imported as a default import
+    return `import Svg, ${componentsString} from 'react-native-svg';`
+  }
+
   const replacements: {
     from: string
     to: string
@@ -199,7 +199,7 @@ export function SvgToReactNative(svg: string, name: string, snippet: boolean) {
   let code = `
 ${imports}
 
-export function ${name}(props: any) {
+export function ${name}(props) {
  return (
     ${reactNativeSvgCode}
  )
