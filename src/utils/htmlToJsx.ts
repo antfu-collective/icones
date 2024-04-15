@@ -1,8 +1,8 @@
 function transformToReactJSX(jsx: string) {
-  const reactJSX = jsx.replace(/(class|(\w+:\w+))=/g, (i) => {
+  const reactJSX = jsx.replace(/(class|(stroke-\w+)|(\w+:\w+))=/g, (i) => {
     if (i === 'class=')
       return 'className='
-    return i.split(':')
+    return i.split(/[\:\-]/)
       .map((i, idx) => idx === 0
         ? i.toLowerCase()
         : i[0].toUpperCase() + i.slice(1).toLowerCase())
