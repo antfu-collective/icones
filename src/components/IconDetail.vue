@@ -235,6 +235,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
             Iconify
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('iconify-tailwind')">
+            Iconify Tailwind
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('pure-jsx')">
             JSX
           </button>

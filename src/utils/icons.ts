@@ -258,6 +258,9 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToReactNative(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'unplugin':
       return `import ${toComponentName(icon)} from '~icons/${icon.split(':')[0]}/${icon.split(':')[1]}'`
+    case 'iconify-tailwind':
+      // https://iconify.design/docs/usage/css/tailwind/#html
+      return `<span class="icon-[${icon.replace(/:/g, '--')}]"></span>`
   }
 }
 
