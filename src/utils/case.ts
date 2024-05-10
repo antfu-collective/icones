@@ -35,6 +35,9 @@ export const idCases = {
   unocss(id: string) {
     return `i-${id.replace(/:/g, '-')}`
   },
+  iconifyTailwind(id: string) {
+    return `icon-[${id.replace(/:/g, '--')}]`
+  },
 }
 
 export type IdCase = keyof typeof idCases
