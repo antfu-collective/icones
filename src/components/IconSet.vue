@@ -157,7 +157,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
       <button
         fixed top="50%" flex="~ items-end justify-center" w-5 h-8
         icon-button transition-all duration-300
-        border="t r b base rounded-r-full" z-100
+        border="t r b base rounded-r-full" z-10 max-md:hidden
         title="Toggle Sidebar"
         :style="{ left: drawerCollapsed ? '0px' : '250px' }"
         @click="drawerCollapsed = !drawerCollapsed"
