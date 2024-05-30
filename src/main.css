@@ -71,8 +71,16 @@ html.dark {
 }
 
 /* Tootip */
-.tooltip {
-  position: relative;
+.v-popper--theme-tooltip .v-popper__inner {
+  --uno: important-bg-base;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-outer {
+  --uno: important-border-none;
+}
+
+.v-popper--theme-tooltip .v-popper__inner {
+  --uno: border border-base;
 }
 
 /* fallback black svg in dark mode */

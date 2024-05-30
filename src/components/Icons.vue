@@ -47,26 +47,28 @@ const { style } = useThemeColor()
 <template>
   <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size} ${colorClass}`">
     <div
-      v-for="icon of icons " :key="icon" class="non-dragging icons-item tooltip"
+      v-for="icon of icons " :key="icon" class="non-dragging icons-item relative"
       :class="[spacing, selected.includes(namespace + icon) ? 'active' : '']"
       @click="$emit('select', namespace + icon)"
     >
-      <Tooltip placement="bottom">
+      <div v-if="display === 'list'" class="icon-border flex gap-1">
         <Icon
-          :key="icon" class="tooltip-content non-dragging leading-none icon-border  h-1em" :cache="true"
+          :key="icon" class="non-dragging leading-none" :cache="true"
+          :icon="namespace + icon"
+        />
+        <span
+          class="text-sm px-1 m-auto"
+          v-html="getSearchHighlightHTML(icon, search)"
+        />
+      </div>
+      <Tooltip v-else placement="bottom">
+        <Icon
+          :key="icon" class="non-dragging leading-none icon-border h-1em" :cache="true"
           :icon="namespace + icon"
         />
         <template #popper>
-          <div :style="style">
-            <span
-              v-if="display === 'list'" class="tooltip-content text-sm ml-1 px-1 m-auto"
-              v-html="getSearchHighlightHTML(icon, search)"
-            />
-            <span v-else class="leading-none border-none z-100 text-primary">
-              <span class="opacity-75 ">
-                {{ icon }}
-              </span>
-            </span>
+          <div :style="style" class="leading-none border-none z-100 text-primary opacity-75 text-sm">
+            {{ icon }}
           </div>
         </template>
       </Tooltip>
@@ -106,13 +108,5 @@ const { style } = useThemeColor()
   border-radius: 4px;
   border: 1px solid var(--theme-color);
   opacity: 0.4;
-}
-
-.v-popper--theme-tooltip .v-popper__inner {
-  @apply !bg-base;
-}
-
-.v-popper--theme-tooltip .v-popper__arrow-outer {
-  @apply !border-none;
 }
 </style>
