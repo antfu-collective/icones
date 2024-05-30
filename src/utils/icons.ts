@@ -33,13 +33,13 @@ export async function getSvgSymbol(icon: string, size = '1em', color = 'currentC
   // Grab the inner HTML and move into a symbol element
   symbolElem.innerHTML = node.querySelector('svg')!.innerHTML
   symbolElem.setAttribute('viewBox', node.querySelector('svg')!.getAttribute('viewBox')!)
-  symbolElem.id = icon.replace(/\:/, '-') // Simple slugify for quick symbol lookup
+  symbolElem.id = icon.replace(/:/, '-') // Simple slugify for quick symbol lookup
 
   return symbolElem?.outerHTML
 }
 
 export function toComponentName(icon: string) {
-  return icon.split(/:|-|_/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
+  return icon.split(/[:\-_]/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
 
 export function ClearSvg(svgCode: string, reactJSX?: boolean) {
