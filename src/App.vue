@@ -1,9 +1,7 @@
 <script setup lang='ts'>
-import { themeColor } from './store'
+import { useThemeColor } from './hooks'
 
-const style = computed<any>(() => ({
-  '--theme-color': themeColor.value,
-}))
+const { style } = useThemeColor()
 </script>
 
 <template>

@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import { disableCache } from 'iconify-icon'
 import App from './App.vue'
 import '@unocss/reset/tailwind.css'
+import 'floating-vue/dist/style.css'
 import './utils/electron'
 import './main.css'
 import 'uno.css'

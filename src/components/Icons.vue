@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { getSearchHighlightHTML } from '../hooks'
+import { Tooltip } from 'floating-vue'
+import { getSearchHighlightHTML, useThemeColor } from '../hooks'
 
 defineProps({
   icons: {
@@ -36,44 +37,39 @@ defineProps({
     default: 'text-dark-600 dark:text-dark-900',
   },
 })
-
 defineEmits<{
   (event: 'select', id: string): void
 }>()
+
+const { style } = useThemeColor()
 </script>
 
 <template>
-  <div
-    class="non-dragging flex flex-wrap select-none justify-center"
-    :class="`text-${size} ${colorClass}`"
-  >
+  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size} ${colorClass}`">
     <div
-      v-for="icon of icons"
-      :key="icon"
-      class="non-dragging icons-item flex tooltip"
+      v-for="icon of icons " :key="icon" class="non-dragging icons-item tooltip"
       :class="[spacing, selected.includes(namespace + icon) ? 'active' : '']"
       @click="$emit('select', namespace + icon)"
     >
-      <Icon
-        :key="icon"
-        class="tooltip-content non-dragging leading-none h-1em"
-        :cache="true"
-        :icon="namespace + icon"
-      />
-      <span
-        v-if="display === 'list'"
-        class="tooltip-content text-sm ml-1 px-1 m-auto"
-        v-html="getSearchHighlightHTML(icon, search)"
-      />
-      <span
-        v-else
-        border="~ dark-only"
-        class="tooltip-text bg-base shadow leading-none whitespace-nowrap z-100"
-      >
-        <span class="opacity-75">
-          {{ icon }}
-        </span>
-      </span>
+      <Tooltip placement="bottom">
+        <Icon
+          :key="icon" class="tooltip-content non-dragging leading-none icon-border  h-1em" :cache="true"
+          :icon="namespace + icon"
+        />
+        <template #popper>
+          <div :style="style">
+            <span
+              v-if="display === 'list'" class="tooltip-content text-sm ml-1 px-1 m-auto"
+              v-html="getSearchHighlightHTML(icon, search)"
+            />
+            <span v-else class="leading-none border-none z-100 text-primary">
+              <span class="opacity-75 ">
+                {{ icon }}
+              </span>
+            </span>
+          </div>
+        </template>
+      </Tooltip>
     </div>
   </div>
 </template>
@@ -82,9 +78,13 @@ defineEmits<{
 .icons-item:hover,
 .icons-item.active {
   color: var(--theme-color);
+}
+
+.icon-border {
   position: relative;
 }
-.icons-item.active::after {
+
+.icon-border.active::after {
   content: '';
   position: absolute;
   top: -3px;
@@ -95,7 +95,8 @@ defineEmits<{
   background: var(--theme-color);
   opacity: 0.1;
 }
-.icons-item:hover::before {
+
+.icon-border:hover::before {
   content: '';
   position: absolute;
   top: -4px;
@@ -105,5 +106,13 @@ defineEmits<{
   border-radius: 4px;
   border: 1px solid var(--theme-color);
   opacity: 0.4;
+}
+
+.v-popper--theme-tooltip .v-popper__inner {
+  @apply !bg-base;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-outer {
+  @apply !border-none;
 }
 </style>

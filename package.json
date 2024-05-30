@@ -31,6 +31,7 @@
     "@vueuse/core": "^10.9.0",
     "dexie": "^4.0.1",
     "file-saver": "^2.0.5",
+    "floating-vue": "^5.2.2",
     "fzf": "^0.5.2",
     "hotkeys-js": "^3.13.7",
     "iconify-icon": "^2.0.0",
