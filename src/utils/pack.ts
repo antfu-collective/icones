@@ -1,5 +1,5 @@
 import { isVSCode } from '../env'
-import { bufferToString } from './bufferToSring'
+import { bufferToString } from './bufferToString'
 import {
   SvgToJSX,
   SvgToTSX,
