@@ -12,7 +12,7 @@ export async function prettierCode(code: string, parser: BuiltInParserName) {
       singleQuote: true,
     })
   }
-  catch (e) {
+  catch {
     return code
   }
 }
