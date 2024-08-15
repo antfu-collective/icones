@@ -9,10 +9,8 @@ html.dark {
 }
 
 .btn {
-  --uno: border border-base rounded shadow-sm outline-none px-4 py-1
-    text-gray-600 text-sm transition-all bg-base hover-(bg-gray-50 shadow)
-    dark-(border-dark-200 text-gray-300)
-    dark-hover-(border-primary bg-dark-100 text-primary)
+  --uno: border border-base rounded shadow-sm outline-none px-4 py-1 text-gray-600 text-sm transition-all bg-base
+    hover-(bg-gray-50 shadow) dark-(border-dark-200 text-gray-300) dark-hover-(border-primary bg-dark-100 text-primary)
     focus-(shadow outline-none);
 }
 
