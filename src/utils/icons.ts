@@ -1,4 +1,5 @@
 import { buildIcon, loadIcon } from 'iconify-icon'
+import { encodeSvgForCss } from '@iconify/utils'
 import { getTransformedId } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
@@ -211,6 +212,13 @@ export function ${name}(props) {
   return prettierCode(code, 'babel-ts')
 }
 
+export function SvgToDataURL(svg: string) {
+  const base64 = `data:image/svg+xml;base64,${Base64.encode(svg)}`
+  const plain = `data:image/svg+xml,${encodeSvgForCss(svg)}`
+  // Return the shorter of the two data URLs
+  return base64.length < plain.length ? base64 : plain
+}
+
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
   if (!icon)
     return
@@ -235,7 +243,7 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
     case 'svg-symbol':
       return await getSvgSymbol(icon, '32', color)
     case 'data_url':
-      return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon, undefined, color))}`
+      return SvgToDataURL(await getSvg(icon, undefined, color))
     case 'pure-jsx':
       return ClearSvg(await getSvg(icon, undefined, color))
     case 'jsx':
