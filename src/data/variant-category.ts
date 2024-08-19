@@ -1,7 +1,7 @@
 export const variantCategories: Record<string, [string, string | RegExp][]> = {
   'ph': [
     ['Bold', '-bold'],
-    ['Duetone', '-duotone'],
+    ['Duotone', '-duotone'],
     ['Fill', '-fill'],
     ['Light', '-light'],
     ['Thin', '-thin'],

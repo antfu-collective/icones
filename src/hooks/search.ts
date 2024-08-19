@@ -4,11 +4,36 @@ import { computed, markRaw, ref, watch } from 'vue'
 import type { CollectionMeta } from '../data'
 import { specialTabs } from '../data'
 import { searchAlias } from '../data/search-alias'
+import { cleanupQuery } from '../utils/query'
 
 export function useSearch(collection: Ref<CollectionMeta | null>) {
-  const category = ref('')
-  const variant = ref('')
-  const search = ref('')
+  const route = useRoute()
+  const router = useRouter()
+
+  const category = computed({
+    get() {
+      return route.query.category as string || ''
+    },
+    set(value: string) {
+      router.replace({ query: cleanupQuery({ ...route.query, category: value }) })
+    },
+  })
+  const variant = computed({
+    get() {
+      return route.query.variant as string || ''
+    },
+    set(value: string) {
+      router.replace({ query: cleanupQuery({ ...route.query, variant: value }) })
+    },
+  })
+  const search = computed({
+    get() {
+      return route.query.s as string || ''
+    },
+    set(value: string) {
+      router.replace({ query: cleanupQuery({ ...route.query, s: value }) })
+    },
+  })
 
   const isAll = computed(() => collection.value && specialTabs.includes(collection.value.id))
   const searchParts = computed(() => search.value.trim().toLowerCase().split(' ').filter(Boolean))
@@ -104,14 +129,6 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
     debouncedSearch()
   })
 
-  watch(
-    collection,
-    () => {
-      category.value = ''
-      variant.value = ''
-    },
-  )
-
   return {
     collection,
     search,
@@ -121,7 +138,13 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
   }
 }
 
-export function getSearchHighlightHTML(text: string, search: string, baseClass = 'text-gray-500', activeClass = 'text-primary') {
+// @unocss-include
+export function getSearchHighlightHTML(
+  text: string,
+  search: string,
+  baseClass = 'color-fade',
+  activeClass = 'text-primary',
+) {
   const start = text.indexOf(search || '')
 
   if (!search || start < 0)

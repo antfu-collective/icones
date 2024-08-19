@@ -48,6 +48,7 @@ async function createMainWindow() {
     }
   }
 
+  // @ts-expect-error - no types
   win.webContents.on('will-navigate', handleRedirect)
 
   win.webContents.setWindowOpenHandler((details) => {

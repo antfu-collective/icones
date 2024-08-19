@@ -3,6 +3,7 @@ import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { Download } from '../utils/pack'
+import { dataUrlToBlob } from '../utils/dataUrlToBlob'
 import { idCases } from '../utils/case'
 
 const props = defineProps({
@@ -46,19 +47,38 @@ async function copyText(text?: string) {
       await navigator.clipboard.writeText(text)
       return true
     }
-    catch (err) {
+    catch {
     }
   }
   return false
 }
 
+async function copyPng(dataUrl: string): Promise<boolean> {
+  try {
+    const blob = dataUrlToBlob(dataUrl)
+    const item = new ClipboardItem({ 'image/png': blob })
+    await navigator.clipboard.write([item])
+    return true
+  }
+  catch (e) {
+    console.error('Failed to copy png error', e)
+    return false
+  }
+}
+
 async function copy(type: string) {
   pushRecentIcon(props.icon)
-  const text = await getIconSnippet(props.icon, type, true, color.value)
-  if (!text)
+
+  const svg = await getIconSnippet(props.icon, type, true, color.value)
+  if (!svg)
     return
 
-  emit('copy', await copyText(text))
+  emit(
+    'copy',
+    type === 'png'
+      ? await copyPng(svg)
+      : await copyText(svg),
+  )
 }
 
 async function download(type: string) {
@@ -66,9 +86,11 @@ async function download(type: string) {
   const text = await getIconSnippet(props.icon, type, false, color.value)
   if (!text)
     return
-  const ext = (type === 'solid' || type === 'qwik') ? 'tsx' : type
+  const ext = (type === 'solid' || type === 'qwik' || type === 'react-native') ? 'tsx' : type
   const name = `${toComponentName(props.icon)}.${ext}`
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+  const blob = type === 'png'
+    ? dataUrlToBlob(text)
+    : new Blob([text], { type: 'text/plain;charset=utf-8' })
   Download(blob, name)
 }
 
@@ -132,13 +154,19 @@ const collection = computed(() => {
           </div>
         </div>
       </div>
+      <div v-if="collection?.license">
+        <a
+          class="text-xs opacity-50 hover:opacity-100"
+          :href="collection.license.url"
+          target="_blank"
+        >{{ collection.license.title }}</a>
+      </div>
 
       <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
         Collection:
         <RouterLink
           class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
           :to="`/collection/${collection.id}`"
-          @click="$emit('close')"
         >
           {{ collection.name }}
         </RouterLink>
@@ -201,6 +229,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg-symbol')">
             SVG Symbol
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('png')">
+            PNG
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
             Iconify
           </button>
@@ -233,6 +264,12 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
             Solid
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('astro')">
+            Astro
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('react-native')">
+            React Native
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('unplugin')">
             Unplugin Icons
           </button>
@@ -255,6 +292,9 @@ const collection = computed(() => {
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">
             SVG
           </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('png')">
+            PNG
+          </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">
             Vue
           </button>
@@ -272,6 +312,12 @@ const collection = computed(() => {
           </button>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
             Solid
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('astro')">
+            Astro
+          </button>
+          <button class="btn small mr-1 mb-1 opacity-75" @click="download('react-native')">
+            React Native
           </button>
         </div>
         <div class="mr-4">
@@ -299,3 +345,5 @@ const collection = computed(() => {
     </div>
   </div>
 </template>
+../utils/copyPng
+../utils/svgToPng

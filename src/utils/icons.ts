@@ -1,8 +1,10 @@
 import { buildIcon, loadIcon } from 'iconify-icon'
+import { encodeSvgForCss } from '@iconify/utils'
 import { getTransformedId } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
 import { prettierCode } from './prettier'
+import { svgToPngDataUrl } from './svgToPng'
 
 const API_ENTRY = 'https://api.iconify.design'
 
@@ -19,7 +21,7 @@ export async function getSvgLocal(icon: string, size = '1em', color = 'currentCo
 
 export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
   return await getSvgLocal(icon, size, color)
-   || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
+    || await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`).then(r => r.text()) || ''
 }
 
 export async function getSvgSymbol(icon: string, size = '1em', color = 'currentColor') {
@@ -32,13 +34,13 @@ export async function getSvgSymbol(icon: string, size = '1em', color = 'currentC
   // Grab the inner HTML and move into a symbol element
   symbolElem.innerHTML = node.querySelector('svg')!.innerHTML
   symbolElem.setAttribute('viewBox', node.querySelector('svg')!.getAttribute('viewBox')!)
-  symbolElem.id = icon.replace(/\:/, '-') // Simple slugify for quick symbol lookup
+  symbolElem.id = icon.replace(/:/, '-') // Simple slugify for quick symbol lookup
 
   return symbolElem?.outerHTML
 }
 
 export function toComponentName(icon: string) {
-  return icon.split(/:|-|_/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
+  return icon.split(/[:\-_]/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
 
 export function ClearSvg(svgCode: string, reactJSX?: boolean) {
@@ -92,7 +94,7 @@ export function ${name}(props: QwikIntrinsicElements['svg'], key: string) {
 }
 
 export function SvgToVue(svg: string, name: string, isTs?: boolean) {
-  const contet = `
+  const content = `
 <template>
   ${ClearSvg(svg)}
 </template>
@@ -102,15 +104,15 @@ export default {
   name: '${name}'
 }
 </script>`
-  const code = isTs ? contet.replace('<script>', '<script lang="ts">') : contet
+  const code = isTs ? content.replace('<script>', '<script lang="ts">') : content
   return prettierCode(code, 'vue')
 }
 
 export function SvgToSolid(svg: string, name: string, snippet: boolean) {
   let code = `
-export function ${name}(props: JSX.IntrinsicElements['svg'], key: string) {
+export function ${name}(props: JSX.IntrinsicElements['svg']) {
   return (
-    ${ClearSvg(svg, false).replace(/<svg (.*?)>/, '<svg $1 {...props} key={key}>')}
+    ${svg.replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
   )
 }`
 
@@ -120,6 +122,101 @@ export function ${name}(props: JSX.IntrinsicElements['svg'], key: string) {
 
 export function SvgToSvelte(svg: string) {
   return `${svg.replace(/<svg (.*?)>/, '<svg $1 {...$$$props}>')}`
+}
+
+export function SvgToAstro(svg: string) {
+  return `
+---
+const props = Astro.props 
+---
+
+${svg.replace(/<svg (.*?)>/, '<svg $1 {...props}>')}
+`
+}
+
+export function SvgToReactNative(svg: string, name: string, snippet: boolean) {
+  function replaceTags(svg: string, replacements: {
+    from: string
+    to: string
+  }[]): string {
+    let result = svg
+    replacements.forEach(({ from, to }) => {
+      result = result.replace(new RegExp(`<${from}(.*?)>`, 'g'), `<${to}$1>`)
+        .replace(new RegExp(`</${from}>`, 'g'), `</${to}>`)
+    })
+    return result
+  }
+
+  function generateImports(usedComponents: string[]): string {
+  // Separate Svg from the other components
+    const svgIndex = usedComponents.indexOf('Svg')
+    if (svgIndex !== -1)
+      usedComponents.splice(svgIndex, 1)
+
+    // Join all other component names with a comma and wrap them in curly braces
+    const componentsString = usedComponents.length > 0 ? `{ ${usedComponents.join(', ')} }` : ''
+
+    // Return the consolidated import statement, ensuring Svg is imported as a default import
+    return `import Svg, ${componentsString} from 'react-native-svg';`
+  }
+
+  const replacements: {
+    from: string
+    to: string
+  }[] = [
+    { from: 'svg', to: 'Svg' },
+    { from: 'path', to: 'Path' },
+    { from: 'g', to: 'G' },
+    { from: 'circle', to: 'Circle' },
+    { from: 'rect', to: 'Rect' },
+    { from: 'line', to: 'Line' },
+    { from: 'polyline', to: 'Polyline' },
+    { from: 'polygon', to: 'Polygon' },
+    { from: 'ellipse', to: 'Ellipse' },
+    { from: 'text', to: 'Text' },
+    { from: 'tspan', to: 'Tspan' },
+    { from: 'textPath', to: 'TextPath' },
+    { from: 'defs', to: 'Defs' },
+    { from: 'use', to: 'Use' },
+    { from: 'symbol', to: 'Symbol' },
+    { from: 'linearGradient', to: 'LinearGradient' },
+    { from: 'radialGradient', to: 'RadialGradient' },
+    { from: 'stop', to: 'Stop' },
+  ]
+
+  const reactNativeSvgCode = replaceTags(ClearSvg(svg, true), replacements)
+    .replace(/className=/g, '')
+    .replace(/href=/g, 'xlinkHref=')
+    .replace(/clip-path=/g, 'clipPath=')
+    .replace(/fill-opacity=/g, 'fillOpacity=')
+    .replace(/stroke-width=/g, 'strokeWidth=')
+    .replace(/stroke-linecap=/g, 'strokeLinecap=')
+    .replace(/stroke-linejoin=/g, 'strokeLinejoin=')
+    .replace(/stroke-miterlimit=/g, 'strokeMiterlimit=')
+
+  const svgComponents = replacements.map(({ to }) => to)
+  const imports = generateImports(svgComponents.filter(component => reactNativeSvgCode.includes(component)))
+
+  let code = `
+${imports}
+
+export function ${name}(props) {
+ return (
+    ${reactNativeSvgCode}
+ )
+}`
+
+  if (!snippet)
+    code = `import React from 'react';\n${code}\nexport default ${name}`
+
+  return prettierCode(code, 'babel-ts')
+}
+
+export function SvgToDataURL(svg: string) {
+  const base64 = `data:image/svg+xml;base64,${Base64.encode(svg)}`
+  const plain = `data:image/svg+xml,${encodeSvgForCss(svg)}`
+  // Return the shorter of the two data URLs
+  return base64.length < plain.length ? base64 : plain
 }
 
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
@@ -141,10 +238,12 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return `background: url('${url}') no-repeat center center / contain;`
     case 'svg':
       return await getSvg(icon, '32', color)
+    case 'png':
+      return await svgToPngDataUrl(await getSvg(icon, '32', color))
     case 'svg-symbol':
       return await getSvgSymbol(icon, '32', color)
     case 'data_url':
-      return `data:image/svg+xml;base64,${Base64.encode(await getSvg(icon, undefined, color))}`
+      return SvgToDataURL(await getSvg(icon, undefined, color))
     case 'pure-jsx':
       return ClearSvg(await getSvg(icon, undefined, color))
     case 'jsx':
@@ -161,6 +260,10 @@ export async function getIconSnippet(icon: string, type: string, snippet = true,
       return SvgToSolid(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'svelte':
       return SvgToSvelte(await getSvg(icon, undefined, color))
+    case 'astro':
+      return SvgToAstro(await getSvg(icon, undefined, color))
+    case 'react-native':
+      return SvgToReactNative(await getSvg(icon, undefined, color), toComponentName(icon), snippet)
     case 'unplugin':
       return `import ${toComponentName(icon)} from '~icons/${icon.split(':')[0]}/${icon.split(':')[1]}'`
   }

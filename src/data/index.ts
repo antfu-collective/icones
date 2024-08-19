@@ -15,8 +15,8 @@ export type PresentType = 'favorite' | 'recent' | 'normal'
 export interface CollectionInfo {
   id: string
   name: string
-  author?: { name: string; url: string }
-  license?: { title: string; url: string }
+  author?: { name: string, url: string }
+  license?: { title: string, url: string }
   url?: string
   sampleIcons?: string[]
   category?: string

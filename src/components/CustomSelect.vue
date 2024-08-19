@@ -11,6 +11,7 @@ defineProps<{
   modelValue: string
 }>()
 
+const emit = defineEmits(['update:modelValue'])
 const visible = ref(false)
 const target = ref(null)
 
@@ -39,7 +40,7 @@ onClickOutside(target, () => visible.value = false)
             'color-primary': option.value === modelValue,
             'cursor-not-allowed opacity-50': option?.disabled,
           }"
-          @click="{ $emit('update:modelValue', option.value);visible = false; }"
+          @click="{ emit('update:modelValue', option.value); visible = false; }"
         >
           {{ option.label }}
         </div>

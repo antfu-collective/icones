@@ -29,8 +29,14 @@ export const idCases = {
   componentKebab(id: string) {
     return `<${id.replace(/:/g, '-')}/>`
   },
+  unocssColon(id: string) {
+    return `i-${id}`
+  },
   unocss(id: string) {
     return `i-${id.replace(/:/g, '-')}`
+  },
+  iconifyTailwind(id: string) {
+    return `icon-[${id.replace(/:/g, '--')}]`
   },
 }
 

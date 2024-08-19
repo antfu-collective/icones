@@ -1,33 +1,40 @@
 <!-- eslint-disable no-console -->
 <script setup lang='ts'>
-import { useRoute, useRouter } from 'vue-router'
-import { activeMode, bags, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
+import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
 import { getIconSnippet } from '../utils/icons'
-
-const showBag = $ref(false)
-let copied = $ref(false)
-let current = $ref('')
-let max = $ref(isLocalMode ? 500 : 200)
-const searchbar = ref<{ input: HTMLElement }>()
+import { cleanupQuery } from '../utils/query'
 
 const route = useRoute()
 const router = useRouter()
+
+const showBag = ref(false)
+const copied = ref(false)
+const current = computed({
+  get() {
+    return (route.query.icon as string) || ''
+  },
+  set(value) {
+    router.replace({ query: cleanupQuery({ ...route.query, icon: value }) })
+  },
+})
+const max = ref(isLocalMode ? 500 : 200)
+const searchbar = ref<{ input: HTMLElement }>()
 
 const { search, icons, category, collection, variant } = getSearchResults()
 const loading = isCurrentCollectionLoading()
 
 const maxMap = new Map<string, number>()
-const id = $computed(() => collection.value?.id)
-const url = $computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = $computed(() => (id != null && !specialTabs.includes(id)) ? `https://www.npmjs.com/package/@iconify-json/${id}` : '')
-const namespace = $computed(() => (id != null && !specialTabs.includes(id)) ? `${id}:` : '')
+const id = computed(() => collection.value?.id)
+const url = computed(() => collection.value?.url || collection.value?.author?.url)
+const npm = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `https://www.npmjs.com/package/@iconify-json/${id.value}` : '')
+const namespace = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `${id.value}:` : '')
 
 function onCopy(status: boolean) {
-  copied = status
+  copied.value = status
   setTimeout(() => {
-    copied = false
+    copied.value = false
   }, 2000)
 }
 
@@ -51,7 +58,7 @@ async function copyText(text?: string) {
       await navigator.clipboard.writeText(text)
       return true
     }
-    catch (err) {
+    catch {
     }
   }
   return false
@@ -66,47 +73,41 @@ async function onSelect(icon: string) {
       onCopy(await copyText(await getIconSnippet(icon, 'id', true) || icon))
       break
     default:
-      current = icon
+      current.value = icon
       break
   }
 }
 
 function loadMore() {
-  max += 100
-  maxMap.set(namespace, max)
+  max.value += 100
+  maxMap.set(namespace.value, max.value)
 }
 
 async function loadAll() {
-  if (!namespace)
+  if (!namespace.value)
     return
 
   await cacheCollection(collection.value!.id)
-  max = icons.value.length
-  maxMap.set(namespace, max)
+  max.value = icons.value.length
+  maxMap.set(namespace.value, max.value)
 }
 
 function next(delta = 1) {
-  const name = current.startsWith(namespace) ? current.slice(namespace.length) : current
+  const name = current.value.startsWith(namespace.value)
+    ? current.value.slice(namespace.value.length)
+    : current.value
   const index = icons.value.indexOf(name)
   if (index === -1)
     return
   const newOne = icons.value[index + delta]
   if (newOne)
-    current = namespace + newOne
+    current.value = namespace.value + newOne
 }
 
 watch(
-  () => namespace,
-  () => max = maxMap.get(namespace) || 200,
+  () => namespace.value,
+  () => max.value = maxMap.get(namespace.value) || 200,
 )
-
-onMounted(() => {
-  search.value = route.query.s as string || ''
-  watch([search, collection], () => {
-    if (search.value)
-      router.replace({ query: { s: search.value } })
-  })
-})
 
 function focusSearch() {
   searchbar.value?.input.focus()
@@ -115,9 +116,7 @@ function focusSearch() {
 onMounted(focusSearch)
 watch(router.currentRoute, focusSearch, { immediate: true })
 
-router.afterEach((to) => {
-  if (to.path === '/')
-    search.value = ''
+router.afterEach(() => {
   focusSearch()
 })
 
@@ -127,8 +126,8 @@ onKeyStroke('/', (e) => {
 })
 
 onKeyStroke('Escape', () => {
-  if (current !== '') {
-    current = ''
+  if (current.value !== '') {
+    current.value = ''
     focusSearch()
   }
 })
@@ -149,7 +148,28 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
 <template>
   <WithNavbar>
     <div class="flex flex-auto h-full overflow-hidden">
-      <Drawer h-full overflow-y-overlay flex-none hidden md:block w-220px />
+      <Drawer
+        h-full overflow-y-overlay flex-none hidden md:block
+        :w="drawerCollapsed ? '0px' : '250px'"
+        transition-all duration-300
+      />
+
+      <button
+        fixed top="50%" flex="~ items-end justify-center" w-5 h-8
+        icon-button transition-all duration-300
+        border="t r b base rounded-r-full" z-10 max-md:hidden
+        title="Toggle Sidebar"
+        :style="{ left: drawerCollapsed ? '0px' : '250px' }"
+        @click="drawerCollapsed = !drawerCollapsed"
+      >
+        <div
+          i-carbon-chevron-left
+          icon-button ml--1
+          transition duration-300 ease-in-out
+          :class="drawerCollapsed ? 'transform rotate-180' : ''"
+        />
+      </button>
+
       <!-- Loading -->
       <div
         v-if="collection && loading"
@@ -254,7 +274,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
         <div of-y-scroll of-x-hidden>
           <!-- Icons -->
-          <div class="px-4 pt-2 pb-4 text-center">
+          <div class="px-5 pt-2 pb-4 text-center">
             <Icons
               :icons="icons.slice(0, max)"
               :selected="bags"

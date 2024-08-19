@@ -1,8 +1,12 @@
 import { isVSCode } from '../env'
-import { bufferToString } from './bufferToSring'
+import { bufferToString } from './bufferToString'
 import {
-  SvgToJSX, SvgToTSX, SvgToVue,
-  getSvg, toComponentName,
+  SvgToJSX,
+  SvgToTSX,
+  SvgToVue,
+  getSvg,
+  getSvgSymbol,
+  toComponentName,
 } from './icons'
 
 export async function LoadIconSvgs(icons: string[]) {
@@ -37,6 +41,25 @@ export async function Download(blob: Blob, name: string) {
     a.click()
     a.remove()
   }
+}
+
+export async function PackSVGSprite(icons: string[], options: any = {}) {
+  if (!icons.length)
+    return
+  const data = await LoadIconSvgs(icons)
+
+  let symbols = ''
+  for (const { name } of data)
+    symbols += `${await getSvgSymbol(name, options.size, options.color)}\n`
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+${symbols}
+</defs>
+</svg>`
+
+  const blob = new Blob([svg], { type: 'image/svg+xml' })
+  Download(blob, 'sprite.svg')
 }
 
 export async function PackIconFont(icons: string[], options: any = {}) {

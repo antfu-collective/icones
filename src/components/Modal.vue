@@ -7,6 +7,8 @@ const props = withDefaults(defineProps<{
   direction: 'bottom',
 })
 
+const emit = defineEmits(['close'])
+
 const { width, height } = useWindowSize()
 const isSmall = computed(() => width.value < 600 || height.value < 450)
 
@@ -51,7 +53,7 @@ const transform = computed(() => {
     <div
       bg-base bottom-0 left-0 right-0 top-0 absolute transition-opacity duration-500 ease-out
       :class="value ? 'opacity-85' : 'opacity-0'"
-      @click="$emit('close')"
+      @click="emit('close')"
     />
     <div
       bg-base border border-base absolute transition-all duration-200 ease-out

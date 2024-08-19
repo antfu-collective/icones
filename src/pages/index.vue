@@ -8,7 +8,7 @@ const categorized = ref(getIconList(categorySearch.value))
 
 let categorizeDebounceTimer: NodeJS.Timeout | null = null
 
-watch(categorySearch, (newVal) => {
+watch([categorySearch, favoritedCollections, recentCollections], ([newVal]) => {
   if (categorizeDebounceTimer)
     clearTimeout(categorizeDebounceTimer)
   categorizeDebounceTimer = setTimeout(() => {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { getSearchHighlightHTML } from '../hooks'
+import { Tooltip } from 'floating-vue'
+import { getSearchHighlightHTML, useThemeColor } from '../hooks'
 
 defineProps({
   icons: {
@@ -36,55 +37,57 @@ defineProps({
     default: 'text-dark-600 dark:text-dark-900',
   },
 })
-
 defineEmits<{
   (event: 'select', id: string): void
 }>()
+
+const { style } = useThemeColor()
 </script>
 
 <template>
-  <div
-    class="non-dragging flex flex-wrap select-none justify-center"
-    :class="`text-${size} ${colorClass}`"
-  >
+  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size} ${colorClass}`">
     <div
-      v-for="icon of icons"
-      :key="icon"
-      class="non-dragging icons-item flex tooltip"
+      v-for="icon of icons " :key="icon" class="non-dragging icons-item relative"
       :class="[spacing, selected.includes(namespace + icon) ? 'active' : '']"
       @click="$emit('select', namespace + icon)"
     >
-      <Icon
-        :key="icon"
-        class="tooltip-content non-dragging leading-none h-1em"
-        :cache="true"
-        :icon="namespace + icon"
-      />
-      <span
-        v-if="display === 'list'"
-        class="tooltip-content text-sm ml-1 px-1 m-auto"
-        v-html="getSearchHighlightHTML(icon, search)"
-      />
-      <span
-        v-else
-        border="~ dark-only"
-        class="tooltip-text bg-base shadow leading-none whitespace-nowrap z-100"
-      >
-        <span class="opacity-75">
-          {{ icon }}
-        </span>
-      </span>
+      <div v-if="display === 'list'" class="icon-border flex gap-1">
+        <Icon
+          :key="icon" class="non-dragging leading-none" :cache="true"
+          :icon="namespace + icon"
+        />
+        <span
+          class="text-sm px-1 m-auto"
+          v-html="getSearchHighlightHTML(icon, search)"
+        />
+      </div>
+      <Tooltip v-else placement="bottom">
+        <Icon
+          :key="icon" class="non-dragging leading-none icon-border h-1em" :cache="true"
+          :icon="namespace + icon"
+        />
+        <template #popper>
+          <div :style="style" class="leading-none border-none z-100 text-primary opacity-75 text-sm">
+            {{ icon }}
+          </div>
+        </template>
+      </Tooltip>
     </div>
   </div>
 </template>
 
 <style>
-.icons-item:hover, .icons-item.active {
+.icons-item:hover,
+.icons-item.active {
   color: var(--theme-color);
+}
+
+.icon-border {
   position: relative;
 }
-.icons-item.active::after {
-  content: "";
+
+.icon-border.active::after {
+  content: '';
   position: absolute;
   top: -3px;
   left: -3px;
@@ -94,8 +97,9 @@ defineEmits<{
   background: var(--theme-color);
   opacity: 0.1;
 }
-.icons-item:hover::before {
-  content: "";
+
+.icon-border:hover::before {
+  content: '';
   position: absolute;
   top: -4px;
   left: -4px;
