@@ -213,13 +213,10 @@ export function ${name}(props) {
 }
 
 export function SvgToDataURL(svg: string) {
-  const url = `data:image/svg+xml;base64,${Base64.encode(svg)}`
-  const percentURL = `data:image/svg+xml,${encodeSvgForCss(svg)}`
-
-  if (percentURL.length < url.length)
-    return percentURL
-
-  return url
+  const base64 = `data:image/svg+xml;base64,${Base64.encode(svg)}`
+  const plain = `data:image/svg+xml,${encodeSvgForCss(svg)}`
+  // Return the shorter of the two data URLs
+  return base64.length < plain.length ? base64 : plain
 }
 
 export async function getIconSnippet(icon: string, type: string, snippet = true, color = 'currentColor'): Promise<string | undefined> {
