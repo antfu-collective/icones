@@ -19,6 +19,7 @@ export const bags = useStorage<string[]>('icones-bags', [])
 export const activeMode = useStorage<ActiveMode>('active-mode', 'normal')
 export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
 export const drawerCollapsed = useStorage<boolean>('icones-drawer-collapsed', false)
+export const selectedPackageManager = useStorage<string>('icones-package-manager', 'pnpm')
 
 export const excludedCollectionIds = useStorage<string[]>('icones-excluded-collections', [])
 export const excludedCategories = useStorage<string[]>('icones-excluded-categories', [

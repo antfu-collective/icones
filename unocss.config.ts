@@ -2,7 +2,7 @@ import { defineConfig, presetAttributify, presetIcons, presetUno, transformerDir
 
 export default defineConfig({
   shortcuts: {
-    'border-base': 'border-gray-200 dark:border-dark-100',
+    'border-base': 'border-hex-888/15',
     'border-dark-only': 'border-transparent dark:border-dark-100',
     'bg-base': 'bg-white dark:bg-[#181818]',
     'color-base': 'text-gray-900 dark:text-gray-300',

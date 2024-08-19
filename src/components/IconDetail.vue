@@ -5,6 +5,7 @@ import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, p
 import { Download } from '../utils/pack'
 import { dataUrlToBlob } from '../utils/dataUrlToBlob'
 import { idCases } from '../utils/case'
+import InstallIconSet from './InstallIconSet.vue'
 
 const props = defineProps({
   icon: {
@@ -122,12 +123,12 @@ const collection = computed(() => {
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
       <button
-        class="text-gray-500 hover:text-primary text-sm dark:text-dark-500 !outline-none"
+        class="op35 hover:text-primary hover:op100 text-sm !outline-none"
         @click="showHelp = !showHelp"
       >
         How to use the icon?
       </button>
-      <div class="flex text-gray-700 relative font-mono dark:text-dark-900">
+      <div class="flex op75 relative font-mono">
         {{ transformedId }}
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
         <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
@@ -135,7 +136,7 @@ const collection = computed(() => {
         <div
           v-if="showCaseSelect"
           ref="caseSelector"
-          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-white dark:bg-dark-100 dark:border dark:border-dark-200"
+          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-base dark:border dark:border-dark-200"
         >
           <div
             v-for="[k, v] of Object.entries(idCases)"
@@ -162,7 +163,7 @@ const collection = computed(() => {
         >{{ collection.license.title }}</a>
       </div>
 
-      <p v-if="showCollection && collection" class="flex mb-1 text-gray-500 text-sm">
+      <p v-if="showCollection && collection" class="flex mb-1 op50 text-sm">
         Collection:
         <RouterLink
           class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
@@ -178,7 +179,7 @@ const collection = computed(() => {
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
           "
-          :class="inBag(icon) ? 'text-primary' : 'text-gray-500'"
+          :class="inBag(icon) ? 'text-primary' : 'op50'"
           @click="toggleBag(icon)"
         >
           <template v-if="inBag(icon)">
@@ -197,7 +198,7 @@ const collection = computed(() => {
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
           "
-          :class="activeMode === 'select' ? 'text-primary' : 'text-gray-500'"
+          :class="activeMode === 'select' ? 'text-primary' : 'op50'"
           @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
@@ -209,7 +210,7 @@ const collection = computed(() => {
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
           "
-          :class="copyPreviewColor ? 'text-primary' : 'text-gray-500'"
+          :class="copyPreviewColor ? 'text-primary' : 'op50'"
           @click="copyPreviewColor = !copyPreviewColor"
         >
           <Icon v-if="!copyPreviewColor" class="inline-block text-lg align-middle" icon="carbon:checkbox" />
@@ -220,7 +221,7 @@ const collection = computed(() => {
 
       <div class="flex flex-wrap mt-2">
         <div class="mr-4">
-          <div class="my-1 text-gray-500 text-sm">
+          <div class="my-1 op50 text-sm">
             Snippets
           </div>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
@@ -240,7 +241,7 @@ const collection = computed(() => {
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 text-sm">
+          <div class="my-1 op50 text-sm">
             Components
           </div>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue')">
@@ -275,7 +276,7 @@ const collection = computed(() => {
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 text-sm">
+          <div class="my-1 op50 text-sm">
             Links
           </div>
           <button class="btn small mr-1 mb-1 opacity-75" @click="copy('url')">
@@ -286,7 +287,7 @@ const collection = computed(() => {
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 text-sm">
+          <div class="my-1 op50 text-sm">
             Download
           </div>
           <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">
@@ -321,7 +322,7 @@ const collection = computed(() => {
           </button>
         </div>
         <div class="mr-4">
-          <div class="my-1 text-gray-500 text-sm">
+          <div class="my-1 op50 text-sm">
             View on
           </div>
           <a
@@ -342,8 +343,8 @@ const collection = computed(() => {
           </a>
         </div>
       </div>
+
+      <InstallIconSet v-if="collection" :collection="collection" />
     </div>
   </div>
 </template>
-../utils/copyPng
-../utils/svgToPng
