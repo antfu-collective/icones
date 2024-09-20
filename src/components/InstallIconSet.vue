@@ -48,11 +48,11 @@ async function copyText() {
   <div lt-md:hidden>
     <a
       href="https://iconify.design/docs/icons/json.html" target="_blank"
-      class="my-1 text-sm mt6 block op50 hover:op100 hover:text-primary"
+      class="block w-fit my-1 text-sm mt6 op50 hover:op100 hover:text-primary"
     >
       Install Iconify Iconset
     </a>
-    <div class="border-1 border-base rounded w-100 mt1">
+    <div class="border-1 border-base rounded w-fit mt1">
       <div flex="~ gap-4 items-center" p3 border="b base">
         <label
           v-for="manager in managers" :key="manager"
