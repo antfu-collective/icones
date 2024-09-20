@@ -1,4 +1,5 @@
 <script setup lang='ts'>
+import { Menu, Tooltip } from 'floating-vue'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
@@ -23,6 +24,40 @@ const emit = defineEmits(['close', 'copy', 'next', 'prev'])
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
 const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
+
+const typeMap = reactive<Record<string, Record<string, { name: string, key?: string, code?: string }>>>(
+  {
+    Snippets: {
+      'svg': { name: 'SVG' },
+      'svg-symbol': { name: 'SVG Symbol' },
+      'png': { name: 'PNG' },
+      'html': { name: 'Iconify' },
+      'pure-jsx': { name: 'JSX' },
+    },
+    Components: {
+      'vue': { name: 'Vue' },
+      'vue-ts': { name: 'Vue TS' },
+      'jsx': { name: 'React' },
+      'tsx': { name: 'React TS' },
+      'svelte': { name: 'Svelte' },
+      'qwik': { name: 'Qwik' },
+      'solid': { name: 'Solid' },
+      'astro': { name: 'Astro' },
+      'react-native': { name: 'React Native' },
+      'unplugin': { name: 'Unplugin Icons' },
+    },
+    Links: {
+      url: { name: 'URL' },
+      data_url: { name: 'Data URL' },
+    },
+  },
+)
+
+async function handleSnippetShow(group: keyof typeof typeMap, type: string) {
+  if (!typeMap[group][type].code)
+    typeMap[group][type].code = await getIconSnippet(props.icon, type, true, color.value)
+  return typeMap[group][type].code
+}
 
 onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
@@ -220,72 +255,32 @@ const collection = computed(() => {
       </div>
 
       <div class="flex flex-wrap mt-2">
-        <div class="mr-4">
-          <div class="my-1 op50 text-sm">
-            Snippets
+        <template v-for="(group, groupName) in typeMap" :key="groupName">
+          <div class="mr-4">
+            <div class="my-1 op50 text-sm">
+              {{ groupName }}
+            </div>
+            <div class="flex gap-1">
+              <template v-for="(snippet, type) in group" :key="type">
+                <Menu placement="top" theme="tooltip" @show="handleSnippetShow(groupName, type)">
+                  <button class="btn small opacity-75" @click="copy(type)">
+                    {{ snippet.name }}
+                  </button>
+                  <template #popper>
+                    <!-- 如果是 base64 图片 -->
+                    <!-- <img v-if="snippet.code?.startsWith('data:image')" w-20 aspect-square :src="snippet.code" :alt="snippet.code">
+                    <div v-else>
+                      {{ snippet.code }}
+                    </div> -->
+                    <div w-60 max-h-40 break-words>
+                      {{ snippet.code }}
+                    </div>
+                  </template>
+                </Menu>
+              </template>
+            </div>
           </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg')">
-            SVG
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svg-symbol')">
-            SVG Symbol
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('png')">
-            PNG
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('html')">
-            Iconify
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('pure-jsx')">
-            JSX
-          </button>
-        </div>
-        <div class="mr-4">
-          <div class="my-1 op50 text-sm">
-            Components
-          </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue')">
-            Vue
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('vue-ts')">
-            Vue<sup class="opacity-50 -mr-1">TS</sup>
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('jsx')">
-            React
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('tsx')">
-            React<sup class="opacity-50 -mr-1">TS</sup>
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('svelte')">
-            Svelte
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('qwik')">
-            Qwik
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('solid')">
-            Solid
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('astro')">
-            Astro
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('react-native')">
-            React Native
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('unplugin')">
-            Unplugin Icons
-          </button>
-        </div>
-        <div class="mr-4">
-          <div class="my-1 op50 text-sm">
-            Links
-          </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('url')">
-            URL
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="copy('data_url')">
-            Data URL
-          </button>
-        </div>
+        </template>
         <div class="mr-4">
           <div class="my-1 op50 text-sm">
             Download
