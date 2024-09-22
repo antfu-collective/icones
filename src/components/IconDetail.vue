@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { Menu, Tooltip } from 'floating-vue'
+import type { BuiltInParserName } from 'prettier'
 import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
@@ -24,39 +24,49 @@ const emit = defineEmits(['close', 'copy', 'next', 'prev'])
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
 const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
+const { typeMap, handleSnippetShow } = useSnippetGroup()
 
-const typeMap = reactive<Record<string, Record<string, { name: string, key?: string, code?: string }>>>(
-  {
-    Snippets: {
-      'svg': { name: 'SVG' },
-      'svg-symbol': { name: 'SVG Symbol' },
-      'png': { name: 'PNG' },
-      'html': { name: 'Iconify' },
-      'pure-jsx': { name: 'JSX' },
+function useSnippetGroup() {
+  const typeMap = reactive<Record<string, Record<string, {
+    name: string
+    code?: string
+    lang: string // for shiki
+    parser: BuiltInParserName // for prettier
+  }>>>(
+    {
+      Snippets: {
+        'svg': { name: 'SVG', lang: 'html', parser: 'html' },
+        'svg-symbol': { name: 'SVG Symbol', lang: 'html', parser: 'html' },
+        'png': { name: 'PNG', lang: 'html', parser: 'html' },
+        'html': { name: 'Iconify', lang: 'html', parser: 'html' },
+        'pure-jsx': { name: 'JSX', lang: 'jsx', parser: 'typescript' },
+      },
+      Components: {
+        'vue': { name: 'Vue', lang: 'vue', parser: 'vue' },
+        'vue-ts': { name: 'Vue TS', lang: 'vue', parser: 'vue' },
+        'jsx': { name: 'React', lang: 'jsx', parser: 'typescript' },
+        'tsx': { name: 'React TS', lang: 'tsx', parser: 'typescript' },
+        'svelte': { name: 'Svelte', lang: 'svelte', parser: 'typescript' },
+        'qwik': { name: 'Qwik', lang: 'tsx', parser: 'typescript' },
+        'solid': { name: 'Solid', lang: 'tsx', parser: 'typescript' },
+        'astro': { name: 'Astro', lang: 'astro', parser: 'typescript' },
+        'react-native': { name: 'React Native', lang: 'tsx', parser: 'typescript' },
+        'unplugin': { name: 'Unplugin Icons', lang: 'tsx', parser: 'typescript' },
+      },
+      Links: {
+        url: { name: 'URL', lang: 'html', parser: 'html' },
+        data_url: { name: 'Data URL', lang: 'html', parser: 'html' },
+      },
     },
-    Components: {
-      'vue': { name: 'Vue' },
-      'vue-ts': { name: 'Vue TS' },
-      'jsx': { name: 'React' },
-      'tsx': { name: 'React TS' },
-      'svelte': { name: 'Svelte' },
-      'qwik': { name: 'Qwik' },
-      'solid': { name: 'Solid' },
-      'astro': { name: 'Astro' },
-      'react-native': { name: 'React Native' },
-      'unplugin': { name: 'Unplugin Icons' },
-    },
-    Links: {
-      url: { name: 'URL' },
-      data_url: { name: 'Data URL' },
-    },
-  },
-)
+  )
 
-async function handleSnippetShow(group: keyof typeof typeMap, type: string) {
-  if (!typeMap[group][type].code)
-    typeMap[group][type].code = await getIconSnippet(props.icon, type, true, color.value)
-  return typeMap[group][type].code
+  async function handleSnippetShow(group: keyof typeof typeMap, type: string) {
+    if (!typeMap[group][type].code) {
+      typeMap[group][type].code = (await getIconSnippet(props.icon, type, false, color.value))?.trim()
+    }
+  }
+
+  return { typeMap, handleSnippetShow }
 }
 
 onClickOutside(caseSelector, () => {
@@ -150,17 +160,17 @@ const collection = computed(() => {
 
 <template>
   <div class="p-2 flex flex-col flex-wrap md:flex-row md:text-left relative">
-    <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="$emit('close')" />
+    <IconButton
+      class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close"
+      @click="$emit('close')"
+    />
     <div :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">
         <Icon :key="icon" outer-class="p-4 text-8xl" :icon="icon" />
       </ColorPicker>
     </div>
     <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
-      <button
-        class="op35 hover:text-primary hover:op100 text-sm !outline-none"
-        @click="showHelp = !showHelp"
-      >
+      <button class="op35 hover:text-primary hover:op100 text-sm !outline-none" @click="showHelp = !showHelp">
         How to use the icon?
       </button>
       <div class="flex op75 relative font-mono">
@@ -169,21 +179,15 @@ const collection = computed(() => {
         <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
         <div class="flex-auto" />
         <div
-          v-if="showCaseSelect"
-          ref="caseSelector"
+          v-if="showCaseSelect" ref="caseSelector"
           class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-base dark:border dark:border-dark-200"
         >
           <div
-            v-for="[k, v] of Object.entries(idCases)"
-            :key="k"
-            class="flex items-center p-1 cursor-pointer"
-            :class="k === preferredCase ? 'text-primary' : ''"
-            @click="preferredCase = k as any"
+            v-for="[k, v] of Object.entries(idCases)" :key="k" class="flex items-center p-1 cursor-pointer"
+            :class="k === preferredCase ? 'text-primary' : ''" @click="preferredCase = k as any"
           >
             <Icon
-              icon="carbon:checkmark"
-              class="text-primary text-lg"
-              outer-class="mr-1"
+              icon="carbon:checkmark" class="text-primary text-lg" outer-class="mr-1"
               :class="k === preferredCase ? '' : 'opacity-0'"
             />
             <span class="flex-auto mr-2">{{ v(icon) }}</span>
@@ -191,11 +195,8 @@ const collection = computed(() => {
         </div>
       </div>
       <div v-if="collection?.license">
-        <a
-          class="text-xs opacity-50 hover:opacity-100"
-          :href="collection.license.url"
-          target="_blank"
-        >{{ collection.license.title }}</a>
+        <a class="text-xs opacity-50 hover:opacity-100" :href="collection.license.url" target="_blank">{{
+          collection.license.title }}</a>
       </div>
 
       <p v-if="showCollection && collection" class="flex mb-1 op50 text-sm">
@@ -213,9 +214,7 @@ const collection = computed(() => {
           class="
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
-          "
-          :class="inBag(icon) ? 'text-primary' : 'op50'"
-          @click="toggleBag(icon)"
+          " :class="inBag(icon) ? 'text-primary' : 'op50'" @click="toggleBag(icon)"
         >
           <template v-if="inBag(icon)">
             <Icon class="inline-block text-lg align-middle" icon="carbon:shopping-bag" />
@@ -228,13 +227,10 @@ const collection = computed(() => {
         </button>
 
         <button
-          v-if="inBag(icon)"
-          class="
+          v-if="inBag(icon)" class="
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
-          "
-          :class="activeMode === 'select' ? 'text-primary' : 'op50'"
-          @click="toggleSelectingMode"
+          " :class="activeMode === 'select' ? 'text-primary' : 'op50'" @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
           <span class="inline-block align-middle ml1">multiple select</span>
@@ -244,9 +240,7 @@ const collection = computed(() => {
           class="
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
-          "
-          :class="copyPreviewColor ? 'text-primary' : 'op50'"
-          @click="copyPreviewColor = !copyPreviewColor"
+          " :class="copyPreviewColor ? 'text-primary' : 'op50'" @click="copyPreviewColor = !copyPreviewColor"
         >
           <Icon v-if="!copyPreviewColor" class="inline-block text-lg align-middle" icon="carbon:checkbox" />
           <Icon v-else class="inline-block text-lg align-middle" icon="carbon:checkbox-checked" />
@@ -262,21 +256,11 @@ const collection = computed(() => {
             </div>
             <div class="flex gap-1">
               <template v-for="(snippet, type) in group" :key="type">
-                <Menu placement="top" theme="tooltip" @show="handleSnippetShow(groupName, type)">
+                <SnippetPreview :code="snippet.code" :type="type" :lang="snippet.lang" :parser="snippet.parser" @show="handleSnippetShow(groupName, type)">
                   <button class="btn small opacity-75" @click="copy(type)">
                     {{ snippet.name }}
                   </button>
-                  <template #popper>
-                    <!-- 如果是 base64 图片 -->
-                    <!-- <img v-if="snippet.code?.startsWith('data:image')" w-20 aspect-square :src="snippet.code" :alt="snippet.code">
-                    <div v-else>
-                      {{ snippet.code }}
-                    </div> -->
-                    <div w-60 max-h-40 break-words>
-                      {{ snippet.code }}
-                    </div>
-                  </template>
-                </Menu>
+                </SnippetPreview>
               </template>
             </div>
           </div>
@@ -321,18 +305,14 @@ const collection = computed(() => {
             View on
           </div>
           <a
-            v-if="collection"
-            class="btn small mr-1 mb-1 opacity-75"
-            :href="`https://icon-sets.iconify.design/${collection.id}/?query=${icon.split(':')[1]}`"
-            target="_blank"
+            v-if="collection" class="btn small mr-1 mb-1 opacity-75"
+            :href="`https://icon-sets.iconify.design/${collection.id}/?query=${icon.split(':')[1]}`" target="_blank"
           >
             Iconify
           </a>
           <a
-            v-if="collection"
-            class="btn small mr-1 mb-1 opacity-75"
-            :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`"
-            target="_blank"
+            v-if="collection" class="btn small mr-1 mb-1 opacity-75"
+            :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`" target="_blank"
           >
             UnoCSS
           </a>

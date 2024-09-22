@@ -1,0 +1,31 @@
+<script lang='ts' setup>
+import type { BuiltInParserName } from 'prettier'
+import { Menu } from 'floating-vue'
+import { prettierCode } from '../utils/prettier'
+import { highlight } from '../utils/shiki'
+
+const props = defineProps<{
+  code: string
+  type: string
+  lang: string
+  parser: BuiltInParserName
+}>()
+
+const emit = defineEmits<{
+  (e: 'show'): void
+}>()
+
+const highlightCode = computedAsync(async () => {
+  const code = await prettierCode(props.code, props.parser)
+  return highlight(code, props.lang)
+})
+</script>
+
+<template>
+  <Menu :delay="0" placement="top" @show="emit('show')">
+    <slot />
+    <template #popper>
+      <div h-fit max-w-70 sm:max-w-100 md:max-w-120 lg:max-w-150 p2 text-sm v-html="highlightCode" />
+    </template>
+  </Menu>
+</template>

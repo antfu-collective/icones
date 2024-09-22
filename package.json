@@ -55,6 +55,7 @@
     "jszip": "^3.10.1",
     "lru-cache": "^11.0.0",
     "pnpm": "8.10.2",
+    "shiki": "^1.18.0",
     "svg-packer": "^0.0.3",
     "typescript": "^5.5.4",
     "unocss": "^0.62.2",
