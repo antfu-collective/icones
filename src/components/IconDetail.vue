@@ -1,10 +1,9 @@
 <script setup lang='ts'>
-import type { BuiltInParserName } from 'prettier'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { idCases } from '../utils/case'
 import { dataUrlToBlob } from '../utils/dataUrlToBlob'
-import { getIconSnippet, toComponentName } from '../utils/icons'
+import { getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
 import { Download } from '../utils/pack'
 import InstallIconSet from './InstallIconSet.vue'
 
@@ -24,51 +23,6 @@ const emit = defineEmits(['close', 'copy', 'next', 'prev'])
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
 const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
-const { typeMap, handleSnippetShow } = useSnippetGroup()
-
-function useSnippetGroup() {
-  const typeMap = reactive<Record<string, Record<string, {
-    name: string
-    tag?: string
-    code?: string
-    lang: string // for shiki
-    parser: BuiltInParserName // for prettier
-  }>>>(
-    {
-      Snippets: {
-        'svg': { name: 'SVG', lang: 'html', parser: 'html' },
-        'svg-symbol': { name: 'SVG Symbol', lang: 'html', parser: 'html' },
-        'png': { name: 'PNG', lang: 'html', parser: 'html' },
-        'html': { name: 'Iconify', lang: 'html', parser: 'html' },
-        'pure-jsx': { name: 'JSX', lang: 'jsx', parser: 'typescript' },
-      },
-      Components: {
-        'vue': { name: 'Vue', lang: 'vue', parser: 'vue' },
-        'vue-ts': { name: 'Vue', tag: 'TS', lang: 'vue', parser: 'vue' },
-        'jsx': { name: 'React', lang: 'jsx', parser: 'typescript' },
-        'tsx': { name: 'React', tag: 'TS', lang: 'tsx', parser: 'typescript' },
-        'svelte': { name: 'Svelte', lang: 'svelte', parser: 'typescript' },
-        'qwik': { name: 'Qwik', lang: 'tsx', parser: 'typescript' },
-        'solid': { name: 'Solid', lang: 'tsx', parser: 'typescript' },
-        'astro': { name: 'Astro', lang: 'astro', parser: 'typescript' },
-        'react-native': { name: 'React Native', lang: 'tsx', parser: 'typescript' },
-        'unplugin': { name: 'Unplugin Icons', lang: 'tsx', parser: 'typescript' },
-      },
-      Links: {
-        url: { name: 'URL', lang: 'html', parser: 'html' },
-        data_url: { name: 'Data URL', lang: 'html', parser: 'html' },
-      },
-    },
-  )
-
-  async function handleSnippetShow(group: keyof typeof typeMap, type: string) {
-    if (!typeMap[group][type].code) {
-      typeMap[group][type].code = (await getIconSnippet(props.icon, type, false, color.value))?.trim()
-    }
-  }
-
-  return { typeMap, handleSnippetShow }
-}
 
 onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
@@ -250,14 +204,19 @@ const collection = computed(() => {
       </div>
 
       <div class="flex flex-wrap mt-2">
-        <template v-for="(group, groupName) in typeMap" :key="groupName">
+        <template v-for="(group, groupName) in SnippetMap" :key="groupName">
           <div class="mr-4">
             <div class="my-1 op50 text-sm">
               {{ groupName }}
             </div>
             <div class="flex gap-1">
               <template v-for="(snippet, type) in group" :key="type">
-                <SnippetPreview :code="snippet.code" :type="type" :lang="snippet.lang" :parser="snippet.parser" @show="handleSnippetShow(groupName, type)">
+                <SnippetPreview
+                  :icon="icon"
+                  :snippet="snippet"
+                  :type="type"
+                  :color="color"
+                >
                   <button class="btn small opacity-75" @click="copy(type)">
                     {{ snippet.name }}<sup v-if="snippet.tag" class="opacity-50 -mr-1">{{ snippet.tag }}</sup>
                   </button>

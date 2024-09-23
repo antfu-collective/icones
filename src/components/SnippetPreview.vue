@@ -1,28 +1,32 @@
 <script lang='ts' setup>
-import type { BuiltInParserName } from 'prettier'
 import { Menu } from 'floating-vue'
+import { getIconSnippet, type Snippet } from '../utils/icons'
 import { prettierCode } from '../utils/prettier'
 import { highlight } from '../utils/shiki'
 
 const props = defineProps<{
-  code: string
+  icon: string
+  snippet: Snippet
   type: string
-  lang: string
-  parser: BuiltInParserName
+  color: string
 }>()
 
-const emit = defineEmits<{
-  (e: 'show'): void
-}>()
+const code = ref<string>('')
+
+async function onShow() {
+  if (!code.value)
+    code.value = await getIconSnippet(props.icon, props.type, false, props.color) || ''
+}
 
 const highlightCode = computedAsync(async () => {
-  const code = await prettierCode(props.code, props.parser)
-  return highlight(code, props.lang)
+  const c = code.value
+  const formatted = await prettierCode(c, props.snippet.prettierParser)
+  return highlight(formatted, props.snippet.lang)
 })
 </script>
 
 <template>
-  <Menu :delay="0" placement="top" distance="10" @show="emit('show')">
+  <Menu :delay="0" placement="top" distance="10" @show="onShow">
     <slot />
     <template #popper>
       <div color-base px3 py2 border="b base" bg-gray:5>

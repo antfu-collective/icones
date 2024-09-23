@@ -6,6 +6,7 @@ body {
 
 html.dark {
   background: #181818;
+  color-scheme: dark;
 }
 html.dark .shiki,
 html.dark .shiki span {

@@ -1,3 +1,4 @@
+import type { BuiltInParserName as PrettierParser } from 'prettier'
 import { encodeSvgForCss } from '@iconify/utils'
 import { buildIcon, loadIcon } from 'iconify-icon'
 import { getTransformedId } from '../store'
@@ -5,6 +6,39 @@ import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
 import { prettierCode } from './prettier'
 import { svgToPngDataUrl } from './svgToPng'
+
+export interface Snippet {
+  name: string
+  tag?: string
+  lang: string // for shiki
+  prettierParser: PrettierParser // for prettier
+}
+
+export const SnippetMap: Record<string, Record<string, Snippet>> = {
+  Snippets: {
+    'svg': { name: 'SVG', lang: 'html', prettierParser: 'html' },
+    'svg-symbol': { name: 'SVG Symbol', lang: 'html', prettierParser: 'html' },
+    'png': { name: 'PNG', lang: 'html', prettierParser: 'html' },
+    'html': { name: 'Iconify', lang: 'html', prettierParser: 'html' },
+    'pure-jsx': { name: 'JSX', lang: 'jsx', prettierParser: 'typescript' },
+  },
+  Components: {
+    'vue': { name: 'Vue', lang: 'vue', prettierParser: 'vue' },
+    'vue-ts': { name: 'Vue', tag: 'TS', lang: 'vue', prettierParser: 'vue' },
+    'jsx': { name: 'React', lang: 'jsx', prettierParser: 'typescript' },
+    'tsx': { name: 'React', tag: 'TS', lang: 'tsx', prettierParser: 'typescript' },
+    'svelte': { name: 'Svelte', lang: 'svelte', prettierParser: 'typescript' },
+    'qwik': { name: 'Qwik', lang: 'tsx', prettierParser: 'typescript' },
+    'solid': { name: 'Solid', lang: 'tsx', prettierParser: 'typescript' },
+    'astro': { name: 'Astro', lang: 'astro', prettierParser: 'typescript' },
+    'react-native': { name: 'React Native', lang: 'tsx', prettierParser: 'typescript' },
+    'unplugin': { name: 'Unplugin Icons', lang: 'tsx', prettierParser: 'typescript' },
+  },
+  Links: {
+    url: { name: 'URL', lang: 'html', prettierParser: 'html' },
+    data_url: { name: 'Data URL', lang: 'html', prettierParser: 'html' },
+  },
+}
 
 const API_ENTRY = 'https://api.iconify.design'
 
