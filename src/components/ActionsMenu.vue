@@ -1,10 +1,10 @@
 <script setup lang='ts'>
 import type { PropType } from 'vue'
-import { activeMode, iconSize, inProgress, isFavoritedCollection, listType, progressMessage, toggleFavoriteCollection } from '../store'
-import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import type { CollectionMeta } from '../data'
-import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
+import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
 import { isElectron } from '../env'
+import { activeMode, iconSize, inProgress, isFavoritedCollection, listType, progressMessage, toggleFavoriteCollection } from '../store'
+import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
 
 const props = defineProps({
   collection: {

@@ -8,8 +8,8 @@ import {
   isMetaLoaded,
   tryInstallFromLocal,
 } from '../data'
-import { useSearch } from '../hooks'
 import { isLocalMode } from '../env'
+import { useSearch } from '../hooks'
 import { isExcludedCollection, recentIconIds } from './localstorage'
 
 const currentCollectionId = ref('')

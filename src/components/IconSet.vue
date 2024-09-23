@@ -1,8 +1,8 @@
 <!-- eslint-disable no-console -->
 <script setup lang='ts'>
-import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
-import { isLocalMode } from '../env'
 import { cacheCollection, specialTabs } from '../data'
+import { isLocalMode } from '../env'
+import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { getIconSnippet } from '../utils/icons'
 import { cleanupQuery } from '../utils/query'
 

@@ -1,10 +1,10 @@
 <script setup lang='ts'>
-import { getIconSnippet, toComponentName } from '../utils/icons'
 import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
-import { Download } from '../utils/pack'
-import { dataUrlToBlob } from '../utils/dataUrlToBlob'
 import { idCases } from '../utils/case'
+import { dataUrlToBlob } from '../utils/dataUrlToBlob'
+import { getIconSnippet, toComponentName } from '../utils/icons'
+import { Download } from '../utils/pack'
 import InstallIconSet from './InstallIconSet.vue'
 
 const props = defineProps({

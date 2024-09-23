@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { ref } from 'vue'
 import type { CollectionMeta } from '../data'
+import { ref } from 'vue'
 import { selectedPackageManager } from '../store'
 
 const props = defineProps({

@@ -1,11 +1,11 @@
 import { isVSCode } from '../env'
 import { bufferToString } from './bufferToString'
 import {
+  getSvg,
+  getSvgSymbol,
   SvgToJSX,
   SvgToTSX,
   SvgToVue,
-  getSvg,
-  getSvgSymbol,
   toComponentName,
 } from './icons'
 

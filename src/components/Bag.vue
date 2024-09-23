@@ -1,7 +1,7 @@
 <script setup lang='ts'>
+import type { PackType } from '../utils/pack'
 import { bags, clearBag } from '../store'
 import { PackIconFont, PackSVGSprite, PackZip } from '../utils/pack'
-import type { PackType } from '../utils/pack'
 
 const emit = defineEmits<{
   (event: 'close'): void
