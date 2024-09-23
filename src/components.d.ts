@@ -36,6 +36,7 @@ declare module 'vue' {
     SearchBar: typeof import('./components/SearchBar.vue')['default']
     SearchElectron: typeof import('./components/electron/SearchElectron.vue')['default']
     SettingsCollectionsList: typeof import('./components/SettingsCollectionsList.vue')['default']
+    SnippetPreview: typeof import('./components/SnippetPreview.vue')['default']
     WithNavbar: typeof import('./components/WithNavbar.vue')['default']
   }
 }
