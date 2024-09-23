@@ -82,6 +82,9 @@ export default defineConfig(({ mode }) => {
             },
           ],
         },
+        injectManifest: {
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        },
         integration: {
           configureOptions(viteConfig, options) {
             if (viteConfig.command === 'build')

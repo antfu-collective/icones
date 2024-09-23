@@ -20,7 +20,7 @@ async function onShow() {
 
 const highlightCode = computedAsync(async () => {
   const c = code.value
-  const formatted = await prettierCode(c, props.snippet.prettierParser)
+  const formatted = (await prettierCode(c, props.snippet.prettierParser)).trim()
   return highlight(formatted, props.snippet.lang)
 })
 </script>

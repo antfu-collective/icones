@@ -1,28 +1,20 @@
 import type { HighlighterCore } from 'shiki/core'
-import { createHighlighterCore } from 'shiki/core'
-import langAstro from 'shiki/langs/astro.mjs'
-import langHtml from 'shiki/langs/html.mjs'
-import langJsx from 'shiki/langs/jsx.mjs'
-import langSvelte from 'shiki/langs/svelte.mjs'
-import langTsx from 'shiki/langs/tsx.mjs'
-import langVue from 'shiki/langs/vue.mjs'
-import vitesseDark from 'shiki/themes/vitesse-dark.mjs'
-import vitesseLight from 'shiki/themes/vitesse-light.mjs'
+import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki/core'
 
 export const shiki = computedAsync<HighlighterCore>(async (onCancel) => {
   const shiki = await createHighlighterCore({
-    loadWasm: () => import('shiki/wasm'),
+    engine: createJavaScriptRegexEngine(),
     themes: [
-      vitesseDark,
-      vitesseLight,
+      () => import('shiki/themes/vitesse-dark.mjs'),
+      () => import('shiki/themes/vitesse-light.mjs'),
     ],
     langs: [
-      langHtml,
-      langJsx,
-      langTsx,
-      langVue,
-      langAstro,
-      langSvelte,
+      () => import('shiki/langs/html.mjs'),
+      () => import('shiki/langs/jsx.mjs'),
+      () => import('shiki/langs/tsx.mjs'),
+      () => import('shiki/langs/vue.mjs'),
+      () => import('shiki/langs/astro.mjs'),
+      () => import('shiki/langs/svelte.mjs'),
     ],
   })
 
