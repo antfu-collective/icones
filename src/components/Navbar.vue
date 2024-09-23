@@ -1,6 +1,6 @@
 <script lang="ts">
-import { getSearchResults, isDark } from '../store'
 import { isElectron } from '../env'
+import { getSearchResults, isDark } from '../store'
 
 export default defineComponent({
   setup() {

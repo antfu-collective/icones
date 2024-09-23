@@ -1,10 +1,17 @@
 import type { IconifyJSON } from 'iconify-icon'
 import { notNullish } from '@antfu/utils'
-import { addCollection } from 'iconify-icon'
 import { AsyncFzf } from 'fzf'
-import { favoritedCollectionIds, inProgress, isExcludedCollection, isFavoritedCollection, isRecentCollection, progressMessage, recentCollectionIds } from '../store'
+import { addCollection } from 'iconify-icon'
 import { isLocalMode, staticPath } from '../env'
 import { loadCollection, saveCollection } from '../store/indexedDB'
+import {
+  favoritedCollectionIds,
+  isExcludedCollection,
+  isFavoritedCollection,
+  isRecentCollection,
+  recentCollectionIds,
+} from '../store/localstorage'
+import { inProgress, progressMessage } from '../store/progress'
 import infoJSON from './collections-info.json'
 import { variantCategories } from './variant-category'
 

@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
-import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 import { isElectron } from '../env'
+import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 
 const route = useRoute()
 const current = computed(() => route.path.split('/').slice(-1)[0])

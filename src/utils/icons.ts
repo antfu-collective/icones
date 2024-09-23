@@ -1,5 +1,5 @@
-import { buildIcon, loadIcon } from 'iconify-icon'
 import { encodeSvgForCss } from '@iconify/utils'
+import { buildIcon, loadIcon } from 'iconify-icon'
 import { getTransformedId } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
