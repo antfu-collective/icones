@@ -29,6 +29,7 @@ const { typeMap, handleSnippetShow } = useSnippetGroup()
 function useSnippetGroup() {
   const typeMap = reactive<Record<string, Record<string, {
     name: string
+    tag?: string
     code?: string
     lang: string // for shiki
     parser: BuiltInParserName // for prettier
@@ -43,9 +44,9 @@ function useSnippetGroup() {
       },
       Components: {
         'vue': { name: 'Vue', lang: 'vue', parser: 'vue' },
-        'vue-ts': { name: 'Vue TS', lang: 'vue', parser: 'vue' },
+        'vue-ts': { name: 'Vue', tag: 'TS', lang: 'vue', parser: 'vue' },
         'jsx': { name: 'React', lang: 'jsx', parser: 'typescript' },
-        'tsx': { name: 'React TS', lang: 'tsx', parser: 'typescript' },
+        'tsx': { name: 'React', tag: 'TS', lang: 'tsx', parser: 'typescript' },
         'svelte': { name: 'Svelte', lang: 'svelte', parser: 'typescript' },
         'qwik': { name: 'Qwik', lang: 'tsx', parser: 'typescript' },
         'solid': { name: 'Solid', lang: 'tsx', parser: 'typescript' },
@@ -258,7 +259,7 @@ const collection = computed(() => {
               <template v-for="(snippet, type) in group" :key="type">
                 <SnippetPreview :code="snippet.code" :type="type" :lang="snippet.lang" :parser="snippet.parser" @show="handleSnippetShow(groupName, type)">
                   <button class="btn small opacity-75" @click="copy(type)">
-                    {{ snippet.name }}
+                    {{ snippet.name }}<sup v-if="snippet.tag" class="opacity-50 -mr-1">{{ snippet.tag }}</sup>
                   </button>
                 </SnippetPreview>
               </template>
