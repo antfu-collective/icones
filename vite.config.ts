@@ -1,19 +1,19 @@
-import { join, resolve } from 'node:path'
 import { rmSync } from 'node:fs'
+import { join, resolve } from 'node:path'
 import process from 'node:process'
-import { defineConfig } from 'vite'
-import Pages from 'vite-plugin-pages'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { VitePWA } from 'vite-plugin-pwa'
-import dayjs from 'dayjs'
 import Vue from '@vitejs/plugin-vue'
-import UnoCSS from 'unocss/vite'
+import dayjs from 'dayjs'
 import fg from 'fast-glob'
-
+import UnoCSS from 'unocss/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { defineConfig } from 'vite'
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
+
 import esmodule from 'vite-plugin-esmodule'
+import Pages from 'vite-plugin-pages'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ mode }) => {
   const isElectron = mode === 'electron'

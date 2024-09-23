@@ -1,7 +1,7 @@
-import { AsyncFzf, asyncExtendedMatch } from 'fzf'
 import type { Ref } from 'vue'
-import { computed, markRaw, ref, watch } from 'vue'
 import type { CollectionMeta } from '../data'
+import { asyncExtendedMatch, AsyncFzf } from 'fzf'
+import { computed, markRaw, ref, watch } from 'vue'
 import { specialTabs } from '../data'
 import { searchAlias } from '../data/search-alias'
 import { cleanupQuery } from '../utils/query'
@@ -103,7 +103,8 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
     finder.value.find(searchString)
       .then((result) => {
         icons.value = result.map(i => i.item)
-      }).catch(() => {
+      })
+      .catch(() => {
         // The search is canceled
       })
   }

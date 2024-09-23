@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { BrowserWindow, app, shell } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 
 let mainWindow: BrowserWindow | null = null

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { ref } from 'vue'
 import type { CollectionMeta } from '../data'
+import { ref } from 'vue'
 import { selectedPackageManager } from '../store'
 
 const props = defineProps({
@@ -52,7 +52,7 @@ async function copyText() {
     >
       Install Iconify Iconset
     </a>
-    <div class="border-1 border-base rounded w-100 mt1">
+    <div class="border-1 border-base rounded w-140 mt1">
       <div flex="~ gap-4 items-center" p3 border="b base">
         <label
           v-for="manager in managers" :key="manager"
