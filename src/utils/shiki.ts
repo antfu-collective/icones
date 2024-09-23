@@ -1,16 +1,16 @@
 import type { HighlighterCore } from 'shiki/core'
 import { createHighlighterCore } from 'shiki/core'
-import vitesseDark from 'shiki/themes/vitesse-dark.mjs'
-import vitesseLight from 'shiki/themes/vitesse-light.mjs'
+import langAstro from 'shiki/langs/astro.mjs'
 import langHtml from 'shiki/langs/html.mjs'
 import langJsx from 'shiki/langs/jsx.mjs'
+import langSvelte from 'shiki/langs/svelte.mjs'
 import langTsx from 'shiki/langs/tsx.mjs'
 import langVue from 'shiki/langs/vue.mjs'
-import langAstro from 'shiki/langs/astro.mjs'
-import langSvelte from 'shiki/langs/svelte.mjs'
+import vitesseDark from 'shiki/themes/vitesse-dark.mjs'
+import vitesseLight from 'shiki/themes/vitesse-light.mjs'
 
-export const shiki = computedAsync<HighlighterCore>(async () => {
-  return await createHighlighterCore({
+export const shiki = computedAsync<HighlighterCore>(async (onCancel) => {
+  const shiki = await createHighlighterCore({
     loadWasm: () => import('shiki/wasm'),
     themes: [
       vitesseDark,
@@ -25,6 +25,9 @@ export const shiki = computedAsync<HighlighterCore>(async () => {
       langSvelte,
     ],
   })
+
+  onCancel(() => shiki?.dispose())
+  return shiki
 })
 
 export function highlight(code: string, lang: string) {

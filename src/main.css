@@ -89,7 +89,7 @@ html:not(.dark) .shiki span {
 
 .v-popper--theme-tooltip .v-popper__inner,
 .v-popper--theme-menu .v-popper__inner {
-  --uno: border border-base;
+  --uno: border border-base shadow-lg;
 }
 
 .v-popper--theme-menu .v-popper__arrow-outer {
