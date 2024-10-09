@@ -98,13 +98,13 @@ importers:
         version: 5.6.3
       unocss:
         specifier: ^0.63.4
-        version: 0.63.4(postcss@8.4.47)(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
+        version: 0.63.4(postcss@8.4.47)(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
       unplugin-auto-import:
         specifier: ^0.18.3
-        version: 0.18.3(@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3)))(rollup@2.79.1)
+        version: 0.18.3(@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3)))(rollup@2.79.2)
       unplugin-vue-components:
         specifier: ^0.27.4
-        version: 0.27.4(@babel/parser@7.25.6)(rollup@2.79.1)(vue@3.5.11(typescript@5.6.3))
+        version: 0.27.4(@babel/parser@7.25.6)(rollup@2.79.2)(vue@3.5.11(typescript@5.6.3))
       vite:
         specifier: ^5.4.8
         version: 5.4.8(@types/node@22.5.5)(terser@5.33.0)
@@ -2425,7 +2425,7 @@ packages:
     resolution: {integrity: sha512-P7qDB/RckdKETpBM4CtjHRQ5qXByPmFhRi86sN3E+J+tySchq+RSOGGhI2hDIefmmKFuTi/1ACjqsnDJDDDfzg==}
     engines: {node: '>=18'}
     peerDependencies:
-      eslint: ^9.11.1
+      eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
 
   eslint-plugin-jsonc@2.16.0:
     resolution: {integrity: sha512-Af/ZL5mgfb8FFNleH6KlO4/VdmDuTqmM+SPnWcdoWywTetv7kq+vQe99UyQb9XO3b0OWLVuTH7H0d/PXYCMdSg==}
@@ -2448,7 +2448,7 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       astro-eslint-parser: ^1.0.2
-      eslint: ^9.11.1
+      eslint: '>=8.0.0'
       svelte: '>=3.0.0'
       svelte-eslint-parser: ^0.41.1
       vue-eslint-parser: '>=9.0.0'
@@ -3926,8 +3926,8 @@ packages:
     resolution: {integrity: sha512-CHhPh+UNHD2GTXNYhPWLnU8ONHdI+5DI+4EYIAOaiD63rHeYlZvyh8P+in5999TTSFgUYuKUAjzRI4mdh/p+2A==}
     engines: {node: '>=8.0'}
 
-  rollup@2.79.1:
-    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
+  rollup@2.79.2:
+    resolution: {integrity: sha512-fS6iqSPZDs3dr/y7Od6y5nha8dW1YnbgtsyotCVvoFGKbERG++CVRFv1meyGDE1SNItQA8BrnCw7ScdAhRJ3XQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
 
@@ -6033,53 +6033,53 @@ snapshots:
 
   '@polka/url@1.0.0-next.28': {}
 
-  '@rollup/plugin-babel@5.3.1(@babel/core@7.25.2)(rollup@2.79.1)':
+  '@rollup/plugin-babel@5.3.1(@babel/core@7.25.2)(rollup@2.79.2)':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/helper-module-imports': 7.24.7
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
-      rollup: 2.79.1
+      '@rollup/pluginutils': 3.1.0(rollup@2.79.2)
+      rollup: 2.79.2
     transitivePeerDependencies:
       - supports-color
 
-  '@rollup/plugin-node-resolve@15.3.0(rollup@2.79.1)':
+  '@rollup/plugin-node-resolve@15.3.0(rollup@2.79.2)':
     dependencies:
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
       '@types/resolve': 1.20.2
       deepmerge: 4.3.1
       is-module: 1.0.0
       resolve: 1.22.8
     optionalDependencies:
-      rollup: 2.79.1
+      rollup: 2.79.2
 
-  '@rollup/plugin-replace@2.4.2(rollup@2.79.1)':
+  '@rollup/plugin-replace@2.4.2(rollup@2.79.2)':
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 3.1.0(rollup@2.79.2)
       magic-string: 0.25.9
-      rollup: 2.79.1
+      rollup: 2.79.2
 
-  '@rollup/plugin-terser@0.4.4(rollup@2.79.1)':
+  '@rollup/plugin-terser@0.4.4(rollup@2.79.2)':
     dependencies:
       serialize-javascript: 6.0.2
       smob: 1.5.0
       terser: 5.33.0
     optionalDependencies:
-      rollup: 2.79.1
+      rollup: 2.79.2
 
-  '@rollup/pluginutils@3.1.0(rollup@2.79.1)':
+  '@rollup/pluginutils@3.1.0(rollup@2.79.2)':
     dependencies:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
       picomatch: 2.3.1
-      rollup: 2.79.1
+      rollup: 2.79.2
 
-  '@rollup/pluginutils@5.1.2(rollup@2.79.1)':
+  '@rollup/pluginutils@5.1.2(rollup@2.79.2)':
     dependencies:
       '@types/estree': 1.0.6
       estree-walker: 2.0.2
       picomatch: 2.3.1
     optionalDependencies:
-      rollup: 2.79.1
+      rollup: 2.79.2
 
   '@rollup/rollup-android-arm-eabi@4.22.4':
     optional: true
@@ -6359,21 +6359,21 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unocss/astro@0.63.4(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))':
+  '@unocss/astro@0.63.4(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))':
     dependencies:
       '@unocss/core': 0.63.4
       '@unocss/reset': 0.63.4
-      '@unocss/vite': 0.63.4(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
+      '@unocss/vite': 0.63.4(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
     optionalDependencies:
       vite: 5.4.8(@types/node@22.5.5)(terser@5.33.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
 
-  '@unocss/cli@0.63.4(rollup@2.79.1)':
+  '@unocss/cli@0.63.4(rollup@2.79.2)':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
       '@unocss/config': 0.63.4
       '@unocss/core': 0.63.4
       '@unocss/preset-uno': 0.63.4
@@ -6490,10 +6490,10 @@ snapshots:
     dependencies:
       '@unocss/core': 0.63.4
 
-  '@unocss/vite@0.63.4(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))':
+  '@unocss/vite@0.63.4(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
       '@unocss/config': 0.63.4
       '@unocss/core': 0.63.4
       '@unocss/inspector': 0.63.4
@@ -9238,7 +9238,7 @@ snapshots:
       sprintf-js: 1.1.3
     optional: true
 
-  rollup@2.79.1:
+  rollup@2.79.2:
     optionalDependencies:
       fsevents: 2.3.3
 
@@ -9816,9 +9816,9 @@ snapshots:
 
   unicode-property-aliases-ecmascript@2.1.0: {}
 
-  unimport@3.12.0(rollup@2.79.1):
+  unimport@3.12.0(rollup@2.79.2):
     dependencies:
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
       acorn: 8.12.1
       escape-string-regexp: 5.0.0
       estree-walker: 3.0.3
@@ -9866,10 +9866,10 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss@0.63.4(postcss@8.4.47)(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0)):
+  unocss@0.63.4(postcss@8.4.47)(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0)):
     dependencies:
-      '@unocss/astro': 0.63.4(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
-      '@unocss/cli': 0.63.4(rollup@2.79.1)
+      '@unocss/astro': 0.63.4(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
+      '@unocss/cli': 0.63.4(rollup@2.79.2)
       '@unocss/core': 0.63.4
       '@unocss/postcss': 0.63.4(postcss@8.4.47)
       '@unocss/preset-attributify': 0.63.4
@@ -9884,7 +9884,7 @@ snapshots:
       '@unocss/transformer-compile-class': 0.63.4
       '@unocss/transformer-directives': 0.63.4
       '@unocss/transformer-variant-group': 0.63.4
-      '@unocss/vite': 0.63.4(rollup@2.79.1)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
+      '@unocss/vite': 0.63.4(rollup@2.79.2)(vite@5.4.8(@types/node@22.5.5)(terser@5.33.0))
     optionalDependencies:
       vite: 5.4.8(@types/node@22.5.5)(terser@5.33.0)
     transitivePeerDependencies:
@@ -9892,15 +9892,15 @@ snapshots:
       - rollup
       - supports-color
 
-  unplugin-auto-import@0.18.3(@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3)))(rollup@2.79.1):
+  unplugin-auto-import@0.18.3(@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3)))(rollup@2.79.2):
     dependencies:
       '@antfu/utils': 0.7.10
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
       fast-glob: 3.3.2
       local-pkg: 0.5.0
       magic-string: 0.30.11
       minimatch: 9.0.5
-      unimport: 3.12.0(rollup@2.79.1)
+      unimport: 3.12.0(rollup@2.79.2)
       unplugin: 1.14.1
     optionalDependencies:
       '@vueuse/core': 11.1.0(vue@3.5.11(typescript@5.6.3))
@@ -9908,10 +9908,10 @@ snapshots:
       - rollup
       - webpack-sources
 
-  unplugin-vue-components@0.27.4(@babel/parser@7.25.6)(rollup@2.79.1)(vue@3.5.11(typescript@5.6.3)):
+  unplugin-vue-components@0.27.4(@babel/parser@7.25.6)(rollup@2.79.2)(vue@3.5.11(typescript@5.6.3)):
     dependencies:
       '@antfu/utils': 0.7.10
-      '@rollup/pluginutils': 5.1.2(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
       chokidar: 3.6.0
       debug: 4.3.7
       fast-glob: 3.3.2
@@ -10149,10 +10149,10 @@ snapshots:
       '@babel/core': 7.25.2
       '@babel/preset-env': 7.25.4(@babel/core@7.25.2)
       '@babel/runtime': 7.25.6
-      '@rollup/plugin-babel': 5.3.1(@babel/core@7.25.2)(rollup@2.79.1)
-      '@rollup/plugin-node-resolve': 15.3.0(rollup@2.79.1)
-      '@rollup/plugin-replace': 2.4.2(rollup@2.79.1)
-      '@rollup/plugin-terser': 0.4.4(rollup@2.79.1)
+      '@rollup/plugin-babel': 5.3.1(@babel/core@7.25.2)(rollup@2.79.2)
+      '@rollup/plugin-node-resolve': 15.3.0(rollup@2.79.2)
+      '@rollup/plugin-replace': 2.4.2(rollup@2.79.2)
+      '@rollup/plugin-terser': 0.4.4(rollup@2.79.2)
       '@surma/rollup-plugin-off-main-thread': 2.2.3
       ajv: 8.17.1
       common-tags: 1.8.2
@@ -10161,7 +10161,7 @@ snapshots:
       glob: 7.2.3
       lodash: 4.17.21
       pretty-bytes: 5.6.0
-      rollup: 2.79.1
+      rollup: 2.79.2
       source-map: 0.8.0-beta.0
       stringify-object: 3.3.0
       strip-comments: 2.0.1
