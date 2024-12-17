@@ -1,7 +1,7 @@
-import routes from '~pages'
 import { disableCache } from 'iconify-icon'
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import routes from '~pages'
 import App from './App.vue'
 import { basePath, isElectron } from './env'
 

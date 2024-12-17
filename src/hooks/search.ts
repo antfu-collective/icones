@@ -65,9 +65,9 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
 
     return (category.value && variant.value)
       ? arrayIntersection(
-        collection.value.categories?.[category.value] || [],
-        collection.value.variants?.[variant.value] || [],
-      )
+          collection.value.categories?.[category.value] || [],
+          collection.value.variants?.[variant.value] || [],
+        )
       : category.value
         ? (collection.value.categories?.[category.value] || [])
         : variant.value
