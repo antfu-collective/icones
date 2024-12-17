@@ -54,7 +54,7 @@
     "fs-extra": "^11.2.0",
     "jszip": "^3.10.1",
     "lru-cache": "^11.0.2",
-    "pnpm": "8.10.2",
+    "pnpm": "9.15.0",
     "shiki": "^1.24.2",
     "svg-packer": "^0.0.3",
     "typescript": "^5.7.2",
