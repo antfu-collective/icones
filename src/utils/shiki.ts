@@ -1,5 +1,6 @@
 import type { HighlighterCore } from 'shiki/core'
-import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki/core'
+import { createHighlighterCore } from 'shiki/core'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 export const shiki = computedAsync<HighlighterCore>(async (onCancel) => {
   const shiki = await createHighlighterCore({
