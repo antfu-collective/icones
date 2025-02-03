@@ -85,8 +85,8 @@ importers:
         specifier: ^11.0.2
         version: 11.0.2
       pnpm:
-        specifier: 8.10.2
-        version: 8.10.2
+        specifier: ^9.15.4
+        version: 9.15.4
       shiki:
         specifier: ^2.2.0
         version: 2.2.0
@@ -3771,9 +3771,9 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
-  pnpm@8.10.2:
-    resolution: {integrity: sha512-B4IJPVumx62UYggbwe8HdQFqS0EJ7KHh/tzqbxEBQ69fUJk9s2xCfU+oxivjkgoyJNsS2nGdJGyhndnxgEjDPA==}
-    engines: {node: '>=16.14'}
+  pnpm@9.15.4:
+    resolution: {integrity: sha512-stwg4vxys+GISEWbNzWaMgZGY+VielHkx0ssKd2OjgSRSDw6u0B4nP1Xi/Ni+2uoJhsF8Dh9dnku1uI+o7G2oA==}
+    engines: {node: '>=18.12'}
     hasBin: true
 
   possible-typed-array-names@1.0.0:
@@ -9149,7 +9149,7 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  pnpm@8.10.2: {}
+  pnpm@9.15.4: {}
 
   possible-typed-array-names@1.0.0: {}
 
