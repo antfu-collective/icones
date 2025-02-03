@@ -1,6 +1,7 @@
 <script lang='ts' setup>
+import type { Snippet } from '../utils/icons'
 import { Menu } from 'floating-vue'
-import { getIconSnippet, type Snippet } from '../utils/icons'
+import { getIconSnippet } from '../utils/icons'
 import { prettierCode } from '../utils/prettier'
 import { highlight } from '../utils/shiki'
 
