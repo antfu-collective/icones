@@ -210,7 +210,7 @@ const collection = computed(() => {
               {{ groupName }}
             </div>
             <div class="flex gap-1">
-              <template v-for="(snippet, type) in group" :key="type">
+              <template v-for="(snippet, type) in group" :key="`${icon}-${groupName}-${type}`">
                 <SnippetPreview
                   :icon="icon"
                   :snippet="snippet"
