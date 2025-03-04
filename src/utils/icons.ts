@@ -1,7 +1,7 @@
 import type { BuiltInParserName as PrettierParser } from 'prettier'
 import { encodeSvgForCss } from '@iconify/utils'
 import { buildIcon, loadIcon } from 'iconify-icon'
-import { getTransformedId } from '../store'
+import { getTransformedId, useCurrentCollection } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
 import { prettierCode } from './prettier'
@@ -42,15 +42,19 @@ export const SnippetMap: Record<string, Record<string, Snippet>> = {
 
 const API_ENTRY = 'https://api.iconify.design'
 
+const collectionDetails = useCurrentCollection()
+
 export async function getSvgLocal(icon: string, size = '1em', color = 'currentColor') {
+  const currentUsedCollection = collectionDetails.value
   const data = await loadIcon(icon)
   if (!data)
     return
   const built = buildIcon(data, { height: size })
   if (!built)
     return
+  const license = `<!-- Icon from ${currentUsedCollection?.name} by ${currentUsedCollection?.author?.name} - ${currentUsedCollection?.license?.url} -->`
   const xlink = built.body.includes('xlink:') ? ' xmlns:xlink="http://www.w3.org/1999/xlink"' : ''
-  return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${built.body}</svg>`.replaceAll('currentColor', color)
+  return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${license}${built.body}</svg>`.replaceAll('currentColor', color)
 }
 
 export async function getSvg(icon: string, size = '1em', color = 'currentColor') {
@@ -182,7 +186,7 @@ export function SvgToReactNative(svg: string, name: string, snippet: boolean) {
   }
 
   function generateImports(usedComponents: string[]): string {
-  // Separate Svg from the other components
+    // Separate Svg from the other components
     const svgIndex = usedComponents.indexOf('Svg')
     if (svgIndex !== -1)
       usedComponents.splice(svgIndex, 1)
