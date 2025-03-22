@@ -1,6 +1,7 @@
 import type { BuiltInParserName as PrettierParser } from 'prettier'
 import { encodeSvgForCss } from '@iconify/utils'
 import { buildIcon, loadIcon } from 'iconify-icon'
+import { collections } from '../data'
 import { getTransformedId, useCurrentCollection } from '../store'
 import Base64 from './base64'
 import { HtmlToJSX } from './htmlToJsx'
@@ -42,17 +43,23 @@ export const SnippetMap: Record<string, Record<string, Snippet>> = {
 
 const API_ENTRY = 'https://api.iconify.design'
 
-const collectionDetails = useCurrentCollection()
+function getLicenseComment(icon: string) {
+  const [id] = icon.split(':')
+  const collection = collections.find(i => i.id === id)
+  if (!collection) {
+    return ''
+  }
+  return `<!-- Icon from ${collection?.name} by ${collection?.author?.name} - ${collection?.license?.url} -->`
+}
 
 export async function getSvgLocal(icon: string, size = '1em', color = 'currentColor') {
-  const currentUsedCollection = collectionDetails.value
   const data = await loadIcon(icon)
   if (!data)
     return
   const built = buildIcon(data, { height: size })
   if (!built)
     return
-  const license = `<!-- Icon from ${currentUsedCollection?.name} by ${currentUsedCollection?.author?.name} - ${currentUsedCollection?.license?.url} -->`
+  const license = getLicenseComment(icon)
   const xlink = built.body.includes('xlink:') ? ' xmlns:xlink="http://www.w3.org/1999/xlink"' : ''
   return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${license}${built.body}</svg>`.replaceAll('currentColor', color)
 }
