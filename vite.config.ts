@@ -10,7 +10,7 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
-
+// @ts-expect-error type resolution
 import esmodule from 'vite-plugin-esmodule'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'

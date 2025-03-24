@@ -4,7 +4,7 @@
     "jsx": "preserve",
     "lib": ["DOM", "ESNext", "WebWorker"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "types": [
       "vite/client",
