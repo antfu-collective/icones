@@ -119,7 +119,7 @@ export async function PackZip(
 
   const zip = new window.JSZip()
 
-  const zipActions: Record<PackType, (name: string, svg: string) => void | (() => void) > = {
+  const zipActions: Record<PackType, (name: string, svg: string) => void | (() => void)> = {
     vue(name: string, svg: string) {
       name = toComponentName(name)
       zip.file(`${name}.vue`, SvgToVue(svg, name))
