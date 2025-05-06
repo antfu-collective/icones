@@ -266,7 +266,7 @@ const collection = computed(() => {
           </div>
           <a
             v-if="collection" class="btn small mr-1 mb-1 opacity-75 inline-flex"
-            :href="`https://icon-sets.iconify.design/${collection.id}/?query=${icon.split(':')[1]}`" target="_blank"
+            :href="`https://icon-sets.iconify.design/${collection.id}/?icon-filter=${icon.split(':')[1]}`" target="_blank"
           >
             Iconify
           </a>
