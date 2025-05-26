@@ -188,40 +188,4 @@ export async function PackZip(
     ).blob()),
     `${name}-${type}.zip`,
   )
-
-  /* const data = await LoadIconSvgs(icons)
-
-  const zip = new window.JSZip()
-
-  const zipActions: Record<PackType, (name: string, svg: string) => void | (() => void)> = {
-    vue(name: string, svg: string) {
-      name = toComponentName(name)
-      zip.file(`${name}.vue`, SvgToVue(svg, name))
-    },
-    jsx(name: string, svg: string) {
-      name = toComponentName(name)
-      zip.file(`${name}.jsx`, SvgToJSX(svg, name, false))
-    },
-    tsx(name: string, svg: string) {
-      name = toComponentName(name)
-      zip.file(`${name}.tsx`, SvgToTSX(svg, name, false))
-    },
-    svg(name: string, svg: string) {
-      zip.file(`${name}.svg`, svg)
-    },
-    json() {
-      zip.file(`${name}.json`, JSON.stringify(data, null, 2))
-    },
-  }
-
-  const action = zipActions[type]
-  if (type === 'json') {
-    (action as () => void)()
-  }
-  else {
-    for (const { name, svg } of data)
-      action(normalizeZipFleName(name), svg)
-  }
-  const blob = await zip.generateAsync({ type: 'blob' })
-  Download(blob, `${name}-${type}.zip`) */
 }
