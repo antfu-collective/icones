@@ -4,6 +4,7 @@ import process from 'node:process'
 import Vue from '@vitejs/plugin-vue'
 import dayjs from 'dayjs'
 import fg from 'fast-glob'
+import { SvgPackerVitePlugin } from 'svg-packer/vite'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -61,6 +62,7 @@ export default defineConfig(({ mode }) => {
         ],
         dts: 'src/auto-imports.d.ts',
       }),
+      SvgPackerVitePlugin(),
       !isElectron && VitePWA({
         strategies: 'injectManifest',
         srcDir: 'src',
@@ -83,7 +85,8 @@ export default defineConfig(({ mode }) => {
           ],
         },
         injectManifest: {
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          // collections-meta.json ~7.5MB
+          maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
         },
         integration: {
           configureOptions(viteConfig, options) {
