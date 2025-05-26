@@ -3,8 +3,7 @@ import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { idCases } from '../utils/case'
 import { dataUrlToBlob } from '../utils/dataUrlToBlob'
-import { getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
-import { Download } from '../utils/pack'
+import { Download, getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
 import InstallIconSet from './InstallIconSet.vue'
 
 const props = defineProps({

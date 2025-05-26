@@ -12,7 +12,7 @@ import {
   recentCollectionIds,
 } from '../store/localstorage'
 import { inProgress, progressMessage } from '../store/progress'
-import infoJSON from './collections-info.json'
+import { collections } from '../utils/collections'
 import { variantCategories } from './variant-category'
 
 export const specialTabs = ['all', 'recent']
@@ -41,7 +41,7 @@ export interface CollectionMeta extends CollectionInfo {
 const loadedMeta = ref<CollectionMeta[]>([])
 const installed = ref<string[]>([])
 
-export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
+export { collections }
 export const enabledCollections = computed(() => collections.filter(c => !isExcludedCollection(c)))
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 
