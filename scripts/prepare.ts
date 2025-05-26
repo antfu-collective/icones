@@ -77,23 +77,4 @@ async function prepareJSON() {
   await fs.writeJSON(path.join(infoOut, 'collections-info.json'), collections)
 }
 
-async function copyLibs() {
-  const modules = path.resolve(__dirname, '../node_modules')
-
-  await fs.copy(
-    path.join(modules, 'svg-packer/dist/index.browser.js'),
-    path.join(out, 'lib/svg-packer.js'),
-  )
-
-  await fs.copy(
-    path.join(modules, 'jszip/dist/jszip.min.js'),
-    path.join(out, 'lib/jszip.min.js'),
-  )
-}
-
-async function prepare() {
-  await copyLibs()
-  await prepareJSON()
-}
-
-prepare()
+prepareJSON()

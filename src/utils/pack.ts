@@ -23,6 +23,29 @@ export async function LoadIconSvgs(icons: string[]) {
   )
 }
 
+export async function* PrepareIconSvgs(icons: string[], format: 'svg' | 'json', name?: string) {
+  if (format === 'json') {
+    const svgs = await LoadIconSvgs(icons)
+    yield {
+      name: `${name}.json`,
+      input: new Blob([JSON.stringify(svgs, null, 2)], { type: 'application/json; charset=utf-8' }),
+    }
+    return
+  }
+
+  for (const icon of icons) {
+    if (!icon)
+      continue
+
+    const svg = await getSvg(icon)
+
+    yield {
+      name: `${normalizeZipFleName(icon)}.svg`,
+      input: new Blob([svg], { type: 'image/svg+xml' }),
+    }
+  }
+}
+
 export async function Download(blob: Blob, name: string) {
   if (isVSCode) {
     blob.arrayBuffer().then(
@@ -62,11 +85,19 @@ ${symbols}
   Download(blob, 'sprite.svg')
 }
 
+function normalizeZipFleName(svgName: string): string {
+  return svgName.replace(':', '-')
+}
+
 export async function PackIconFont(icons: string[], options: any = {}) {
   if (!icons.length)
     return
-  const data = await LoadIconSvgs(icons)
-  const result = await window.SvgPacker({
+
+  const [data, { SvgPacker }] = await Promise.all([
+    LoadIconSvgs(icons),
+    import('svg-packer'),
+  ])
+  const result = await SvgPacker({
     fontName: 'Iconify Explorer Font',
     fileName: 'iconfont',
     cssPrefix: 'i',
@@ -80,32 +111,67 @@ export async function PackIconFont(icons: string[], options: any = {}) {
 export async function PackSvgZip(icons: string[], name: string) {
   if (!icons.length)
     return
-  const data = await LoadIconSvgs(icons)
 
-  const zip = new window.JSZip()
-  for (const { name, svg } of data)
-    zip.file(`${name}.svg`, svg)
-
-  const blob = await zip.generateAsync({ type: 'blob' })
-  Download(blob, `${name}.zip`)
+  Download(
+    await import('client-zip').then(({ downloadZip }) => downloadZip(
+      PrepareIconSvgs(icons, 'svg'),
+    ).blob()),
+    `${name}.zip`,
+  )
 }
 
 export async function PackJsonZip(icons: string[], name: string) {
   if (!icons.length)
     return
-  const data = await LoadIconSvgs(icons)
 
-  const zip = new window.JSZip()
-  zip.file(`${name}.json`, JSON.stringify(data, null, 2))
-
-  const blob = await zip.generateAsync({ type: 'blob' })
-  Download(blob, `${name}.zip`)
+  Download(
+    await import('client-zip').then(({ downloadZip }) => downloadZip(
+      PrepareIconSvgs(icons, 'json', name),
+    ).blob()),
+    `${name}.zip`,
+  )
 }
 
 export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue' | 'json'
 
-function normalizeZipFleName(svgName: string): string {
-  return svgName.replace(':', '-')
+async function* PreparePackZip(
+  icons: string[],
+  name: string,
+  type: PackType,
+) {
+  if (type === 'json' || type === 'svg') {
+    yield* PrepareIconSvgs(icons, type, name)
+    return
+  }
+
+  for (const name of icons) {
+    if (!name)
+      continue
+
+    const svg = await getSvg(name)
+
+    const componentName = toComponentName(normalizeZipFleName(name))
+    let content: string
+
+    switch (type) {
+      case 'vue':
+        content = await SvgToVue(svg, componentName)
+        break
+      case 'jsx':
+        content = await SvgToJSX(svg, componentName, false)
+        break
+      case 'tsx':
+        content = await SvgToTSX(svg, componentName, false)
+        break
+      default:
+        continue
+    }
+
+    yield {
+      name: `${componentName}.${type}`,
+      input: new Blob([content], { type: 'text/plain' }),
+    }
+  }
 }
 
 export async function PackZip(
@@ -115,39 +181,11 @@ export async function PackZip(
 ) {
   if (!icons.length)
     return
-  const data = await LoadIconSvgs(icons)
 
-  const zip = new window.JSZip()
-
-  const zipActions: Record<PackType, (name: string, svg: string) => void | (() => void)> = {
-    vue(name: string, svg: string) {
-      name = toComponentName(name)
-      zip.file(`${name}.vue`, SvgToVue(svg, name))
-    },
-    jsx(name: string, svg: string) {
-      name = toComponentName(name)
-      zip.file(`${name}.jsx`, SvgToJSX(svg, name, false))
-    },
-    tsx(name: string, svg: string) {
-      name = toComponentName(name)
-      zip.file(`${name}.tsx`, SvgToTSX(svg, name, false))
-    },
-    svg(name: string, svg: string) {
-      zip.file(`${name}.svg`, svg)
-    },
-    json() {
-      zip.file(`${name}.json`, JSON.stringify(data, null, 2))
-    },
-  }
-
-  const action = zipActions[type]
-  if (type === 'json') {
-    (action as () => void)()
-  }
-  else {
-    for (const { name, svg } of data)
-      action(normalizeZipFleName(name), svg)
-  }
-  const blob = await zip.generateAsync({ type: 'blob' })
-  Download(blob, `${name}-${type}.zip`)
+  Download(
+    await import('client-zip').then(({ downloadZip }) => downloadZip(
+      PreparePackZip(icons, name, type),
+    ).blob()),
+    `${name}-${type}.zip`,
+  )
 }
