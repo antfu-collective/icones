@@ -1,2 +1,4 @@
 packages:
   - electron
+onlyBuiltDependencies:
+  - ttf2woff2

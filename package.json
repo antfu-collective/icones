@@ -63,15 +63,5 @@
     "vite-plugin-pages": "^0.32.5",
     "vite-plugin-pwa": "^1.0.0",
     "vue-tsc": "^2.2.8"
-  },
-  "pnpm": {
-    "neverBuiltDependencies": [
-      "electron",
-      "electron-builder",
-      "ttf2woff2",
-      "vite-plugin-electron",
-      "vite-plugin-electron-renderer",
-      "vite-plugin-esmodule"
-    ]
   }
 }
