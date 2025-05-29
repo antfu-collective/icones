@@ -1,5 +1,6 @@
 <script setup lang='ts'>
-import type { PackType } from '../utils/pack'
+import type { PackType } from '../utils/svg'
+import { collections } from '../data'
 import { bags, clearBag } from '../store'
 import { PackIconFont, PackSVGSprite, PackZip } from '../utils/pack'
 
@@ -21,18 +22,21 @@ function clear() {
 async function packIconFont() {
   // TODO: customzie
   await PackIconFont(
+    collections,
     bags.value,
   )
 }
 
 async function packSVGSprite() {
   await PackSVGSprite(
+    collections,
     bags.value,
   )
 }
 
 async function PackSvgs(type: PackType = 'svg') {
   await PackZip(
+    collections,
     bags.value,
     'icones-bags',
     type,

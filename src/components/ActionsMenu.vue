@@ -32,6 +32,7 @@ async function packIconFont() {
   progressMessage.value = 'Packing up...'
   await nextTick()
   await PackIconFont(
+    [props.collection],
     props.collection.icons.map(i => `${props.collection!.id}:${i}`),
     { fontName: props.collection.name, fileName: props.collection.id },
   )
@@ -49,6 +50,7 @@ async function packSvgs() {
   progressMessage.value = 'Packing up...'
   await nextTick()
   await PackSvgZip(
+    [props.collection],
     props.collection.icons.map(i => `${props.collection!.id}:${i}`),
     props.collection.id,
   )
@@ -66,6 +68,7 @@ async function packJson() {
   progressMessage.value = 'Packing up...'
   await nextTick()
   await PackJsonZip(
+    [props.collection],
     props.collection.icons.map(i => `${props.collection!.id}:${i}`),
     props.collection.id,
   )

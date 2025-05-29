@@ -1,79 +1,40 @@
-import { isVSCode } from '../env'
-import { bufferToString } from './bufferToString'
-import {
-  getSvg,
-  getSvgSymbol,
-  SvgToJSX,
-  SvgToTSX,
-  SvgToVue,
-  toComponentName,
-} from './icons'
+import type { CollectionInfo } from '../data'
+import type { PackType } from './svg'
+import { Download } from './icons'
+import { getSvg, LoadIconSvgs } from './svg'
 
-export async function LoadIconSvgs(icons: string[]) {
-  return await Promise.all(
-    icons
-      .filter(Boolean)
-      .sort()
-      .map(async (name) => {
-        return {
-          name,
-          svg: await getSvg(name),
-        }
-      }),
-  )
+export async function getSvgSymbol(
+  collections: CollectionInfo[],
+  icon: string,
+  size = '1em',
+  color = 'currentColor',
+) {
+  const svgMarkup = await getSvg(collections, icon, size, color)
+
+  const symbolElem = document.createElementNS('http://www.w3.org/2000/svg', 'symbol')
+  const node = document.createElement('div') // Create any old element
+  node.innerHTML = svgMarkup
+
+  // Grab the inner HTML and move into a symbol element
+  symbolElem.innerHTML = node.querySelector('svg')!.innerHTML
+  symbolElem.setAttribute('viewBox', node.querySelector('svg')!.getAttribute('viewBox')!)
+  symbolElem.id = icon.replace(/:/, '-') // Simple slugify for quick symbol lookup
+
+  return symbolElem?.outerHTML
 }
 
-export async function* PrepareIconSvgs(icons: string[], format: 'svg' | 'json', name?: string) {
-  if (format === 'json') {
-    const svgs = await LoadIconSvgs(icons)
-    yield {
-      name: `${name}.json`,
-      input: new Blob([JSON.stringify(svgs, null, 2)], { type: 'application/json; charset=utf-8' }),
-    }
-    return
-  }
-
-  for (const icon of icons) {
-    if (!icon)
-      continue
-
-    const svg = await getSvg(icon)
-
-    yield {
-      name: `${normalizeZipFleName(icon)}.svg`,
-      input: new Blob([svg], { type: 'image/svg+xml' }),
-    }
-  }
-}
-
-export async function Download(blob: Blob, name: string) {
-  if (isVSCode) {
-    blob.arrayBuffer().then(
-      buffer => vscode.postMessage({
-        command: 'download',
-        name,
-        text: bufferToString(buffer),
-      }),
-    )
-  }
-  else {
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = name
-    a.click()
-    a.remove()
-  }
-}
-
-export async function PackSVGSprite(icons: string[], options: any = {}) {
+export async function PackSVGSprite(
+  collections: CollectionInfo[],
+  icons: string[],
+  options: any = {},
+) {
   if (!icons.length)
     return
-  const data = await LoadIconSvgs(icons)
+  const data = await LoadIconSvgs(collections, icons)
 
   let symbols = ''
   for (const { name } of data)
-    symbols += `${await getSvgSymbol(name, options.size, options.color)}\n`
+    symbols += `${await getSvgSymbol(collections, name, options.size, options.color)}\n`
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
@@ -85,96 +46,112 @@ ${symbols}
   Download(blob, 'sprite.svg')
 }
 
-function normalizeZipFleName(svgName: string): string {
-  return svgName.replace(':', '-')
-}
-
-export async function PackIconFont(icons: string[], options: any = {}) {
+export async function PackIconFont(
+  collections: CollectionInfo[],
+  icons: string[],
+  options: any = {},
+) {
   if (!icons.length)
     return
 
-  const [data, { SvgPacker }] = await Promise.all([
-    LoadIconSvgs(icons),
-    import('svg-packer'),
-  ])
-  const result = await SvgPacker({
-    fontName: 'Iconify Explorer Font',
-    fileName: 'iconfont',
-    cssPrefix: 'i',
-    ...options,
-    icons: data,
+  const { packerWorker } = await import('./pack-worker-client')
+
+  return new Promise<void>((resolve, reject) => {
+    packerWorker.addEventListener('message', (event) => {
+      if (event.data.error) {
+        reject(event.data.error)
+        return
+      }
+      const { blob, name } = event.data as { blob: ArrayBuffer, name: string }
+      Download(
+        new Blob([blob]),
+        name,
+      )
+      resolve()
+    }, { once: true })
+    const arrayBuffer = createArrayBufferFromCollections(collections)
+    packerWorker.postMessage({
+      operation: 'pack-font-zip',
+      collections: arrayBuffer,
+      payload: {
+        icons: toRaw(icons),
+        ...toRaw(options),
+      },
+    }, [arrayBuffer])
   })
-
-  Download(result.zip.blob, result.zip.name)
 }
 
-export async function PackSvgZip(icons: string[], name: string) {
-  if (!icons.length)
-    return
-
-  Download(
-    await import('client-zip').then(({ downloadZip }) => downloadZip(
-      PrepareIconSvgs(icons, 'svg'),
-    ).blob()),
-    `${name}.zip`,
-  )
-}
-
-export async function PackJsonZip(icons: string[], name: string) {
-  if (!icons.length)
-    return
-
-  Download(
-    await import('client-zip').then(({ downloadZip }) => downloadZip(
-      PrepareIconSvgs(icons, 'json', name),
-    ).blob()),
-    `${name}.zip`,
-  )
-}
-
-export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue' | 'json'
-
-async function* PreparePackZip(
+export async function PackSvgZip(
+  collections: CollectionInfo[],
   icons: string[],
   name: string,
-  type: PackType,
 ) {
-  if (type === 'json' || type === 'svg') {
-    yield* PrepareIconSvgs(icons, type, name)
+  if (!icons.length)
     return
-  }
 
-  for (const name of icons) {
-    if (!name)
-      continue
+  const { packerWorker } = await import('./pack-worker-client')
 
-    const svg = await getSvg(name)
+  return new Promise<void>((resolve, reject) => {
+    packerWorker.addEventListener('message', (event) => {
+      if (event.data.error) {
+        reject(event.data.error)
+        return
+      }
+      const { blob } = event.data as { blob: ArrayBuffer }
+      Download(
+        new Blob([blob]),
+        `${name}.zip`,
+      )
+      resolve()
+    }, { once: true })
+    const arrayBuffer = createArrayBufferFromCollections(collections)
+    packerWorker.postMessage({
+      operation: 'pack-svg-zip',
+      collections: arrayBuffer,
+      payload: {
+        icons: toRaw(icons),
+      },
+    }, [arrayBuffer])
+  })
+}
 
-    const componentName = toComponentName(normalizeZipFleName(name))
-    let content: string
+export async function PackJsonZip(
+  collections: CollectionInfo[],
+  icons: string[],
+  name: string,
+) {
+  if (!icons.length)
+    return
 
-    switch (type) {
-      case 'vue':
-        content = await SvgToVue(svg, componentName)
-        break
-      case 'jsx':
-        content = await SvgToJSX(svg, componentName, false)
-        break
-      case 'tsx':
-        content = await SvgToTSX(svg, componentName, false)
-        break
-      default:
-        continue
-    }
+  const { packerWorker } = await import('./pack-worker-client')
 
-    yield {
-      name: `${componentName}.${type}`,
-      input: new Blob([content], { type: 'text/plain' }),
-    }
-  }
+  return new Promise<void>((resolve, reject) => {
+    packerWorker.addEventListener('message', (event) => {
+      if (event.data.error) {
+        reject(event.data.error)
+        return
+      }
+      const { blob } = event.data as { blob: ArrayBuffer }
+      Download(
+        new Blob([blob]),
+        `${name}.zip`,
+      )
+      resolve()
+    }, { once: true })
+    const arrayBuffer = createArrayBufferFromCollections(collections)
+    packerWorker.postMessage({
+      operation: 'pack-json-zip',
+      collections: arrayBuffer,
+      payload: {
+        icons: toRaw(icons),
+        name,
+      },
+    }, [arrayBuffer])
+  })
 }
 
 export async function PackZip(
+  collections: CollectionInfo[],
   icons: string[],
   name: string,
   type: PackType = 'svg',
@@ -182,10 +159,36 @@ export async function PackZip(
   if (!icons.length)
     return
 
-  Download(
-    await import('client-zip').then(({ downloadZip }) => downloadZip(
-      PreparePackZip(icons, name, type),
-    ).blob()),
-    `${name}-${type}.zip`,
-  )
+  const { packerWorker } = await import('./pack-worker-client')
+
+  return new Promise<void>((resolve, reject) => {
+    packerWorker.addEventListener('message', (event) => {
+      if (event.data.error) {
+        reject(event.data.error)
+        return
+      }
+      const { blob } = event.data as { blob: ArrayBuffer }
+      Download(
+        new Blob([blob]),
+        `${name}-${type}.zip`,
+      )
+      resolve()
+    }, { once: true })
+    const arrayBuffer = createArrayBufferFromCollections(collections)
+    packerWorker.postMessage({
+      operation: 'pack-zip',
+      collections: arrayBuffer,
+      payload: {
+        icons: toRaw(icons),
+        name,
+        type,
+      },
+    }, [arrayBuffer])
+  })
+}
+
+function createArrayBufferFromCollections(
+  collections: CollectionInfo[],
+) {
+  return new TextEncoder().encode(JSON.stringify(collections)).buffer
 }

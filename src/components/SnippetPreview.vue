@@ -1,11 +1,13 @@
 <script lang='ts' setup>
+import type { CollectionInfo } from '../data'
 import type { Snippet } from '../utils/icons'
 import { Menu } from 'floating-vue'
 import { getIconSnippet } from '../utils/icons'
-import { prettierCode } from '../utils/prettier'
 import { highlight } from '../utils/shiki'
+import { prettierCode } from '../utils/svg'
 
 const props = defineProps<{
+  collection: CollectionInfo
   icon: string
   snippet: Snippet
   type: string
@@ -16,7 +18,7 @@ const code = ref<string>('')
 
 async function onShow() {
   if (!code.value)
-    code.value = await getIconSnippet(props.icon, props.type, false, props.color) || ''
+    code.value = await getIconSnippet([props.collection], props.icon, props.type, false, props.color) || ''
 }
 
 const highlightCode = computedAsync(async () => {

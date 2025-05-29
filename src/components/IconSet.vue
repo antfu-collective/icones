@@ -70,7 +70,12 @@ async function onSelect(icon: string) {
       toggleBag(icon)
       break
     case 'copy':
-      onCopy(await copyText(await getIconSnippet(icon, 'id', true) || icon))
+      onCopy(await copyText(await getIconSnippet(
+        [collection.value!],
+        icon,
+        'id',
+        true,
+      ) || icon))
       break
     default:
       current.value = icon

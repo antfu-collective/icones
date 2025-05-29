@@ -112,5 +112,14 @@ export default defineConfig(({ mode }) => {
         'iconify-icon': resolve(__dirname, 'node_modules/iconify-icon/dist/iconify-icon.mjs'),
       },
     },
+    worker: {
+      format: 'es',
+      rollupOptions: {
+        treeshake: true,
+      },
+      plugins: () => [
+        SvgPackerVitePlugin(),
+      ],
+    },
   }
 })

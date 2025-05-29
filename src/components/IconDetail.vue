@@ -3,8 +3,7 @@ import { collections } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { idCases } from '../utils/case'
 import { dataUrlToBlob } from '../utils/dataUrlToBlob'
-import { getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
-import { Download } from '../utils/pack'
+import { Download, getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
 import InstallIconSet from './InstallIconSet.vue'
 
 const props = defineProps({
@@ -70,7 +69,7 @@ async function copyPng(dataUrl: string): Promise<boolean> {
 async function copy(type: string) {
   pushRecentIcon(props.icon)
 
-  const svg = await getIconSnippet(props.icon, type, true, color.value)
+  const svg = await getIconSnippet(collections, props.icon, type, true, color.value)
   if (!svg)
     return
 
@@ -84,7 +83,7 @@ async function copy(type: string) {
 
 async function download(type: string) {
   pushRecentIcon(props.icon)
-  const text = await getIconSnippet(props.icon, type, false, color.value)
+  const text = await getIconSnippet(collections, props.icon, type, false, color.value)
   if (!text)
     return
   const ext = (type === 'solid' || type === 'qwik' || type === 'react-native') ? 'tsx' : type
@@ -212,6 +211,7 @@ const collection = computed(() => {
             <div class="flex gap-1">
               <template v-for="(snippet, type) in group" :key="`${icon}-${groupName}-${type}`">
                 <SnippetPreview
+                  :collection="collection"
                   :icon="icon"
                   :snippet="snippet"
                   :type="type"
