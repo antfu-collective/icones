@@ -34,6 +34,7 @@
     "hotkeys-js": "^3.13.9",
     "iconify-icon": "^2.3.0",
     "prettier": "^3.5.3",
+    "ultrahtml": "^1.6.0",
     "vue": "^3.5.13",
     "vue-chemistry": "^0.2.2",
     "vue-router": "^4.5.0"

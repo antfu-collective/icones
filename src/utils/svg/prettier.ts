@@ -1,5 +1,5 @@
 import type { BuiltInParserName } from 'prettier'
-import { isElectron } from '../env'
+import { isElectron } from '../../env'
 
 export async function prettierCode(code: string, parser: BuiltInParserName) {
   if (!isElectron)
