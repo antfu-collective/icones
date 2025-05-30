@@ -1,4 +1,4 @@
 packages:
   - electron
-onlyBuiltDependencies:
+neverBuiltDependencies:
   - ttf2woff2
