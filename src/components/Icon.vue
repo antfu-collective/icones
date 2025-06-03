@@ -1,4 +1,5 @@
 <script lang="ts">
+import { loadIcon } from 'iconify-icon'
 import { LRUCache } from 'lru-cache'
 
 const cache = new LRUCache<string, HTMLElement>({
@@ -29,8 +30,6 @@ function unmountIcon(name: string, icon: HTMLElement) {
 </script>
 
 <script setup lang="ts">
-import { loadIcon } from 'iconify-icon'
-
 const props = defineProps({
   icon: {
     type: String,
