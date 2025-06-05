@@ -1,4 +1,5 @@
 <script lang="ts">
+import { loadIcon } from 'iconify-icon'
 import { LRUCache } from 'lru-cache'
 
 const cache = new LRUCache<string, HTMLElement>({
@@ -46,6 +47,7 @@ const props = defineProps({
 
 const el = ref<HTMLDivElement>()
 let node: HTMLElement | undefined
+const widthStyle = ref<string | undefined>()
 
 watchEffect(() => {
   if (node)
@@ -53,8 +55,12 @@ watchEffect(() => {
 })
 
 onMounted(() => {
+  const icon = props.icon
   node = getIcon(props.icon)
   el.value?.appendChild(node)
+  loadIcon(icon).then((data) => {
+    widthStyle.value = `width: ${(data.width ?? 16) / (data.height ?? 16)}em;`
+  }).catch(console.error)
 })
 
 onBeforeUnmount(() => {
@@ -64,7 +70,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="el" class="icon-container" :class="[props.class, props.outerClass]" />
+  <div ref="el" class="icon-container" :class="[props.class, props.outerClass]" :style="widthStyle" />
 </template>
 
 <style>
