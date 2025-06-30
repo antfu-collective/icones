@@ -4,15 +4,7 @@ import type { CollectionInfo } from '../../data'
 import type { PackType } from '../svg'
 import type { PackOperation, WorkerPackMessage } from './types'
 import { downloadZip } from 'client-zip'
-import {
-  getSvg,
-  LoadIconSvgs,
-  normalizeZipFleName,
-  SvgToJSX,
-  SvgToTSX,
-  SvgToVue,
-  toComponentName,
-} from '../svg'
+import { getSvg, LoadIconSvgs, normalizeZipFleName, SvgToAstro, SvgToJSX, SvgToQwik, SvgToReactNative, SvgToSolid, SvgToSvelte, SvgToTSX, SvgToVue, toComponentName } from '../svg'
 
 globalThis.onmessage = async (event: MessageEvent<WorkerPackMessage<PackOperation>>) => {
   const message = event.data
@@ -149,6 +141,8 @@ async function* PreparePackZip(
     return
   }
 
+  const ext = (type === 'solid' || type === 'qwik' || type === 'react-native') ? 'tsx' : type
+
   for (const name of icons) {
     if (!name)
       continue
@@ -165,6 +159,21 @@ async function* PreparePackZip(
       case 'jsx':
         content = await SvgToJSX(svg, componentName, false)
         break
+      case 'svelte':
+        content = SvgToSvelte(svg)
+        break
+      case 'astro':
+        content = SvgToAstro(svg)
+        break
+      case 'qwik':
+        content = await SvgToQwik(svg, componentName, false)
+        break
+      case 'react-native':
+        content = await SvgToReactNative(svg, componentName, false)
+        break
+      case 'solid':
+        content = await SvgToSolid(svg, componentName, false)
+        break
       case 'tsx':
         content = await SvgToTSX(svg, componentName, false)
         break
@@ -173,7 +182,7 @@ async function* PreparePackZip(
     }
 
     yield {
-      name: `${componentName}.${type}`,
+      name: `${componentName}.${ext}`,
       input: new Blob([content], { type: 'text/plain' }),
     }
   }

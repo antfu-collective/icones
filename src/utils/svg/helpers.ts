@@ -7,7 +7,7 @@ import { HtmlToJSX } from './htmlToJsx'
 import { getSvg } from './loader'
 import { prettierCode } from './prettier'
 
-export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue' | 'json'
+export type PackType = 'svg' | 'tsx' | 'jsx' | 'vue' | 'vue-tsc' | 'solid' | 'qwik' | 'svelte' | 'astro' | 'react-native' | 'json'
 
 export function normalizeZipFleName(svgName: string): string {
   return svgName.replace(':', '-')
