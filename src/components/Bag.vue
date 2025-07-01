@@ -87,6 +87,21 @@ async function PackSvgs(type: PackType = 'svg') {
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('tsx')">
           React<sup class="opacity-50 -mr-1">TS</sup>
         </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svelte')">
+          Svelte
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('qwik')">
+          Qwik
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('solid')">
+          Solid
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('astro')">
+          Astro
+        </button>
+        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('react-native')">
+          React Native
+        </button>
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('json')">
           JSON
         </button>
