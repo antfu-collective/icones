@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@antfu/utils": "^9.1.0",
+    "@google/generative-ai": "^0.24.1",
     "@vueuse/core": "^13.0.0",
     "dexie": "^4.0.11",
     "file-saver": "^2.0.5",
@@ -35,6 +36,7 @@
     "iconify-icon": "^2.3.0",
     "prettier": "^3.5.3",
     "ultrahtml": "^1.6.0",
+    "vite-plugin-esmodule": "^1.5.0",
     "vue": "^3.5.13",
     "vue-chemistry": "^0.2.2",
     "vue-router": "^4.5.0"
@@ -61,6 +63,8 @@
     "unplugin-auto-import": "^19.1.1",
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.3.5",
+    "vite-plugin-electron": "^0.29.0",
+    "vite-plugin-electron-renderer": "^0.14.6",
     "vite-plugin-pages": "^0.32.5",
     "vite-plugin-pwa": "^1.0.0",
     "vue-tsc": "^2.2.8"

@@ -4,6 +4,7 @@ import { cacheCollection, specialTabs } from '../data'
 import { isLocalMode } from '../env'
 import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { getIconSnippet } from '../utils/icons'
+import { searchIconAi } from '../utils/iconSearchAi'
 import { cleanupQuery } from '../utils/query'
 
 const route = useRoute()
@@ -148,6 +149,9 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
 }, {
   passive: false,
 })
+
+// ------------ AI Search ------------
+const aiquery = ref('')
 </script>
 
 <template>
@@ -251,12 +255,29 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           </div>
 
           <!-- Searching -->
-          <SearchBar
-            ref="searchbar"
-            v-model:search="search"
-            class="mx-8 hidden md:flex"
-          />
+          <div flex justify-between px8 gap-2>
+            <SearchBar
+              ref="searchbar"
+              v-model:search="search"
+              class=" hidden md:flex w-full"
+            />
+            <div class="relative  flex items-center gap-2 w-full  border border-base rounded bg-transparent shadow-sm ">
+              <span class="p-1 px-2 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- Icon from Huge Icons by Hugeicons - undefined --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m10 7l-.516 1.394c-.676 1.828-1.014 2.742-1.681 3.409s-1.581 1.005-3.409 1.681L3 14l1.394.516c1.828.676 2.742 1.015 3.409 1.681s1.005 1.581 1.681 3.409L10 21l.516-1.394c.676-1.828 1.015-2.742 1.681-3.409s1.581-1.005 3.409-1.681L17 14l-1.394-.516c-1.828-.676-2.742-1.014-3.409-1.681s-1.005-1.581-1.681-3.409zm8-4l-.221.597c-.29.784-.435 1.176-.72 1.461c-.286.286-.678.431-1.462.72L15 6l.598.221c.783.29 1.175.435 1.46.72c.286.286.431.678.72 1.462L18 9l.221-.597c.29-.784.435-1.176.72-1.461c.286-.286.678-.431 1.462-.72L21 6l-.598-.221c-.783-.29-1.175-.435-1.46-.72c-.286-.286-.431-.678-.72-1.462z" /></svg>
+              </span>
 
+              <input
+                v-model="aiquery"
+                type="text" placeholder="AI prompt, icon name, or keywords"
+                class="text-base bg-transparent outline-none w-full  py-1 m-0 "
+              >
+              <button class="mr-4 px-4 rounded-lg text-gray-500  hover:bg-neutral-200" @click="searchIconAi(aiquery, collection.name)">
+                Search
+              </button>
+              <div class="absolute bg-red-500/20 top-12 z-50 w-full"></div>
+            </div>
+            
+          </div>
           <!-- Variants --->
           <div v-if="collection.variants" class="mx-8 mb-2 flex flex-wrap gap-2 select-none items-center">
             <div text-sm op50>
