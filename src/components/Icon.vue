@@ -84,5 +84,6 @@ iconify-icon {
   display: inline-block;
   vertical-align: middle;
   line-height: 1em !important;
+  box-sizing: content-box;
 }
 </style>
