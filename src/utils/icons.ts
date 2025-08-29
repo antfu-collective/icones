@@ -5,9 +5,7 @@ import { getTransformedId } from '../store'
 import { getSvgSymbol } from './pack'
 import {
   API_ENTRY,
-  bufferToString,
   ClearSvg,
-  getSvg,
   SvgToAstro,
   SvgToDataURL,
   SvgToJSX,
@@ -17,6 +15,8 @@ import {
   SvgToSvelte,
   SvgToTSX,
   SvgToVue,
+  bufferToString,
+  getSvg,
   toComponentName,
 } from './svg'
 import { svgToPngDataUrl } from './svgToPng'
@@ -68,6 +68,8 @@ export const SnippetMap: Record<string, Record<string, Snippet>> = {
     'astro': { name: 'Astro', lang: 'astro', prettierParser: 'typescript' },
     'react-native': { name: 'React Native', lang: 'tsx', prettierParser: 'typescript' },
     'unplugin': { name: 'Unplugin Icons', lang: 'tsx', prettierParser: 'typescript' },
+    'unocss': { name: 'UnoCSS', lang: 'html', prettierParser: 'html' },
+    'unocss-attributify': { name: 'UnoCSS', tag: 'attributify', lang: 'html', prettierParser: 'html' },
   },
   Links: {
     url: { name: 'URL', lang: 'html', prettierParser: 'html' },
@@ -128,6 +130,10 @@ export async function getIconSnippet(
       return SvgToReactNative(await getSvg(collections, icon, undefined, color), toComponentName(icon), snippet)
     case 'unplugin':
       return `import ${toComponentName(icon)} from '~icons/${icon.split(':')[0]}/${icon.split(':')[1]}'`
+    case 'unocss':
+      return `<div class="i-${icon}" />`
+    case 'unocss-attributify':
+      return `<div i-${icon} />`
   }
 }
 
