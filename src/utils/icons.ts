@@ -5,7 +5,9 @@ import { getTransformedId } from '../store'
 import { getSvgSymbol } from './pack'
 import {
   API_ENTRY,
+  bufferToString,
   ClearSvg,
+  getSvg,
   SvgToAstro,
   SvgToDataURL,
   SvgToJSX,
@@ -15,8 +17,6 @@ import {
   SvgToSvelte,
   SvgToTSX,
   SvgToVue,
-  bufferToString,
-  getSvg,
   toComponentName,
 } from './svg'
 import { svgToPngDataUrl } from './svgToPng'
