@@ -21,11 +21,11 @@ export interface PackFontZipPayload {
 }
 
 export interface WorkerPackMessage<O extends PackOperation> {
-  payload: O extends 'pack-zip' ? PackZipPayload :
-    O extends 'pack-json-zip' ? PackJsonZipPayload :
-      O extends 'pack-svg-zip' ? PackSvgZipPayload :
-        O extends 'pack-font-zip' ? PackFontZipPayload :
-          never
+  payload: O extends 'pack-zip' ? PackZipPayload
+    : O extends 'pack-json-zip' ? PackJsonZipPayload
+      : O extends 'pack-svg-zip' ? PackSvgZipPayload
+        : O extends 'pack-font-zip' ? PackFontZipPayload
+          : never
   operation: O
   collections: ArrayBuffer
 }
