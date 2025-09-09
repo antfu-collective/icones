@@ -1,4 +1,3 @@
-import { disableCache } from 'iconify-icon'
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import routes from '~pages'
@@ -19,10 +18,6 @@ const router = createRouter({
 })
 
 if (!isElectron && PWA) {
-  // disable local storage cache when there is PWA:
-  // we need to keep local storage when running dev server without PWA
-  // to avoid sending requests to iconify server api
-  disableCache('all')
   router.isReady().then(async () => {
     const { registerSW } = await import('virtual:pwa-register')
     registerSW({ immediate: true })
