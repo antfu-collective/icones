@@ -35,9 +35,9 @@ function onKeydown(event: any) {
   emit('onKeydown', event)
 }
 
-function update(event: any) {
+const update = useDebounceFn((event: any) => {
   emit('update:search', event.target.value)
-}
+}, 250)
 
 function clear() {
   emit('update:search', '')
