@@ -7,16 +7,24 @@ const route = useRoute()
 const current = computed(() => route.path.split('/').slice(-1)[0])
 
 const collections = computed(() => {
-  if (categorySearch.value) {
-    return filteredCollections.value
-  }
-  else {
-    return [
-      { id: 'all', name: 'All' },
-      { id: 'recent', name: 'Recent' },
-      ...sortedCollectionsInfo.value,
-    ]
-  }
+  const _collections = categorySearch.value
+    ? filteredCollections.value
+    : [
+        { id: 'all', name: 'All' },
+        { id: 'recent', name: 'Recent' },
+        ...sortedCollectionsInfo.value,
+      ]
+
+  return _collections.map(collection => ({
+    ...collection,
+    to: {
+      name: 'collection-id',
+      params: { id: collection.id },
+      query: {
+        s: route.query.s,
+      },
+    },
+  }))
 })
 </script>
 
@@ -51,7 +59,7 @@ const collections = computed(() => {
       v-for="collection in collections"
       :key="collection.id"
       class="px-3 py-1 flex border-b border-base"
-      :to="`/collection/${collection.id}`"
+      :to="collection.to"
     >
       <div
         class="flex-auto py-1"
