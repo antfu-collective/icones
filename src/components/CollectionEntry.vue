@@ -13,7 +13,7 @@ defineProps<{
     :key="collection.id"
     p3 relative
     border="~ base"
-    class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all translate-z-0"
+    class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all translate-z-0 group"
     hover="text-primary !border-primary shadow"
     :to="`/collection/${collection.id}`"
   >
@@ -40,25 +40,24 @@ defineProps<{
     <div
       absolute top--1px right--1px
       flex="~ items-center"
-      op0 hover="op100 transition-all"
+      op0 group-hover="op100 transition-all"
+      un-children="op-64 hover:op-100"
     >
       <button
-        class="group"
         border="~ primary" p2 bg-base
         :title="isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
         @click.prevent="toggleFavoriteCollection(collection.id)"
       >
-        <div v-if="isFavoritedCollection(collection.id)" i-carbon-star-filled op50 group-hover="op100" />
-        <div v-else i-carbon-star op50 group-hover="op100" />
+        <div v-if="isFavoritedCollection(collection.id)" i-carbon-star-filled />
+        <div v-else i-carbon-star />
       </button>
       <button
         v-if="type === 'recent'"
-        class="group"
         border="~ primary" p2 bg-base ml--1px
         :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
         @click.prevent="removeRecentCollection(collection.id)"
       >
-        <div i-carbon-delete op50 group-hover="op100" />
+        <div i-carbon-delete />
       </button>
     </div>
   </RouterLink>
