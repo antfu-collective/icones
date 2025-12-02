@@ -1,4 +1,4 @@
-import { defineConfig, presetAttributify, presetIcons, presetUno, transformerDirectives, transformerVariantGroup } from 'unocss'
+import { defineConfig, presetAttributify, presetIcons, presetWind3, transformerDirectives, transformerVariantGroup } from 'unocss'
 
 export default defineConfig({
   shortcuts: {
@@ -10,7 +10,7 @@ export default defineConfig({
     'icon-button': 'op50 hover:op100 my-auto shrink-0',
   },
   presets: [
-    presetUno(),
+    presetWind3(),
     presetIcons(),
     presetAttributify(),
   ],
