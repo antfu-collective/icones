@@ -13,7 +13,7 @@ defineProps<{
     :key="collection.id"
     p3 relative
     border="~ base"
-    :class="collection.hidden ? 'opacity-64 border-dashed hover:opacity-100' : ''"
+    :class="{ 'border-dashed': collection.hidden }"
     class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all translate-z-0 group"
     hover="text-primary !border-primary shadow"
     :to="`/collection/${collection.id}`"
@@ -22,8 +22,8 @@ defineProps<{
       <div class="flex-auto text-lg leading-1em my1" :class="{ 'line-through group-hover:no-underline': collection.hidden }">
         {{ collection.name }}
         <span inline-flex align-top flex="items-center gap-0.5" m="l--0.5">
-          <span v-if="isFavoritedCollection(collection.id)" op80 text-xs inline-block i-carbon-star-filled />
-          <span v-if="collection.hidden" op80 text-xs text-orange inline-block i-carbon:information-disabled />
+          <div v-if="isFavoritedCollection(collection.id)" op80 text-xs i-carbon-star-filled />
+          <div v-if="collection.hidden" op80 text-xs text-orange i-carbon:information-disabled />
         </span>
       </div>
       <div flex="~ col auto" opacity-50 text-xs>
