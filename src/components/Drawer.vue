@@ -67,6 +67,7 @@ const collections = computed(() => {
       >
         <div class="text-base leading-tight">
           {{ collection.name }}
+          <span v-if="collection.hidden" m="l--0.5" op80 text-xs text-orange inline-block align-top i-carbon:information-disabled />
         </div>
         <div class="text-xs block opacity-50 mt-1">
           {{

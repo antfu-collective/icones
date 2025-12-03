@@ -5,6 +5,7 @@ import { categories, categorySearch, favoritedCollections, filteredCollections, 
 const searchbar = ref<{ input: HTMLElement }>()
 
 const categorized = ref(getIconList(categorySearch.value))
+const availableCategories = computed(() => categorized.value.filter(c => c.collections.length > 0))
 
 let categorizeDebounceTimer: NodeJS.Timeout | null = null
 
@@ -55,7 +56,8 @@ onKeyStroke('/', (e) => {
 })
 onMounted(() => searchbar.value?.input.focus())
 
-const isMacOS = navigator.platform.toUpperCase().includes('MAC')
+const platform = (navigator as any).userAgentData?.platform || navigator.platform || ''
+const isMacOS = platform.toUpperCase().includes('MAC')
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
@@ -93,11 +95,11 @@ function onKeydown(e: KeyboardEvent) {
         </RouterLink>
       </div>
 
-      <div of-y-auto>
+      <div of-y-auto relative space-y-6>
         <!-- Category listing -->
-        <template v-for="c of categorized" :key="c.name">
-          <div v-if="(c.collections).length" px4>
-            <div px-2 op50 mt6 text-lg>
+        <template v-for="c of availableCategories" :key="c.name">
+          <div px4>
+            <div px-2 text-op-50 text-lg sticky top-0 bg-base z-1>
               {{ c.name }}
             </div>
             <CollectionEntries
@@ -109,12 +111,13 @@ function onKeydown(e: KeyboardEvent) {
         </template>
 
         <div
-          v-if="categorized.every(c => !c.collections.length)"
+          v-if="availableCategories.length === 0"
           class="flex flex-col flex-grow w-full py-6 justify-center items-center"
         >
           <Icon icon="ph:x-circle-bold" class="text-4xl mb-2 opacity-20" />
           <span class="text-lg opacity-60">There is no result corresponding to your search query.</span>
         </div>
+
         <Footer />
       </div>
     </div>

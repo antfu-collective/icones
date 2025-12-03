@@ -193,26 +193,30 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
             <div class="flex-auto px-2">
               <NavPlaceholder class="md:hidden" />
 
-              <div class="text-gray-900 text-xl flex select-none dark:text-gray-200">
-                <div class="whitespace-no-wrap overflow-hidden">
+              <div class="text-gray-900 text-xl flex items-center select-none dark:text-gray-200">
+                <div class="whitespace-no-wrap of-hidden">
                   {{ collection.name }}
                 </div>
-                <a
-                  v-if="url"
-                  class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
-                  :href="url"
-                  target="_blank"
-                >
-                  <Icon icon="la:external-link-square-alt-solid" />
-                </a>
-                <a
-                  v-if="npm"
-                  class="ml-1 mt-1 text-base opacity-25 hover:opacity-100"
-                  :href="npm"
-                  target="_blank"
-                >
-                  <Icon icon="la:npm" />
-                </a>
+                <!-- Information icons -->
+                <div ml-1 flex="~ items-center gap-1">
+                  <div v-if="collection.hidden" i-carbon:information-disabled text="orange sm" title="The icon set was deprecated and is no longer available" />
+                  <a
+                    v-if="url"
+                    class="flex items-center text-base opacity-25 hover:opacity-100"
+                    :href="url"
+                    target="_blank"
+                  >
+                    <Icon icon="la:external-link-square-alt-solid" />
+                  </a>
+                  <a
+                    v-if="npm"
+                    class="flex items-center text-base opacity-25 hover:opacity-100"
+                    :href="npm"
+                    target="_blank"
+                  >
+                    <Icon icon="la:npm" />
+                  </a>
+                </div>
                 <div class="flex-auto" />
               </div>
               <div class="text-xs block opacity-50">

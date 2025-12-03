@@ -13,14 +13,18 @@ defineProps<{
     :key="collection.id"
     p3 relative
     border="~ base"
+    :class="{ 'border-dashed': collection.hidden }"
     class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all translate-z-0 group"
     hover="text-primary !border-primary shadow"
     :to="`/collection/${collection.id}`"
   >
     <div ml2>
-      <div class="flex-auto text-lg leading-1em my1">
+      <div class="flex-auto text-lg leading-1em my1" :class="{ 'line-through group-hover:no-underline': collection.hidden }">
         {{ collection.name }}
-        <span v-if="isFavoritedCollection(collection.id)" m="l--0.5" op80 text-xs inline-block align-top i-carbon-star-filled />
+        <span inline-flex align-top flex="items-center gap-0.5" m="l--0.5">
+          <div v-if="isFavoritedCollection(collection.id)" op80 text-xs i-carbon-star-filled />
+          <div v-if="collection.hidden" op80 text-xs text-orange i-carbon:information-disabled />
+        </span>
       </div>
       <div flex="~ col auto" opacity-50 text-xs>
         <span>{{ collection.author?.name }}</span>
@@ -46,6 +50,7 @@ defineProps<{
       <button
         border="~ primary" p2 bg-base
         :title="isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
+        :class="{ 'border-dashed': collection.hidden }"
         @click.prevent="toggleFavoriteCollection(collection.id)"
       >
         <div v-if="isFavoritedCollection(collection.id)" i-carbon-star-filled />
@@ -55,6 +60,7 @@ defineProps<{
         v-if="type === 'recent'"
         border="~ primary" p2 bg-base ml--1px
         :title="type === 'recent' ? 'Remove from recent' : type === 'favorite' || isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
+        :class="{ 'border-dashed': collection.hidden }"
         @click.prevent="removeRecentCollection(collection.id)"
       >
         <div i-carbon-delete />

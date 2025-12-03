@@ -24,6 +24,7 @@ export const selectedPackageManager = useStorage<string>('icones-package-manager
 export const excludedCollectionIds = useStorage<string[]>('icones-excluded-collections', [])
 export const excludedCategories = useStorage<string[]>('icones-excluded-categories', [
   'Archive / Unmaintained',
+  'Deprecated / Unavailable',
 ])
 
 export function getTransformedId(icon: string) {
