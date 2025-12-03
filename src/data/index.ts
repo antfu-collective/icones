@@ -30,6 +30,10 @@ export interface CollectionInfo {
   palette?: string
   total?: number
   prepacked?: IconifyJSON
+  /**
+   * The icon set was deprecated and is no longer available
+   */
+  hidden?: boolean
 }
 
 export interface CollectionMeta extends CollectionInfo {
@@ -43,6 +47,7 @@ const installed = ref<string[]>([])
 
 export const collections = infoJSON.map(c => Object.freeze(c as any as CollectionInfo))
 export const enabledCollections = computed(() => collections.filter(c => !isExcludedCollection(c)))
+
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 
 export const isSearchOpen = ref(false)

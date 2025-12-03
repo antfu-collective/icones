@@ -27,8 +27,11 @@ async function prepareJSON() {
 
   const collections = Object
     .entries(raw)
-    .map(([id, v]) => ({ ...(v as any), id }))
-    .filter(v => v.hidden !== true)
+    .map(([id, v]) => ({
+      ...(v as any),
+      id,
+      category: (v as any).hidden ? 'Deprecated / Unavailable' : (v as any).category,
+    }))
 
   const collectionsMeta = []
 
