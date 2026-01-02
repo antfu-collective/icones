@@ -111,7 +111,7 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
 
   const debouncedSearch = useDebounceFn(runSearch, 200)
 
-  watch([category, variant], () => {
+  watch([category, variant, () => collection.value?.id], () => {
     runSearch()
   })
 
