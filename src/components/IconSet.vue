@@ -284,6 +284,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           <!-- Icons -->
           <div class="px-5 pt-2 pb-4 text-center">
             <Icons
+              :key="namespace"
               :icons="icons.slice(0, max)"
               :selected="bags"
               :class="iconSize"
