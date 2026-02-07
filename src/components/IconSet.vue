@@ -28,7 +28,7 @@ const loading = isCurrentCollectionLoading()
 const maxMap = new Map<string, number>()
 const id = computed(() => collection.value?.id)
 const url = computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `https://www.npmx.dev/package/@iconify-json/${id.value}` : '')
+const npm = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `https://npmx.dev/package/@iconify-json/${id.value}` : '')
 const namespace = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `${id.value}:` : '')
 
 function onCopy(status: boolean) {
