@@ -17,7 +17,7 @@ export function toComponentName(icon: string) {
   return icon.split(/[:\-_]/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
 
-export function ClearSvg(svgCode: string, reactJSX?: boolean) {
+export function ClearSvg(svgCode: string, reactJSX?: boolean, skipJSXTransform?: boolean) {
   const result = transformSync(parse(svgCode).children[0] as Node, [
     (node: Node): Node => {
       if (node.name !== 'svg')
@@ -37,6 +37,9 @@ export function ClearSvg(svgCode: string, reactJSX?: boolean) {
       return node
     },
   ])
+
+  if (skipJSXTransform)
+    return result
 
   return HtmlToJSX(result, reactJSX)
 }
@@ -77,7 +80,7 @@ export function SvgToQwik(svg: string, name: string, snippet: boolean) {
   let code = `
 export function ${name}(props: QwikIntrinsicElements['svg'], key: string) {
   return (
-    ${ClearSvg(svg, false).replace(/<svg (.*?)>/, '<svg $1 {...props} key={key}>')}
+    ${ClearSvg(svg, false, true).replace(/<svg (.*?)>/, '<svg $1 {...props} key={key}>')}
   )
 }`
 
