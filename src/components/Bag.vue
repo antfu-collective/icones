@@ -66,7 +66,7 @@ async function PackSvgs(type: PackType = 'svg') {
     </div>
 
     <template v-if="bags.length">
-      <div class="flex-auto overflow-y-overflow py-3 px-1">
+      <div class="flex-auto overflow-y-auto py-3 px-1">
         <Icons :icons="bags" @select="(e: any) => $emit('select', e)" />
       </div>
 
