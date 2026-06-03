@@ -351,8 +351,6 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
         </div>
 
-        <SearchElectron />
-
         <Notification :value="copied">
           <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
           <span class="align-middle">Copied</span>

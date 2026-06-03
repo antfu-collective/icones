@@ -1,6 +1,5 @@
 <script setup lang='ts'>
 import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
-import { isElectron } from '../env'
 import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 
 const route = useRoute()
@@ -30,9 +29,7 @@ const collections = computed(() => {
 
 <template>
   <div border="r base" relative>
-    <NavPlaceholder class="mb-4" />
     <div
-      v-if="!isElectron"
       sticky top-0 bg-base z-1
     >
       <div flex="~ justify-between" border="b base">

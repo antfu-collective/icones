@@ -8,10 +8,6 @@ Icônes
 <a href="https://icones.js.org">Go to App</a>
 </p>
 
-<p align="center">
-<sub><em>Electron is coming...</em></sub>
-</p>
-
 ![Icônes screenshot 1](./screenshots/1.png)
 ![Icônes screenshot 2](./screenshots/2.png)
 ![Icônes screenshot 3](./screenshots/3.png)
@@ -47,11 +43,6 @@ Icônes
 ### Community
 
 - [VS Code Extension](https://github.com/afzalsayed96/vscode-icones) by [@afzalsayed96](https://github.com/afzalsayed96)
-
-### TODOs
-
-- Electron client (Coming!)
-- Full-offline mode - pack all the icons
 
 ## License
 

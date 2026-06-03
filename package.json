@@ -20,9 +20,7 @@
     "dev": "vite --port 3333 --open",
     "dev-pwa": "SW_DEV=true vite --port 3333",
     "typecheck": "vue-tsc --noEmit",
-    "dev:electron": "npm -C ./electron run dev",
-    "build": "NODE_ENV=production vite build",
-    "build:electron": "NODE_ENV=production npm -C ./electron run build"
+    "build": "NODE_ENV=production vite build"
   },
   "dependencies": {
     "@antfu/utils": "^9.3.0",
@@ -53,6 +51,7 @@
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.5",
     "lru-cache": "^11.5.1",
+    "sax": "^1.6.0",
     "shiki": "^4.1.0",
     "svg-packer": "^1.0.0",
     "tsx": "^4.22.4",

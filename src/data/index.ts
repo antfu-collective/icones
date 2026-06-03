@@ -50,7 +50,6 @@ export const enabledCollections = computed(() => collections.filter(c => !isExcl
 
 export const categories = Array.from(new Set(collections.map(i => i.category).filter(notNullish)))
 
-export const isSearchOpen = ref(false)
 export const categorySearch = ref('')
 
 const fzf = new AsyncFzf(collections, {

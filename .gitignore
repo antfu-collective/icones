@@ -12,5 +12,4 @@ release
 collections-info.json
 collections-meta.json
 
-dist-electron
 dev-dist

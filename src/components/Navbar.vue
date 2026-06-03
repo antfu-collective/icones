@@ -1,5 +1,4 @@
 <script lang="ts">
-import { isElectron } from '../env'
 import { getSearchResults, isDark } from '../store'
 
 export default defineComponent({
@@ -8,7 +7,6 @@ export default defineComponent({
 
     return {
       ...getSearchResults(),
-      isElectron,
       isDark,
       showNav: computed(() => !route.path.startsWith('/collection')),
       isHomepage: computed(() => route.path === '/'),
@@ -18,9 +16,6 @@ export default defineComponent({
 </script>
 
 <template>
-  <NavElectron
-    v-if="isElectron && !isHomepage"
-  />
   <nav
     class="dragging"
     flex="~ gap4 none"
@@ -28,7 +23,7 @@ export default defineComponent({
     :class="showNav ? '' : 'md:hidden'"
   >
     <!-- In Collections -->
-    <template v-if="!isHomepage && !isElectron">
+    <template v-if="!isHomepage">
       <RouterLink
         class="non-dragging"
         icon-button flex-none

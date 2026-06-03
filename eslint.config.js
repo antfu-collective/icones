@@ -10,7 +10,6 @@ export default antfu(
       '**/release',
       '**/collections-info.json',
       '**/collections-meta.json',
-      '**/dist-electron',
     ],
     formatters: true,
   },

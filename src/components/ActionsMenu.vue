@@ -2,7 +2,6 @@
 import type { PropType } from 'vue'
 import type { CollectionMeta } from '../data'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
-import { isElectron } from '../env'
 import { activeMode, iconSize, inProgress, isFavoritedCollection, listType, progressMessage, toggleFavoriteCollection } from '../store'
 import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
 
@@ -155,7 +154,7 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
 //     ? {
 //         label: 'Downloads',
 //         children: [
-//           (!isElectron && !installed) ? { label: 'Cache in Browser', value: 'cache' } : null,
+//           !installed ? { label: 'Cache in Browser', value: 'cache' } : null,
 //           { label: 'Iconfont', value: 'download_iconfont', disabled: inProgress.value },
 //           { label: 'SVGs Zip', value: 'download_svgs', disabled: inProgress.value },
 //           { label: 'JSON', value: 'download_json', disabled: inProgress.value },
@@ -186,7 +185,7 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
 
     <!-- Download State -->
     <div
-      v-if="installed && !isElectron"
+      v-if="installed"
       icon-button class="!op50"
       i-carbon-cloud-auditing
       title="Cached in browser"
@@ -224,7 +223,7 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
                   in browser version.
           -->
         <optgroup v-if="collection.id !== 'all'" label="Downloads">
-          <option v-if="!isElectron && !installed" value="cache">
+          <option v-if="!installed" value="cache">
             Cache in Browser
           </option>
           <option value="download_iconfont" :disabled="inProgress">
