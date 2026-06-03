@@ -12,21 +12,21 @@ Icônes
 <sub><em>Electron is coming...</em></sub>
 </p>
 
-![](./screenshots/1.png)
-![](./screenshots/2.png)
-![](./screenshots/3.png)
-![](./screenshots/4.png)
-![](./screenshots/5.png)
+![Icônes screenshot 1](./screenshots/1.png)
+![Icônes screenshot 2](./screenshots/2.png)
+![Icônes screenshot 3](./screenshots/3.png)
+![Icônes screenshot 4](./screenshots/4.png)
+![Icônes screenshot 5](./screenshots/5.png)
 
 <p align="center">
 <sub><em>Dark Mode is now Live!</em></sub>
 </p>
 
-![](./screenshots/6.png)
+![Icônes dark mode screenshot](./screenshots/6.png)
 
 <p align="center">
   <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg' alt='Sponsors'/>
   </a>
 </p>
 

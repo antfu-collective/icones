@@ -93,7 +93,7 @@ export function isInstalled(id: string) {
   return installed.value.includes(id)
 }
 export function isMetaLoaded(id: string) {
-  return !!loadedMeta.value.find(i => i.id === id)
+  return loadedMeta.value.some(i => i.id === id)
 }
 
 // install the preview icons on the homepage

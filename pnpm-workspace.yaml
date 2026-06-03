@@ -1,4 +1,23 @@
+ignoreWorkspaceRootCheck: true
+minimumReleaseAge: 0
+shamefullyHoist: true
+shellEmulator: true
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver@6.3.1
+  - '@trickfilm400/rollup-plugin-off-main-thread@3.0.0-pre1'
+
 packages:
   - electron
+allowBuilds:
+  electron: true
+  esbuild: true
+  ttf2woff2: true
+  vue-demi: true
+overrides:
+  chokidar: ^5.0.0
+  pnpm: 11.5.0
+  undici-types: ^8.3.0
+  vite-plugin-node-polyfills: ^0.28.0
 neverBuiltDependencies:
   - ttf2woff2
