@@ -1,9 +1,18 @@
+import fs from 'node:fs'
+import fsp from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import fs from 'fs-extra'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const out = path.resolve(__dirname, '../public')
+
+async function readJSON(file: string) {
+  return JSON.parse(await fsp.readFile(file, 'utf-8'))
+}
+
+async function writeJSON(file: string, data: any) {
+  await fsp.writeFile(file, JSON.stringify(data))
+}
 
 function ObjectPick(source: Record<string, any>, keys: string[]) {
   const obj: Record<string, any> = {}
@@ -22,8 +31,8 @@ async function prepareJSON() {
   const dir = path.resolve(__dirname, '../node_modules/@iconify/json')
   const collectionsDir = path.resolve(__dirname, '../public/collections')
 
-  const raw = await fs.readJSON(path.join(dir, 'collections.json'))
-  await fs.ensureDir(collectionsDir)
+  const raw = await readJSON(path.join(dir, 'collections.json'))
+  await fsp.mkdir(collectionsDir, { recursive: true })
 
   const collections = Object
     .entries(raw)
@@ -36,7 +45,7 @@ async function prepareJSON() {
   const collectionsMeta = []
 
   for (const info of collections) {
-    const setData = await fs.readJSON(path.join(dir, 'json', `${info.id}.json`))
+    const setData = await readJSON(path.join(dir, 'json', `${info.id}.json`))
 
     const icons = Object.keys(setData.icons)
     const categories = setData.categories
@@ -44,8 +53,8 @@ async function prepareJSON() {
     const rawFilePath = path.join(collectionsDir, `${info.id}.json`)
     const metaFilePath = path.join(collectionsDir, `${info.id}-meta.json`)
 
-    await fs.writeJSON(rawFilePath, setData)
-    await fs.writeJSON(metaFilePath, meta)
+    await writeJSON(rawFilePath, setData)
+    await writeJSON(metaFilePath, meta)
     collectionsMeta.push(meta)
 
     info.sampleIcons = icons.slice(0, 9)
@@ -75,9 +84,9 @@ async function prepareJSON() {
     info.size = humanFileSize(fs.statSync(rawFilePath).size)
   }
 
-  await fs.writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)
+  await writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)
   const infoOut = path.resolve(__dirname, '../src/data')
-  await fs.writeJSON(path.join(infoOut, 'collections-info.json'), collections)
+  await writeJSON(path.join(infoOut, 'collections-info.json'), collections)
 }
 
 prepareJSON()
