@@ -13,6 +13,13 @@ function getIcon(name: string) {
   if (el) {
     if (!mounted.has(el)) {
       mounted.add(el)
+      // If the element was unmounted while out of the viewport, its internal
+      // IntersectionObserver had removed the SVG from the shadow root, and
+      // `disconnectedCallback` reset the visibility flag without re-rendering,
+      // so on reuse it would stay empty forever. Re-setting the attribute
+      // triggers `attributeChangedCallback`, which re-checks the shadow root
+      // and re-renders the icon if it is missing.
+      el.setAttribute('icon', name)
       return el
     }
   }
