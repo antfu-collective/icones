@@ -14,7 +14,7 @@ allowBuilds:
 overrides:
   chokidar: ^5.0.0
   pnpm: 11.5.0
-  undici-types: ^8.3.0
+  undici-types: ^8.8.0
   vite-plugin-node-polyfills: ^0.28.0
 neverBuiltDependencies:
   - ttf2woff2
