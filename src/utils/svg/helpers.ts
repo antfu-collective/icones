@@ -17,7 +17,7 @@ export function toComponentName(icon: string) {
   return icon.split(/[:\-_]/).filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1).toLowerCase()).join('')
 }
 
-export function ClearSvg(svgCode: string, reactJSX?: boolean,skipJSXTransform = false) {
+export function ClearSvg(svgCode: string, reactJSX?: boolean, skipJSXTransform = false) {
   const result = transformSync(parse(svgCode).children[0] as Node, [
     (node: Node): Node => {
       if (node.name !== 'svg')
