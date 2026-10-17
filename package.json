@@ -20,7 +20,8 @@
     "dev": "vite --port 3333 --open",
     "dev-pwa": "SW_DEV=true vite --port 3333",
     "typecheck": "vue-tsc --noEmit",
-    "build": "NODE_ENV=production vite build"
+    "build": "NODE_ENV=production vite build",
+    "test": "vitest"
   },
   "dependencies": {
     "@antfu/utils": "^9.3.0",
@@ -60,6 +61,7 @@
     "vite": "^8.1.5",
     "vite-plugin-pages": "^0.33.3",
     "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^5.0.5",
     "vue-tsc": "^3.3.7"
   }
 }
