@@ -1,0 +1,341 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`transformers: attrs > clearSvg > default 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>"`;
+
+exports[`transformers: attrs > clearSvg > reactJSX 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g>{/* comment */}</svg>"`;
+
+exports[`transformers: attrs > clearSvg > skipJSXTransform 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fill-opacity=".3" /><path clip-path="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>"`;
+
+exports[`transformers: attrs > components (snippet: false) > jsx 1`] = `
+"import React from 'react'
+
+export function TestIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g>{/* comment */}</svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: attrs > components (snippet: false) > qwik 1`] = `
+"import type { QwikIntrinsicElements } from '@builder.io/qwik'
+
+export function TestIcon(props: QwikIntrinsicElements['svg'], key: string) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props} key={key}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: attrs > components (snippet: false) > react-native 1`] = `
+"import React from 'react';
+
+import Svg, { Path, G, Circle, Line } from 'react-native-svg';
+
+export function TestIcon(props) {
+ return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><G fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><Circle cx="12" cy="12" r="10" fillOpacity=".3" /><Path clipPath="url(#a)" d="M12 6v6l4 2" /></G>{/* comment */}</Svg>
+ )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: attrs > components (snippet: false) > solid 1`] = `
+"import type { JSX } from 'solid-js'
+
+export function TestIcon(props: JSX.IntrinsicElements['svg']) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fill-opacity=".3"/><path clip-path="url(#a)" d="M12 6v6l4 2"/></g><!-- comment --></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: attrs > components (snippet: false) > tsx 1`] = `
+"import React, { SVGProps } from 'react'
+
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g>{/* comment */}</svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: attrs > components (snippet: false) > tsx-no-react-jsx 1`] = `
+"import React, { SVGProps } from 'react'
+
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: attrs > components (snippet: true) > jsx 1`] = `
+"
+export function TestIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g>{/* comment */}</svg>
+  )
+}"
+`;
+
+exports[`transformers: attrs > components (snippet: true) > qwik 1`] = `
+"
+export function TestIcon(props: QwikIntrinsicElements['svg'], key: string) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props} key={key}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>
+  )
+}"
+`;
+
+exports[`transformers: attrs > components (snippet: true) > react-native 1`] = `
+"
+import Svg, { Path, G, Circle, Line } from 'react-native-svg';
+
+export function TestIcon(props) {
+ return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><G fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><Circle cx="12" cy="12" r="10" fillOpacity=".3" /><Path clipPath="url(#a)" d="M12 6v6l4 2" /></G>{/* comment */}</Svg>
+ )
+}"
+`;
+
+exports[`transformers: attrs > components (snippet: true) > solid 1`] = `
+"
+export function TestIcon(props: JSX.IntrinsicElements['svg']) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fill-opacity=".3"/><path clip-path="url(#a)" d="M12 6v6l4 2"/></g><!-- comment --></svg>
+  )
+}"
+`;
+
+exports[`transformers: attrs > components (snippet: true) > tsx 1`] = `
+"
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g>{/* comment */}</svg>
+  )
+}"
+`;
+
+exports[`transformers: attrs > components (snippet: true) > tsx-no-react-jsx 1`] = `
+"
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>
+  )
+}"
+`;
+
+exports[`transformers: attrs > svgToAstro 1`] = `
+"
+---
+const props = Astro.props 
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify" width="1em" height="1em" viewBox="0 0 24 24" {...props}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fill-opacity=".3"/><path clip-path="url(#a)" d="M12 6v6l4 2"/></g><!-- comment --></svg>
+"
+`;
+
+exports[`transformers: attrs > svgToDataURL 1`] = `"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' aria-hidden='true' role='img' class='iconify' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10' fill-opacity='.3'/%3E%3Cpath clip-path='url(%23a)' d='M12 6v6l4 2'/%3E%3C/g%3E%3C!-- comment --%3E%3C/svg%3E"`;
+
+exports[`transformers: attrs > svgToSvelte 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify" width="1em" height="1em" viewBox="0 0 24 24" {...$$props}><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fill-opacity=".3"/><path clip-path="url(#a)" d="M12 6v6l4 2"/></g><!-- comment --></svg>"`;
+
+exports[`transformers: attrs > svgToVue > js 1`] = `
+"
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>
+</template>
+
+<script>
+export default {
+  name: 'TestIcon'
+}
+</script>"
+`;
+
+exports[`transformers: attrs > svgToVue > ts 1`] = `
+"
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" fillOpacity=".3" /><path clipPath="url(#a)" d="M12 6v6l4 2" /></g><!-- comment --></svg>
+</template>
+
+<script lang="ts">
+export default {
+  name: 'TestIcon'
+}
+</script>"
+`;
+
+exports[`transformers: simple > clearSvg > default 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 22h20z" /></svg>"`;
+
+exports[`transformers: simple > clearSvg > reactJSX 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 22h20z" /></svg>"`;
+
+exports[`transformers: simple > clearSvg > skipJSXTransform 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 22h20z" /></svg>"`;
+
+exports[`transformers: simple > components (snippet: false) > jsx 1`] = `
+"import React from 'react'
+
+export function TestIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: simple > components (snippet: false) > qwik 1`] = `
+"import type { QwikIntrinsicElements } from '@builder.io/qwik'
+
+export function TestIcon(props: QwikIntrinsicElements['svg'], key: string) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props} key={key}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: simple > components (snippet: false) > react-native 1`] = `
+"import React from 'react';
+
+import Svg, { Path } from 'react-native-svg';
+
+export function TestIcon(props) {
+ return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><Path fill="currentColor" d="M12 2L2 22h20z" /></Svg>
+ )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: simple > components (snippet: false) > solid 1`] = `
+"import type { JSX } from 'solid-js'
+
+export function TestIcon(props: JSX.IntrinsicElements['svg']) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z"/></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: simple > components (snippet: false) > tsx 1`] = `
+"import React, { SVGProps } from 'react'
+
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: simple > components (snippet: false) > tsx-no-react-jsx 1`] = `
+"import React, { SVGProps } from 'react'
+
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}
+export default TestIcon"
+`;
+
+exports[`transformers: simple > components (snippet: true) > jsx 1`] = `
+"
+export function TestIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}"
+`;
+
+exports[`transformers: simple > components (snippet: true) > qwik 1`] = `
+"
+export function TestIcon(props: QwikIntrinsicElements['svg'], key: string) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props} key={key}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}"
+`;
+
+exports[`transformers: simple > components (snippet: true) > react-native 1`] = `
+"
+import Svg, { Path } from 'react-native-svg';
+
+export function TestIcon(props) {
+ return (
+    <Svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><Path fill="currentColor" d="M12 2L2 22h20z" /></Svg>
+ )
+}"
+`;
+
+exports[`transformers: simple > components (snippet: true) > solid 1`] = `
+"
+export function TestIcon(props: JSX.IntrinsicElements['svg']) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z"/></svg>
+  )
+}"
+`;
+
+exports[`transformers: simple > components (snippet: true) > tsx 1`] = `
+"
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}"
+`;
+
+exports[`transformers: simple > components (snippet: true) > tsx-no-react-jsx 1`] = `
+"
+export function TestIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+  )
+}"
+`;
+
+exports[`transformers: simple > svgToAstro 1`] = `
+"
+---
+const props = Astro.props 
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}><path fill="currentColor" d="M12 2L2 22h20z"/></svg>
+"
+`;
+
+exports[`transformers: simple > svgToDataURL 1`] = `"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2L2 22h20z'/%3E%3C/svg%3E"`;
+
+exports[`transformers: simple > svgToSvelte 1`] = `"<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...$$props}><path fill="currentColor" d="M12 2L2 22h20z"/></svg>"`;
+
+exports[`transformers: simple > svgToVue > js 1`] = `
+"
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+</template>
+
+<script>
+export default {
+  name: 'TestIcon'
+}
+</script>"
+`;
+
+exports[`transformers: simple > svgToVue > ts 1`] = `
+"
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2L2 22h20z" /></svg>
+</template>
+
+<script lang="ts">
+export default {
+  name: 'TestIcon'
+}
+</script>"
+`;

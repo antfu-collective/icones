@@ -50,6 +50,26 @@ jobs:
       - name: Typecheck
         run: pnpm run typecheck
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: Test
+        run: pnpm run test
+
   build:
     runs-on: ${{ matrix.os }}
 

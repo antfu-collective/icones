@@ -1,6 +1,5 @@
 export { default } from './base64'
 export { bufferToString } from './bufferToString'
-export type { PackType } from './helpers'
 export {
   ClearSvg,
   LoadIconSvgs,
@@ -19,3 +18,4 @@ export {
 export { HtmlToJSX } from './htmlToJsx'
 export { API_ENTRY, getLicenseComment, getSvg, getSvgLocal } from './loader'
 export { prettierCode } from './prettier'
+export type { PackType } from './transformers'
