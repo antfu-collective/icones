@@ -37,7 +37,10 @@ const recentIconsCollection = computed((): CollectionMeta => ({
     Array.from(new Set(
       recentIconIds.value.map(i => i.split(':')[0]),
     ))
-      .map(id => [collections.find(i => i.id === id)?.name || id, recentIconIds.value.filter(i => i.startsWith(`${id}:`))]),
+      .map(id => [
+        collections.find(i => i.id === id)?.name || id,
+        recentIconIds.value.filter(i => i.startsWith(`${id}:`)),
+      ]),
   ),
 }))
 

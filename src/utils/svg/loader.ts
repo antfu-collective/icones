@@ -25,7 +25,9 @@ export async function getSvgLocal(
   if (!built)
     return
   const license = await getLicenseComment(collections, icon)
-  const xlink = built.body.includes('xlink:') ? ' xmlns:xlink="http://www.w3.org/1999/xlink"' : ''
+  const xlink = built.body.includes('xlink:')
+    ? ' xmlns:xlink="http://www.w3.org/1999/xlink"'
+    : ''
   return `<svg xmlns="http://www.w3.org/2000/svg"${xlink} ${Object.entries(built.attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${license}${built.body}</svg>`.replaceAll('currentColor', color)
 }
 
@@ -39,7 +41,9 @@ export async function getSvg(
   if (local)
     return local
 
-  const mode = import.meta.env.DEV && !PWA ? 'no-cors' : undefined
+  const mode = import.meta.env.DEV && !PWA
+    ? 'no-cors'
+    : undefined
   return await fetch(`${API_ENTRY}/${icon}.svg?inline=false&height=${size}&color=${encodeURIComponent(color)}`, {
     mode,
   }).then(r => r.text()) || ''

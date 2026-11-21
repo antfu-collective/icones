@@ -56,7 +56,11 @@ globalThis.onmessage = async (event: MessageEvent<WorkerPackMessage<PackOperatio
   }
   catch (e: any) {
     console.error('PackWorker: error while generating the zip', e)
-    globalThis.postMessage({ error: e && 'message' in e ? e.message : String(e) })
+    globalThis.postMessage({
+      error: e && 'message' in e
+        ? e.message
+        : String(e),
+    })
     return
   }
 
@@ -70,7 +74,11 @@ globalThis.onmessage = async (event: MessageEvent<WorkerPackMessage<PackOperatio
     }
     catch (e: any) {
       console.error('PackWorker: error while transferring generated zip', e)
-      globalThis.postMessage({ error: e && 'message' in e ? e.message : String(e) })
+      globalThis.postMessage({
+        error: e && 'message' in e
+          ? e.message
+          : String(e),
+      })
     }
   }
   else {
@@ -112,7 +120,9 @@ async function* PrepareIconSvgs(
     const svgs = await LoadIconSvgs(collections, icons)
     yield {
       name: `${name}.json`,
-      input: new Blob([JSON.stringify(svgs, null, 2)], { type: 'application/json; charset=utf-8' }),
+      input: new Blob([
+        JSON.stringify(svgs, null, 2),
+      ], { type: 'application/json; charset=utf-8' }),
     }
     return
   }
@@ -141,7 +151,9 @@ async function* PreparePackZip(
     return
   }
 
-  const ext = (type === 'solid' || type === 'qwik' || type === 'react-native') ? 'tsx' : type
+  const ext = (type === 'solid' || type === 'qwik' || type === 'react-native')
+    ? 'tsx'
+    : type
 
   for (const name of icons) {
     if (!name)

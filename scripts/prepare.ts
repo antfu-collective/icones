@@ -72,8 +72,17 @@ async function prepareJSON() {
       ]
     }
     // non-square icons
-    if (['flag', 'flagpack', 'cif', 'fa', 'fontisto', 'et', 'ps'].includes(info.id))
+    if ([
+      'flag',
+      'flagpack',
+      'cif',
+      'fa',
+      'fontisto',
+      'et',
+      'ps',
+    ].includes(info.id)) {
       info.sampleIcons = info.sampleIcons.slice(0, 6)
+    }
 
     info.prepacked = {
       prefix: setData.prefix,

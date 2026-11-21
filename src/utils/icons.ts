@@ -59,9 +59,19 @@ export const SnippetMap: Record<string, Record<string, Snippet>> = {
   },
   Components: {
     'vue': { name: 'Vue', lang: 'vue', prettierParser: 'vue' },
-    'vue-ts': { name: 'Vue', tag: 'TS', lang: 'vue', prettierParser: 'vue' },
+    'vue-ts': {
+      name: 'Vue',
+      tag: 'TS',
+      lang: 'vue',
+      prettierParser: 'vue',
+    },
     'jsx': { name: 'React', lang: 'jsx', prettierParser: 'typescript' },
-    'tsx': { name: 'React', tag: 'TS', lang: 'tsx', prettierParser: 'typescript' },
+    'tsx': {
+      name: 'React',
+      tag: 'TS',
+      lang: 'tsx',
+      prettierParser: 'typescript',
+    },
     'svelte': { name: 'Svelte', lang: 'svelte', prettierParser: 'typescript' },
     'qwik': { name: 'Qwik', lang: 'tsx', prettierParser: 'typescript' },
     'solid': { name: 'Solid', lang: 'tsx', prettierParser: 'typescript' },
@@ -69,7 +79,12 @@ export const SnippetMap: Record<string, Record<string, Snippet>> = {
     'react-native': { name: 'React Native', lang: 'tsx', prettierParser: 'typescript' },
     'unplugin': { name: 'Unplugin Icons', lang: 'tsx', prettierParser: 'typescript' },
     'unocss': { name: 'UnoCSS', lang: 'html', prettierParser: 'html' },
-    'unocss-attributify': { name: 'UnoCSS', tag: 'attributify', lang: 'html', prettierParser: 'html' },
+    'unocss-attributify': {
+      name: 'UnoCSS',
+      tag: 'attributify',
+      lang: 'html',
+      prettierParser: 'html',
+    },
   },
   Links: {
     url: { name: 'URL', lang: 'html', prettierParser: 'html' },
@@ -97,7 +112,9 @@ export async function getIconSnippet(
     case 'url':
       return url
     case 'html':
-      return `<span class="iconify" data-icon="${icon}" data-inline="false"${color === 'currentColor' ? '' : ` style="color: ${color}"`}></span>`
+      return `<span class="iconify" data-icon="${icon}" data-inline="false"${color === 'currentColor'
+        ? ''
+        : ` style="color: ${color}"`}></span>`
     case 'css':
       return `background: url('${url}') no-repeat center center / contain;`
     case 'svg':

@@ -86,7 +86,9 @@ async function download(type: string) {
   const text = await getIconSnippet(collections, props.icon, type, false, color.value)
   if (!text)
     return
-  const ext = (type === 'solid' || type === 'qwik' || type === 'react-native') ? 'tsx' : type
+  const ext = (type === 'solid' || type === 'qwik' || type === 'react-native')
+    ? 'tsx'
+    : type
   const name = `${toComponentName(props.icon)}.${ext}`
   const blob = type === 'png'
     ? dataUrlToBlob(text)

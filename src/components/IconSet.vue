@@ -16,7 +16,9 @@ const current = computed({
     return (route.query.icon as string) || ''
   },
   set(value) {
-    router.replace({ query: cleanupQuery({ ...route.query, icon: value }) })
+    router.replace({
+      query: cleanupQuery({ ...route.query, icon: value }),
+    })
   },
 })
 const max = ref(isLocalMode ? 500 : 200)
@@ -28,8 +30,12 @@ const loading = isCurrentCollectionLoading()
 const maxMap = new Map<string, number>()
 const id = computed(() => collection.value?.id)
 const url = computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `https://npmx.dev/package/@iconify-json/${id.value}` : '')
-const namespace = computed(() => (id.value != null && !specialTabs.includes(id.value)) ? `${id.value}:` : '')
+const npm = computed(() => (id.value != null && !specialTabs.includes(id.value))
+  ? `https://npmx.dev/package/@iconify-json/${id.value}`
+  : '')
+const namespace = computed(() => (id.value != null && !specialTabs.includes(id.value))
+  ? `${id.value}:`
+  : '')
 
 function onCopy(status: boolean) {
   copied.value = status
@@ -135,7 +141,11 @@ function isSentinelNear() {
 
 // The sentinel can stay near after a load, when the icons are small.
 // The observer does not fire again in that case, so measure after the render.
-watch([nearEnd, max, () => icons.value.length], async () => {
+watch([
+  nearEnd,
+  max,
+  () => icons.value.length,
+], async () => {
   if (!nearEnd.value)
     return
   await nextTick()

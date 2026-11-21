@@ -26,5 +26,7 @@ export function HtmlToJSX(html: string, reactJSX = false) {
         : i[0].toUpperCase() + i.slice(1).toLowerCase())
       .join('')
   })
-  return reactJSX ? transformToReactJSX(jsx) : jsx
+  return reactJSX
+    ? transformToReactJSX(jsx)
+    : jsx
 }

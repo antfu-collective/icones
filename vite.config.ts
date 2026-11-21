@@ -64,8 +64,12 @@ export default defineConfig({
       },
       integration: {
         configureOptions(viteConfig, options) {
-          if (viteConfig.command === 'build')
-            options.includeAssets = fg.sync('**/*.*', { cwd: join(process.cwd(), 'public'), onlyFiles: true })
+          if (viteConfig.command === 'build') {
+            options.includeAssets = fg.sync('**/*.*', {
+              cwd: join(process.cwd(), 'public'),
+              onlyFiles: true,
+            })
+          }
         },
       },
       devOptions: {

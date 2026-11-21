@@ -20,7 +20,9 @@ const code = ref<string>('')
 async function onShow() {
   if (!code.value) {
     code.value = await getIconSnippet(
-      props.collection ? [props.collection] : collections,
+      props.collection
+        ? [props.collection]
+        : collections,
       props.icon,
       props.type,
       false,

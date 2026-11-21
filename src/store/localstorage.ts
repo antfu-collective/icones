@@ -48,7 +48,10 @@ export function isRecentCollection(id: string) {
 }
 
 export function pushRecentCollection(id: string) {
-  recentCollectionIds.value = [id, ...recentCollectionIds.value.filter(i => i !== id)].slice(0, RECENT_COLLECTION_CAPACITY)
+  recentCollectionIds.value = [
+    id,
+    ...recentCollectionIds.value.filter(i => i !== id),
+  ].slice(0, RECENT_COLLECTION_CAPACITY)
 }
 
 export function removeRecentCollection(id: string) {
@@ -60,7 +63,10 @@ export function isRecentIcon(id: string) {
 }
 
 export function pushRecentIcon(id: string) {
-  recentIconIds.value = [id, ...recentIconIds.value.filter(i => i !== id)].slice(0, RECENT_ICONS_CAPACITY)
+  recentIconIds.value = [
+    id,
+    ...recentIconIds.value.filter(i => i !== id),
+  ].slice(0, RECENT_ICONS_CAPACITY)
 }
 
 export function removeRecentIcon(id: string) {
