@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { Tooltip } from 'floating-vue'
 import { getSearchHighlightHTML, useThemeColor } from '../hooks'
 
-defineProps({
+const props = defineProps({
   icons: {
-    type: Array as PropType<any[]>,
+    type: Array as PropType<string[]>,
     default: () => [],
   },
   selected: {
-    type: Array,
+    type: Array as PropType<string[]>,
     default: () => [],
   },
   size: {
@@ -36,24 +35,71 @@ defineProps({
     type: String,
     default: 'text-dark-600 dark:text-dark-900',
   },
+  tooltip: {
+    type: Boolean,
+    default: true,
+  },
 })
-defineEmits<{
+const emit = defineEmits<{
   (event: 'select', id: string): void
 }>()
 
 const { style } = useThemeColor()
+
+const selectedSet = computed(() => new Set(props.selected))
+
+// One shared tooltip for the whole list, instead of one popper per icon
+const hovered = ref<{ name: string, x: number, y: number } | null>(null)
+
+function getItem(e: Event) {
+  return (e.target as HTMLElement).closest<HTMLElement>('[data-icon]')
+}
+
+function onClick(e: MouseEvent) {
+  const item = getItem(e)
+  if (item)
+    emit('select', props.namespace + item.dataset.icon)
+}
+
+function onPointerOver(e: PointerEvent) {
+  if (!props.tooltip || props.display === 'list' || e.pointerType === 'touch')
+    return
+  const item = getItem(e)
+  if (!item) {
+    hovered.value = null
+    return
+  }
+  const name = item.dataset.icon!
+  if (hovered.value?.name === name)
+    return
+  const rect = item.getBoundingClientRect()
+  hovered.value = { name, x: rect.left + rect.width / 2, y: rect.bottom }
+}
+
+function hideTooltip() {
+  hovered.value = null
+}
+
+useEventListener('scroll', hideTooltip, { capture: true, passive: true })
 </script>
 
 <template>
-  <div class="non-dragging flex flex-wrap select-none justify-center" :class="`text-${size} ${colorClass}`">
+  <div
+    class="non-dragging flex flex-wrap select-none justify-center"
+    :class="`text-${size} ${colorClass}`"
+    @click="onClick"
+    @pointerover="onPointerOver"
+    @pointerleave="hideTooltip"
+  >
     <div
-      v-for="icon of icons " :key="icon" class="non-dragging icons-item relative"
-      :class="[spacing, selected.includes(namespace + icon) ? 'active' : '']"
-      @click="$emit('select', namespace + icon)"
+      v-for="icon of icons" :key="icon"
+      class="non-dragging icons-item relative"
+      :class="[spacing, selectedSet.has(namespace + icon) ? 'active' : '']"
+      :data-icon="icon"
     >
       <div v-if="display === 'list'" class="icon-border flex gap-1">
         <Icon
-          :key="icon" class="non-dragging leading-none" :cache="true"
+          class="non-dragging leading-none"
           :icon="namespace + icon"
         />
         <span
@@ -61,18 +107,21 @@ const { style } = useThemeColor()
           v-html="getSearchHighlightHTML(icon, search)"
         />
       </div>
-      <Tooltip v-else placement="bottom">
-        <Icon
-          :key="icon" class="non-dragging leading-none icon-border h-1em" :cache="true"
-          :icon="namespace + icon"
-        />
-        <template #popper>
-          <div :style="style" class="leading-none border-none z-100 text-primary opacity-75 text-sm">
-            {{ icon }}
-          </div>
-        </template>
-      </Tooltip>
+      <Icon
+        v-else
+        class="non-dragging leading-none icon-border h-1em"
+        :icon="namespace + icon"
+      />
     </div>
+    <Teleport v-if="tooltip" to="body">
+      <div
+        v-if="hovered"
+        class="icons-tooltip fixed z-100 pointer-events-none px-2 py-1.5 leading-none text-sm text-primary bg-base border border-base rounded shadow-lg"
+        :style="[style, { left: `${hovered.x}px`, top: `${hovered.y + 8}px` }]"
+      >
+        {{ hovered.name }}
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -80,6 +129,17 @@ const { style } = useThemeColor()
 .icons-item:hover,
 .icons-item.active {
   color: var(--theme-color);
+}
+
+.icons-tooltip {
+  transform: translateX(-50%);
+  animation: icons-tooltip-in 0.12s ease-out;
+}
+
+@keyframes icons-tooltip-in {
+  from {
+    opacity: 0;
+  }
 }
 
 .icon-border {
