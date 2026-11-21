@@ -27,7 +27,9 @@ function selectManager(packageName: string) {
 const status = ref(false)
 
 async function copyText() {
-  const text = `${selectedPackageManager.value} ${selectedPackageManager.value !== 'npm' ? 'add' : 'i'} -D @iconify-json/${props.collection.id}`
+  const text = `${selectedPackageManager.value} ${selectedPackageManager.value !== 'npm'
+    ? 'add'
+    : 'i'} -D @iconify-json/${props.collection.id}`
   status.value = true
   setTimeout(() => {
     status.value = false

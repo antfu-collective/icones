@@ -15,7 +15,9 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
       return route.query.category as string || ''
     },
     set(value: string) {
-      router.replace({ query: cleanupQuery({ ...route.query, category: value }) })
+      router.replace({
+        query: cleanupQuery({ ...route.query, category: value }),
+      })
     },
   })
   const variant = computed({
@@ -23,7 +25,9 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
       return route.query.variant as string || ''
     },
     set(value: string) {
-      router.replace({ query: cleanupQuery({ ...route.query, variant: value }) })
+      router.replace({
+        query: cleanupQuery({ ...route.query, variant: value }),
+      })
     },
   })
   const search = computed({
@@ -31,7 +35,9 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
       return route.query.s as string || ''
     },
     set(value: string) {
-      router.replace({ query: cleanupQuery({ ...route.query, s: value }) })
+      router.replace({
+        query: cleanupQuery({ ...route.query, s: value }),
+      })
     },
   })
 
@@ -103,7 +109,9 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
     const typed = parts.join(' ')
 
     try {
-      const results = plain ? filterAll(typed) : await find(typed, extended)
+      const results = plain
+        ? filterAll(typed)
+        : await find(typed, extended)
       if (signal.aborted)
         return
       icons.value = results
@@ -123,12 +131,18 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
       const seen = new Set(merged)
       for (const prediction of ordered) {
         // The quote makes fzf match the word exactly
-        const word = plain ? prediction.word : `'${prediction.word}`
+        const word = plain
+          ? prediction.word
+          : `'${prediction.word}`
         const index = parts.indexOf(prediction.from)
         const pattern = index < 0
           ? word
-          : parts.map((part, i) => i === index ? word : part).join(' ')
-        const matches = plain ? filterAll(pattern) : await find(pattern, true)
+          : parts.map((part, i) => i === index
+              ? word
+              : part).join(' ')
+        const matches = plain
+          ? filterAll(pattern)
+          : await find(pattern, true)
         if (signal.aborted)
           return
         for (const icon of matches) {
@@ -148,7 +162,11 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
 
   const debouncedSearch = useDebounceFn(runSearch, 200)
 
-  watch([category, variant, () => collection.value?.id], () => {
+  watch([
+    category,
+    variant,
+    () => collection.value?.id,
+  ], () => {
     runSearch()
   })
 

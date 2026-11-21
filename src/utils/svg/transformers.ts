@@ -23,7 +23,14 @@ export function ClearSvg(svgCode: string, reactJSX?: boolean, skipJSXTransform =
 
       const attributes = node.attributes || {}
       // keep only 'viewBox', 'width', 'height', 'focusable', 'xmlns', 'xlink' attributes
-      const allowedAttributes = ['viewBox', 'width', 'height', 'focusable', 'xmlns', 'xlink']
+      const allowedAttributes = [
+        'viewBox',
+        'width',
+        'height',
+        'focusable',
+        'xmlns',
+        'xlink',
+      ]
       for (const key of Object.keys(attributes)) {
         if (!allowedAttributes.includes(key)) {
           delete attributes[key]
@@ -45,7 +52,9 @@ export function SvgToDataURL(svg: string) {
   const base64 = `data:image/svg+xml;base64,${Base64.encode(svg)}`
   const plain = `data:image/svg+xml,${encodeSvgForCss(svg)}`
   // Return the shorter of the two data URLs
-  return base64.length < plain.length ? base64 : plain
+  return base64.length < plain.length
+    ? base64
+    : plain
 }
 
 export function SvgToJSX(svg: string, name: string, snippet: boolean) {
@@ -69,7 +78,9 @@ export function ${name}(props: SVGProps<SVGSVGElement>) {
   )
 }`
 
-  code = snippet ? code : `import React, { SVGProps } from 'react'\n${code}\nexport default ${name}`
+  code = snippet
+    ? code
+    : `import React, { SVGProps } from 'react'\n${code}\nexport default ${name}`
   return prettierCode(code, 'babel-ts')
 }
 
@@ -81,7 +92,9 @@ export function ${name}(props: QwikIntrinsicElements['svg'], key: string) {
   )
 }`
 
-  code = snippet ? code : `import type { QwikIntrinsicElements } from '@builder.io/qwik'\n${code}\nexport default ${name}`
+  code = snippet
+    ? code
+    : `import type { QwikIntrinsicElements } from '@builder.io/qwik'\n${code}\nexport default ${name}`
   return prettierCode(code, 'babel-ts')
 }
 
@@ -96,7 +109,9 @@ export default {
   name: '${name}'
 }
 </script>`
-  const code = isTs ? content.replace('<script>', '<script lang="ts">') : content
+  const code = isTs
+    ? content.replace('<script>', '<script lang="ts">')
+    : content
   return prettierCode(code, 'vue')
 }
 
@@ -108,7 +123,9 @@ export function ${name}(props: JSX.IntrinsicElements['svg']) {
   )
 }`
 
-  code = snippet ? code : `import type { JSX } from 'solid-js'\n${code}\nexport default ${name}`
+  code = snippet
+    ? code
+    : `import type { JSX } from 'solid-js'\n${code}\nexport default ${name}`
   return prettierCode(code, 'babel-ts')
 }
 
@@ -146,7 +163,9 @@ export function SvgToReactNative(svg: string, name: string, snippet: boolean) {
       usedComponents.splice(svgIndex, 1)
 
     // Join all other component names with a comma and wrap them in curly braces
-    const componentsString = usedComponents.length > 0 ? `{ ${usedComponents.join(', ')} }` : ''
+    const componentsString = usedComponents.length > 0
+      ? `{ ${usedComponents.join(', ')} }`
+      : ''
 
     // Return the consolidated import statement, ensuring Svg is imported as a default import
     return `import Svg, ${componentsString} from 'react-native-svg';`

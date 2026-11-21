@@ -58,12 +58,21 @@ function buildCollectionResponseHeaders(cachedResponse: Response) {
 const swManifestMap = new Map<string, string>(
   swManifest.map((entry) => {
     if (typeof entry === 'string') {
-      const e = entry[0] === '/' ? entry : `/${entry}`
+      const e = entry[0] === '/'
+        ? entry
+        : `/${entry}`
       return [e, e]
     }
     else {
-      const e = entry.url[0] === '/' ? entry.url : `/${entry.url}`
-      return [e, entry.revision ? `${e}?__WB_REVISION__=${entry.revision}` : e]
+      const e = entry.url[0] === '/'
+        ? entry.url
+        : `/${entry.url}`
+      return [
+        e,
+        entry.revision
+          ? `${e}?__WB_REVISION__=${entry.revision}`
+          : e,
+      ]
     }
   }),
 )
