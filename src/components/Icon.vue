@@ -10,20 +10,16 @@ const mounted = new WeakSet<HTMLElement>()
 
 function getIcon(name: string) {
   const el = cache.get(name)
-  if (el) {
-    if (!mounted.has(el)) {
-      mounted.add(el)
-      // If the element was unmounted while out of the viewport, its internal
-      // IntersectionObserver had removed the SVG from the shadow root, and
-      // `disconnectedCallback` reset the visibility flag without re-rendering,
-      // so on reuse it would stay empty forever. Re-setting the attribute
-      // triggers `attributeChangedCallback`, which re-checks the shadow root
-      // and re-renders the icon if it is missing.
-      el.setAttribute('icon', name)
-      return el
-    }
+  if (el && !mounted.has(el)) {
+    mounted.add(el)
+    return el
   }
   const icon = document.createElement('iconify-icon')
+  // Without it, `iconify-icon` removes the SVG of an icon out of the viewport,
+  // with one IntersectionObserver per icon. When the element is then moved in
+  // the DOM (Vue reorders keyed items after a search, or a cached element is
+  // mounted again), it loses track of that and the icon stays empty forever.
+  icon.setAttribute('noobserver', '')
   icon.setAttribute('icon', name)
   cache.set(name, icon)
   mounted.add(icon)
