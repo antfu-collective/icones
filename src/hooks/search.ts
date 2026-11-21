@@ -192,5 +192,6 @@ export function getSearchHighlightHTML(
 }
 
 export function arrayIntersection<T>(a: T[], b: T[]) {
-  return a.filter(i => b.includes(i))
+  const set = new Set(b)
+  return a.filter(i => set.has(i))
 }
