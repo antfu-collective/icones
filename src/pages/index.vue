@@ -66,36 +66,41 @@ function onKeydown(e: KeyboardEvent) {
   <WithNavbar>
     <div of-hidden grid="~ rows-[max-content_1fr]">
       <!-- Searching -->
-      <div md:mx-6 md:mt-6>
+      <div px-4 pt-4 md:px-6 md:pt-6>
         <SearchBar
           ref="searchbar"
           v-model:search="categorySearch"
           placeholder="Search category..."
           flex
+          :class="categorySearch ? '!rounded-b-none' : ''"
           @on-keydown="onKeydown"
         />
         <RouterLink
-          :class="categorySearch ? '' : 'op0 pointer-events-none'"
+          :class="categorySearch ? '' : 'op0 pointer-events-none max-md:hidden'"
           px4 py2 w-full mt--1px text-sm z--1 h-10
           flex="~ gap-2" items-center
-          border="~ base rounded-b"
+          border="~ base rounded-b-lg"
           hover="text-primary !border-primary shadow"
           :to="`/collection/all?s=${categorySearch}`"
         >
           <div i-carbon-direction-right-01 scale-y--100 op50 />
           Search for all icons...
-          <div>
+          <div max-md:hidden>
             <kbd text-sm border="~ base rounded" px1>{{ isMacOS ? '⌘' : 'Ctrl' }}</kbd> + <kbd text-sm border="~ base rounded" px1>Enter</kbd>
           </div>
         </RouterLink>
       </div>
 
-      <div of-y-auto relative space-y-6>
+      <div of-y-auto relative space-y-4 md:space-y-6 pt-2 md:pt-0>
         <!-- Category listing -->
         <template v-for="c of availableCategories" :key="c.name">
-          <div px4>
-            <div px-2 text-op-50 text-lg sticky top-0 bg-base z-1>
-              {{ c.name }}
+          <div px-2 md:px-4>
+            <div
+              px-2 py-1 sticky top-0 bg-base z-1
+              flex="~ items-baseline gap-2"
+            >
+              <span text-lg op50>{{ c.name }}</span>
+              <span text-xs op30>{{ c.collections.length }}</span>
             </div>
             <CollectionEntries
               of-hidden

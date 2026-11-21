@@ -13,11 +13,15 @@ const { width, height } = useWindowSize()
 const isSmall = computed(() => width.value < 600 || height.value < 450)
 
 const positionClass = computed(() => {
-  if (isSmall.value)
-    return 'bottom-0 left-0 right-0 top-0 of-auto'
+  if (isSmall.value) {
+    // A bottom sheet keeps the page visible above it on small screens
+    return props.direction === 'bottom'
+      ? 'bottom-0 left-0 right-0 max-h-[85vh] of-auto rounded-t-2xl border-t shadow-2xl pb-[env(safe-area-inset-bottom)]'
+      : 'bottom-0 left-0 right-0 top-0 of-auto'
+  }
   switch (props.direction) {
     case 'bottom':
-      return 'bottom-0 left-0 right-0 border-t'
+      return 'bottom-0 left-0 right-0 max-h-[85vh] of-auto border-t shadow-2xl'
     case 'top':
       return 'top-0 left-0 right-0 border-b'
     case 'left':
@@ -56,7 +60,7 @@ const transform = computed(() => {
       @click="emit('close')"
     />
     <div
-      bg-base border border-base absolute transition-all duration-200 ease-out
+      bg-base border-base absolute transition-all duration-200 ease-out
       :class="positionClass"
       :style="value ? {} : { transform }"
     >

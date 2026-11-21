@@ -226,14 +226,12 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
       </div>
 
       <div v-else-if="collection" h-full w-full relative max-h-full grid="~ rows-[max-content_1fr] cols-[minmax(0,1fr)]" of-hidden>
-        <div pt-5 flex="~ col gap-2">
-          <div class="flex px-8">
+        <div pt-3 md:pt-5 flex="~ col gap-2">
+          <div class="flex px-4 md:px-8 gap-2">
             <!-- Left -->
-            <div class="flex-auto px-2">
-              <NavPlaceholder class="md:hidden" />
-
+            <div class="flex-auto min-w-0 md:px-2">
               <div class="text-gray-900 text-xl flex items-center select-none dark:text-gray-200">
-                <div class="whitespace-no-wrap of-hidden">
+                <div class="truncate">
                   {{ collection.name }}
                 </div>
                 <!-- Information icons -->
@@ -258,12 +256,11 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
                 </div>
                 <div class="flex-auto" />
               </div>
-              <div class="text-xs block opacity-50">
-                {{ collection.author?.name }}
-              </div>
-              <div v-if="collection.license">
+              <div class="text-xs flex flex-wrap md:flex-col gap-x-2">
+                <span class="opacity-50">{{ collection.author?.name }}</span>
                 <a
-                  class="text-xs opacity-50 hover:opacity-100"
+                  v-if="collection.license"
+                  class="opacity-50 hover:opacity-100"
                   :href="collection.license.url"
                   target="_blank"
                 >{{ collection.license.title }}</a>
@@ -278,12 +275,12 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           </div>
 
           <!-- Categories -->
-          <div v-if="collection.categories" ref="categoriesContainer" class="mx-8 flex gap-2 select-none max-md:of-x-auto max-md:pb-1 md:flex-wrap">
+          <div v-if="collection.categories" ref="categoriesContainer" class="px-4 md:px-8 flex gap-2 select-none max-md:of-x-auto max-md:pb-1 md:flex-wrap">
             <div
               v-for="c of Object.keys(collection.categories).sort()"
               :key="c"
               class="
-                whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
+                whitespace-nowrap text-sm inline-block px-3 py-1 md:px-2 md:py-0 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
               "
               :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
@@ -301,15 +298,15 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           />
 
           <!-- Variants --->
-          <div v-if="collection.variants" class="mx-8 mb-2 flex flex-wrap gap-2 select-none items-center">
-            <div text-sm op50>
+          <div v-if="collection.variants" class="px-4 md:px-8 mb-2 flex gap-2 select-none items-center max-md:of-x-auto max-md:pb-1 md:flex-wrap">
+            <div text-sm op50 whitespace-nowrap>
               Variants
             </div>
             <div
               v-for="c of Object.keys(collection.variants).sort()"
               :key="c"
               class="
-                whitespace-nowrap text-sm inline-block px-2 border border-base rounded-full hover:bg-gray-50 cursor-pointer
+                whitespace-nowrap text-sm inline-block px-3 py-1 md:px-2 md:py-0 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
               "
               :class="c === variant ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
@@ -321,7 +318,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
         <div ref="scroller" of-y-scroll of-x-hidden>
           <!-- Icons -->
-          <div class="px-5 pt-2 pb-4 text-center">
+          <div class="px-1 md:px-5 pt-2 pb-4 text-center">
             <Icons
               :key="namespace"
               :icons="icons.slice(0, max)"

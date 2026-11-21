@@ -19,7 +19,7 @@ export default defineComponent({
   <nav
     class="dragging"
     flex="~ gap4 none"
-    p4 relative bg-base z-10 border="b base" text-xl
+    px4 py3 md:p4 items-center relative bg-base z-10 border="b base" text-xl
     :class="showNav ? '' : 'md:hidden'"
   >
     <!-- In Collections -->
@@ -66,7 +66,7 @@ export default defineComponent({
     <SearchBar
       v-if="collection"
       v-model:search="search"
-      class="flex w-full"
+      class="flex items-center w-full rounded-lg bg-gray-400/10 text-base"
       :style="false"
       :icon="false"
     />

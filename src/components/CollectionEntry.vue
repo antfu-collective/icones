@@ -11,10 +11,10 @@ defineProps<{
 <template>
   <RouterLink
     :key="collection.id"
-    p3 relative
-    border="~ base"
+    px3 py2 md:p3 relative
+    border="~ base rounded-lg"
     :class="{ 'border-dashed': collection.hidden }"
-    class="grid grid-cols-[1fr_90px] gap2 items-center color-base transition-all translate-z-0 group"
+    class="grid grid-cols-[minmax(0,1fr)_auto] md:grid-cols-[minmax(0,1fr)_90px] gap2 items-center color-base transition-all translate-z-0 group"
     hover="text-primary !border-primary shadow"
     :to="`/collection/${collection.id}`"
   >
@@ -27,9 +27,9 @@ defineProps<{
         </span>
       </div>
       <div flex="~ col auto" opacity-50 text-xs>
-        <span>{{ collection.author?.name }}</span>
-        <span op50>{{ collection.license?.title }}</span>
-        <span m1 />
+        <span truncate>{{ collection.author?.name }}</span>
+        <span op50 max-md:hidden>{{ collection.license?.title }}</span>
+        <span m1 max-md:hidden />
         <span>{{ collection.total }} icons</span>
       </div>
     </div>
@@ -40,10 +40,10 @@ defineProps<{
       size="xl"
       :tooltip="false"
       spacing="m-1"
-      class="ma justify-center opacity-75 flex-wrap pointer-events-none"
+      class="collection-samples ma justify-center opacity-75 md:flex-wrap pointer-events-none"
     />
     <div
-      absolute top--1px right--1px
+      absolute top--1px right--1px of-hidden rounded-tr-lg
       flex="~ items-center"
       op0 group-hover="op100 transition-all"
       un-children="op-64 hover:op-100"
@@ -69,3 +69,15 @@ defineProps<{
     </div>
   </RouterLink>
 </template>
+
+<style>
+@media (max-width: 767.9px) {
+  /* One row of samples keeps the cards short on small screens */
+  .collection-samples {
+    flex-wrap: nowrap;
+  }
+  .collection-samples > :nth-child(n + 5) {
+    display: none;
+  }
+}
+</style>

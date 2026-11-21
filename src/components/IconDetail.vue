@@ -115,21 +115,22 @@ const collection = computed(() => {
 </script>
 
 <template>
-  <div class="p-2 flex flex-col flex-wrap md:flex-row md:text-left relative">
+  <div class="p-2 md:p-4 grid md:grid-cols-[auto_minmax(0,1fr)] md:gap-2 relative">
+    <div class="md:hidden mx-auto mt-1 h-1 w-10 rounded-full bg-gray-400/30" />
     <IconButton
       class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close"
       @click="$emit('close')"
     />
-    <div :style="{ color: previewColor }">
+    <div class="flex justify-center md:block" :style="{ color: previewColor }">
       <ColorPicker v-model:value="previewColor" class="inline-block">
-        <Icon :key="icon" outer-class="p-4 text-8xl" :icon="icon" />
+        <Icon :key="icon" outer-class="p-4 text-7xl md:text-8xl" :icon="icon" />
       </ColorPicker>
     </div>
-    <div class="px-6 py-2 mb-2 md:px-2 md:py-4">
+    <div class="min-w-0 px-4 pb-4 md:px-2 md:py-4">
       <button class="op35 hover:text-primary hover:op100 text-sm !outline-none" @click="showHelp = !showHelp">
         How to use the icon?
       </button>
-      <div class="flex op75 relative font-mono">
+      <div class="flex items-center op75 relative font-mono break-all">
         {{ transformedId }}
         <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
         <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
@@ -204,13 +205,13 @@ const collection = computed(() => {
         </button>
       </div>
 
-      <div class="flex flex-wrap mt-2">
+      <div class="flex flex-wrap gap-x-4 gap-y-2 mt-2">
         <template v-for="(group, groupName) in SnippetMap" :key="groupName">
-          <div class="mr-4">
+          <div>
             <div class="my-1 op50 text-sm">
               {{ groupName }}
             </div>
-            <div class="flex gap-1">
+            <div class="flex flex-wrap gap-1">
               <template v-for="(snippet, type) in group" :key="`${icon}-${groupName}-${type}`">
                 <SnippetPreview
                   :collection="collection"
@@ -227,57 +228,61 @@ const collection = computed(() => {
             </div>
           </div>
         </template>
-        <div class="mr-4">
+        <div>
           <div class="my-1 op50 text-sm">
             Download
           </div>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svg')">
-            SVG
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('png')">
-            PNG
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('vue')">
-            Vue
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('jsx')">
-            React
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('tsx')">
-            React<sup class="opacity-50 -mr-1">TS</sup>
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('svelte')">
-            Svelte
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('qwik')">
-            Qwik
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('solid')">
-            Solid
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('astro')">
-            Astro
-          </button>
-          <button class="btn small mr-1 mb-1 opacity-75" @click="download('react-native')">
-            React Native
-          </button>
+          <div class="flex flex-wrap gap-1">
+            <button class="btn small opacity-75" @click="download('svg')">
+              SVG
+            </button>
+            <button class="btn small opacity-75" @click="download('png')">
+              PNG
+            </button>
+            <button class="btn small opacity-75" @click="download('vue')">
+              Vue
+            </button>
+            <button class="btn small opacity-75" @click="download('jsx')">
+              React
+            </button>
+            <button class="btn small opacity-75" @click="download('tsx')">
+              React<sup class="opacity-50 -mr-1">TS</sup>
+            </button>
+            <button class="btn small opacity-75" @click="download('svelte')">
+              Svelte
+            </button>
+            <button class="btn small opacity-75" @click="download('qwik')">
+              Qwik
+            </button>
+            <button class="btn small opacity-75" @click="download('solid')">
+              Solid
+            </button>
+            <button class="btn small opacity-75" @click="download('astro')">
+              Astro
+            </button>
+            <button class="btn small opacity-75" @click="download('react-native')">
+              React Native
+            </button>
+          </div>
         </div>
-        <div class="mr-4">
+        <div>
           <div class="my-1 op50 text-sm">
             View on
           </div>
-          <a
-            v-if="collection" class="btn small mr-1 mb-1 opacity-75 inline-flex"
-            :href="`https://icon-sets.iconify.design/${collection.id}/?icon-filter=${icon.split(':')[1]}`" target="_blank"
-          >
-            Iconify
-          </a>
-          <a
-            v-if="collection" class="btn small mr-1 mb-1 opacity-75 inline-flex"
-            :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`" target="_blank"
-          >
-            UnoCSS
-          </a>
+          <div class="flex flex-wrap gap-1">
+            <a
+              v-if="collection" class="btn small opacity-75 inline-flex"
+              :href="`https://icon-sets.iconify.design/${collection.id}/?icon-filter=${icon.split(':')[1]}`" target="_blank"
+            >
+              Iconify
+            </a>
+            <a
+              v-if="collection" class="btn small opacity-75 inline-flex"
+              :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`" target="_blank"
+            >
+              UnoCSS
+            </a>
+          </div>
         </div>
       </div>
 
