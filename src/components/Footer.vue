@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const buildTime = __BUILD_TIME__
-
-const timeAgo = useTimeAgo(new Date(buildTime))
+const buildDate = new Date(__BUILD_TIME__)
+const buildTime = useDateFormat(buildDate, 'YYYY/MM/DD HH:mm')
+const timeAgo = useTimeAgo(buildDate)
 </script>
 
 <template>
