@@ -32,6 +32,9 @@ importers:
       fzf:
         specifier: ^0.5.2
         version: 0.5.2
+      gpu-icons-search:
+        specifier: ^0.0.0
+        version: 0.0.0
       hotkeys-js:
         specifier: ^4.0.4
         version: 4.0.4
@@ -3029,6 +3032,9 @@ packages:
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
+
+  gpu-icons-search@0.0.0:
+    resolution: {integrity: sha512-xmI65JZqEI7VBKNDxf6ZUN0SjgdXr9Fy/ZkE4EbARuSoXgDND7gvoclfnbSG2kdW6uD0zv0YjcNypzRKshpZsA==}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -8097,6 +8103,8 @@ snapshots:
   globrex@0.1.2: {}
 
   gopd@1.2.0: {}
+
+  gpu-icons-search@0.0.0: {}
 
   graceful-fs@4.2.11: {}
 
