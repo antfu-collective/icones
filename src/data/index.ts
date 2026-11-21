@@ -7,8 +7,6 @@ import { loadCollection, saveCollection } from '../store/indexedDB'
 import {
   favoritedCollectionIds,
   isExcludedCollection,
-  isFavoritedCollection,
-  isRecentCollection,
   recentCollectionIds,
 } from '../store/localstorage'
 import { inProgress, progressMessage } from '../store/progress'
@@ -73,20 +71,31 @@ watch([categorySearch, enabledCollections], ([q]) => {
   }
 })
 
-export const sortedCollectionsInfo = computed(() =>
-  filteredCollections.value
-    .sort((a, b) => favoritedCollectionIds.value.indexOf(b.id) - favoritedCollectionIds.value.indexOf(a.id)),
-)
+function indexMap(ids: string[]) {
+  return new Map(ids.map((id, index) => [id, index]))
+}
 
-export const favoritedCollections = computed(() =>
-  filteredCollections.value.filter(i => isFavoritedCollection(i.id))
-    .sort((a, b) => favoritedCollectionIds.value.indexOf(b.id) - favoritedCollectionIds.value.indexOf(a.id)),
-)
+const favoritedIndex = computed(() => indexMap(favoritedCollectionIds.value))
+const recentIndex = computed(() => indexMap(recentCollectionIds.value))
 
-export const recentCollections = computed(() =>
-  filteredCollections.value.filter(i => isRecentCollection(i.id))
-    .sort((a, b) => recentCollectionIds.value.indexOf(b.id) - recentCollectionIds.value.indexOf(a.id)),
-)
+export const sortedCollectionsInfo = computed(() => {
+  const index = favoritedIndex.value
+  // Copy before sorting, to keep `filteredCollections` in the fzf order
+  return [...filteredCollections.value]
+    .sort((a, b) => (index.get(b.id) ?? -1) - (index.get(a.id) ?? -1))
+})
+
+export const favoritedCollections = computed(() => {
+  const index = favoritedIndex.value
+  return filteredCollections.value.filter(i => index.has(i.id))
+    .sort((a, b) => index.get(b.id)! - index.get(a.id)!)
+})
+
+export const recentCollections = computed(() => {
+  const index = recentIndex.value
+  return filteredCollections.value.filter(i => index.has(i.id))
+    .sort((a, b) => index.get(b.id)! - index.get(a.id)!)
+})
 
 export function isInstalled(id: string) {
   return installed.value.includes(id)

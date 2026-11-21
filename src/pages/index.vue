@@ -4,18 +4,13 @@ import { categories, categorySearch, favoritedCollections, filteredCollections, 
 
 const searchbar = ref<{ input: HTMLElement }>()
 
-const categorized = ref(getIconList(categorySearch.value))
+const categorized = shallowRef(getIconList(categorySearch.value))
 const availableCategories = computed(() => categorized.value.filter(c => c.collections.length > 0))
 
-let categorizeDebounceTimer: NodeJS.Timeout | null = null
-
-watch([categorySearch, favoritedCollections, recentCollections], ([newVal]) => {
-  if (categorizeDebounceTimer)
-    clearTimeout(categorizeDebounceTimer)
-  categorizeDebounceTimer = setTimeout(() => {
-    categorizeDebounceTimer = null
-    categorized.value = getIconList(newVal)
-  }, 500)
+// Both lists derive from the search results, so they change after each search,
+// and also after a favorite or recent change, which is reflected at once
+watch([favoritedCollections, recentCollections], () => {
+  categorized.value = getIconList(categorySearch.value)
 })
 
 function getIconList(searchString: string) {
