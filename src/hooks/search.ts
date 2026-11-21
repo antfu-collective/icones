@@ -3,7 +3,7 @@ import type { CollectionMeta } from '../data'
 import { asyncExtendedMatch, AsyncFzf } from 'fzf'
 import { computed, markRaw, ref, watch } from 'vue'
 import { specialTabs } from '../data'
-import { searchAlias } from '../data/search-alias'
+import { predictWords } from '../utils/predict'
 import { cleanupQuery } from '../utils/query'
 
 export function useSearch(collection: Ref<CollectionMeta | null>) {
@@ -37,23 +37,6 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
 
   const isAll = computed(() => collection.value && specialTabs.includes(collection.value.id))
   const searchParts = computed(() => search.value.trim().toLowerCase().split(' ').filter(Boolean))
-
-  const aliasedSearchCandidates = computed(() => {
-    const options = new Set([
-      searchParts.value.join(' '),
-    ])
-
-    searchParts.value.forEach((i, idx, arr) => {
-      const alias = searchAlias.find(a => a.includes(i))
-      if (alias?.length) {
-        alias.forEach((a) => {
-          options.add([...arr.slice(0, idx), a, arr.slice(idx + 1)].filter(Boolean).join(' ').trim())
-        })
-      }
-    })
-
-    return [...options]
-  })
 
   // Matching any character used in extended match
   // https://github.com/junegunn/fzf#search-syntax
@@ -92,21 +75,75 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
   })
 
   const icons = ref<string[]>([])
+  let controller: AbortController | undefined
 
-  function runSearch() {
-    const finder = (useExtendedMatch.value || aliasedSearchCandidates.value.length > 1)
-      ? fzf
-      : fzfFast
+  function filterAll(pattern: string) {
+    return iconSource.value.filter(i => i.includes(pattern))
+  }
 
-    const searchString = aliasedSearchCandidates.value.join(' | ')
+  async function find(pattern: string, extended: boolean) {
+    const finder = extended ? fzf : fzfFast
+    const result = await finder.value.find(pattern)
+    return result.map(i => i.item)
+  }
 
-    finder.value.find(searchString)
-      .then((result) => {
-        icons.value = result.map(i => i.item)
-      })
-      .catch(() => {
-        // The search is canceled
-      })
+  async function runSearch() {
+    controller?.abort()
+    controller = new AbortController()
+    const signal = controller.signal
+
+    const parts = searchParts.value
+    if (!parts.length) {
+      icons.value = iconSource.value
+      return
+    }
+
+    const extended = useExtendedMatch.value
+    const plain = isAll.value && !extended
+    const typed = parts.join(' ')
+
+    try {
+      const results = plain ? filterAll(typed) : await find(typed, extended)
+      if (signal.aborted)
+        return
+      icons.value = results
+
+      // The user writes fzf syntax, keep the query as typed
+      if (/['^$!|]/.test(typed))
+        return
+
+      // Append the matches of the predicted words, after the matches of the typed text.
+      // Corrections and completions come first, then related words, each in score order.
+      const predictions = await predictWords(typed, signal)
+      const ordered = [
+        ...predictions.filter(p => p.kind !== 'related'),
+        ...predictions.filter(p => p.kind === 'related'),
+      ]
+      const merged = [...results]
+      const seen = new Set(merged)
+      for (const prediction of ordered) {
+        // The quote makes fzf match the word exactly
+        const word = plain ? prediction.word : `'${prediction.word}`
+        const index = parts.indexOf(prediction.from)
+        const pattern = index < 0
+          ? word
+          : parts.map((part, i) => i === index ? word : part).join(' ')
+        const matches = plain ? filterAll(pattern) : await find(pattern, true)
+        if (signal.aborted)
+          return
+        for (const icon of matches) {
+          if (!seen.has(icon)) {
+            seen.add(icon)
+            merged.push(icon)
+          }
+        }
+      }
+      if (merged.length > results.length)
+        icons.value = merged
+    }
+    catch {
+      // The search is canceled
+    }
   }
 
   const debouncedSearch = useDebounceFn(runSearch, 200)
@@ -117,15 +154,14 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
 
   watchEffect(() => {
     if (!search.value) {
+      controller?.abort()
       icons.value = iconSource.value
       return
     }
 
-    if (isAll.value && !useExtendedMatch.value) {
-      icons.value = iconSource.value
-        .filter(i => aliasedSearchCandidates.value.some(s => i.includes(s)))
-      return
-    }
+    // Show the plain matches at once, the predictions follow after the debounce
+    if (isAll.value && !useExtendedMatch.value)
+      icons.value = filterAll(searchParts.value.join(' '))
 
     debouncedSearch()
   })

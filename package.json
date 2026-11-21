@@ -29,6 +29,7 @@
     "file-saver": "^2.0.5",
     "floating-vue": "^5.2.2",
     "fzf": "^0.5.2",
+    "gpu-icons-search": "^0.0.0",
     "hotkeys-js": "^4.0.4",
     "iconify-icon": "^3.0.2",
     "prettier": "^3.9.5",
