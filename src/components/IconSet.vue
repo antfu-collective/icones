@@ -109,10 +109,39 @@ function next(delta = 1) {
     current.value = namespace.value + newOne
 }
 
+const scroller = ref<HTMLElement>()
+const sentinel = ref<HTMLElement>()
+
 watch(
   () => namespace.value,
-  () => max.value = maxMap.get(namespace.value) || 200,
+  () => {
+    max.value = maxMap.get(namespace.value) || 200
+    scroller.value?.scrollTo({ top: 0 })
+  },
 )
+
+// Load more icons when the end of the list comes near
+const LOAD_MARGIN = 600
+const nearEnd = ref(false)
+useIntersectionObserver(sentinel, ([entry]) => {
+  nearEnd.value = entry?.isIntersecting ?? false
+}, { root: scroller, rootMargin: `0px 0px ${LOAD_MARGIN}px 0px` })
+
+function isSentinelNear() {
+  if (!sentinel.value || !scroller.value)
+    return false
+  return sentinel.value.getBoundingClientRect().top < scroller.value.getBoundingClientRect().bottom + LOAD_MARGIN
+}
+
+// The sentinel can stay near after a load, when the icons are small.
+// The observer does not fire again in that case, so measure after the render.
+watch([nearEnd, max, () => icons.value.length], async () => {
+  if (!nearEnd.value)
+    return
+  await nextTick()
+  if (icons.value.length > max.value && isSentinelNear())
+    loadMore()
+})
 
 function focusSearch() {
   searchbar.value?.input.focus()
@@ -186,7 +215,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
       </div>
 
-      <div v-else-if="collection" h-full w-full relative max-h-full grid="~ rows-[max-content_1fr]" of-hidden>
+      <div v-else-if="collection" h-full w-full relative max-h-full grid="~ rows-[max-content_1fr] cols-[minmax(0,1fr)]" of-hidden>
         <div pt-5 flex="~ col gap-2">
           <div class="flex px-8">
             <!-- Left -->
@@ -239,7 +268,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           </div>
 
           <!-- Categories -->
-          <div v-if="collection.categories" ref="categoriesContainer" class="mx-8 flex flex-wrap gap-2 select-none">
+          <div v-if="collection.categories" ref="categoriesContainer" class="mx-8 flex gap-2 select-none max-md:of-x-auto max-md:pb-1 md:flex-wrap">
             <div
               v-for="c of Object.keys(collection.categories).sort()"
               :key="c"
@@ -280,7 +309,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
             </div>
           </div>
         </div>
-        <div of-y-scroll of-x-hidden>
+        <div ref="scroller" of-y-scroll of-x-hidden>
           <!-- Icons -->
           <div class="px-5 pt-2 pb-4 text-center">
             <Icons
@@ -293,6 +322,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
               :namespace="namespace"
               @select="onSelect"
             />
+            <div ref="sentinel" />
             <button v-if="icons.length > max" class="btn mx-1 my-3" @click="loadMore">
               Load More
             </button>
