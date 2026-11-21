@@ -59,6 +59,8 @@ export default defineConfig({
         ],
       },
       injectManifest: {
+        // `.bin` and `.json` assets cover the gpu-icons-search model and alias table
+        globPatterns: ['**/*.{js,css,html}', 'assets/*.{bin,json}'],
         // collections-meta.json ~7.5MB
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
       },
