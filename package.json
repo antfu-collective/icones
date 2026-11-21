@@ -20,7 +20,7 @@
     "dev": "vite --port 3333 --open",
     "dev-pwa": "SW_DEV=true vite --port 3333",
     "typecheck": "vue-tsc --noEmit",
-    "build": "NODE_ENV=production vite build",
+    "build": "tsx scripts/prepare.ts && NODE_ENV=production vite build",
     "test": "vitest"
   },
   "dependencies": {
