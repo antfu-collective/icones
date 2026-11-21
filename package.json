@@ -46,7 +46,6 @@
     "@unocss/reset": "^66.7.5",
     "@vitejs/plugin-vue": "^6.0.8",
     "client-zip": "^2.5.0",
-    "dayjs": "^1.11.21",
     "eslint": "^10.7.0",
     "eslint-plugin-format": "^2.0.1",
     "fast-glob": "^3.3.3",

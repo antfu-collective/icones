@@ -38,6 +38,7 @@ defineProps<{
       :namespace="`${collection.id}:`"
       color-class=""
       size="xl"
+      :tooltip="false"
       spacing="m-1"
       class="ma justify-center opacity-75 flex-wrap pointer-events-none"
     />

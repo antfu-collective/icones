@@ -1,7 +1,6 @@
 import { join, resolve } from 'node:path'
 import process from 'node:process'
 import Vue from '@vitejs/plugin-vue'
-import dayjs from 'dayjs'
 import fg from 'fast-glob'
 import { SvgPackerVitePlugin } from 'svg-packer/vite'
 import UnoCSS from 'unocss/vite'
@@ -79,7 +78,8 @@ export default defineConfig({
     UnoCSS(),
   ],
   define: {
-    __BUILD_TIME__: JSON.stringify(dayjs().format('YYYY/MM/DD HH:mm')),
+    // ISO with timezone, formatted in the visitor's timezone at runtime
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
     PWA: process.env.NODE_ENV === 'production' || process.env.SW_DEV === 'true',
   },
   resolve: {

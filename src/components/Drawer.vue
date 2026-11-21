@@ -1,30 +1,21 @@
 <script setup lang='ts'>
+import type { CollectionInfo } from '../data'
 import { categorySearch, filteredCollections, sortedCollectionsInfo, specialTabs } from '../data'
 import { isFavoritedCollection, recentIconIds, toggleFavoriteCollection } from '../store'
 
 const route = useRoute()
 const current = computed(() => route.path.split('/').slice(-1)[0])
 
-const collections = computed(() => {
-  const _collections = categorySearch.value
-    ? filteredCollections.value
-    : [
-        { id: 'all', name: 'All' },
-        { id: 'recent', name: 'Recent' },
-        ...sortedCollectionsInfo.value,
-      ]
+const collections = computed(() => categorySearch.value
+  ? filteredCollections.value
+  : [
+      { id: 'all', name: 'All' } as CollectionInfo,
+      { id: 'recent', name: 'Recent' } as CollectionInfo,
+      ...sortedCollectionsInfo.value,
+    ])
 
-  return _collections.map(collection => ({
-    ...collection,
-    to: {
-      name: 'collection-id',
-      params: { id: collection.id },
-      query: {
-        s: route.query.s,
-      },
-    },
-  }))
-})
+// Kept apart from the list, so typing a search only updates the links
+const linkQuery = computed(() => ({ s: route.query.s }))
 </script>
 
 <template>
@@ -56,7 +47,7 @@ const collections = computed(() => {
       v-for="collection in collections"
       :key="collection.id"
       class="px-3 py-1 flex border-b border-base"
-      :to="collection.to"
+      :to="{ name: 'collection-id', params: { id: collection.id }, query: linkQuery }"
     >
       <div
         class="flex-auto py-1"

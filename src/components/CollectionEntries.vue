@@ -21,5 +21,8 @@ defineProps<{
 <style>
 .collections-list {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  /* Skip layout and paint of the categories out of the viewport */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
 }
 </style>
