@@ -49,6 +49,7 @@ export const variantCategories: Record<string, [string, string | RegExp][]> = {
   ],
   'heroicons': [
     ['20 Solid', '-20-solid'],
+    ['16 Solid', '-16-solid'],
     ['Solid', '-solid'],
   ],
   'ic': [
@@ -94,6 +95,7 @@ export const variantCategories: Record<string, [string, string | RegExp][]> = {
   ],
   'material-symbols': [
     ['Outline Rounded', '-outline-rounded'],
+    ['Outline Sharp', '-outline-sharp'],
     ['Outline', '-outline'],
     ['Rounded', '-rounded'],
     ['Sharp', '-sharp'],
