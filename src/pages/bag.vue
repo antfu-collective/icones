@@ -13,7 +13,7 @@ function addAll() {
 
 <template>
   <WithNavbar>
-    <div class="flex-auto of-y-auto px-4 md:px-8 py-6">
+    <div class="flex-auto md:of-y-auto px-4 md:px-8 py-6">
       <h1 class="text-xl">
         Shared bag
       </h1>

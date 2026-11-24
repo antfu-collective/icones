@@ -117,12 +117,15 @@ function next(delta = 1) {
 
 const scroller = ref<HTMLElement>()
 const sentinel = ref<HTMLElement>()
+// On mobile the document scrolls, not the icon list (see App.vue)
+const isMobile = useMediaQuery('(max-width: 767.9px)')
+const scrollRoot = computed(() => isMobile.value ? undefined : scroller.value)
 
 watch(
   () => namespace.value,
   () => {
     max.value = maxMap.get(namespace.value) || 200
-    scroller.value?.scrollTo({ top: 0 })
+    ;(scrollRoot.value ?? window).scrollTo({ top: 0 })
   },
 )
 
@@ -131,12 +134,13 @@ const LOAD_MARGIN = 600
 const nearEnd = ref(false)
 useIntersectionObserver(sentinel, ([entry]) => {
   nearEnd.value = entry?.isIntersecting ?? false
-}, { root: scroller, rootMargin: `0px 0px ${LOAD_MARGIN}px 0px` })
+}, { root: scrollRoot, rootMargin: `0px 0px ${LOAD_MARGIN}px 0px` })
 
 function isSentinelNear() {
-  if (!sentinel.value || !scroller.value)
+  if (!sentinel.value)
     return false
-  return sentinel.value.getBoundingClientRect().top < scroller.value.getBoundingClientRect().bottom + LOAD_MARGIN
+  const bottom = scrollRoot.value?.getBoundingClientRect().bottom ?? window.innerHeight
+  return sentinel.value.getBoundingClientRect().top < bottom + LOAD_MARGIN
 }
 
 // The sentinel can stay near after a load, when the icons are small.
@@ -191,7 +195,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
 
 <template>
   <WithNavbar>
-    <div class="flex flex-auto h-full overflow-hidden">
+    <div class="flex flex-auto md:h-full md:overflow-hidden">
       <Drawer
         h-full overflow-y-overlay flex-none hidden md:block
         :w="drawerCollapsed ? '0px' : '250px'"
@@ -227,7 +231,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </div>
       </div>
 
-      <div v-else-if="collection" h-full w-full relative max-h-full grid="~ rows-[max-content_1fr] cols-[minmax(0,1fr)]" of-hidden>
+      <div v-else-if="collection" md:h-full w-full relative md:max-h-full grid="~ rows-[max-content_1fr] cols-[minmax(0,1fr)]" md:of-hidden>
         <div pt-3 md:pt-5 flex="~ col gap-2">
           <div class="flex px-4 md:px-8 gap-2">
             <!-- Left -->
@@ -327,7 +331,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
             </button>
           </div>
         </div>
-        <div ref="scroller" of-y-scroll of-x-hidden>
+        <div ref="scroller" md:of-y-scroll md:of-x-hidden>
           <!-- Icons -->
           <div class="px-1 md:px-5 pt-2 pb-4 text-center">
             <Icons

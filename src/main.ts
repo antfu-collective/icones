@@ -14,6 +14,13 @@ const app = createApp(App)
 const router = createRouter({
   history: createWebHistory(basePath),
   routes,
+  // On mobile the document scrolls, so reset it on a new page,
+  // but keep it when only the query changes (search, icon dialog)
+  scrollBehavior(to, from) {
+    return to.path !== from.path
+      ? { top: 0 }
+      : false
+  },
 })
 
 if (PWA) {
