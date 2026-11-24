@@ -136,6 +136,8 @@ async function writeAgentFiles(collections: any[]) {
 - \`${SITE}/collection/mdi?icon=mdi:home\`: show one icon, with copy and download options.
 - \`${SITE}/bag#mdi:home,carbon:add\`: show a shared bag (a list of icons, separated by commas). The user can add the icons to their own bag.
 
+The search (\`s\`) uses the [fzf syntax](https://github.com/junegunn/fzf#search-syntax): \`home outline\` matches both words, \`home | house\` either word, \`'home\` the exact text, \`^home\` the start of the name, \`home$\` the end, and \`!outline\` excludes a word. In \`/collection/all\`, the names start with the set id, so \`^mdi: home\` searches only in \`mdi\`. Encode the query in the URL, for example \`?s=home%20!outline\`.
+
 In a browser with WebMCP (\`document.modelContext\`), the page registers these tools: \`list_collections\`, \`get_collection\`, \`search_icons\`, \`get_icon\` (SVG, Vue, React, Svelte, CSS and more, with the license and categories), \`open_icon\`, \`get_bag\` (with a share link of the bag), \`add_to_bag\` and \`remove_from_bag\`.
 
 ## Static data

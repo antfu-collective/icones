@@ -73,6 +73,7 @@ export default defineComponent({
       class="flex items-center w-full rounded-lg bg-gray-400/10 text-base"
       :style="false"
       :icon="false"
+      help
     />
   </nav>
 </template>
