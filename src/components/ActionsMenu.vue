@@ -166,6 +166,16 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
 
 <template>
   <div flex="~ gap3" text-xl items-center>
+    <!-- Download State -->
+    <template v-if="installed">
+      <span flex="~ gap-1" items-center text-sm op50 title="Cached in browser">
+        <span i-carbon-cloud-auditing text-xl aria-hidden="true" />
+        <span lt-md:sr-only>Cached</span>
+        <span sr-only> in browser</span>
+      </span>
+      <span h-5 border="l base" aria-hidden="true" />
+    </template>
+
     <DarkSwitcher />
 
     <RouterLink
@@ -183,14 +193,6 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
       aria-label="Toggle favorite"
       :aria-pressed="favorited"
       @click="toggleFavoriteCollection(collection.id)"
-    />
-
-    <!-- Download State -->
-    <div
-      v-if="installed"
-      icon-button class="!op50"
-      i-carbon-cloud-auditing
-      title="Cached in browser"
     />
 
     <!-- Menu -->
