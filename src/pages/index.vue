@@ -64,8 +64,8 @@ function onKeydown(e: KeyboardEvent) {
 
 <template>
   <WithNavbar>
-    <div of-hidden grid="~ rows-[max-content_1fr]">
-      <!-- Searching -->
+    <!-- Searching -->
+    <template #header>
       <div px-4 pt-4 md:px-6 md:pt-6>
         <SearchBar
           ref="searchbar"
@@ -90,36 +90,37 @@ function onKeydown(e: KeyboardEvent) {
           </div>
         </RouterLink>
       </div>
+    </template>
 
-      <div of-y-auto relative space-y-4 md:space-y-6 pt-2 md:pt-0>
-        <!-- Category listing -->
-        <template v-for="c of availableCategories" :key="c.name">
-          <div px-2 md:px-4>
-            <div
-              px-2 py-1 sticky top-0 bg-base z-1
-              flex="~ items-baseline gap-2"
-            >
-              <span text-lg op50>{{ c.name }}</span>
-              <span text-xs op50>{{ c.collections.length }}</span>
-            </div>
-            <CollectionEntries
-              of-hidden
-              :collections="c.collections"
-              :type="c.type"
-            />
+    <div flex-auto md:of-y-auto relative space-y-4 md:space-y-6 pt-2 md:pt-0>
+      <!-- Category listing -->
+      <template v-for="c of availableCategories" :key="c.name">
+        <div px-2 md:px-4>
+          <div
+            px-2 py-1 sticky top-0 bg-base z-1
+            class="max-md:top-[var(--header-height)]"
+            flex="~ items-baseline gap-2"
+          >
+            <span text-lg op50>{{ c.name }}</span>
+            <span text-xs op50>{{ c.collections.length }}</span>
           </div>
-        </template>
-
-        <div
-          v-if="availableCategories.length === 0"
-          class="flex flex-col flex-grow w-full py-6 justify-center items-center"
-        >
-          <Icon icon="ph:x-circle-bold" class="text-4xl mb-2 opacity-20" />
-          <span class="text-lg opacity-60">There is no result corresponding to your search query.</span>
+          <CollectionEntries
+            of-hidden
+            :collections="c.collections"
+            :type="c.type"
+          />
         </div>
+      </template>
 
-        <Footer />
+      <div
+        v-if="availableCategories.length === 0"
+        class="flex flex-col flex-grow w-full py-6 justify-center items-center"
+      >
+        <Icon icon="ph:x-circle-bold" class="text-4xl mb-2 opacity-20" />
+        <span class="text-lg opacity-60">There is no result corresponding to your search query.</span>
       </div>
+
+      <Footer />
     </div>
   </WithNavbar>
 </template>
