@@ -39,6 +39,7 @@ defineProps<{
       color-class=""
       size="xl"
       :tooltip="false"
+      :interactive="false"
       spacing="m-1"
       class="collection-samples ma justify-center opacity-75 md:flex-wrap pointer-events-none"
     />

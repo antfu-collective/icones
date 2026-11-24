@@ -24,4 +24,8 @@ if (PWA) {
 }
 
 app.use(router)
+
+// Tools for AI agents in the browser, see `src/utils/agent-tools.ts`
+if ('modelContext' in document || 'modelContext' in navigator)
+  import('./utils/agent-tools').then(({ registerAgentTools }) => registerAgentTools(router))
 app.mount('#app')

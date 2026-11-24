@@ -76,7 +76,7 @@ async function copyText() {
           <span style="color:#DBD7CAEE;" /><span style="color:#DBD7CAEE;" />
           <span style="color:#C98A7D;">@iconify-json/{{ props.collection.id }}</span>
         </code>
-        <IconButton icon="carbon:copy" @click="copyText" />
+        <IconButton icon="carbon:copy" label="Copy command" @click="copyText" />
       </div>
       <Notification :value="status">
         <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />

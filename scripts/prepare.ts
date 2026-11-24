@@ -93,9 +93,71 @@ async function prepareJSON() {
     info.size = humanFileSize(fs.statSync(rawFilePath).size)
   }
 
+  await writeAgentFiles(collections)
+
   await writeJSON(path.join(out, 'collections-meta.json'), collectionsMeta)
   const infoOut = path.resolve(__dirname, '../src/data')
   await writeJSON(path.join(infoOut, 'collections-info.json'), collections)
+}
+
+const SITE = 'https://icones.js.org'
+
+/**
+ * Files for AI agents and other programs: `/llms.txt` and a small `/collections.json` index
+ */
+async function writeAgentFiles(collections: any[]) {
+  const index = collections.map(c => ({
+    id: c.id,
+    name: c.name,
+    total: c.total,
+    category: c.category,
+    author: c.author?.name,
+    license: c.license?.title,
+    licenseUrl: c.license?.url,
+    palette: c.palette,
+    deprecated: c.hidden || undefined,
+  }))
+  await writeJSON(path.join(out, 'collections.json'), index)
+
+  const list = collections
+    .filter(c => !c.hidden)
+    .map(c => `- [${c.name}](${SITE}/collections/${c.id}-meta.json): \`${c.id}\`, ${c.total} icons, ${c.license?.title || 'unknown license'}`)
+    .join('\n')
+
+  const llms = `# Icônes
+
+> Icônes is an icon explorer for ${index.length} open source icon sets (${index.reduce((sum, c) => sum + (c.total || 0), 0).toLocaleString('en-US')} icons), powered by Iconify. Every icon has an id in the form \`prefix:name\`, for example \`mdi:home\`. The prefix is the id of the icon set.
+
+## Use the website
+
+- \`${SITE}/collection/all?s=home\`: search all icon sets for "home".
+- \`${SITE}/collection/mdi?s=arrow\`: search one icon set.
+- \`${SITE}/collection/mdi?icon=mdi:home\`: show one icon, with copy and download options.
+
+In a browser with WebMCP (\`document.modelContext\`), the page registers these tools: \`list_collections\`, \`get_collection\`, \`search_icons\`, \`get_icon\` (SVG, Vue, React, Svelte, CSS and more), \`open_icon\`, \`get_bag\`, \`add_to_bag\` and \`remove_from_bag\`.
+
+## Static data
+
+These JSON files do not need JavaScript:
+
+- [${SITE}/collections.json](${SITE}/collections.json): index of all icon sets, with id, name, icon count, category and license.
+- \`${SITE}/collections/{prefix}-meta.json\`: names of all icons in one set, with categories.
+- \`${SITE}/collections/{prefix}.json\`: the full icon set in the [Iconify JSON format](https://iconify.design/docs/types/iconify-json.html), with the SVG bodies.
+
+## Get the SVG of one icon
+
+Icônes gets SVGs from the Iconify API:
+
+- \`https://api.iconify.design/{prefix}/{name}.svg\`, for example https://api.iconify.design/mdi/home.svg
+- Add \`?color=%23ff0000\` to set the color, or \`?height=24\` to set the size.
+
+Check the license of the icon set before you use an icon. Some licenses require attribution.
+
+## Icon sets
+
+${list}
+`
+  await fsp.writeFile(path.join(out, 'llms.txt'), llms)
 }
 
 prepareJSON()

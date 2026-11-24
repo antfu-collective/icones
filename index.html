@@ -4,12 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Icônes</title>
+    <meta
+      name="description"
+      content="Icon explorer with instant searching for over 500,000 open source icons, powered by Iconify."
+    />
+    <link rel="help" type="text/plain" href="/llms.txt" title="Guide for AI agents" />
     <link rel="icon" href="/favicon.svg" />
     <link rel="icon" href="/favicon-dark.svg" media="(prefers-color-scheme: light)" />
     <link rel="search" type="application/opensearchdescription+xml" href="/search.xml" title="Icônes" />
   </head>
   <body class="dragging bg-base color-base">
     <div id="app"></div>
+    <noscript>
+      Icônes needs JavaScript. AI agents and other programs can read <a href="/llms.txt">/llms.txt</a> and
+      <a href="/collections.json">/collections.json</a> instead.
+    </noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

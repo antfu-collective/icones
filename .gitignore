@@ -11,5 +11,7 @@ public/lib
 release
 collections-info.json
 collections-meta.json
+public/collections.json
+public/llms.txt
 
 dev-dist

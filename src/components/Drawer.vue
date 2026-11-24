@@ -26,6 +26,8 @@ const linkQuery = computed(() => ({ s: route.query.s }))
       <div flex="~ justify-between" border="b base">
         <button
           icon-button text-xl px-4 py-3
+          title="Back to collections"
+          aria-label="Back to collections"
           @click="$router.replace('/')"
         >
           <div i-carbon:arrow-left />
@@ -72,6 +74,9 @@ const linkQuery = computed(() => ({ s: route.query.s }))
         icon-button
         :class="isFavoritedCollection(collection.id) ? 'op50 hover:op100' : 'op0 hover:op50' "
         class="flex-none text-lg p0.5 -mr-1 hover:text-primary flex"
+        :title="isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
+        :aria-label="isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
+        :aria-pressed="isFavoritedCollection(collection.id)"
         @click="toggleFavoriteCollection(collection.id)"
       >
         <div :class="isFavoritedCollection(collection.id) ? 'i-carbon-star-filled' : 'i-carbon-star'" ma />
