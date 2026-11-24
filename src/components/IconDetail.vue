@@ -135,7 +135,7 @@ const categories = computedAsync(() => getIconCategories(props.icon), [])
         >
           <Icon :key="icon" outer-class="p-4 text-7xl md:text-8xl" :icon="icon" />
         </div>
-        <div class="mt-1 flex items-center justify-center gap-1 text-xs op35 group-hover:op100 group-hover:text-primary">
+        <div class="mt-1 flex items-center justify-center gap-1 text-xs op50 group-hover:op100 group-hover:text-primary">
           <Icon icon="carbon:color-palette" />
           change color
         </div>
@@ -185,7 +185,7 @@ const categories = computedAsync(() => getIconCategories(props.icon), [])
         {{ categories.length > 1 ? 'Categories' : 'Category' }}:
         <template v-for="(c, idx) of categories" :key="c">
           <RouterLink
-            class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
+            class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white"
             :to="{ path: `/collection/${icon.split(':')[0]}`, query: { category: c } }"
           >
             {{ c }}</RouterLink><span v-if="idx < categories.length - 1">,</span>
