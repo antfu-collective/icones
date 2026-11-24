@@ -132,9 +132,10 @@ async function writeAgentFiles(collections: any[]) {
 
 - \`${SITE}/collection/all?s=home\`: search all icon sets for "home".
 - \`${SITE}/collection/mdi?s=arrow\`: search one icon set.
+- \`${SITE}/collection/mdi?category=Navigation\`: show the icons of one category of an icon set.
 - \`${SITE}/collection/mdi?icon=mdi:home\`: show one icon, with copy and download options.
 
-In a browser with WebMCP (\`document.modelContext\`), the page registers these tools: \`list_collections\`, \`get_collection\`, \`search_icons\`, \`get_icon\` (SVG, Vue, React, Svelte, CSS and more), \`open_icon\`, \`get_bag\`, \`add_to_bag\` and \`remove_from_bag\`.
+In a browser with WebMCP (\`document.modelContext\`), the page registers these tools: \`list_collections\`, \`get_collection\`, \`search_icons\`, \`get_icon\` (SVG, Vue, React, Svelte, CSS and more, with the license and categories), \`open_icon\`, \`get_bag\`, \`add_to_bag\` and \`remove_from_bag\`.
 
 ## Static data
 

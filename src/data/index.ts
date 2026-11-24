@@ -179,6 +179,17 @@ export async function getCollectionMeta(id: string): Promise<CollectionMeta | nu
   return meta
 }
 
+/**
+ * Names of the categories that contain an icon, for example `['Home Automation', 'Places']` for `mdi:home`.
+ */
+export async function getIconCategories(icon: string): Promise<string[]> {
+  const [prefix, name] = icon.split(':')
+  const meta = await getCollectionMeta(prefix).catch(() => null)
+  return Object.entries(meta?.categories || {})
+    .filter(([, icons]) => icons.includes(name))
+    .map(([category]) => category)
+}
+
 function getVariantCategories(collection: CollectionMeta) {
   const variantsRule = variantCategories[collection.id]
   if (!variantsRule)

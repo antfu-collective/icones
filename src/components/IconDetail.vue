@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { collections } from '../data'
+import { collections, getIconCategories } from '../data'
 import { activeMode, copyPreviewColor, getTransformedId, inBag, isDark, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { idCases } from '../utils/case'
 import { isLowContrast } from '../utils/color'
@@ -114,6 +114,8 @@ const collection = computed(() => {
   const id = props.icon.split(':')[0]
   return collections.find(i => i.id === id)
 })
+
+const categories = computedAsync(() => getIconCategories(props.icon), [])
 </script>
 
 <template>
@@ -177,6 +179,17 @@ const collection = computed(() => {
         >
           {{ collection.name }}
         </RouterLink>
+      </p>
+
+      <p v-if="categories.length" class="flex flex-wrap mb-1 op50 text-sm">
+        {{ categories.length > 1 ? 'Categories' : 'Category' }}:
+        <template v-for="(c, idx) of categories" :key="c">
+          <RouterLink
+            class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
+            :to="{ path: `/collection/${icon.split(':')[0]}`, query: { category: c } }"
+          >
+            {{ c }}</RouterLink><span v-if="idx < categories.length - 1">,</span>
+        </template>
       </p>
 
       <div>

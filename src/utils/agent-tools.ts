@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
 import type { CollectionInfo } from '../data'
-import { collections, getCollectionMeta, getFullMeta } from '../data'
+import { collections, getCollectionMeta, getFullMeta, getIconCategories } from '../data'
 import { addToBag, bags, removeFromBag } from '../store/localstorage'
 import { getIconSnippet, SnippetMap } from './icons'
 import { predictWords } from './predict'
@@ -194,11 +194,13 @@ export async function getIcon({ id, format = 'svg', color }: { id: string, forma
     .catch(() => undefined)
   if (code === undefined)
     throw new Error(`Can not load icon "${icon}". Check the name with search_icons.`)
+  const categories = await getIconCategories(icon)
   return {
     id: icon,
     format,
     code,
     collection: collection.name,
+    categories: categories.length ? categories : undefined,
     license: collection.license?.title,
     licenseUrl: collection.license?.url,
     author: collection.author?.name,
@@ -262,7 +264,7 @@ export function createAgentTools(router: Router): AgentTool[] {
     {
       name: 'get_icon',
       title: 'Get icon code',
-      description: 'Get the code of an icon: SVG markup, a component for a framework, a CSS rule or a URL. Includes the license of the icon.',
+      description: 'Get the code of an icon: SVG markup, a component for a framework, a CSS rule or a URL. Includes the license and the categories of the icon.',
       inputSchema: {
         type: 'object',
         properties: {
