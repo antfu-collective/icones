@@ -2,7 +2,7 @@
 <script setup lang='ts'>
 import { cacheCollection, specialTabs } from '../data'
 import { isLocalMode } from '../env'
-import { activeMode, bags, drawerCollapsed, getSearchResults, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
+import { activeMode, bags, clampIconSize, drawerCollapsed, getSearchResults, ICON_SIZE_STEP, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
 import { getIconSnippet } from '../utils/icons'
 import { cleanupQuery } from '../utils/query'
 
@@ -173,6 +173,21 @@ onKeyStroke('/', (e) => {
   focusSearch()
 })
 
+function isTyping(e: KeyboardEvent) {
+  const el = e.target as HTMLElement | null
+  return !!el && (el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName))
+}
+
+// `+` and `-` resize the icons, unless the user types in a field
+onKeyStroke(['+', '=', '-'], (e) => {
+  if (isTyping(e) || e.ctrlKey || e.metaKey || e.altKey || current.value)
+    return
+  e.preventDefault()
+  iconSize.value = clampIconSize(iconSize.value + (e.key === '-'
+    ? -ICON_SIZE_STEP
+    : ICON_SIZE_STEP))
+})
+
 onKeyStroke('Escape', () => {
   if (current.value !== '') {
     current.value = ''
@@ -338,7 +353,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
               :key="namespace"
               :icons="icons.slice(0, max)"
               :selected="bags"
-              :class="iconSize"
+              :style="{ fontSize: `${iconSize}px` }"
               :display="listType"
               :search="search"
               :namespace="namespace"
