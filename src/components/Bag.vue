@@ -119,7 +119,7 @@ async function PackSvgs(type: PackType = 'svg') {
     </template>
 
     <template v-else>
-      <div class="text-center px-4 py-8 text-gray-500 italic font-light text-sm">
+      <div class="text-center px-4 py-8 text-gray-500 dark:text-gray-400 italic font-light text-sm">
         No icons yet ;)
       </div>
     </template>

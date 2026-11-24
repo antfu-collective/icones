@@ -128,7 +128,7 @@ const collection = computed(() => {
       </ColorPicker>
     </div>
     <div class="min-w-0 px-4 pb-4 md:px-2 md:py-4">
-      <button class="op35 hover:text-primary hover:op100 text-sm !outline-none" @click="showHelp = !showHelp">
+      <button class="op50 hover:text-primary hover:op100 text-sm !outline-none" @click="showHelp = !showHelp">
         How to use the icon?
       </button>
       <div class="flex items-center op75 relative font-mono break-all">
@@ -160,7 +160,7 @@ const collection = computed(() => {
       <p v-if="showCollection && collection" class="flex mb-1 op50 text-sm">
         Collection:
         <RouterLink
-          class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200"
+          class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white"
           :to="`/collection/${collection.id}`"
         >
           {{ collection.name }}
@@ -222,7 +222,7 @@ const collection = computed(() => {
                   :color="color"
                 >
                   <button class="btn small opacity-75" @click="copy(type)">
-                    {{ snippet.name }}<sup v-if="snippet.tag" class="opacity-50 -mr-1">{{ snippet.tag }}</sup>
+                    {{ snippet.name }}<sup v-if="snippet.tag" class="opacity-75 -mr-1">{{ snippet.tag }}</sup>
                   </button>
                 </SnippetPreview>
               </template>
@@ -247,7 +247,7 @@ const collection = computed(() => {
               React
             </button>
             <button class="btn small opacity-75" @click="download('tsx')">
-              React<sup class="opacity-50 -mr-1">TS</sup>
+              React<sup class="opacity-75 -mr-1">TS</sup>
             </button>
             <button class="btn small opacity-75" @click="download('svelte')">
               Svelte

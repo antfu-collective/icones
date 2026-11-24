@@ -28,7 +28,7 @@ defineProps<{
       </div>
       <div flex="~ col auto" opacity-50 text-xs>
         <span truncate>{{ collection.author?.name }}</span>
-        <span op50 max-md:hidden>{{ collection.license?.title }}</span>
+        <span max-md:hidden>{{ collection.license?.title }}</span>
         <span m1 max-md:hidden />
         <span>{{ collection.total }} icons</span>
       </div>
