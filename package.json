@@ -30,7 +30,7 @@
     "file-saver": "^2.0.5",
     "floating-vue": "^5.4.0",
     "fzf": "^0.5.2",
-    "gpu-icons-search": "^0.0.0",
+    "gpu-icons-search": "^0.2.0",
     "hotkeys-js": "^4.1.3",
     "iconify-icon": "^3.0.5",
     "prettier": "^3.10.1",
