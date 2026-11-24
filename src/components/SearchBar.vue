@@ -24,6 +24,13 @@ defineProps({
     type: String,
     default: '',
   },
+  /**
+   * Show a button that explains the search syntax
+   */
+  help: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:search', 'onKeydown'])
@@ -42,6 +49,20 @@ const update = useDebounceFn((event: any) => {
 function clear() {
   emit('update:search', '')
 }
+
+// https://github.com/junegunn/fzf#search-syntax
+const syntax = [
+  ['home outline', 'both words'],
+  ['home | house', 'either word'],
+  ['\'home', 'exact match'],
+  ['^home', 'starts with'],
+  ['home$', 'ends with'],
+  ['!outline', 'does not contain'],
+]
+
+const helpRoot = ref<HTMLElement>()
+const showHelp = ref(false)
+onClickOutside(helpRoot, () => showHelp.value = false)
 </script>
 
 <template>
@@ -73,6 +94,38 @@ function clear() {
     >
       <Icon icon="carbon:close" class="m-auto text-lg -mr-1" aria-hidden="true" />
     </button>
+    <div v-if="help" ref="helpRoot" class="relative flex items-center ml-3" @keydown.esc="showHelp = false">
+      <button
+        type="button"
+        class="flex items-center opacity-60 hover:opacity-80"
+        title="Search syntax"
+        aria-label="Search syntax"
+        :aria-expanded="showHelp"
+        aria-controls="search-syntax"
+        @click="showHelp = !showHelp"
+      >
+        <Icon icon="carbon:help" class="m-auto text-lg" aria-hidden="true" />
+      </button>
+      <div
+        v-if="showHelp"
+        id="search-syntax"
+        class="absolute right-0 top-full mt-2 z-50 w-64 p-3 text-sm bg-base border border-base rounded-lg shadow-lg"
+      >
+        <table class="w-full">
+          <tr v-for="[example, meaning] of syntax" :key="example">
+            <td class="pr-3 py-0.5 whitespace-nowrap">
+              <code class="text-primary">{{ example }}</code>
+            </td>
+            <td class="py-0.5 opacity-75">
+              {{ meaning }}
+            </td>
+          </tr>
+        </table>
+        <p class="mt-2 opacity-75">
+          In all sets, the names start with the set id: <code class="text-primary">^mdi:</code> searches one set.
+        </p>
+      </div>
+    </div>
     <slot name="actions" />
   </div>
 </template>

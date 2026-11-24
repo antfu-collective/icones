@@ -133,7 +133,7 @@ const categories = computedAsync(() => getIconCategories(props.icon), [])
           :class="lowContrast ? (isDark ? 'bg-gray-200' : 'bg-dark-200') : ''"
           :style="{ color: previewColor }"
         >
-          <Icon :key="icon" outer-class="p-4 text-7xl md:text-8xl" :icon="icon" />
+          <Icon :key="icon" outer-class="icon-preview p-4" :icon="icon" />
         </div>
         <div class="mt-1 flex items-center justify-center gap-1 text-xs op50 group-hover:op100 group-hover:text-primary">
           <Icon icon="carbon:color-palette" />
@@ -318,3 +318,15 @@ const categories = computedAsync(() => getIconCategories(props.icon), [])
     </div>
   </div>
 </template>
+
+<style>
+/* Scale wide icons (like logos) down so the preview fits the screen */
+.icon-preview {
+  font-size: min(4.5rem, (100vw - 3rem) / var(--icon-ratio, 1));
+}
+@media (min-width: 768px) {
+  .icon-preview {
+    font-size: min(6rem, 36vw / var(--icon-ratio, 1));
+  }
+}
+</style>
