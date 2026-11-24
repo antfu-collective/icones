@@ -100,7 +100,7 @@ function onKeydown(e: KeyboardEvent) {
               flex="~ items-baseline gap-2"
             >
               <span text-lg op50>{{ c.name }}</span>
-              <span text-xs op30>{{ c.collections.length }}</span>
+              <span text-xs op50>{{ c.collections.length }}</span>
             </div>
             <CollectionEntries
               of-hidden

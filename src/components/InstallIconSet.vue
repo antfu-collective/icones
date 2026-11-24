@@ -59,7 +59,7 @@ async function copyText() {
         <label
           v-for="manager in managers" :key="manager"
           flex="~ items-center gap-2"
-          :class="[manager === selectedPackageManager ? 'op100' : 'op25']"
+          :class="[manager === selectedPackageManager ? 'op100' : 'op50']"
           @change="selectManager(manager)"
         >
           <input type="radio" name="manager" :value="manager" hidden>
