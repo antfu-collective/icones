@@ -154,16 +154,16 @@ const categories = computedAsync(() => getIconCategories(props.icon), [])
           v-if="showCaseSelect" ref="caseSelector"
           class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-base dark:border dark:border-dark-200"
         >
-          <div
-            v-for="[k, v] of Object.entries(idCases)" :key="k" class="flex items-center p-1 cursor-pointer"
-            :class="k === preferredCase ? 'text-primary' : ''" @click="preferredCase = k as any"
+          <button
+            v-for="[k, v] of Object.entries(idCases)" :key="k" type="button" class="flex items-center w-full p-1 text-left cursor-pointer"
+            :class="k === preferredCase ? 'text-primary' : ''" :aria-pressed="k === preferredCase" @click="preferredCase = k as any"
           >
             <Icon
               icon="carbon:checkmark" class="text-primary text-lg" outer-class="mr-1"
               :class="k === preferredCase ? '' : 'opacity-0'"
             />
             <span class="flex-auto mr-2">{{ v(icon) }}</span>
-          </div>
+          </button>
         </div>
       </div>
       <div v-if="collection?.license">
@@ -213,7 +213,7 @@ const categories = computedAsync(() => getIconCategories(props.icon), [])
           v-if="inBag(icon)" class="
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
-          " :class="activeMode === 'select' ? 'text-primary' : 'op50'" @click="toggleSelectingMode"
+          " :class="activeMode === 'select' ? 'text-primary' : 'op50'" :aria-pressed="activeMode === 'select'" @click="toggleSelectingMode"
         >
           <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
           <span class="inline-block align-middle ml1">multiple select</span>

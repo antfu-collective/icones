@@ -53,6 +53,7 @@ defineProps<{
         border="~ primary" p2 bg-base
         :title="isFavoritedCollection(collection.id) ? 'Remove from favorites' : 'Add to favorites'"
         :class="{ 'border-dashed': collection.hidden }"
+        :aria-pressed="isFavoritedCollection(collection.id)"
         @click.prevent="toggleFavoriteCollection(collection.id)"
       >
         <div v-if="isFavoritedCollection(collection.id)" i-carbon-star-filled />

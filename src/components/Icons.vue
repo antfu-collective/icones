@@ -46,6 +46,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  /**
+   * Clicking an icon toggles it in `selected`. Exposes the state with `aria-pressed`.
+   */
+  toggle: {
+    type: Boolean,
+    default: false,
+  },
 })
 const emit = defineEmits<{
   (event: 'select', id: string): void
@@ -109,6 +116,7 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
       :class="[spacing, selectedSet.has(namespace + icon) ? 'active' : '']"
       :data-icon="icon"
       :aria-label="interactive ? namespace + icon : undefined"
+      :aria-pressed="interactive && toggle ? selectedSet.has(namespace + icon) : undefined"
     >
       <div v-if="display === 'list'" class="icon-border flex gap-1">
         <Icon
