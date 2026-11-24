@@ -1,10 +1,13 @@
+import type { Prediction } from 'gpu-icons-search'
 import type { Ref } from 'vue'
 import type { CollectionMeta } from '../data'
+import type { RankTerm } from '../utils/rank'
 import { asyncExtendedMatch, AsyncFzf } from 'fzf'
 import { computed, markRaw, ref, watch } from 'vue'
 import { specialTabs } from '../data'
 import { predictWords } from '../utils/predict'
 import { cleanupQuery } from '../utils/query'
+import { rankIcons } from '../utils/rank'
 
 export function useSearch(collection: Ref<CollectionMeta | null>) {
   const route = useRoute()
@@ -114,46 +117,52 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
         : await find(typed, extended)
       if (signal.aborted)
         return
-      icons.value = results
 
       // The user writes fzf syntax, keep the query as typed
-      if (/['^$!|]/.test(typed))
+      if (/['^$!|]/.test(typed)) {
+        icons.value = results
         return
+      }
 
-      // Append the matches of the predicted words, after the matches of the typed text.
-      // Corrections and completions come first, then related words, each in score order.
-      const predictions = await predictWords(typed, signal)
-      const ordered = [
-        ...predictions.filter(p => p.kind !== 'related'),
-        ...predictions.filter(p => p.kind === 'related'),
+      const matches: [RankTerm, string[]][] = [
+        [
+          { parts, weight: 1 },
+          results,
+        ],
       ]
-      const merged = [...results]
-      const seen = new Set(merged)
-      for (const prediction of ordered) {
-        // The quote makes fzf match the word exactly
-        const word = plain
-          ? prediction.word
-          : `'${prediction.word}`
+      icons.value = rankIcons(matches)
+
+      // Rank the matches of the predicted words together with the matches of the typed text.
+      // A close match of a predicted word comes before a loose match of the typed text.
+      const predictions = await predictWords(typed, signal)
+      for (const prediction of predictions) {
         const index = parts.indexOf(prediction.from)
-        const pattern = index < 0
-          ? word
+        const predictedParts = index < 0
+          ? [prediction.word]
           : parts.map((part, i) => i === index
-              ? word
+              ? prediction.word
+              : part)
+        const pattern = plain
+          ? predictedParts.join(' ')
+          // The quote makes fzf match the word exactly
+          : predictedParts.map(part => part === prediction.word
+              ? `'${part}`
               : part).join(' ')
-        const matches = plain
+        const found = plain
           ? filterAll(pattern)
           : await find(pattern, true)
         if (signal.aborted)
           return
-        for (const icon of matches) {
-          if (!seen.has(icon)) {
-            seen.add(icon)
-            merged.push(icon)
-          }
-        }
+        matches.push([
+          {
+            parts: predictedParts,
+            weight: predictionWeight(prediction),
+          },
+          found,
+        ])
       }
-      if (merged.length > results.length)
-        icons.value = merged
+      if (predictions.length)
+        icons.value = rankIcons(matches)
     }
     catch {
       // The search is canceled
@@ -178,8 +187,15 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
     }
 
     // Show the plain matches at once, the predictions follow after the debounce
-    if (isAll.value && !useExtendedMatch.value)
-      icons.value = filterAll(searchParts.value.join(' '))
+    if (isAll.value && !useExtendedMatch.value) {
+      const parts = searchParts.value
+      icons.value = rankIcons([
+        [
+          { parts, weight: 1 },
+          filterAll(parts.join(' ')),
+        ],
+      ])
+    }
 
     debouncedSearch()
   })
@@ -191,6 +207,15 @@ export function useSearch(collection: Ref<CollectionMeta | null>) {
     variant,
     icons,
   }
+}
+
+/**
+ * A predicted word weighs less than the typed text, and a related word less than a correction.
+ */
+function predictionWeight(prediction: Prediction) {
+  return (prediction.kind === 'related'
+    ? 0.6
+    : 0.7) + prediction.score * 0.3
 }
 
 // @unocss-include
