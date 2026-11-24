@@ -337,6 +337,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
               :display="listType"
               :search="search"
               :namespace="namespace"
+              :toggle="activeMode === 'select'"
               @select="onSelect"
             />
             <div ref="sentinel" />

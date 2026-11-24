@@ -34,6 +34,8 @@ defineProps<{
         icon-button
         :class="isFavoritedCollection(c.id) ? 'i-carbon:star-filled text-yellow' : 'i-carbon:star'"
         title="Toggle Favorite"
+        :aria-label="`Favorite ${c.name}`"
+        :aria-pressed="isFavoritedCollection(c.id)"
         @click="toggleFavoriteCollection(c.id)"
       />
       <button
@@ -41,6 +43,8 @@ defineProps<{
         icon-button
         :class="isExcludedCollection(c) ? 'i-carbon:view-off text-rose' : 'i-carbon:view'"
         title="Toggle Visible"
+        :aria-label="`Show ${c.name}`"
+        :aria-pressed="!isExcludedCollection(c)"
         @click="toggleExcludedCollection(c.id)"
       />
     </div>

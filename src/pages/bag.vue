@@ -24,7 +24,7 @@ function addAll() {
         <button class="btn mb-4" :disabled="!missing.length" @click="addAll">
           {{ missing.length ? `Add ${missing.length} icons to my bag` : 'All icons are in your bag' }}
         </button>
-        <Icons :icons="icons" :selected="bags" class="text-2xl" @select="toggleBag" />
+        <Icons :icons="icons" :selected="bags" toggle class="text-2xl" @select="toggleBag" />
         <p class="op50 text-sm mt-4">
           Your bag has {{ bags.length }} icons. <RouterLink to="/collection/all" class="underline">
             Browse icons
