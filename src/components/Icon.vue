@@ -62,7 +62,8 @@ onMounted(() => {
   node = getIcon(props.icon)
   el.value?.appendChild(node)
   loadIcon(icon).then((data) => {
-    widthStyle.value = `width: ${(data.width ?? 16) / (data.height ?? 16)}em;`
+    const ratio = (data.width ?? 16) / (data.height ?? 16)
+    widthStyle.value = `--icon-ratio: ${ratio}; width: ${ratio}em;`
   }).catch(console.error)
 })
 
