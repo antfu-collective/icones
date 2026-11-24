@@ -39,6 +39,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  /**
+   * Render the icons as buttons. Turn off for decorative previews.
+   */
+  interactive: {
+    type: Boolean,
+    default: true,
+  },
 })
 const emit = defineEmits<{
   (event: 'select', id: string): void
@@ -85,17 +92,23 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
 
 <template>
   <div
+    :role="interactive ? 'group' : undefined"
+    :aria-label="interactive ? 'Icons' : undefined"
+    :aria-hidden="interactive ? undefined : 'true'"
     class="non-dragging flex flex-wrap select-none justify-center"
     :class="`text-${size} ${colorClass}`"
     @click="onClick"
     @pointerover="onPointerOver"
     @pointerleave="hideTooltip"
   >
-    <div
+    <component
+      :is="interactive ? 'button' : 'div'"
       v-for="icon of icons" :key="icon"
+      :type="interactive ? 'button' : undefined"
       class="non-dragging icons-item relative"
       :class="[spacing, selectedSet.has(namespace + icon) ? 'active' : '']"
       :data-icon="icon"
+      :aria-label="interactive ? namespace + icon : undefined"
     >
       <div v-if="display === 'list'" class="icon-border flex gap-1">
         <Icon
@@ -112,7 +125,7 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
         class="non-dragging leading-none icon-border h-1em"
         :icon="namespace + icon"
       />
-    </div>
+    </component>
     <Teleport v-if="tooltip" to="body">
       <div
         v-if="hovered"

@@ -29,6 +29,8 @@ export default defineComponent({
         icon-button flex-none
         i-carbon:arrow-left
         to="/"
+        title="Back to collections"
+        aria-label="Back to collections"
       />
     </template>
 
@@ -52,12 +54,14 @@ export default defineComponent({
         href="https://github.com/antfu/icones"
         target="_blank"
         title="GitHub"
+        aria-label="GitHub"
       />
       <RouterLink
         class="non-dragging"
         i-carbon-settings icon-button flex-none
         to="/settings"
         title="Settings"
+        aria-label="Settings"
       />
       <DarkSwitcher flex-none />
     </template>

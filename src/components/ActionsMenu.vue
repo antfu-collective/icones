@@ -180,6 +180,8 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
       icon-button
       :class="favorited ? 'i-carbon:star-filled' : 'i-carbon:star'"
       title="Toggle Favorite"
+      aria-label="Toggle favorite"
+      :aria-pressed="favorited"
       @click="toggleFavoriteCollection(collection.id)"
     />
 
@@ -195,6 +197,7 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
     <div icon-button cursor-pointer relative i-carbon-menu title="Menu">
       <select
         v-model="menu"
+        aria-label="Menu"
         absolute w-full dark:bg-dark-100 text-base top-0 right-0 opacity-0 z-10
       >
         <optgroup label="Size">

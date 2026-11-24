@@ -203,6 +203,8 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         icon-button transition-all duration-300
         border="t r b base rounded-r-full" z-10 max-md:hidden
         title="Toggle Sidebar"
+        aria-label="Toggle sidebar"
+        :aria-expanded="!drawerCollapsed"
         :style="{ left: drawerCollapsed ? '0px' : '250px' }"
         @click="drawerCollapsed = !drawerCollapsed"
       >
@@ -242,6 +244,8 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
                     class="flex items-center text-base opacity-25 hover:opacity-100"
                     :href="url"
                     target="_blank"
+                    title="Website"
+                    aria-label="Website"
                   >
                     <Icon icon="la:external-link-square-alt-solid" />
                   </a>
@@ -250,6 +254,8 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
                     class="flex items-center text-base opacity-25 hover:opacity-100"
                     :href="npm"
                     target="_blank"
+                    title="npm package"
+                    aria-label="npm package"
                   >
                     <Icon icon="la:npm" />
                   </a>
@@ -275,10 +281,12 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           </div>
 
           <!-- Categories -->
-          <div v-if="collection.categories" ref="categoriesContainer" class="px-4 md:px-8 flex gap-2 select-none max-md:of-x-auto max-md:pb-1 md:flex-wrap">
-            <div
+          <div v-if="collection.categories" ref="categoriesContainer" role="group" aria-label="Categories" class="px-4 md:px-8 flex gap-2 select-none max-md:of-x-auto max-md:pb-1 md:flex-wrap">
+            <button
               v-for="c of Object.keys(collection.categories).sort()"
               :key="c"
+              type="button"
+              :aria-pressed="c === category"
               class="
                 whitespace-nowrap text-sm inline-block px-3 py-1 md:px-2 md:py-0 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
@@ -287,7 +295,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
               @click="toggleCategory(c)"
             >
               {{ c }}
-            </div>
+            </button>
           </div>
 
           <!-- Searching -->
@@ -298,13 +306,15 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           />
 
           <!-- Variants --->
-          <div v-if="collection.variants" class="px-4 md:px-8 mb-2 flex gap-2 select-none items-center max-md:of-x-auto max-md:pb-1 md:flex-wrap">
+          <div v-if="collection.variants" role="group" aria-label="Variants" class="px-4 md:px-8 mb-2 flex gap-2 select-none items-center max-md:of-x-auto max-md:pb-1 md:flex-wrap">
             <div text-sm op50 whitespace-nowrap>
               Variants
             </div>
-            <div
+            <button
               v-for="c of Object.keys(collection.variants).sort()"
               :key="c"
+              type="button"
+              :aria-pressed="c === variant"
               class="
                 whitespace-nowrap text-sm inline-block px-3 py-1 md:px-2 md:py-0 border border-base rounded-full hover:bg-gray-50 cursor-pointer
                 dark:border-dark-200 dark:hover:bg-dark-200
@@ -313,7 +323,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
               @click="toggleVariant(c)"
             >
               {{ c }}
-            </div>
+            </button>
           </div>
         </div>
         <div ref="scroller" of-y-scroll of-x-hidden>
@@ -351,6 +361,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
           v-if="bags.length"
           icon="carbon:shopping-bag"
           :number="bags.length"
+          :label="`Open bag (${bags.length} icons)`"
           @click="showBag = true"
         />
 
@@ -379,14 +390,17 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
         </ModalDialog>
 
         <!-- Mode -->
-        <div
+        <button
+          type="button"
+          :aria-hidden="activeMode === 'normal'"
+          :tabindex="activeMode === 'normal' ? -1 : undefined"
           class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
           :style="activeMode !== 'normal' ? {} : { transform: 'translateX(120%)' }"
           @click="activeMode = 'normal'"
         >
           {{ activeMode === 'select' ? 'Multiple select' : 'Name copying mode' }}
-          <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" />
-        </div>
+          <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" aria-hidden="true" />
+        </button>
 
         <Notification :value="copied">
           <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />

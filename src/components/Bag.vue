@@ -61,8 +61,8 @@ async function PackSvgs(type: PackType = 'svg') {
         </div>
       </div>
       <div class="flex-auto" />
-      <IconButton v-if="bags.length" class="text-xl mr-4 flex-none" icon="carbon:delete" @click="clear" />
-      <IconButton class="text-2xl flex-none" icon="carbon:close" @click="$emit('close')" />
+      <IconButton v-if="bags.length" class="text-xl mr-4 flex-none" icon="carbon:delete" label="Clear bag" @click="clear" />
+      <IconButton class="text-2xl flex-none" icon="carbon:close" label="Close bag" @click="$emit('close')" />
     </div>
 
     <template v-if="bags.length">
@@ -74,7 +74,7 @@ async function PackSvgs(type: PackType = 'svg') {
         v-show="showPackOption"
         class="relative flex-none border-t border-base py-3 px-6 text-2xl opacity-75"
       >
-        <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" @click="showPackOption = false" />
+        <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" label="Close" @click="showPackOption = false" />
         <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svg')">
           SVG
         </button>

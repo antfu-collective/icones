@@ -63,8 +63,15 @@ function clear() {
       >
     </form>
 
-    <button class="flex items-center opacity-60 hover:opacity-80">
-      <Icon v-if="search" icon="carbon:close" class="m-auto text-lg -mr-1" @click="clear" />
+    <button
+      v-if="search"
+      type="button"
+      class="flex items-center opacity-60 hover:opacity-80"
+      title="Clear search"
+      aria-label="Clear search"
+      @click="clear"
+    >
+      <Icon icon="carbon:close" class="m-auto text-lg -mr-1" aria-hidden="true" />
     </button>
     <slot name="actions" />
   </div>

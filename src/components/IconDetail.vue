@@ -119,6 +119,7 @@ const collection = computed(() => {
     <div class="md:hidden mx-auto mt-1 h-1 w-10 rounded-full bg-gray-400/30" />
     <IconButton
       class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close"
+      label="Close"
       @click="$emit('close')"
     />
     <div class="flex justify-center md:block" :style="{ color: previewColor }">
@@ -132,8 +133,8 @@ const collection = computed(() => {
       </button>
       <div class="flex items-center op75 relative font-mono break-all">
         {{ transformedId }}
-        <IconButton icon="carbon:copy" class="ml-2" @click="copy('id')" />
-        <IconButton icon="carbon:chevron-up" class="ml-2" @click="showCaseSelect = !showCaseSelect" />
+        <IconButton icon="carbon:copy" class="ml-2" label="Copy icon name" @click="copy('id')" />
+        <IconButton icon="carbon:chevron-up" class="ml-2" label="Choose name case" @click="showCaseSelect = !showCaseSelect" />
         <div class="flex-auto" />
         <div
           v-if="showCaseSelect" ref="caseSelector"

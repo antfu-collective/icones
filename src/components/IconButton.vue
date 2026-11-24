@@ -20,6 +20,13 @@ defineProps({
     type: String,
     default: '',
   },
+  /**
+   * Accessible name, for buttons without a visible text
+   */
+  label: {
+    type: String,
+    default: '',
+  },
 })
 </script>
 
@@ -27,11 +34,15 @@ defineProps({
   <component
     :is="to ? 'RouterLink' : 'button'"
     :to="to"
+    :type="to ? undefined : 'button'"
+    :aria-label="label || undefined"
+    :title="label || undefined"
     class="icon-button m-auto"
     :class="none ? '' : active ? 'opacity-100 hover:opacity-100' : 'opacity-25 hover:opacity-50'"
   >
     <Icon
       :key="icon"
+      aria-hidden="true"
       :icon="icon"
       class="inline-block align-middle"
     />

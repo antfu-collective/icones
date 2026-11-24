@@ -49,7 +49,10 @@ function toggleDark(event?: MouseEvent) {
 
 <template>
   <button
+    type="button"
     icon-button
+    title="Toggle dark mode"
+    aria-label="Toggle dark mode"
     dark:i-carbon-moon i-carbon:sun
     @click="toggleDark"
   />
