@@ -159,3 +159,26 @@ export const variantCategories: Record<string, [string, string | RegExp][]> = {
     ['Solid', '-solid'],
   ],
 }
+
+/**
+ * Group the icons of a set by variant, for example `{ 'Solid': [...], '16 Solid': [...] }`.
+ * Each icon goes to the first matching rule, so list more specific suffixes first.
+ */
+export function getVariantCategories(collection: { id: string, icons: string[] }) {
+  const variantsRule = variantCategories[collection.id]
+  if (!variantsRule)
+    return
+
+  const variants: Record<string, string[]> = {}
+
+  for (const icon of collection.icons) {
+    const name = variantsRule.find(i => typeof i[1] === 'string'
+      ? icon.endsWith(i[1])
+      : i[1].test(icon))?.[0] || 'Regular'
+    if (!variants[name])
+      variants[name] = []
+    variants[name].push(icon)
+  }
+
+  return variants
+}

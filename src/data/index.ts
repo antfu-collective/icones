@@ -11,7 +11,7 @@ import {
 } from '../store/localstorage'
 import { inProgress, progressMessage } from '../store/progress'
 import infoJSON from './collections-info.json'
-import { variantCategories } from './variant-category'
+import { getVariantCategories } from './variant-category'
 
 export const specialTabs = ['all', 'recent']
 
@@ -188,25 +188,6 @@ export async function getIconCategories(icon: string): Promise<string[]> {
   return Object.entries(meta?.categories || {})
     .filter(([, icons]) => icons.includes(name))
     .map(([category]) => category)
-}
-
-function getVariantCategories(collection: CollectionMeta) {
-  const variantsRule = variantCategories[collection.id]
-  if (!variantsRule)
-    return
-
-  const variants: Record<string, string[]> = {}
-
-  for (const icon of collection.icons) {
-    const name = variantsRule.find(i => typeof i[1] === 'string'
-      ? icon.endsWith(i[1])
-      : i[1].test(icon))?.[0] || 'Regular'
-    if (!variants[name])
-      variants[name] = []
-    variants[name].push(icon)
-  }
-
-  return variants
 }
 
 export async function getFullMeta() {
