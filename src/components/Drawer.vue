@@ -51,11 +51,11 @@ const linkQuery = computed(() => ({ s: route.query.s }))
       class="px-3 py-1 flex border-b border-base"
       :to="{ name: 'collection-id', params: { id: collection.id }, query: linkQuery }"
     >
-      <div
-        class="flex-auto py-1"
-        :class="collection.id === current ? 'text-primary' : ''"
-      >
-        <div class="text-base leading-tight">
+      <div class="flex-auto py-1">
+        <div
+          class="text-base leading-tight"
+          :class="collection.id === current ? 'text-primary' : ''"
+        >
           {{ collection.name }}
           <span v-if="collection.hidden" m="l--0.5" op80 text-xs text-orange inline-block align-top i-carbon:information-disabled />
         </div>

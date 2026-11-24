@@ -9,18 +9,18 @@ const timeAgo = useTimeAgo(buildDate)
     <p class="color-fade">
       built by
       <a
-        class="opacity-75 hover:opacity-100"
+        class="hover:color-base"
         href="https://github.com/antfu"
         target="_blank"
       >@antfu</a>,
       powered by
       <a
-        class="opacity-75 hover:opacity-100"
+        class="hover:color-base"
         href="https://iconify.design"
         target="_blank"
       >Iconify</a>
     </p>
-    <div color-fade mt-1 op50 italic>
+    <div color-fade mt-1 italic>
       Last update: {{ buildTime }} ({{ timeAgo }})
     </div>
   </footer>

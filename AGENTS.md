@@ -46,6 +46,7 @@ The app state is in the URL, so links work for people and for agents:
 - `/collection/all?s=home`: search all sets.
 - `/collection/mdi?s=arrow&category=Navigation`: search one set, in one category.
 - `/collection/mdi?icon=mdi:home`: open the dialog of one icon.
+- `/bag#mdi:home,carbon:add`: show a shared bag. The icons are in the hash, so they are not sent to the server.
 
 Keep this. New views and filters must also go in the URL.
 

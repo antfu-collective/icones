@@ -2,6 +2,7 @@ import type { Router } from 'vue-router'
 import type { CollectionInfo } from '../data'
 import { collections, getCollectionMeta, getFullMeta, getIconCategories } from '../data'
 import { addToBag, bags, removeFromBag } from '../store/localstorage'
+import { getBagShareUrl } from './bag'
 import { getIconSnippet, SnippetMap } from './icons'
 import { predictWords } from './predict'
 
@@ -300,11 +301,14 @@ export function createAgentTools(router: Router): AgentTool[] {
     {
       name: 'get_bag',
       title: 'Get bag',
-      description: 'List the icons in the bag. The user collects icons in the bag to download them together as an icon font, an SVG sprite or a zip of components.',
+      description: 'List the icons in the bag. The user collects icons in the bag to download them together as an icon font, an SVG sprite or a zip of components. `shareUrl` is a link that shows these icons to other people, so they can add them to their own bag.',
       inputSchema: { type: 'object', properties: {} },
       annotations: { readOnlyHint: true },
       execute: async () => ({
         icons: [...bags.value],
+        shareUrl: bags.value.length
+          ? getBagShareUrl(bags.value, location.origin)
+          : undefined,
       }),
     },
     {

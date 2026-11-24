@@ -1,7 +1,9 @@
 <script setup lang='ts'>
 import type { PackType } from '../utils/svg'
 import { collections } from '../data'
+import { isVSCode } from '../env'
 import { bags, clearBag } from '../store'
+import { getBagShareUrl } from '../utils/bag'
 import { PackIconFont, PackSVGSprite, PackZip } from '../utils/pack'
 
 const emit = defineEmits<{
@@ -10,6 +12,12 @@ const emit = defineEmits<{
 }>()
 
 const showPackOption = ref(false)
+
+const { copy, copied } = useClipboard({ legacy: true })
+
+function copyShareLink() {
+  copy(getBagShareUrl(bags.value, isVSCode ? 'https://icones.js.org' : location.origin))
+}
 
 function clear() {
   // eslint-disable-next-line no-alert
@@ -61,6 +69,13 @@ async function PackSvgs(type: PackType = 'svg') {
         </div>
       </div>
       <div class="flex-auto" />
+      <IconButton
+        v-if="bags.length"
+        class="text-xl mr-4 flex-none"
+        :icon="copied ? 'carbon:checkmark' : 'carbon:link'"
+        :label="copied ? 'Share link copied' : 'Copy share link'"
+        @click="copyShareLink"
+      />
       <IconButton v-if="bags.length" class="text-xl mr-4 flex-none" icon="carbon:delete" label="Clear bag" @click="clear" />
       <IconButton class="text-2xl flex-none" icon="carbon:close" label="Close bag" @click="$emit('close')" />
     </div>
@@ -119,7 +134,7 @@ async function PackSvgs(type: PackType = 'svg') {
     </template>
 
     <template v-else>
-      <div class="text-center px-4 py-8 text-gray-500 italic font-light text-sm">
+      <div class="text-center px-4 py-8 text-gray-500 dark:text-gray-400 italic font-light text-sm">
         No icons yet ;)
       </div>
     </template>

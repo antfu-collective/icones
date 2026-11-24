@@ -5,8 +5,8 @@ export default defineConfig({
     'border-base': 'border-hex-888/25',
     'border-dark-only': 'border-transparent dark:border-dark-100',
     'bg-base': 'bg-white dark:bg-[#181818]',
-    'color-base': 'text-gray-900 dark:text-gray-300',
-    'color-fade': 'text-gray-900:50 dark:text-gray-300:50',
+    'color-base': 'text-gray-900 dark:text-gray-100',
+    'color-fade': 'text-gray-900:50 dark:text-gray-100:50',
     'icon-button': 'op50 hover:op100 my-auto shrink-0',
   },
   presets: [
