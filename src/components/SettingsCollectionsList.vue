@@ -23,10 +23,11 @@ defineProps<{
         {{ c.name }}
       </RouterLink>
       <div />
-      <div
+      <span
         v-if="isInstalled(c.id)"
-        icon-button class="!op50"
-        i-carbon-cloud-auditing
+        i-carbon-cloud-auditing op50 shrink-0
+        role="img"
+        aria-label="Cached in browser"
         title="Cached in browser"
       />
       <button
