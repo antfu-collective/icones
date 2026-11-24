@@ -29,6 +29,7 @@ Icônes
 ### Features
 
 - **Instant Fuzzy Searching** _- all are done locally, no web queries!_
+  - _Supports the [fzf syntax](https://github.com/junegunn/fzf#search-syntax): `'exact`, `^prefix`, `suffix$`, `!exclude` and `a | b` (click `?` next to the search box)_
 - The **Bag** _- select your icons and pack them into a ready-to-use icon font!_
   - _[svg-packer](https://github.com/antfu/svg-packer) was born from this XD_
 - Copy the usage scripts

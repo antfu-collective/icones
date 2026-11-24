@@ -303,6 +303,7 @@ useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
             ref="searchbar"
             v-model:search="search"
             class="mx-8 hidden md:flex"
+            help
           />
 
           <!-- Variants --->
