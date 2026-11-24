@@ -10,6 +10,8 @@ export default antfu(
       '**/release',
       '**/collections-info.json',
       '**/collections-meta.json',
+      '**/public/collections.json',
+      '**/public/llms.txt',
     ],
     formatters: true,
   },
