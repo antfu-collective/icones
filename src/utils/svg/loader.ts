@@ -6,10 +6,15 @@ export const API_ENTRY = 'https://api.iconify.design'
 export async function getLicenseComment(collections: CollectionInfo[], icon: string) {
   const [id] = icon.split(':')
   const collection = collections.find(i => i.id === id)
-  if (!collection) {
+  if (!collection)
     return ''
-  }
-  return `<!-- Icon from ${collection?.name} by ${collection?.author?.name} - ${collection?.license?.url} -->`
+  let text = `Icon from ${collection.name}`
+  if (collection.author?.name)
+    text += ` by ${collection.author.name}`
+  const license = collection.license?.url || collection.license?.title
+  if (license)
+    text += ` - ${license}`
+  return `<!-- ${text} -->`
 }
 
 export async function getSvgLocal(
