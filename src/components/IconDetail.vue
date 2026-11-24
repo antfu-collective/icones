@@ -1,7 +1,8 @@
 <script setup lang='ts'>
-import { collections } from '../data'
-import { activeMode, copyPreviewColor, getTransformedId, inBag, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
+import { collections, getIconCategories } from '../data'
+import { activeMode, copyPreviewColor, getTransformedId, inBag, isDark, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
 import { idCases } from '../utils/case'
+import { isLowContrast } from '../utils/color'
 import { dataUrlToBlob } from '../utils/dataUrlToBlob'
 import { Download, getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
 import InstallIconSet from './InstallIconSet.vue'
@@ -22,6 +23,7 @@ const emit = defineEmits(['close', 'copy', 'next', 'prev'])
 const caseSelector = ref<HTMLDivElement>()
 const transformedId = computed(() => getTransformedId(props.icon))
 const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
+const lowContrast = computed(() => isLowContrast(previewColor.value, isDark.value))
 
 onClickOutside(caseSelector, () => {
   showCaseSelect.value = false
@@ -112,6 +114,8 @@ const collection = computed(() => {
   const id = props.icon.split(':')[0]
   return collections.find(i => i.id === id)
 })
+
+const categories = computedAsync(() => getIconCategories(props.icon), [])
 </script>
 
 <template>
@@ -122,9 +126,19 @@ const collection = computed(() => {
       label="Close"
       @click="$emit('close')"
     />
-    <div class="flex justify-center md:block" :style="{ color: previewColor }">
-      <ColorPicker v-model:value="previewColor" class="inline-block">
-        <Icon :key="icon" outer-class="p-4 text-7xl md:text-8xl" :icon="icon" />
+    <div class="flex justify-center md:block">
+      <ColorPicker v-model:value="previewColor" label="Change preview color" class="inline-block group" title="Click to change color">
+        <div
+          class="rounded-lg transition-colors"
+          :class="lowContrast ? (isDark ? 'bg-gray-200' : 'bg-dark-200') : ''"
+          :style="{ color: previewColor }"
+        >
+          <Icon :key="icon" outer-class="p-4 text-7xl md:text-8xl" :icon="icon" />
+        </div>
+        <div class="mt-1 flex items-center justify-center gap-1 text-xs op50 group-hover:op100 group-hover:text-primary">
+          <Icon icon="carbon:color-palette" />
+          change color
+        </div>
       </ColorPicker>
     </div>
     <div class="min-w-0 px-4 pb-4 md:px-2 md:py-4">
@@ -167,6 +181,17 @@ const collection = computed(() => {
         </RouterLink>
       </p>
 
+      <p v-if="categories.length" class="flex flex-wrap mb-1 op50 text-sm">
+        {{ categories.length > 1 ? 'Categories' : 'Category' }}:
+        <template v-for="(c, idx) of categories" :key="c">
+          <RouterLink
+            class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white"
+            :to="{ path: `/collection/${icon.split(':')[0]}`, query: { category: c } }"
+          >
+            {{ c }}</RouterLink><span v-if="idx < categories.length - 1">,</span>
+        </template>
+      </p>
+
       <div>
         <button
           class="
@@ -198,11 +223,13 @@ const collection = computed(() => {
           class="
             inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
             hover:bg-gray-50 dark:hover:bg-dark-200
-          " :class="copyPreviewColor ? 'text-primary' : 'op50'" @click="copyPreviewColor = !copyPreviewColor"
+          " :class="copyPreviewColor ? 'text-primary' : 'op50'" :aria-pressed="copyPreviewColor" @click="copyPreviewColor = !copyPreviewColor"
         >
           <Icon v-if="!copyPreviewColor" class="inline-block text-lg align-middle" icon="carbon:checkbox" />
           <Icon v-else class="inline-block text-lg align-middle" icon="carbon:checkbox-checked" />
           <span class="inline-block align-middle ml1">copy with color</span>
+          <span class="inline-block align-middle ml1 w-0.8em h-0.8em rounded-full border border-base" :style="{ background: previewColor }" />
+          <span class="inline-block align-middle ml1 font-mono">{{ previewColor }}</span>
         </button>
       </div>
 
