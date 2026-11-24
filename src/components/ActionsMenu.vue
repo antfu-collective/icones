@@ -2,7 +2,7 @@
 import type { PropType } from 'vue'
 import type { CollectionMeta } from '../data'
 import { cacheCollection, downloadAndInstall, isInstalled } from '../data'
-import { activeMode, iconSize, inProgress, isFavoritedCollection, listType, progressMessage, toggleFavoriteCollection } from '../store'
+import { activeMode, ICON_SIZE_MAX, ICON_SIZE_MIN, ICON_SIZE_STEP, iconSize, inProgress, isFavoritedCollection, listType, progressMessage, toggleFavoriteCollection } from '../store'
 import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
 
 const props = defineProps({
@@ -12,13 +12,9 @@ const props = defineProps({
   },
 })
 
-const menu = ref(
-  listType.value === 'list'
-    ? 'list'
-    : iconSize.value === 'text-4xl'
-      ? 'large'
-      : 'small',
-)
+const menu = ref(listType.value === 'list'
+  ? 'list'
+  : 'grid')
 
 async function packIconFont() {
   if (!props.collection)
@@ -85,17 +81,9 @@ watch(
   menu,
   async (current, prev) => {
     switch (current) {
-      case 'small':
-        iconSize.value = 'text-2xl'
-        listType.value = 'grid'
-        return
-      case 'large':
-        iconSize.value = 'text-4xl'
-        listType.value = 'grid'
-        return
+      case 'grid':
       case 'list':
-        iconSize.value = 'text-3xl'
-        listType.value = 'list'
+        listType.value = current
         return
       case 'select':
         activeMode.value = 'select'
@@ -131,10 +119,9 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
 
 // const options = computed(() => [
 //   {
-//     label: 'Size',
+//     label: 'View',
 //     children: [
-//       { label: 'Small', value: 'small' },
-//       { label: 'Large', value: 'large' },
+//       { label: 'Grid', value: 'grid' },
 //       { label: 'List', value: 'list' },
 //     ],
 //   },
@@ -166,6 +153,18 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
 
 <template>
   <div flex="~ gap3" text-xl items-center>
+    <input
+      v-model.number="iconSize"
+      type="range"
+      :min="ICON_SIZE_MIN"
+      :max="ICON_SIZE_MAX"
+      :step="ICON_SIZE_STEP"
+      aria-label="Icon size"
+      :aria-valuetext="`${iconSize}px`"
+      :title="`Icon size: ${iconSize}px (+ / -)`"
+      class="w-20 md:w-28 accent-primary cursor-pointer"
+    >
+
     <DarkSwitcher />
 
     <RouterLink
@@ -200,12 +199,9 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
         aria-label="Menu"
         absolute w-full dark:bg-dark-100 text-base top-0 right-0 opacity-0 z-10
       >
-        <optgroup label="Size">
-          <option value="small">
-            Small
-          </option>
-          <option value="large">
-            Large
+        <optgroup label="View">
+          <option value="grid">
+            Grid
           </option>
           <option value="list">
             List

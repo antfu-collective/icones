@@ -1,14 +1,25 @@
 import type { CollectionInfo } from '../data'
 import type { IdCase } from '../utils/case'
 import { idCases } from '../utils/case'
+import { ICON_SIZE_DEFAULT, parseIconSize } from '../utils/icon-size'
 
 const RECENT_COLLECTION_CAPACITY = 10
 const RECENT_ICONS_CAPACITY = 100
 
 export type ActiveMode = 'normal' | 'select' | 'copy'
 
+export * from '../utils/icon-size'
+
 export const themeColor = useStorage('icones-theme-color', '#329672')
-export const iconSize = useStorage('icones-icon-size', '2xl')
+/**
+ * Size of the icons in the grid, in px
+ */
+export const iconSize = useStorage<number>('icones-icon-size', ICON_SIZE_DEFAULT, undefined, {
+  serializer: {
+    read: parseIconSize,
+    write: v => String(v),
+  },
+})
 export const previewColor = useStorage('icones-preview-color', '#888888')
 export const copyPreviewColor = useStorage('icones-copy-preview-color', false)
 export const listType = useStorage('icones-list-type', 'grid')
