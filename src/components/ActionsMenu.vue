@@ -12,6 +12,18 @@ const props = defineProps({
   },
 })
 
+const showSizeMenu = ref(false)
+const sizeMenu = ref<HTMLElement>()
+const sizeSlider = ref<HTMLInputElement>()
+onClickOutside(sizeMenu, () => showSizeMenu.value = false)
+const sizeButton = ref<HTMLButtonElement>()
+watch(sizeSlider, el => el?.focus())
+
+function closeSizeMenu() {
+  showSizeMenu.value = false
+  sizeButton.value?.focus()
+}
+
 const menu = ref(listType.value === 'list'
   ? 'list'
   : 'grid')
@@ -153,17 +165,39 @@ const favorited = computed(() => isFavoritedCollection(props.collection.id))
 
 <template>
   <div flex="~ gap3" text-xl items-center>
-    <input
-      v-model.number="iconSize"
-      type="range"
-      :min="ICON_SIZE_MIN"
-      :max="ICON_SIZE_MAX"
-      :step="ICON_SIZE_STEP"
-      aria-label="Icon size"
-      :aria-valuetext="`${iconSize}px`"
-      :title="`Icon size: ${iconSize}px (+ / -)`"
-      class="w-20 md:w-28 accent-primary cursor-pointer"
-    >
+    <!-- Icon size -->
+    <div ref="sizeMenu" relative flex>
+      <button
+        ref="sizeButton"
+        icon-button
+        i-carbon-zoom-in
+        title="Icon size"
+        aria-label="Icon size"
+        aria-haspopup="true"
+        :aria-expanded="showSizeMenu"
+        @click="showSizeMenu = !showSizeMenu"
+      />
+      <div
+        v-if="showSizeMenu"
+        absolute right-0 top-full mt-2 z-10 px-3 py-2 w-56
+        flex="~ items-center gap-2" text-sm
+        bg-base border="~ base rounded" shadow-lg
+        @keydown.escape.stop="closeSizeMenu"
+      >
+        <input
+          ref="sizeSlider"
+          v-model.number="iconSize"
+          type="range"
+          :min="ICON_SIZE_MIN"
+          :max="ICON_SIZE_MAX"
+          :step="ICON_SIZE_STEP"
+          aria-label="Icon size"
+          :aria-valuetext="`${iconSize}px`"
+          flex-auto accent-primary cursor-pointer
+        >
+        <span w-12 text-right tabular-nums op75>{{ iconSize }}px</span>
+      </div>
+    </div>
 
     <DarkSwitcher />
 
