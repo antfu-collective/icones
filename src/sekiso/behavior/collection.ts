@@ -332,11 +332,10 @@ export const collection = defineBehavior({
         },
       },
     }),
-    // The group's own `label` attribute names it, so it takes its text as `name`, not `label`
-    'menu-group': slot<{ value: string, name: string }>({
-      props: { value: 'key', name: 'string' },
+    'menu-group': slot<{ value: string, label: string }>({
+      props: { value: 'key', label: 'string' },
       present: (state, part) => part.key !== 'downloads' || !state.collection?.special,
-      attrs: (_state, part) => ({ label: part.props.name }),
+      attrs: (_state, part) => ({ label: part.props.label }),
     }),
     'menu-option': slot<{ value: string }>({
       props: { value: 'key' },
