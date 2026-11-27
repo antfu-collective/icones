@@ -22,7 +22,6 @@
   "nav.dark": "Toggle dark mode",
   "nav.github": "GitHub",
   "nav.settings": "Settings",
-  "nav.theme": "Theme: {theme}. Switch to the next theme",
   "search.clear": "Clear search",
   "settings.cached": "Cached in browser",
   "settings.collections.hint": "Manage collections to be listed in the home page and search results.",

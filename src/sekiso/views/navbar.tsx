@@ -8,7 +8,6 @@ export const navbarView = defineView(navbar, {
     back: 'a',
     github: 'a',
     settings: 'a',
-    theme: 'button',
     dark: 'button',
   },
   layout: {
@@ -20,7 +19,6 @@ export const navbarView = defineView(navbar, {
     back: 'icon-button',
     github: 'icon-button',
     settings: 'icon-button',
-    theme: 'icon-button',
     dark: 'toggle',
   },
 }, ({ state, t }, s) => (
@@ -37,12 +35,6 @@ export const navbarView = defineView(navbar, {
     <s.Settings label={t('nav.settings')}>
       <Icon name="settings" />
     </s.Settings>
-    <s.Theme label={t('nav.theme', {
-      theme: t(`theme.${state.theme}`),
-    })}
-    >
-      <Icon name="theme" />
-    </s.Theme>
     <s.Dark label={t('nav.dark')}>
       <Icon name={state.dark ? 'dark' : 'light'} />
     </s.Dark>

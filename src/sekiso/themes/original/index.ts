@@ -39,7 +39,6 @@ export default defineTheme({
     'back': 'i-carbon-arrow-left',
     'github': 'i-carbon-logo-github',
     'settings': 'i-carbon-settings',
-    'theme': 'i-carbon-color-palette',
     'light': 'i-carbon-sun',
     'dark': 'i-carbon-moon',
     'search': 'i-carbon-search',

@@ -44,7 +44,6 @@ export default defineTheme({
     'back': 'i-lucide-arrow-left',
     'github': 'i-lucide-github',
     'settings': 'i-lucide-settings',
-    'theme': 'i-lucide-sun-moon',
     'light': 'i-lucide-sun',
     'dark': 'i-lucide-moon',
     'search': 'i-lucide-search',

@@ -1,7 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { home, searchAllHref } from '../src/sekiso/behavior/home'
 import { followLink } from '../src/sekiso/behavior/link'
-import { navbar } from '../src/sekiso/behavior/navbar'
 
 describe('home behavior (headless)', () => {
   beforeEach(() => {
@@ -36,29 +35,6 @@ describe('home behavior (headless)', () => {
 
   it('encodes the search in the link', () => {
     expect(searchAllHref('home !outline')).toBe('/collection/all?s=home%20!outline')
-  })
-})
-
-describe('navbar behavior (headless)', () => {
-  it('switches to the next theme, and back to the first after the last', () => {
-    const setTheme = vi.fn()
-    const themes = ['original', 'washi', 'geist']
-    navbar({
-      id: 'a',
-      theme: 'washi',
-      themes,
-      setTheme,
-    }).api.nextTheme()
-    navbar({
-      id: 'b',
-      theme: 'geist',
-      themes,
-      setTheme,
-    }).api.nextTheme()
-    expect(setTheme.mock.calls).toEqual([
-      ['geist'],
-      ['original'],
-    ])
   })
 })
 

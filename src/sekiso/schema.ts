@@ -8,7 +8,6 @@ export const icons = [
   'back',
   'github',
   'settings',
-  'theme',
   'light',
   'dark',
   'search',

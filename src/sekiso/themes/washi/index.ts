@@ -41,7 +41,6 @@ export default defineTheme({
     'back': 'i-ph-arrow-left-light',
     'github': 'i-ph-github-logo-light',
     'settings': 'i-ph-gear-six-light',
-    'theme': 'i-ph-paint-brush-light',
     'light': 'i-ph-sun-light',
     'dark': 'i-ph-moon-light',
     'search': 'i-ph-magnifying-glass-light',
