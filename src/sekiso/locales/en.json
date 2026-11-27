@@ -22,6 +22,7 @@
   "collection.mode.select": "Multiple select",
   "collection.npm": "npm package",
   "collection.openBag": "Open bag ({count} icons)",
+  "collection.resizeDrawer": "Resize sidebar",
   "collection.search": "Search...",
   "collection.size": "Icon size",
   "collection.sizeValue": "{size}px",

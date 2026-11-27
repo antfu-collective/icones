@@ -14,6 +14,7 @@ import {
   canToggleDark,
   clampIconSize,
   drawerCollapsed,
+  drawerWidth,
   favoritedCollectionIds,
   getSearchResults,
   ICON_SIZE_MAX,
@@ -223,6 +224,7 @@ const options = computed(() => ({
     : 'grid' as const,
   mode: activeMode.value,
   drawerCollapsed: drawerCollapsed.value,
+  drawerWidth: drawerWidth.value,
   bag: bags.value.length,
   copied: copied.value,
   navigate: (to: string) => router.push(to),
@@ -238,6 +240,7 @@ const options = computed(() => ({
   toggleFavorite: () => id.value && toggleFavoriteCollection(id.value),
   toggleDark,
   toggleDrawer: () => drawerCollapsed.value = !drawerCollapsed.value,
+  setDrawerWidth: (width: number) => drawerWidth.value = width,
   openBag: () => showBag.value = true,
 }))
 

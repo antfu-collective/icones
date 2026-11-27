@@ -914,6 +914,8 @@
 /* The icon set's page */
 
 .collection {
+  --drawer-width: 280px;
+
   display: flex;
   flex: auto;
 
@@ -931,7 +933,7 @@
 .collection-drawer-toggle {
   position: fixed;
   top: 50%;
-  left: 250px;
+  left: var(--drawer-width);
   z-index: 10;
   display: flex;
   align-items: center;
@@ -1227,7 +1229,7 @@
 .drawer {
   position: relative;
   flex: none;
-  width: 250px;
+  width: var(--drawer-width);
   height: 100%;
   overflow-y: auto;
   border-right: 1px solid var(--k-line);
@@ -1235,6 +1237,11 @@
 
   [data-collapsed] > & {
     width: 0;
+  }
+
+  /* While dragging, the width follows the pointer at once */
+  [data-resizing] > & {
+    transition: none;
   }
 
   @media (max-width: 767.9px) {
@@ -1774,5 +1781,49 @@
 
   & > [data-icon] {
     font-size: 1.125rem;
+  }
+}
+
+/* The edge of the sidebar: a thin line that shows on hover, with a wider area to grab */
+.resizer {
+  position: relative;
+  z-index: 5;
+  flex: none;
+  width: 9px;
+  margin: 0 -5px 0 -4px;
+  cursor: col-resize;
+  touch-action: none;
+  outline: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 3px;
+    width: 3px;
+    background: var(--k-accent);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  &:hover::after,
+  &:focus-visible::after,
+  [data-resizing] > &::after {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 767.9px) {
+    display: none;
+  }
+}
+
+/* Nothing slides while the sidebar is dragged, and the text is not selected */
+.collection[data-resizing] {
+  cursor: col-resize;
+  user-select: none;
+
+  & .collection-drawer-toggle {
+    transition: none;
   }
 }

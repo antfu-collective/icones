@@ -258,7 +258,8 @@
 .chip {
   padding: 0 2px;
   border: 0;
-  border-bottom: 1px solid transparent;
+  /* Always 2px, so picking a filter moves nothing */
+  border-bottom: 2px solid transparent;
   border-radius: 0;
   letter-spacing: 0.06em;
 
@@ -268,7 +269,7 @@
   }
 
   &[aria-pressed='true'] {
-    border-bottom: 2px solid var(--k-accent);
+    border-bottom-color: var(--k-accent);
     color: var(--k-fg);
   }
 }
@@ -378,12 +379,12 @@
 
 .drawer-link {
   border: 0;
-  padding: 2px 16px;
+  padding: 3px 16px;
 }
 
 .drawer-text {
   display: flex;
-  align-items: baseline;
+  align-items: last baseline;
   gap: 6px;
   min-width: 0;
 
@@ -398,10 +399,9 @@
 
 .drawer-name {
   min-width: 0;
-  overflow: hidden;
   font-size: 0.95rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 
   [data-current] & {
     color: var(--k-accent);
@@ -569,7 +569,7 @@
   }
 
   .collection-drawer-toggle {
-    right: calc(64px + 250px);
+    right: calc(64px + var(--drawer-width));
     left: auto;
     border: 1px solid var(--k-line);
     border-right: 0;
@@ -699,4 +699,18 @@
   [data-open] > .bag-panel {
     transform: none;
   }
+}
+
+/* The actions of a card sit inside it, apart from its edge */
+.home-card-actions {
+  top: 8px;
+  right: 8px;
+  gap: 4px;
+  overflow: visible;
+}
+
+.home-favorite,
+.home-forget {
+  padding: 6px;
+  margin: 0;
 }

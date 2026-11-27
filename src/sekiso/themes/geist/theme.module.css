@@ -43,8 +43,8 @@
   background: var(--k-raised);
 
   &:focus-within {
-    border-color: var(--k-fg);
-    box-shadow: 0 0 0 3px light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 12%));
+    border-color: light-dark(#a1a1a1, #5e5e5e);
+    box-shadow: 0 0 0 3px light-dark(rgb(0 0 0 / 6%), rgb(255 255 255 / 8%));
   }
 
   & > [data-icon] {
@@ -58,7 +58,8 @@
   font-size: 0.875rem;
 }
 
-.icon-button {
+.icon-button,
+.toggle {
   display: inline-grid;
   width: 32px;
   height: 32px;
@@ -525,7 +526,7 @@
 
 .drawer-text {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
   min-width: 0;
@@ -535,10 +536,9 @@
 .drawer-name {
   flex: 0 1 auto;
   min-width: 0;
-  overflow: hidden;
   font-size: 0.875rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 
   [data-current] & {
     color: var(--k-fg);
@@ -549,6 +549,7 @@
 .drawer-count {
   flex: none;
   margin: 0;
+  padding-top: 2px;
   font-family: var(--k-font-mono);
   font-size: 0.6875rem;
   white-space: nowrap;
@@ -977,4 +978,46 @@
   @media (min-width: 1280px) {
     column-count: 4;
   }
+}
+
+.resizer::after {
+  left: 4px;
+  width: 1px;
+  background: var(--k-fg);
+}
+
+/* The star of a sidebar row shows on hover, or when the set is a favorite, and keeps the row short */
+.drawer-link {
+  min-height: 34px;
+}
+
+.drawer-favorite {
+  width: 24px;
+  height: 24px;
+  margin: -4px -4px -4px 4px;
+  opacity: 0;
+
+  &[aria-pressed='true'] {
+    color: var(--k-star);
+    opacity: 1;
+  }
+
+  .drawer-link:hover & {
+    opacity: 1;
+  }
+}
+
+/* The options of the icon: full strength, the picked one in the accent */
+.detail-chips > * {
+  height: 30px;
+  opacity: 1;
+
+  &[aria-pressed='true'] {
+    border-color: var(--k-fg);
+    color: var(--k-fg);
+  }
+}
+
+.detail-id {
+  gap: 4px;
 }

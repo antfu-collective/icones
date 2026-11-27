@@ -48,6 +48,8 @@ export interface CollectionOptions {
   list?: 'grid' | 'list'
   mode?: ActiveMode
   drawerCollapsed?: boolean
+  /** The width of the sidebar, in px. */
+  drawerWidth?: number
   bag?: number
   /** Something was just copied. */
   copied?: boolean
@@ -64,7 +66,28 @@ export interface CollectionOptions {
   toggleFavorite?: () => void
   toggleDark?: (event?: Event) => void
   toggleDrawer?: () => void
+  setDrawerWidth?: (width: number) => void
   openBag?: () => void
+}
+
+/** The widths the sidebar can take, in px, and the one a double click goes back to. */
+export const DRAWER_WIDTH = {
+  min: 200,
+  max: 480,
+  default: 280,
+  step: 16,
+}
+
+function clampWidth(width: number): number {
+  return Math.round(Math.min(DRAWER_WIDTH.max, Math.max(DRAWER_WIDTH.min, width)))
+}
+
+/** Whether the sidebar sits on the left of the page. A theme may put it on the right. */
+function drawerOnLeft(drawer: Element | null): boolean {
+  if (!drawer)
+    return true
+  const rect = drawer.getBoundingClientRect()
+  return rect.left + rect.width / 2 < window.innerWidth / 2
 }
 
 function stateOf(options: CollectionOptions) {
@@ -87,6 +110,7 @@ function stateOf(options: CollectionOptions) {
     list: options.list ?? 'grid',
     mode: options.mode ?? 'normal',
     drawerCollapsed: options.drawerCollapsed ?? false,
+    drawerWidth: options.drawerWidth ?? DRAWER_WIDTH.default,
     bag: options.bag ?? 0,
     copied: options.copied ?? false,
   }
@@ -127,6 +151,7 @@ export const collection = definePrimitive({
     list: 'string',
     mode: 'string',
     drawerCollapsed: 'boolean',
+    drawerWidth: 'number',
     bag: 'number',
     copied: 'boolean',
     navigate: 'value',
@@ -142,6 +167,7 @@ export const collection = definePrimitive({
     toggleFavorite: 'value',
     toggleDark: 'value',
     toggleDrawer: 'value',
+    setDrawerWidth: 'value',
     openBag: 'value',
   },
   state: (options: CollectionOptions) => ({
@@ -149,6 +175,8 @@ export const collection = definePrimitive({
     draft: options.search ?? '',
     sizeOpen: false,
     helpOpen: false,
+    /** The sidebar is being dragged to a new width. */
+    resizing: false,
   }),
   sync: options => stateOf(options),
   api: (context) => {
@@ -204,6 +232,12 @@ export const collection = definePrimitive({
       toggleDrawer(): void {
         options().toggleDrawer?.()
       },
+      setDrawerWidth(width: number): void {
+        options().setDrawerWidth?.(clampWidth(width))
+      },
+      setResizing(resizing: boolean): void {
+        store.set({ resizing })
+      },
       openBag(): void {
         options().openBag?.()
       },
@@ -222,6 +256,75 @@ export const collection = definePrimitive({
         'aria-expanded': String(!state.drawerCollapsed),
       }),
       press: ({ api }) => api.toggleDrawer(),
+    }),
+    // The edge of the sidebar: drag it, or use the arrow keys, to change its width
+    'resizer': slot<{ label: string }>({
+      props: { label: 'string' },
+      role: 'separator',
+      focus: 'native',
+      keys: [
+        'ArrowLeft',
+        'ArrowRight',
+        'Home',
+        'End',
+      ],
+      present: state => !state.drawerCollapsed,
+      attrs: (state, part) => ({
+        'tabindex': '0',
+        'aria-label': part.props.label,
+        'title': part.props.label,
+        'aria-orientation': 'vertical',
+        'aria-valuenow': String(state.drawerWidth),
+        'aria-valuemin': String(DRAWER_WIDTH.min),
+        'aria-valuemax': String(DRAWER_WIDTH.max),
+      }),
+      on: {
+        keydown: (event, { api, store }) => {
+          const key = (event as KeyboardEvent).key
+          const left = drawerOnLeft(document.querySelector('[data-slot="drawer"]'))
+          const width = store.get().drawerWidth
+          const grow = left ? 'ArrowRight' : 'ArrowLeft'
+          const shrink = left ? 'ArrowLeft' : 'ArrowRight'
+          if (key === grow)
+            api.setDrawerWidth(width + DRAWER_WIDTH.step)
+          else if (key === shrink)
+            api.setDrawerWidth(width - DRAWER_WIDTH.step)
+          else if (key === 'Home')
+            api.setDrawerWidth(DRAWER_WIDTH.min)
+          else if (key === 'End')
+            api.setDrawerWidth(DRAWER_WIDTH.max)
+          else
+            return
+          event.preventDefault()
+        },
+        dblclick: (_event, { api }) => api.setDrawerWidth(DRAWER_WIDTH.default),
+        pointerdown: (event, { api }) => {
+          const pointer = event as PointerEvent
+          if (pointer.button !== 0)
+            return
+          const handle = pointer.currentTarget as HTMLElement
+          const drawer = document.querySelector('[data-slot="drawer"]')
+          if (!drawer)
+            return
+          pointer.preventDefault()
+          handle.setPointerCapture(pointer.pointerId)
+          const left = drawerOnLeft(drawer)
+          const rect = drawer.getBoundingClientRect()
+          api.setResizing(true)
+          const move = (e: PointerEvent) => api.setDrawerWidth(left
+            ? e.clientX - rect.left
+            : rect.right - e.clientX)
+          const stop = () => {
+            api.setResizing(false)
+            handle.removeEventListener('pointermove', move)
+            handle.removeEventListener('pointerup', stop)
+            handle.removeEventListener('pointercancel', stop)
+          }
+          handle.addEventListener('pointermove', move)
+          handle.addEventListener('pointerup', stop)
+          handle.addEventListener('pointercancel', stop)
+        },
+      },
     }),
     'website': slot<{ label: string }>({
       props: { label: 'string' },

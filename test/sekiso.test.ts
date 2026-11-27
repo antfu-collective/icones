@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { bag } from '../src/sekiso/behavior/bag'
-import { collection } from '../src/sekiso/behavior/collection'
+import { collection, DRAWER_WIDTH } from '../src/sekiso/behavior/collection'
 import { detail } from '../src/sekiso/behavior/detail'
 import { home, searchAllHref } from '../src/sekiso/behavior/home'
 import { followLink } from '../src/sekiso/behavior/link'
@@ -91,6 +91,17 @@ describe('collection behavior (headless)', () => {
       [''],
       ['Media'],
     ])
+  })
+})
+
+describe('sidebar width (headless)', () => {
+  it('keeps the width between its bounds', () => {
+    const setDrawerWidth = vi.fn()
+    const instance = collection({ id: 'collection', setDrawerWidth })
+    instance.api.setDrawerWidth(1000)
+    instance.api.setDrawerWidth(10)
+    instance.api.setDrawerWidth(321.6)
+    expect(setDrawerWidth.mock.calls).toEqual([[DRAWER_WIDTH.max], [DRAWER_WIDTH.min], [322]])
   })
 })
 

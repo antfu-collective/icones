@@ -30,6 +30,8 @@ export const bags = useStorage<string[]>('icones-bags', [])
 export const activeMode = useStorage<ActiveMode>('active-mode', 'normal')
 export const preferredCase = useStorage<IdCase>('icones-preferfed-case', 'iconify')
 export const drawerCollapsed = useStorage<boolean>('icones-drawer-collapsed', false)
+/** The width of the sidebar of an icon set's page, in px */
+export const drawerWidth = useStorage<number>('icones-drawer-width', 280)
 export const selectedPackageManager = useStorage<string>('icones-package-manager', 'pnpm')
 
 export const excludedCollectionIds = useStorage<string[]>('icones-excluded-collections', [])

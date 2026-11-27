@@ -10,6 +10,7 @@ const COLLECTION_PARTS = {
   tags: {
     'root': 'div',
     'drawer-toggle': 'button',
+    'resizer': 'div',
     'website': 'a',
     'npm': 'a',
     'license': 'a',
@@ -70,6 +71,7 @@ const COLLECTION_PARTS = {
   roles: {
     'root': 'page',
     'drawer-toggle': 'icon-button',
+    'resizer': 'resizer',
     'title': 'heading',
     'name': 'text',
     'website': 'icon-button',
@@ -142,8 +144,9 @@ export const collectionSearchView = defineView(collection, {
 export const collectionView = defineView(collection, COLLECTION_PARTS, ({ state, t }, s) => {
   const set = state.collection
   return (
-    <s.Root data={{ collapsed: state.drawerCollapsed, mode: state.mode }}>
+    <s.Root data={{ collapsed: state.drawerCollapsed, mode: state.mode, resizing: state.resizing }} vars={{ 'drawer-width': `${state.drawerWidth}px` }}>
       <Embed view={drawerView} />
+      <s.Resizer label={t('collection.resizeDrawer')} />
       <s.DrawerToggle label={t('collection.toggleDrawer')}>
         <Icon name="drawer" />
       </s.DrawerToggle>

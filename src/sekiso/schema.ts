@@ -85,6 +85,7 @@ export const roles = {
   'counter': 'A small number on another part.',
   'banner': 'A bar that says the page is in a mode, and leaves it on a click.',
   'toast': 'A short message that comes and goes, with `data-shown`.',
+  'resizer': 'The edge of a panel, to drag to a new width.',
   'sheet': 'A panel that slides over the page, with a shade behind it.',
   'dialog': 'A box in the middle of the page, with a shade behind it.',
 }
