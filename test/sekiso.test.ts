@@ -101,7 +101,11 @@ describe('sidebar width (headless)', () => {
     instance.api.setDrawerWidth(1000)
     instance.api.setDrawerWidth(10)
     instance.api.setDrawerWidth(321.6)
-    expect(setDrawerWidth.mock.calls).toEqual([[DRAWER_WIDTH.max], [DRAWER_WIDTH.min], [322]])
+    expect(setDrawerWidth.mock.calls).toEqual([
+      [DRAWER_WIDTH.max],
+      [DRAWER_WIDTH.min],
+      [322],
+    ])
   })
 })
 
