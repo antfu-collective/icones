@@ -118,37 +118,28 @@ export const detail = defineBehavior({
     }),
     'close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.close(),
     }),
     // A label: a click on the preview opens the color input inside it
     'preview': slot({}),
-    'color': slot<{ label: string }>({
-      props: { label: 'string' },
-      attrs: (state, part) => ({ 'type': 'color', 'value': state.color, 'aria-label': part.props.label }),
+    'color': slot({
+      attrs: state => ({ type: 'color', value: state.color }),
       on: {
         input: (event, { api }) => api.setColor((event.target as HTMLInputElement).value),
       },
     }),
     'help': slot({
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.showHelp(),
     }),
     'copy-name': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.copy('id'),
     }),
     'case-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
         ...labelled(part.props.label),
         'aria-expanded': String(state.caseOpen),
       }),
@@ -169,7 +160,6 @@ export const detail = defineBehavior({
     'case': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.preferredCase === part.key),
       }),
       press: ({ api, key }) => api.setCase(key),
@@ -196,7 +186,6 @@ export const detail = defineBehavior({
     }),
     'bag': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-pressed': String(state.inBag),
       }),
       press: ({ api }) => api.toggleBag(),
@@ -204,21 +193,18 @@ export const detail = defineBehavior({
     'selecting': slot({
       present: state => state.inBag,
       attrs: state => ({
-        'type': 'button',
         'aria-pressed': String(state.selecting),
       }),
       press: ({ api }) => api.toggleSelecting(),
     }),
     'copy-color': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-pressed': String(state.copyColor),
       }),
       press: ({ api }) => api.toggleCopyColor(),
     }),
     'snippet': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: () => ({ type: 'button' }),
       press: ({ api, key }) => api.copy(key),
       on: {
         pointerenter: (event, { api, key }) => api.preview(key, event.currentTarget as Element),
@@ -233,7 +219,6 @@ export const detail = defineBehavior({
     }),
     'download': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: () => ({ type: 'button' }),
       press: ({ api, key }) => api.download(key),
     }),
     'link': slot<{ value: string }>({
@@ -246,17 +231,13 @@ export const detail = defineBehavior({
     'manager': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.manager === part.key),
       }),
       press: ({ api, key }) => api.setManager(key),
     }),
     'copy-install': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.copyInstall(),
     }),
     'toast': slot({

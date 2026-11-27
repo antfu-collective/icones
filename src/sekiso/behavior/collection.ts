@@ -167,7 +167,6 @@ export const collection = defineBehavior({
     'drawer-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
         ...labelled(part.props.label),
         'aria-expanded': String(!state.drawerCollapsed),
       }),
@@ -265,7 +264,6 @@ export const collection = defineBehavior({
     'size-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
         ...labelled(part.props.label),
         'aria-haspopup': 'true',
         'aria-expanded': String(state.sizeOpen),
@@ -293,15 +291,14 @@ export const collection = defineBehavior({
         return () => document.removeEventListener('pointerdown', close)
       },
     }),
-    'size': slot<{ label: string, text: string }>({
-      props: { label: 'string', text: 'string' },
+    'size': slot<{ text: string }>({
+      props: { text: 'string' },
       attrs: (state, part) => ({
         'type': 'range',
         'min': String(state.sizeMin),
         'max': String(state.sizeMax),
         'step': String(state.sizeStep),
         'value': String(state.size),
-        'aria-label': part.props.label,
         'aria-valuetext': part.props.text,
       }),
       on: {
@@ -317,7 +314,6 @@ export const collection = defineBehavior({
       props: { label: 'string' },
       present: state => state.canToggleDark,
       attrs: (state, part) => ({
-        'type': 'button',
         ...labelled(part.props.label),
         'aria-pressed': String(state.dark),
       }),
@@ -337,16 +333,14 @@ export const collection = defineBehavior({
       props: { label: 'string' },
       present: state => state.collection !== null && !state.collection.special,
       attrs: (state, part) => ({
-        'type': 'button',
         ...labelled(part.props.label),
         'aria-pressed': String(state.favorite),
       }),
       press: ({ api }) => api.toggleFavorite(),
     }),
     // A native select: the value is the way the icons show, and any other choice runs and goes back to it
-    'menu': slot<{ label: string }>({
-      props: { label: 'string' },
-      attrs: (state, part) => ({ 'aria-label': part.props.label, 'value': state.list }),
+    'menu': slot({
+      attrs: state => ({ value: state.list }),
       on: {
         change: (event, { api, store }) => {
           const select = event.target as HTMLSelectElement
@@ -376,7 +370,6 @@ export const collection = defineBehavior({
     'category': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.category === part.key),
       }),
       press: ({ api, key }) => api.toggleCategory(key),
@@ -384,7 +377,6 @@ export const collection = defineBehavior({
     'variant': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.variant === part.key),
       }),
       press: ({ api, key }) => api.toggleVariant(key),
@@ -432,16 +424,12 @@ export const collection = defineBehavior({
     'clear': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       present: state => state.draft !== '',
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.clear(),
     }),
     'help-toggle': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
         ...labelled(part.props.label),
         'aria-expanded': String(state.helpOpen),
         'aria-controls': `search-syntax-${part.key}`,
@@ -470,26 +458,20 @@ export const collection = defineBehavior({
     }),
     'load-more': slot({
       present: state => state.total > state.shown,
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.loadMore(),
     }),
     'load-all': slot({
       present: state => state.total > state.shown && state.collection !== null && !state.collection.special,
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.loadAll(),
     }),
     'bag': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.bag > 0,
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.openBag(),
     }),
     'mode': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-hidden': state.mode === 'normal'
           ? 'true'
           : undefined,

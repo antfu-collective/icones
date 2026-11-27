@@ -55,7 +55,6 @@ export const navbar = defineBehavior({
       props: { label: 'string' },
       present: state => !state.collection && state.canToggleDark,
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(state.dark),

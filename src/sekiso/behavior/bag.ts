@@ -48,27 +48,18 @@ export const bag = defineBehavior({
     'share': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.count > 0,
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.share(),
     }),
     'clear': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.count > 0,
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.clear(),
     }),
     'close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.close(),
     }),
     'zip-options': slot({
@@ -76,30 +67,23 @@ export const bag = defineBehavior({
     }),
     'zip-close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => labelled(part.props.label),
       press: ({ api }) => api.toggleZip(false),
     }),
     'zip': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: () => ({ type: 'button' }),
       press: ({ api, key }) => api.pack(`zip:${key}`),
     }),
     'zip-toggle': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-expanded': String(state.zipOpen),
       }),
       press: ({ api }) => api.toggleZip(),
     }),
     'iconfont': slot({
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.pack('iconfont'),
     }),
     'sprite': slot({
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.pack('sprite'),
     }),
   }),
@@ -133,7 +117,6 @@ export const sharedBag = defineBehavior({
     add: slot({
       present: state => state.count > 0,
       attrs: state => ({
-        type: 'button',
         disabled: state.missing === 0
           ? ''
           : undefined,
