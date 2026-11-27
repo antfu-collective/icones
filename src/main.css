@@ -73,30 +73,6 @@ html:not(.dark) .shiki span {
   border-radius: 3px;
 }
 
-/* Tootip */
-.v-popper--theme-tooltip .v-popper__inner,
-.v-popper--theme-menu .v-popper__inner {
-  --uno: important-bg-base;
-}
-
-.v-popper--theme-tooltip .v-popper__arrow-outer,
-.v-popper--theme-menu .v-popper__arrow-outer {
-  --uno: important-border-none;
-}
-
-.v-popper--theme-tooltip .v-popper__inner,
-.v-popper--theme-menu .v-popper__inner {
-  --uno: border border-base shadow-lg;
-}
-
-.v-popper--theme-menu .v-popper__arrow-outer {
-  visibility: hidden;
-}
-
-.v-popper--theme-menu .v-popper__arrow-inner {
-  visibility: hidden;
-}
-
 /* fallback black svg in dark mode */
 .icons-item svg,
 .dark .icons-item [fill='#000'],

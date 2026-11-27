@@ -5,7 +5,6 @@ import App from './App.vue'
 import { basePath } from './env'
 
 import '@unocss/reset/tailwind.css'
-import 'floating-vue/dist/style.css'
 import './main.css'
 import 'uno.css'
 // After the reset, so the themes come after it

@@ -32,3 +32,24 @@ html[data-theme].dark {
     background: color-mix(in srgb, var(--k-accent) 25%, transparent);
   }
 }
+
+/* The spin and the blink of the progress */
+[data-slot='progress'] > [data-icon] {
+  animation: icones-rotating 2s linear infinite;
+}
+
+[data-slot='progress-message'] {
+  animation: icones-blinking 2s linear infinite;
+}
+
+@keyframes icones-rotating {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes icones-blinking {
+  50% {
+    opacity: 0.3;
+  }
+}

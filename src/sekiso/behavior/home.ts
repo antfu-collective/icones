@@ -148,7 +148,9 @@ export const home = definePrimitive({
         },
       },
       bind: (el) => {
-        el.focus()
+        // The element is not in the page yet when it binds
+        const frame = requestAnimationFrame(() => el.focus())
+        return () => cancelAnimationFrame(frame)
       },
     }),
     'clear': slot<{ label: string }>({

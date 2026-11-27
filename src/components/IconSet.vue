@@ -1,9 +1,39 @@
-<!-- eslint-disable no-console -->
 <script setup lang='ts'>
-import { cacheCollection, specialTabs } from '../data'
+import type { ActiveMode, CollectionTask, CollectionView } from '../sekiso/behavior/collection'
+import type { DrawerItem } from '../sekiso/behavior/drawer'
+import { Scope, View } from '@sekiso/vue'
+import { cacheCollection, categorySearch, downloadAndInstall, filteredCollections, isInstalled, sortedCollectionsInfo, specialTabs } from '../data'
 import { isLocalMode } from '../env'
-import { activeMode, bags, clampIconSize, drawerCollapsed, getSearchResults, ICON_SIZE_STEP, iconSize, isCurrentCollectionLoading, listType, showHelp, toggleBag } from '../store'
+import { IconSetKey } from '../hooks'
+import { collection as collectionPrimitive } from '../sekiso/behavior/collection'
+import { drawer } from '../sekiso/behavior/drawer'
+import { collectionView } from '../sekiso/views/collection'
+import {
+  activeMode,
+  bags,
+  canToggleDark,
+  clampIconSize,
+  drawerCollapsed,
+  favoritedCollectionIds,
+  getSearchResults,
+  ICON_SIZE_MAX,
+  ICON_SIZE_MIN,
+  ICON_SIZE_STEP,
+  iconSize,
+  inProgress,
+  isCurrentCollectionLoading,
+  isDark,
+  isFavoritedCollection,
+  listType,
+  progressMessage,
+  recentIconIds,
+  showHelp,
+  toggleBag,
+  toggleFavoriteCollection,
+} from '../store'
+import { toggleDark } from '../utils/dark'
 import { getIconSnippet } from '../utils/icons'
+import { PackIconFont, PackJsonZip, PackSvgZip } from '../utils/pack'
 import { cleanupQuery } from '../utils/query'
 
 const route = useRoute()
@@ -21,41 +51,27 @@ const current = computed({
     })
   },
 })
-const max = ref(isLocalMode ? 500 : 200)
-const searchbar = ref<{ input: HTMLElement }>()
 
 const { search, icons, category, collection, variant } = getSearchResults()
 const loading = isCurrentCollectionLoading()
 
+const max = ref(isLocalMode ? 500 : 200)
 const maxMap = new Map<string, number>()
 const id = computed(() => collection.value?.id)
-const url = computed(() => collection.value?.url || collection.value?.author?.url)
-const npm = computed(() => (id.value != null && !specialTabs.includes(id.value))
-  ? `https://npmx.dev/package/@iconify-json/${id.value}`
-  : '')
-const namespace = computed(() => (id.value != null && !specialTabs.includes(id.value))
+const isSpecial = computed(() => id.value != null && specialTabs.includes(id.value))
+const namespace = computed(() => (id.value != null && !isSpecial.value)
   ? `${id.value}:`
   : '')
+
+watch(namespace, () => {
+  max.value = maxMap.get(namespace.value) || 200
+})
 
 function onCopy(status: boolean) {
   copied.value = status
   setTimeout(() => {
     copied.value = false
   }, 2000)
-}
-
-function toggleCategory(cat: string) {
-  if (category.value === cat)
-    category.value = ''
-  else
-    category.value = cat
-}
-
-function toggleVariant(v: string) {
-  if (variant.value === v)
-    variant.value = ''
-  else
-    variant.value = v
 }
 
 async function copyText(text?: string) {
@@ -76,12 +92,7 @@ async function onSelect(icon: string) {
       toggleBag(icon)
       break
     case 'copy':
-      onCopy(await copyText(await getIconSnippet(
-        [collection.value!],
-        icon,
-        'id',
-        true,
-      ) || icon))
+      onCopy(await copyText(await getIconSnippet([collection.value!], icon, 'id', true) || icon))
       break
     default:
       current.value = icon
@@ -97,11 +108,19 @@ function loadMore() {
 async function loadAll() {
   if (!namespace.value)
     return
-
   await cacheCollection(collection.value!.id)
   max.value = icons.value.length
   maxMap.set(namespace.value, max.value)
 }
+
+provide(IconSetKey, {
+  icons,
+  max,
+  namespace,
+  search,
+  select: onSelect,
+  loadMore,
+})
 
 function next(delta = 1) {
   const name = current.value.startsWith(namespace.value)
@@ -115,63 +134,30 @@ function next(delta = 1) {
     current.value = namespace.value + newOne
 }
 
-const scroller = ref<HTMLElement>()
-const sentinel = ref<HTMLElement>()
-// On mobile the document scrolls, not the icon list (see App.vue)
-const isMobile = useMediaQuery('(max-width: 767.9px)')
-const scrollRoot = computed(() => isMobile.value ? undefined : scroller.value)
-
-watch(
-  () => namespace.value,
-  () => {
-    max.value = maxMap.get(namespace.value) || 200
-    ;(scrollRoot.value ?? window).scrollTo({ top: 0 })
-  },
-)
-
-// Load more icons when the end of the list comes near
-const LOAD_MARGIN = 600
-const nearEnd = ref(false)
-useIntersectionObserver(sentinel, ([entry]) => {
-  nearEnd.value = entry?.isIntersecting ?? false
-}, { root: scrollRoot, rootMargin: `0px 0px ${LOAD_MARGIN}px 0px` })
-
-function isSentinelNear() {
-  if (!sentinel.value)
-    return false
-  const bottom = scrollRoot.value?.getBoundingClientRect().bottom ?? window.innerHeight
-  return sentinel.value.getBoundingClientRect().top < bottom + LOAD_MARGIN
-}
-
-// The sentinel can stay near after a load, when the icons are small.
-// The observer does not fire again in that case, so measure after the render.
-watch([
-  nearEnd,
-  max,
-  () => icons.value.length,
-], async () => {
-  if (!nearEnd.value)
+/** Packs or stores the whole set, with the progress on screen. */
+async function run(task: CollectionTask) {
+  const set = collection.value
+  if (!set)
     return
+  if (task === 'cache') {
+    await cacheCollection(set.id)
+    return
+  }
+  progressMessage.value = 'Downloading...'
+  inProgress.value = true
   await nextTick()
-  if (icons.value.length > max.value && isSentinelNear())
-    loadMore()
-})
-
-function focusSearch() {
-  searchbar.value?.input.focus()
+  await downloadAndInstall(set.id)
+  progressMessage.value = 'Packing up...'
+  await nextTick()
+  const ids = set.icons.map(i => `${set.id}:${i}`)
+  if (task === 'iconfont')
+    await PackIconFont([set], ids, { fontName: set.name, fileName: set.id })
+  else if (task === 'svgs')
+    await PackSvgZip([set], ids, set.id)
+  else
+    await PackJsonZip([set], ids, set.id)
+  inProgress.value = false
 }
-
-onMounted(focusSearch)
-watch(router.currentRoute, focusSearch, { immediate: true })
-
-router.afterEach(() => {
-  focusSearch()
-})
-
-onKeyStroke('/', (e) => {
-  e.preventDefault()
-  focusSearch()
-})
 
 function isTyping(e: KeyboardEvent) {
   const el = e.target as HTMLElement | null
@@ -191,243 +177,130 @@ onKeyStroke(['+', '=', '-'], (e) => {
 onKeyStroke('Escape', () => {
   if (current.value !== '') {
     current.value = ''
-    focusSearch()
+    document.querySelector<HTMLElement>('[data-slot="collection-search"][data-place="page"] [data-slot="collection-input"]')?.focus()
   }
 })
 
-const categoriesContainer = ref<HTMLElement | null>(null)
-const { x } = useScroll(categoriesContainer)
-useEventListener(categoriesContainer, 'wheel', (e: WheelEvent) => {
-  e.preventDefault()
-  if (e.deltaX)
-    x.value += e.deltaX
-  else
-    x.value += e.deltaY
-}, {
-  passive: false,
+const view = computed((): CollectionView | null => {
+  const set = collection.value
+  if (!set)
+    return null
+  return {
+    id: set.id,
+    name: set.name,
+    special: isSpecial.value,
+    hidden: set.hidden,
+    url: set.url || set.author?.url,
+    npm: isSpecial.value
+      ? undefined
+      : `https://npmx.dev/package/@iconify-json/${set.id}`,
+    author: set.author?.name,
+    license: set.license,
+    categories: Object.keys(set.categories ?? {}).sort(),
+    variants: Object.keys(set.variants ?? {}).sort(),
+  }
 })
+
+const options = computed(() => ({
+  collection: view.value,
+  loading: !collection.value || loading.value,
+  search: search.value,
+  category: category.value,
+  variant: variant.value,
+  total: icons.value.length,
+  shown: Math.min(max.value, icons.value.length),
+  cached: Boolean(id.value && isInstalled(id.value)),
+  busy: inProgress.value,
+  favorite: Boolean(id.value && isFavoritedCollection(id.value)),
+  dark: isDark.value,
+  canToggleDark: canToggleDark.value,
+  size: iconSize.value,
+  sizeMin: ICON_SIZE_MIN,
+  sizeMax: ICON_SIZE_MAX,
+  sizeStep: ICON_SIZE_STEP,
+  list: listType.value === 'list'
+    ? 'list' as const
+    : 'grid' as const,
+  mode: activeMode.value,
+  drawerCollapsed: drawerCollapsed.value,
+  bag: bags.value.length,
+  copied: copied.value,
+  navigate: (to: string) => router.push(to),
+  setSearch: (value: string) => search.value = value,
+  setCategory: (value: string) => category.value = value,
+  setVariant: (value: string) => variant.value = value,
+  setSize: (size: number) => iconSize.value = clampIconSize(size),
+  setList: (list: 'grid' | 'list') => listType.value = list,
+  setMode: (mode: ActiveMode) => activeMode.value = mode,
+  run,
+  loadMore,
+  loadAll,
+  toggleFavorite: () => id.value && toggleFavoriteCollection(id.value),
+  toggleDark,
+  toggleDrawer: () => drawerCollapsed.value = !drawerCollapsed.value,
+  openBag: () => showBag.value = true,
+}))
+
+const drawerItems = computed((): DrawerItem[] => {
+  const sets = categorySearch.value
+    ? filteredCollections.value
+    : sortedCollectionsInfo.value
+  const items = sets.map(set => ({
+    id: set.id,
+    name: set.name,
+    special: false,
+    hidden: set.hidden,
+    count: set.total ?? 0,
+  }))
+  if (categorySearch.value)
+    return items
+  return [
+    {
+      id: 'all',
+      name: 'All',
+      special: true,
+      count: items.length,
+    },
+    {
+      id: 'recent',
+      name: 'Recent',
+      special: true,
+      count: recentIconIds.value.length,
+    },
+    ...items,
+  ]
+})
+
+const drawerOptions = computed(() => ({
+  items: drawerItems.value,
+  current: route.path.split('/').slice(-1)[0],
+  search: categorySearch.value,
+  favorites: favoritedCollectionIds.value,
+  query: (route.query.s as string) || '',
+  navigate: (to: string) => router.push(to),
+  home: () => router.replace('/'),
+  setSearch: (value: string) => categorySearch.value = value,
+  toggleFavorite: toggleFavoriteCollection,
+}))
 </script>
 
 <template>
-  <WithNavbar>
-    <div class="flex flex-auto md:h-full md:overflow-hidden">
-      <Drawer
-        h-full overflow-y-overlay flex-none hidden md:block
-        :w="drawerCollapsed ? '0px' : '250px'"
-        transition-all duration-300
-      />
-
-      <button
-        fixed top="50%" flex="~ items-end justify-center" w-5 h-8
-        icon-button transition-all duration-300
-        border="t r b base rounded-r-full" z-10 max-md:hidden
-        title="Toggle Sidebar"
-        aria-label="Toggle sidebar"
-        :aria-expanded="!drawerCollapsed"
-        :style="{ left: drawerCollapsed ? '0px' : '250px' }"
-        @click="drawerCollapsed = !drawerCollapsed"
-      >
-        <div
-          i-carbon-chevron-left
-          icon-button ml--1
-          transition duration-300 ease-in-out
-          :class="drawerCollapsed ? 'transform rotate-180' : ''"
+  <!-- One instance of each, for the page, the sidebar and the search in the navigation bar -->
+  <Scope :of="collectionPrimitive" :options="options">
+    <Scope :of="drawer" :options="drawerOptions">
+      <WithNavbar>
+        <View :of="collectionView" />
+        <Bag :open="showBag" @close="showBag = false" @select="onSelect" />
+        <IconDetail
+          :icon="current"
+          :show-collection="isSpecial"
+          @close="current = ''"
+          @copy="onCopy"
+          @next="next(1)"
+          @prev="next(-1)"
         />
-      </button>
-
-      <!-- Loading -->
-      <div
-        v-if="collection && loading"
-        class="h-full w-full flex-auto relative bg-base bg-opacity-75 content-center transition-opacity duration-100"
-        :class="loading ? '' : 'opacity-0 pointer-events-none'"
-      >
-        <div class="absolute text-gray-800 dark:text-dark-500" style="top:50%;left:50%;transform:translate(-50%,-50%)">
-          Loading...
-        </div>
-      </div>
-
-      <div v-else-if="collection" md:h-full w-full relative md:max-h-full grid="~ rows-[max-content_1fr] cols-[minmax(0,1fr)]" md:of-hidden>
-        <div pt-3 md:pt-5 flex="~ col gap-2">
-          <div class="flex px-4 md:px-8 gap-2">
-            <!-- Left -->
-            <div class="flex-auto min-w-0 md:px-2">
-              <div class="text-gray-900 text-xl flex items-center select-none dark:text-gray-200">
-                <div class="truncate">
-                  {{ collection.name }}
-                </div>
-                <!-- Information icons -->
-                <div ml-1 flex="~ items-center gap-1">
-                  <div v-if="collection.hidden" i-carbon:information-disabled text="orange sm" title="The icon set was deprecated and is no longer available" />
-                  <a
-                    v-if="url"
-                    class="flex items-center text-base opacity-25 hover:opacity-100"
-                    :href="url"
-                    target="_blank"
-                    title="Website"
-                    aria-label="Website"
-                  >
-                    <Icon icon="la:external-link-square-alt-solid" />
-                  </a>
-                  <a
-                    v-if="npm"
-                    class="flex items-center text-base opacity-25 hover:opacity-100"
-                    :href="npm"
-                    target="_blank"
-                    title="npm package"
-                    aria-label="npm package"
-                  >
-                    <Icon icon="la:npm" />
-                  </a>
-                </div>
-                <div class="flex-auto" />
-              </div>
-              <div class="text-xs flex flex-wrap md:flex-col gap-x-2">
-                <span class="opacity-50">{{ collection.author?.name }}</span>
-                <a
-                  v-if="collection.license"
-                  class="opacity-50 hover:opacity-100"
-                  :href="collection.license.url"
-                  target="_blank"
-                >{{ collection.license.title }}</a>
-              </div>
-            </div>
-
-            <!-- Right -->
-            <div class="flex flex-col">
-              <ActionsMenu :collection="collection" />
-              <div class="flex-auto" />
-            </div>
-          </div>
-
-          <!-- Categories -->
-          <div v-if="collection.categories" ref="categoriesContainer" role="group" aria-label="Categories" class="px-4 md:px-8 flex gap-2 select-none max-md:of-x-auto max-md:pb-1 md:flex-wrap">
-            <button
-              v-for="c of Object.keys(collection.categories).sort()"
-              :key="c"
-              type="button"
-              :aria-pressed="c === category"
-              class="
-                whitespace-nowrap text-sm inline-block px-3 py-1 md:px-2 md:py-0 border border-base rounded-full hover:bg-gray-50 cursor-pointer
-                dark:border-dark-200 dark:hover:bg-dark-200
-              "
-              :class="c === category ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
-              @click="toggleCategory(c)"
-            >
-              {{ c }}
-            </button>
-          </div>
-
-          <!-- Searching -->
-          <SearchBar
-            ref="searchbar"
-            v-model:search="search"
-            class="mx-8 hidden md:flex"
-            help
-          />
-
-          <!-- Variants --->
-          <div v-if="collection.variants" role="group" aria-label="Variants" class="px-4 md:px-8 mb-2 flex gap-2 select-none items-center max-md:of-x-auto max-md:pb-1 md:flex-wrap">
-            <div text-sm op50 whitespace-nowrap>
-              Variants
-            </div>
-            <button
-              v-for="c of Object.keys(collection.variants).sort()"
-              :key="c"
-              type="button"
-              :aria-pressed="c === variant"
-              class="
-                whitespace-nowrap text-sm inline-block px-3 py-1 md:px-2 md:py-0 border border-base rounded-full hover:bg-gray-50 cursor-pointer
-                dark:border-dark-200 dark:hover:bg-dark-200
-              "
-              :class="c === variant ? 'text-primary border-primary dark:border-primary' : 'opacity-75'"
-              @click="toggleVariant(c)"
-            >
-              {{ c }}
-            </button>
-          </div>
-        </div>
-        <div ref="scroller" md:of-y-scroll md:of-x-hidden>
-          <!-- Icons -->
-          <div class="px-1 md:px-5 pt-2 pb-4 text-center">
-            <Icons
-              :key="namespace"
-              :icons="icons.slice(0, max)"
-              :selected="bags"
-              :style="{ fontSize: `${iconSize}px` }"
-              :display="listType"
-              :search="search"
-              :namespace="namespace"
-              :toggle="activeMode === 'select'"
-              @select="onSelect"
-            />
-            <div ref="sentinel" />
-            <button v-if="icons.length > max" class="btn mx-1 my-3" @click="loadMore">
-              Load More
-            </button>
-            <button v-if="icons.length > max && namespace" class="btn mx-1 my-3" @click="loadAll">
-              Load All ({{ icons.length - max }})
-            </button>
-            <p class="color-fade text-sm pt-4">
-              {{ icons.length }} icons
-            </p>
-          </div>
-
-          <Footer />
-        </div>
-      </div>
-
-      <template v-if="collection">
-        <!-- Bag Fab -->
-        <FAB
-          v-if="bags.length"
-          icon="carbon:shopping-bag"
-          :number="bags.length"
-          :label="`Open bag (${bags.length} icons)`"
-          @click="showBag = true"
-        />
-
-        <!-- Bag -->
-        <Modal :value="showBag" direction="right" @close="showBag = false">
-          <Bag
-            @close="showBag = false"
-            @select="onSelect"
-          />
-        </Modal>
-
-        <!-- Details -->
-        <Modal :value="!!current" @close="current = ''">
-          <IconDetail
-            :icon="current" :show-collection="specialTabs.includes(collection.id)"
-            @close="current = ''"
-            @copy="onCopy"
-            @next="next(1)"
-            @prev="next(-1)"
-          />
-        </Modal>
-
-        <!-- Help -->
-        <ModalDialog :value="showHelp" @close="showHelp = false">
-          <HelpPage />
-        </ModalDialog>
-
-        <!-- Mode -->
-        <button
-          type="button"
-          :aria-hidden="activeMode === 'normal'"
-          :tabindex="activeMode === 'normal' ? -1 : undefined"
-          class="fixed top-0 right-0 pl-4 pr-2 py-1 rounded-l-full bg-primary text-white shadow mt-16 cursor-pointer transition-transform duration-300 ease-in-out"
-          :style="activeMode !== 'normal' ? {} : { transform: 'translateX(120%)' }"
-          @click="activeMode = 'normal'"
-        >
-          {{ activeMode === 'select' ? 'Multiple select' : 'Name copying mode' }}
-          <Icon icon="carbon:close" class="inline-block text-xl align-text-bottom" aria-hidden="true" />
-        </button>
-
-        <Notification :value="copied">
-          <Icon icon="mdi:check" class="inline-block mr-2 font-xl align-middle" />
-          <span class="align-middle">Copied</span>
-        </Notification>
-      </template>
-    </div>
-  </WithNavbar>
+        <HelpPage :open="showHelp" @close="showHelp = false" />
+      </WithNavbar>
+    </Scope>
+  </Scope>
 </template>

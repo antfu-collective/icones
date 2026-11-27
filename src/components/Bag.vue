@@ -1,142 +1,65 @@
 <script setup lang='ts'>
+import type { BagPack } from '../sekiso/behavior/bag'
 import type { PackType } from '../utils/svg'
+import { View } from '@sekiso/vue'
 import { collections } from '../data'
 import { isVSCode } from '../env'
+import { BagSelectKey } from '../hooks'
+import { bagView } from '../sekiso/views/bag'
 import { bags, clearBag } from '../store'
 import { getBagShareUrl } from '../utils/bag'
 import { PackIconFont, PackSVGSprite, PackZip } from '../utils/pack'
+
+defineProps<{ open: boolean }>()
 
 const emit = defineEmits<{
   (event: 'close'): void
   (event: 'select', value: string): void
 }>()
 
-const showPackOption = ref(false)
+provide(BagSelectKey, icon => emit('select', icon))
 
 const { copy, copied } = useClipboard({ legacy: true })
 
-function copyShareLink() {
-  copy(getBagShareUrl(bags.value, isVSCode ? 'https://icones.js.org' : location.origin))
+const formats: { type: PackType, name: string, tag?: string }[] = [
+  { type: 'svg', name: 'SVG' },
+  { type: 'vue', name: 'Vue' },
+  { type: 'jsx', name: 'React' },
+  { type: 'tsx', name: 'React', tag: 'TS' },
+  { type: 'svelte', name: 'Svelte' },
+  { type: 'qwik', name: 'Qwik' },
+  { type: 'solid', name: 'Solid' },
+  { type: 'astro', name: 'Astro' },
+  { type: 'react-native', name: 'React Native' },
+  { type: 'json', name: 'JSON' },
+]
+
+async function pack(kind: BagPack) {
+  if (kind === 'iconfont')
+    await PackIconFont(collections, bags.value)
+  else if (kind === 'sprite')
+    await PackSVGSprite(collections, bags.value)
+  else
+    await PackZip(collections, bags.value, 'icones-bags', kind.slice('zip:'.length) as PackType)
 }
 
-function clear() {
-  // eslint-disable-next-line no-alert
-  if (confirm('Are you sure to remove all icons from the bag?')) {
-    clearBag()
-    emit('close')
-  }
-}
-
-async function packIconFont() {
-  // TODO: customzie
-  await PackIconFont(
-    collections,
-    bags.value,
-  )
-}
-
-async function packSVGSprite() {
-  await PackSVGSprite(
-    collections,
-    bags.value,
-  )
-}
-
-async function PackSvgs(type: PackType = 'svg') {
-  await PackZip(
-    collections,
-    bags.value,
-    'icones-bags',
-    type,
-  )
-}
+const options = computed(() => ({
+  count: bags.value.length,
+  shared: copied.value,
+  formats,
+  close: () => emit('close'),
+  share: () => copy(getBagShareUrl(bags.value, isVSCode ? 'https://icones.js.org' : location.origin)),
+  clear: () => {
+    // eslint-disable-next-line no-alert
+    if (confirm('Are you sure to remove all icons from the bag?')) {
+      clearBag()
+      emit('close')
+    }
+  },
+  pack,
+}))
 </script>
 
 <template>
-  <div class="h-full flex flex-col w-screen md:w-96 xl:w-128">
-    <div
-      class="
-        py-3 px-6 flex flex-none border-b border-base
-      "
-    >
-      <div>
-        <NavPlaceholder class="md:hidden" />
-        <div class="text-lg">
-          Bag
-        </div>
-        <div class="opacity-50 text-xs">
-          {{ bags.length }} icons picked
-        </div>
-      </div>
-      <div class="flex-auto" />
-      <IconButton
-        v-if="bags.length"
-        class="text-xl mr-4 flex-none"
-        :icon="copied ? 'carbon:checkmark' : 'carbon:link'"
-        :label="copied ? 'Share link copied' : 'Copy share link'"
-        @click="copyShareLink"
-      />
-      <IconButton v-if="bags.length" class="text-xl mr-4 flex-none" icon="carbon:delete" label="Clear bag" @click="clear" />
-      <IconButton class="text-2xl flex-none" icon="carbon:close" label="Close bag" @click="$emit('close')" />
-    </div>
-
-    <template v-if="bags.length">
-      <div class="flex-auto overflow-y-auto py-3 px-1">
-        <Icons :icons="bags" @select="(e: any) => $emit('select', e)" />
-      </div>
-
-      <div
-        v-show="showPackOption"
-        class="relative flex-none border-t border-base py-3 px-6 text-2xl opacity-75"
-      >
-        <IconButton class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close" label="Close" @click="showPackOption = false" />
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svg')">
-          SVG
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('vue')">
-          Vue
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('jsx')">
-          React
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('tsx')">
-          React<sup class="opacity-50 -mr-1">TS</sup>
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('svelte')">
-          Svelte
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('qwik')">
-          Qwik
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('solid')">
-          Solid
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('astro')">
-          Astro
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('react-native')">
-          React Native
-        </button>
-        <button class="btn small mr-1 mb-1 opacity-75" @click="PackSvgs('json')">
-          JSON
-        </button>
-      </div>
-
-      <div
-        class="
-          flex-none border-t border-base py-3 px-6 text-2xl opacity-75
-        "
-      >
-        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:download" text="Download Zip" :active="true" @click="showPackOption = true" />
-        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:function" text="Generate Icon Fonts" :active="true" @click="packIconFont" />
-        <IconButton class="p-1 cursor-pointer hover:text-primary" icon="carbon:apps" text="Download SVG Sprite" :active="true" @click="packSVGSprite" />
-      </div>
-    </template>
-
-    <template v-else>
-      <div class="text-center px-4 py-8 text-gray-500 dark:text-gray-400 italic font-light text-sm">
-        No icons yet ;)
-      </div>
-    </template>
-  </div>
+  <View :of="bagView" :options="{ ...options, open }" />
 </template>
