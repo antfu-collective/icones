@@ -1,4 +1,4 @@
-import { defineBehavior, follow, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, link, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
 
 /** A row of the sidebar: an icon set, or `all` and `recent`. */
@@ -74,15 +74,11 @@ export const drawer = defineBehavior({
     }),
     link: slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: (state, part) => ({
-        'href': hrefOf(part.key, state.query),
+      ...link((state, part) => hrefOf(part.key, state.query), (state, part) => ({
         'aria-current': state.current === part.key
           ? 'page'
           : undefined,
-      }),
-      on: {
-        click: (event, { api, key, store }) => follow(event, () => api.navigate(hrefOf(key, store.get().query))),
-      },
+      })),
     }),
     favorite: slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },

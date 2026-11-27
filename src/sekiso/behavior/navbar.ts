@@ -1,4 +1,4 @@
-import { defineBehavior, external, follow, port } from '@sekiso/core/behavior'
+import { defineBehavior, external, link, port } from '@sekiso/core/behavior'
 
 /** The bar at the top of every page: back, the app name, and the dark switch. */
 export const navbar = defineBehavior({
@@ -22,10 +22,7 @@ export const navbar = defineBehavior({
     back: slot<{ label: string }>({
       props: { label: 'string' },
       present: state => !state.home,
-      attrs: (_state, part) => ({ href: '/', title: part.props.label }),
-      on: {
-        click: (event, { api }) => follow(event, () => api.navigate('/')),
-      },
+      ...link(() => '/', (_state, part) => ({ title: part.props.label })),
     }),
     github: slot<{ label: string }>({
       props: { label: 'string' },
@@ -38,10 +35,7 @@ export const navbar = defineBehavior({
     settings: slot<{ label: string }>({
       props: { label: 'string' },
       present: state => !state.collection,
-      attrs: (_state, part) => ({ href: '/settings', title: part.props.label }),
-      on: {
-        click: (event, { api }) => follow(event, () => api.navigate('/settings')),
-      },
+      ...link(() => '/settings', (_state, part) => ({ title: part.props.label })),
     }),
     dark: slot<{ label: string }>({
       props: { label: 'string' },

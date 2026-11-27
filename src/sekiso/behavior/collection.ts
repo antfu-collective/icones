@@ -1,4 +1,4 @@
-import { defineBehavior, external, follow, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, external, link, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
 
 /** What the page shows of the open icon set. */
@@ -311,13 +311,7 @@ export const collection = defineBehavior({
     }),
     'settings': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        href: '/settings',
-        title: part.props.label,
-      }),
-      on: {
-        click: (event, { api }) => follow(event, () => api.navigate('/settings')),
-      },
+      ...link(() => '/settings', (_state, part) => ({ title: part.props.label })),
     }),
     'favorite': slot<{ label: string }>({
       props: { label: 'string' },
