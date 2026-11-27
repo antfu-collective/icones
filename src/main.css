@@ -4,10 +4,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html.dark {
-  background: #181818;
-  color-scheme: dark;
-}
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark);
@@ -75,30 +71,6 @@ html:not(.dark) .shiki span {
 ::-webkit-scrollbar-thumb:active {
   background: rgba(128, 128, 128, 0.5);
   border-radius: 3px;
-}
-
-/* Tootip */
-.v-popper--theme-tooltip .v-popper__inner,
-.v-popper--theme-menu .v-popper__inner {
-  --uno: important-bg-base;
-}
-
-.v-popper--theme-tooltip .v-popper__arrow-outer,
-.v-popper--theme-menu .v-popper__arrow-outer {
-  --uno: important-border-none;
-}
-
-.v-popper--theme-tooltip .v-popper__inner,
-.v-popper--theme-menu .v-popper__inner {
-  --uno: border border-base shadow-lg;
-}
-
-.v-popper--theme-menu .v-popper__arrow-outer {
-  visibility: hidden;
-}
-
-.v-popper--theme-menu .v-popper__arrow-inner {
-  visibility: hidden;
 }
 
 /* fallback black svg in dark mode */

@@ -1,0 +1,113 @@
+/**
+ * The contract every theme in `themes/` is written against.
+ * `pnpm sekiso check` checks the themes against it.
+ */
+
+/** The icon names the views use. Every theme has artwork for each one. */
+export const icons = [
+  'back',
+  'github',
+  'settings',
+  'light',
+  'dark',
+  'search',
+  'clear',
+  'help',
+  'search-all',
+  'star',
+  'starred',
+  'remove',
+  'hidden',
+  'visible',
+  'cached',
+  'deprecated',
+  'empty',
+  'drawer',
+  'website',
+  'npm',
+  'size',
+  'menu',
+  'bag',
+  'check',
+  'color',
+  'copy',
+  'case',
+  'add',
+  'select',
+  'checked',
+  'unchecked',
+  'link',
+  'download',
+  'font',
+  'sprite',
+  'busy',
+  'manager-pnpm',
+  'manager-npm',
+  'manager-yarn',
+  'manager-bun',
+] as const
+
+/**
+ * What a part can be. Every theme dresses each role, and a part wears the look
+ * of its role, so a new part of a known role needs no look of its own.
+ */
+export const roles = {
+  'page': 'The body of a screen, below the navigation bar.',
+  'bar': 'A bar of navigation at the top of a screen.',
+  'brand': 'The name of the app.',
+  'heading': 'The title of a screen or a section.',
+  'subheading': 'The title of a group inside a section.',
+  'caption': 'A short line of secondary text, such as a count.',
+  'text': 'Text a person reads.',
+  'search': 'A box that holds a search field and its buttons.',
+  'field': 'A box a person types in.',
+  'icon-button': 'A small button or link that shows only an icon.',
+  'toggle': 'A small icon button that is on or off, with `aria-pressed`.',
+  'link': 'A link inside text.',
+  'card': 'A link to a thing, shown as a box with a title and a preview.',
+  'list': 'A list of things.',
+  'list-item': 'One thing in a list, as a row.',
+  'swatch': 'A small preview of a color.',
+  'keycap': 'A key on the keyboard.',
+  'empty': 'What a list shows when it holds nothing.',
+  'badge': 'A small icon that says something about a thing, like that it is deprecated.',
+  'toolbar': 'A row of buttons for one thing.',
+  'popover': 'A box that floats above the page, next to the button that opened it.',
+  'slider': 'A range input.',
+  'menu': 'A native select that runs what is picked.',
+  'chip': 'A small rounded button that filters or turns on an option, with `aria-pressed`.',
+  'button': 'A text button.',
+  'action': 'A text button with an icon, at the bottom of a panel.',
+  'code': 'Code, like an icon id or a command.',
+  'option': 'One choice in a popover.',
+  'tab': 'One choice in a row of choices, with `aria-pressed`.',
+  'fab': 'A round button that floats in a corner of the page.',
+  'counter': 'A small number on another part.',
+  'banner': 'A bar that says the page is in a mode, and leaves it on a click.',
+  'toast': 'A short message that comes and goes, with `data-shown`.',
+  'resizer': 'The edge of a panel, to drag to a new width.',
+  'sheet': 'A panel that slides over the page, with a shade behind it.',
+  'dialog': 'A box in the middle of the page, with a shade behind it.',
+}
+
+/**
+ * The values every theme gives. The looks of the roles are written with these,
+ * so a theme that extends another and gives other values is a new look.
+ */
+export const tokens = {
+  'fg': 'The color of text.',
+  'muted': 'The color of secondary text.',
+  'line': 'The color of a border.',
+  'surface': 'The color behind the page.',
+  'raised': 'The color of a box above the page, like a card or a popover.',
+  'accent': 'The one color that stands out: links, focus, the hovered icon.',
+  'icon': 'The color of the icons in a grid of icons.',
+  'star': 'The color of a favorite.',
+  'danger': 'The color of what is wrong or hidden.',
+  'font': 'The font of the text.',
+  'font-display': 'The font of the app name and the headings.',
+  'font-mono': 'The font of code and ids.',
+  'radius': 'The roundness of boxes.',
+  'paper': 'An image behind the page, or `none`.',
+  'scheme': 'The color scheme: `light`, `dark`, or `light dark` to follow the dark switch.',
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { getSearchHighlightHTML, useThemeColor } from '../hooks'
+import { getSearchHighlightHTML } from '../hooks'
 
 const props = defineProps({
   icons: {
@@ -33,7 +33,7 @@ const props = defineProps({
   },
   colorClass: {
     type: String,
-    default: 'text-dark-600 dark:text-dark-900',
+    default: 'text-[var(--k-icon)]',
   },
   tooltip: {
     type: Boolean,
@@ -57,8 +57,6 @@ const props = defineProps({
 const emit = defineEmits<{
   (event: 'select', id: string): void
 }>()
-
-const { style } = useThemeColor()
 
 const selectedSet = computed(() => new Set(props.selected))
 
@@ -138,7 +136,7 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
       <div
         v-if="hovered"
         class="icons-tooltip fixed z-100 pointer-events-none px-2 py-1.5 leading-none text-sm text-primary bg-base border border-base rounded shadow-lg"
-        :style="[style, { left: `${hovered.x}px`, top: `${hovered.y + 8}px` }]"
+        :style="{ left: `${hovered.x}px`, top: `${hovered.y + 8}px` }"
       >
         {{ hovered.name }}
       </div>
@@ -149,7 +147,7 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
 <style>
 .icons-item:hover,
 .icons-item.active {
-  color: var(--theme-color);
+  color: var(--k-accent);
 }
 
 .icons-tooltip {
@@ -175,7 +173,7 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
   right: -3px;
   bottom: -3px;
   border-radius: 4px;
-  background: var(--theme-color);
+  background: var(--k-accent);
   opacity: 0.1;
 }
 
@@ -187,7 +185,7 @@ useEventListener('scroll', hideTooltip, { capture: true, passive: true })
   right: -4px;
   bottom: -4px;
   border-radius: 4px;
-  border: 1px solid var(--theme-color);
+  border: 1px solid var(--k-accent);
   opacity: 0.4;
 }
 </style>

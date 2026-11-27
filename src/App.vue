@@ -1,15 +1,22 @@
 <script setup lang='ts'>
-import { useThemeColor } from './hooks'
+import { Scope } from '@sekiso/vue'
+import { footer } from './sekiso/behavior/footer'
 
-const { style } = useThemeColor()
+const buildDate = new Date(__BUILD_TIME__)
+const time = useDateFormat(buildDate, 'YYYY/MM/DD HH:mm')
+const ago = useTimeAgo(buildDate)
+const footerOptions = computed(() => ({ time: time.value, ago: ago.value }))
 </script>
 
 <template>
-  <!-- On mobile the document scrolls, so iOS scrolls to the top on a status bar tap -->
-  <div class="flex flex-col min-h-screen md:h-screen md:overflow-hidden bg-base" :style="style">
-    <div class="flex-auto md:h-full md:overflow-overlay">
-      <RouterView />
+  <!-- One footer instance, for every view that embeds `footerView` -->
+  <Scope :of="footer" :options="footerOptions">
+    <!-- On mobile the document scrolls, so iOS scrolls to the top on a status bar tap -->
+    <div class="flex flex-col min-h-screen md:h-screen md:overflow-hidden bg-base">
+      <div class="flex-auto md:h-full md:overflow-overlay">
+        <RouterView />
+      </div>
+      <Progress />
     </div>
-    <Progress />
-  </div>
+  </Scope>
 </template>

@@ -1,7 +1,9 @@
 import type { Router } from 'vue-router'
 import type { CollectionInfo } from '../data'
 import { collections, getCollectionMeta, getFullMeta, getIconCategories } from '../data'
+import { themeOrder } from '../sekiso/app'
 import { addToBag, bags, removeFromBag } from '../store/localstorage'
+import { themeName } from '../store/theme'
 import { getBagShareUrl } from './bag'
 import { getIconSnippet, SnippetMap } from './icons'
 import { predictWords } from './predict'
@@ -353,6 +355,24 @@ export function createAgentTools(router: Router): AgentTool[] {
         return {
           icons: [...bags.value],
         }
+      },
+    },
+    {
+      name: 'set_theme',
+      title: 'Set theme',
+      description: 'Change the look of the whole app. "original" is the classic look, light or dark. "washi" is ink on Japanese paper, laid out like a book, with a rail on the right and vertical titles. "geist" is black and white Geist type, laid out like a dashboard with lists, tabs and side panels, light or dark.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', enum: themeOrder, description: 'The name of the theme' },
+        },
+        required: ['name'],
+      },
+      execute: async ({ name }) => {
+        if (!themeOrder.includes(name))
+          throw new Error(`Unknown theme "${name}". Use one of: ${themeOrder.join(', ')}`)
+        themeName.value = name
+        return { theme: name, shareUrl: `${location.origin}/?theme=${name}` }
       },
     },
   ]

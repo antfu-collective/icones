@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@sekiso/core",
     "lib": ["DOM", "ESNext", "WebWorker"],
     "module": "esnext",
     "moduleResolution": "Bundler",
@@ -19,6 +20,7 @@
   },
   "exclude": [
     "dist",
+    "eslint.config.ts",
     "node_modules"
   ]
 }

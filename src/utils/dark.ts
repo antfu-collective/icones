@@ -1,25 +1,27 @@
-<script setup lang="ts">
-import { isDark } from '../store'
+import { nextTick } from 'vue'
+import { isDark, preferDark } from '../store'
 
 const isAppearanceTransition = typeof document !== 'undefined'
   // @ts-expect-error: Transition API
   && document.startViewTransition
   && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-function toggleDark(event?: MouseEvent) {
+/**
+ * Switches light and dark. With the click, the new scheme grows in a circle from it.
+ */
+export function toggleDark(event?: Event) {
   if (!isAppearanceTransition || !event) {
-    isDark.value = !isDark.value
+    preferDark.value = !preferDark.value
     return
   }
 
-  const x = event.clientX
-  const y = event.clientY
+  const { clientX: x, clientY: y } = event as MouseEvent
   const endRadius = Math.hypot(
     Math.max(x, innerWidth - x),
     Math.max(y, innerHeight - y),
   )
   const transition = document.startViewTransition(async () => {
-    isDark.value = !isDark.value
+    preferDark.value = !preferDark.value
     await nextTick()
   })
 
@@ -45,15 +47,3 @@ function toggleDark(event?: MouseEvent) {
     )
   })
 }
-</script>
-
-<template>
-  <button
-    type="button"
-    icon-button
-    title="Toggle dark mode"
-    aria-label="Toggle dark mode"
-    dark:i-carbon-moon i-carbon:sun
-    @click="toggleDark"
-  />
-</template>

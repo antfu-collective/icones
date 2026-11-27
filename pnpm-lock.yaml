@@ -184,6 +184,24 @@ importers:
       '@antfu/utils':
         specifier: ^9.3.0
         version: 9.3.0
+      '@fontsource-variable/geist':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource-variable/geist-mono':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@sekiso/core':
+        specifier: 0.0.1
+        version: 0.0.1
+      '@sekiso/vue':
+        specifier: 0.0.1
+        version: 0.0.1(vue@3.5.46(typescript@6.0.3))
+      '@ui-sdk/core':
+        specifier: 0.1.0-beta.17
+        version: 0.1.0-beta.17
+      '@ui-sdk/vue':
+        specifier: 0.1.0-beta.17
+        version: 0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))
       '@vueuse/core':
         specifier: ^15.0.0
         version: 15.0.0(vue@3.5.46(typescript@6.0.3))
@@ -193,9 +211,6 @@ importers:
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
-      floating-vue:
-        specifier: ^5.4.0
-        version: 5.4.0(vue@3.5.46(typescript@6.0.3))
       fzf:
         specifier: ^0.5.2
         version: 0.5.2
@@ -230,6 +245,9 @@ importers:
       '@iconify/json':
         specifier: ^2.2.559
         version: 2.2.559
+      '@sekiso/cli':
+        specifier: 0.0.1
+        version: 0.0.1(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
@@ -248,6 +266,9 @@ importers:
       eslint-plugin-format:
         specifier: ^2.0.1
         version: 2.0.1(eslint@10.15.0(jiti@2.7.0))
+      eslint-plugin-sekiso:
+        specifier: 0.0.1
+        version: 0.0.1(eslint@10.15.0(jiti@2.7.0))
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -1217,14 +1238,11 @@ packages:
     resolution: {integrity: sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@floating-ui/core@1.8.0':
-    resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
+  '@fontsource-variable/geist-mono@5.3.0':
+    resolution: {integrity: sha512-vBbuwDEo9AkrqADMXOrlAR3DFcJi4/JxeuU43FoiQERnNwsfXNnvxvReZG02cQKmyk4DZkZdBZX3oTDvy2zBAw==}
 
-  '@floating-ui/dom@1.8.0':
-    resolution: {integrity: sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==}
-
-  '@floating-ui/utils@0.2.12':
-    resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+  '@fontsource-variable/geist@5.3.0':
+    resolution: {integrity: sha512-j0m+vLQuG5XAYoHtGCVu0spvlGreR3EzpECUVzkFmI1mTVnAO38l/NEPDCFgZ177JxzYJCLSmTQibIiYPilGrA==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -1889,6 +1907,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@sekiso/cli@0.0.1':
+    resolution: {integrity: sha512-rb5ltadv+EWtFP7VOyX1l13zegb7U9HWqocLAfhRCc764ckaDfkPVFKDRdEQRIVjXdZf5+OqALDnRq2fEOn+SA==}
+    hasBin: true
+
+  '@sekiso/core@0.0.1':
+    resolution: {integrity: sha512-kdTarwVqXp0Rytk5ih21zugywFlr9PLgW6y6r5075eHcqj1OdcqeOcwscIeb0tQa9ystxWi4hQE6WHH8Kb9HBg==}
+
+  '@sekiso/vue@0.0.1':
+    resolution: {integrity: sha512-yRFzgK8gA4SWdnO+nH0aRbPZPIEpaYi5/PPrv3AAJrSPqYxgkRnBFCj+9TvWIBJYQT2hq1vqhhkz01oUtWA5Tw==}
+    peerDependencies:
+      vue: ^3.5.0
+
   '@shikijs/core@4.6.0':
     resolution: {integrity: sha512-bfd4OKgvoyXYiYmMRuleA656P4V7M/Du9lcTl38Ngm6KszMj7bq4J1IGZwSYR4c95Tv5UQALtYNWUwaI9UT3xw==}
     engines: {node: '>=20'}
@@ -2057,6 +2087,25 @@ packages:
   '@typescript-eslint/visitor-keys@8.73.0':
     resolution: {integrity: sha512-k4lsFVpRZICbltkIEEH4hZRkwXkqDF1GHBpClKQOHQY+RkoZAAuyc1ci3I6p+CB6v3U4jaHIUshc4RzzQXZWLg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@ui-sdk/core@0.1.0-beta.17':
+    resolution: {integrity: sha512-wBWNqT0Qf1sE6fqD1XuBnSGBFcY6+cek1z7rKl/r4j2bsv2or9i7z44PLy0J9hmflm3IJ5MLW0P4ur2H9BCIvg==}
+
+  '@ui-sdk/vue@0.1.0-beta.17':
+    resolution: {integrity: sha512-4wx8xdVwXLp++/XEnf0MEMeshHb0UDdotTatfIObbQ2D+QQUG3OMLD0thjQWayMFY5phdYBM9t+YlIJdzYAq5Q==}
+    peerDependencies:
+      '@nuxt/kit': ^4.0.0 || ^5.0.0-0
+      '@nuxt/schema': ^4.0.0 || ^5.0.0-0
+      '@ui-sdk/core': ^0.1.0-beta.17
+      nuxt: ^4.0.0 || ^5.0.0-0
+      vue: '>=3.5'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      '@nuxt/schema':
+        optional: true
+      nuxt:
+        optional: true
 
   '@ungap/structured-clone@1.3.1':
     resolution: {integrity: sha512-mUFwbeTqrVgDQxFveS+df2yfap6iuP20NAKAsBt5jDEoOTDew+zwLAOilHCeQJOVSvmgCX4ogqIrA0mnyr08yQ==}
@@ -3002,6 +3051,11 @@ packages:
     peerDependencies:
       eslint: '>=9.38.0'
 
+  eslint-plugin-sekiso@0.0.1:
+    resolution: {integrity: sha512-S5EZx140K55WoBKXGucjb+N8b6Bsu8m5NHlgbJzEQTU7UnHI10Hfx08d17okQA8AC/OfyD9bXYm7q2UqPr3rrw==}
+    peerDependencies:
+      eslint: '>=9.0.0'
+
   eslint-plugin-toml@1.5.0:
     resolution: {integrity: sha512-qBjRywEkKxO2uYOjus//6GVF1r+Hg5QDkRO8RTY6XcaXgWfBU0DhwpFmJa2Ljf0Sz49r7DdZlpKwwHmJ4nmH1Q==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
@@ -3222,15 +3276,6 @@ packages:
 
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
-
-  floating-vue@5.4.0:
-    resolution: {integrity: sha512-hb5y5N8sXs9Dy4iZfWBKLzf3FkUkqhbkQREhRulAEvIihMlSGxc/7pXGrIDetoqXm/RRHNVjvN6lql9IhMM+tQ==}
-    peerDependencies:
-      '@nuxt/kit': ^3.2.0 || ^4.0.0 || ^5.0.0-0
-      vue: ^3.2.0
-    peerDependenciesMeta:
-      '@nuxt/kit':
-        optional: true
 
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
@@ -4319,9 +4364,18 @@ packages:
   pkg-types@2.4.0:
     resolution: {integrity: sha512-07Fys7iVx0X6TcviMOgogM1Lk33ZyqOezMnU79S+kffWqwolG/5W9V8EgQSeYCIfFTYVgssRbnH630Oa2+soBA==}
 
+  playwright-core@1.65.1:
+    resolution: {integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
+
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
 
   pnpm-workspace-yaml@1.9.1:
     resolution: {integrity: sha512-Xj/T2X6DNAWbtk/9UQ0/TJRswltiHZevmcMjqoL7WrpJi67lu3qaslU4+I+zJ8wtwqmuvAE0KkB8rbv2ZdogBg==}
@@ -6471,16 +6525,9 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@floating-ui/core@1.8.0':
-    dependencies:
-      '@floating-ui/utils': 0.2.12
+  '@fontsource-variable/geist-mono@5.3.0': {}
 
-  '@floating-ui/dom@1.8.0':
-    dependencies:
-      '@floating-ui/core': 1.8.0
-      '@floating-ui/utils': 0.2.12
-
-  '@floating-ui/utils@0.2.12': {}
+  '@fontsource-variable/geist@5.3.0': {}
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -6900,6 +6947,41 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.61.0':
     optional: true
 
+  '@sekiso/cli@0.0.1(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)':
+    dependencies:
+      playwright-core: 1.65.1
+      pngjs: 7.0.0
+      typescript: 6.0.3
+      vite: 8.3.8(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vitejs/devtools'
+      - esbuild
+      - jiti
+      - less
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - yaml
+
+  '@sekiso/core@0.0.1':
+    dependencies:
+      '@ui-sdk/core': 0.1.0-beta.17
+
+  '@sekiso/vue@0.0.1(vue@3.5.46(typescript@6.0.3))':
+    dependencies:
+      '@sekiso/core': 0.0.1
+      '@ui-sdk/core': 0.1.0-beta.17
+      '@ui-sdk/vue': 0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))
+      vue: 3.5.46(typescript@6.0.3)
+    transitivePeerDependencies:
+      - '@nuxt/kit'
+      - '@nuxt/schema'
+      - nuxt
+
   '@shikijs/core@4.6.0':
     dependencies:
       '@shikijs/primitive': 4.6.0
@@ -7110,6 +7192,13 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.73.0
       eslint-visitor-keys: 5.0.1
+
+  '@ui-sdk/core@0.1.0-beta.17': {}
+
+  '@ui-sdk/vue@0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))':
+    dependencies:
+      '@ui-sdk/core': 0.1.0-beta.17
+      vue: 3.5.46(typescript@6.0.3)
 
   '@ungap/structured-clone@1.3.1': {}
 
@@ -8327,6 +8416,10 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
+  eslint-plugin-sekiso@0.0.1(eslint@10.15.0(jiti@2.7.0)):
+    dependencies:
+      eslint: 10.15.0(jiti@2.7.0)
+
   eslint-plugin-toml@1.5.0(eslint@10.15.0(jiti@2.7.0)):
     dependencies:
       '@eslint/core': 1.2.1
@@ -8584,11 +8677,6 @@ snapshots:
       hookified: 1.15.1
 
   flatted@3.4.2: {}
-
-  floating-vue@5.4.0(vue@3.5.46(typescript@6.0.3)):
-    dependencies:
-      '@floating-ui/dom': 1.8.0
-      vue: 3.5.46(typescript@6.0.3)
 
   for-each@0.3.5:
     dependencies:
@@ -9947,7 +10035,11 @@ snapshots:
       exsolve: 1.2.0
       pathe: 2.0.3
 
+  playwright-core@1.65.1: {}
+
   pluralize@8.0.0: {}
+
+  pngjs@7.0.0: {}
 
   pnpm-workspace-yaml@1.9.1:
     dependencies:

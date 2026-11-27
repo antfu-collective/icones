@@ -1,15 +1,14 @@
+/* eslint-disable perfectionist/sort-imports -- the reset and the base styles go first, so the themes, which the pages import, come after them */
+import '@unocss/reset/tailwind.css'
+import './main.css'
+import 'uno.css'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from '~pages'
 import App from './App.vue'
 import { basePath } from './env'
-
-import '@unocss/reset/tailwind.css'
-import 'floating-vue/dist/style.css'
-import './main.css'
-import 'uno.css'
-
-const app = createApp(App)
+import { useSekiso } from './sekiso/renderer'
+/* eslint-enable perfectionist/sort-imports */
 
 const router = createRouter({
   history: createWebHistory(basePath),
@@ -30,6 +29,8 @@ if (PWA) {
   })
 }
 
+const { wrap } = useSekiso(router)
+const app = createApp(wrap(App))
 app.use(router)
 
 // Tools for AI agents in the browser, see `src/utils/agent-tools.ts`

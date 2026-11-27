@@ -1,33 +1,29 @@
 <script setup lang='ts'>
+import type { DetailGroup } from '../sekiso/behavior/detail'
+import { View } from '@sekiso/vue'
 import { collections, getIconCategories } from '../data'
-import { activeMode, copyPreviewColor, getTransformedId, inBag, isDark, preferredCase, previewColor, pushRecentIcon, showCaseSelect, showHelp, toggleBag } from '../store'
+import { detailView } from '../sekiso/views/detail'
+import { activeMode, copyPreviewColor, getTransformedId, inBag, isDark, preferredCase, previewColor, pushRecentIcon, selectedPackageManager, showHelp, toggleBag } from '../store'
 import { idCases } from '../utils/case'
 import { isLowContrast } from '../utils/color'
 import { dataUrlToBlob } from '../utils/dataUrlToBlob'
 import { Download, getIconSnippet, SnippetMap, toComponentName } from '../utils/icons'
-import InstallIconSet from './InstallIconSet.vue'
 
-const props = defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  showCollection: {
-    type: Boolean,
-    required: true,
-  },
-})
+const props = defineProps<{
+  icon: string
+  showCollection: boolean
+}>()
 
-const emit = defineEmits(['close', 'copy', 'next', 'prev'])
+const emit = defineEmits<{
+  (event: 'close'): void
+  (event: 'copy', ok: boolean): void
+  (event: 'next'): void
+  (event: 'prev'): void
+}>()
 
-const caseSelector = ref<HTMLDivElement>()
-const transformedId = computed(() => getTransformedId(props.icon))
+const router = useRouter()
+const collection = computed(() => collections.find(i => i.id === props.icon.split(':')[0]))
 const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
-const lowContrast = computed(() => isLowContrast(previewColor.value, isDark.value))
-
-onClickOutside(caseSelector, () => {
-  showCaseSelect.value = false
-})
 
 onKeyStroke('ArrowLeft', (e) => {
   if (!props.icon)
@@ -57,8 +53,9 @@ async function copyText(text?: string) {
 
 async function copyPng(dataUrl: string): Promise<boolean> {
   try {
-    const blob = dataUrlToBlob(dataUrl)
-    const item = new ClipboardItem({ 'image/png': blob })
+    const item = new ClipboardItem({
+      'image/png': dataUrlToBlob(dataUrl),
+    })
     await navigator.clipboard.write([item])
     return true
   }
@@ -70,17 +67,12 @@ async function copyPng(dataUrl: string): Promise<boolean> {
 
 async function copy(type: string) {
   pushRecentIcon(props.icon)
-
   const svg = await getIconSnippet(collections, props.icon, type, true, color.value)
   if (!svg)
     return
-
-  emit(
-    'copy',
-    type === 'png'
-      ? await copyPng(svg)
-      : await copyText(svg),
-  )
+  emit('copy', type === 'png'
+    ? await copyPng(svg)
+    : await copyText(svg))
 }
 
 async function download(type: string) {
@@ -91,242 +83,111 @@ async function download(type: string) {
   const ext = (type === 'solid' || type === 'qwik' || type === 'react-native')
     ? 'tsx'
     : type
-  const name = `${toComponentName(props.icon)}.${ext}`
   const blob = type === 'png'
     ? dataUrlToBlob(text)
     : new Blob([text], { type: 'text/plain;charset=utf-8' })
-  Download(blob, name)
+  Download(blob, `${toComponentName(props.icon)}.${ext}`)
 }
 
-function toggleSelectingMode() {
-  switch (activeMode.value) {
-    case 'select':
-      activeMode.value = 'normal'
-      break
-    default:
-      activeMode.value = 'select'
-      emit('close')
-      break
+function toggleSelecting() {
+  if (activeMode.value === 'select') {
+    activeMode.value = 'normal'
+  }
+  else {
+    activeMode.value = 'select'
+    emit('close')
   }
 }
 
-const collection = computed(() => {
-  const id = props.icon.split(':')[0]
-  return collections.find(i => i.id === id)
-})
+// The install command was just copied
+const installCopied = ref(false)
+async function copyInstall() {
+  const manager = selectedPackageManager.value
+  const ok = await copyText(`${manager} ${manager !== 'npm'
+    ? 'add'
+    : 'i'} -D @iconify-json/${collection.value?.id}`)
+  installCopied.value = ok
+  setTimeout(() => installCopied.value = false, 2000)
+}
 
-const categories = computedAsync(() => getIconCategories(props.icon), [])
+const categories = computedAsync(() => props.icon
+  ? getIconCategories(props.icon)
+  : [], [])
+
+const groups: DetailGroup[] = Object.entries(SnippetMap).map(([name, group]) => ({
+  name,
+  formats: Object.entries(group).map(([type, snippet]) => ({ type, name: snippet.name, tag: snippet.tag })),
+}))
+
+const downloads = [
+  { type: 'svg', name: 'SVG' },
+  { type: 'png', name: 'PNG' },
+  { type: 'vue', name: 'Vue' },
+  { type: 'jsx', name: 'React' },
+  { type: 'tsx', name: 'React', tag: 'TS' },
+  { type: 'svelte', name: 'Svelte' },
+  { type: 'qwik', name: 'Qwik' },
+  { type: 'solid', name: 'Solid' },
+  { type: 'astro', name: 'Astro' },
+  { type: 'react-native', name: 'React Native' },
+]
+
+const options = computed(() => {
+  const icon = props.icon
+  const set = collection.value
+  return {
+    open: Boolean(icon),
+    icon,
+    name: icon
+      ? getTransformedId(icon)
+      : '',
+    cases: icon
+      ? Object.entries(idCases).map(([key, toCase]) => ({
+          key,
+          label: toCase(icon),
+        }))
+      : [],
+    preferredCase: preferredCase.value,
+    license: set?.license ?? null,
+    collection: props.showCollection && set
+      ? { id: set.id, name: set.name }
+      : null,
+    categories: categories.value,
+    inBag: Boolean(icon) && inBag(icon),
+    selecting: activeMode.value === 'select',
+    copyColor: copyPreviewColor.value,
+    color: previewColor.value,
+    lowContrast: isLowContrast(previewColor.value, isDark.value),
+    groups,
+    downloads,
+    links: set && icon
+      ? [
+          { name: 'Iconify', href: `https://icon-sets.iconify.design/${set.id}/?icon-filter=${icon.split(':')[1]}` },
+          { name: 'UnoCSS', href: `https://uno.antfu.me/?s=i-${icon.replace(':', '-')}` },
+        ]
+      : [],
+    managers: ['pnpm', 'npm', 'yarn', 'bun'],
+    manager: selectedPackageManager.value,
+    packageName: set
+      ? `@iconify-json/${set.id}`
+      : '',
+    copied: installCopied.value,
+    navigate: (to: string) => router.push(to),
+    close: () => emit('close'),
+    copy,
+    download,
+    copyInstall,
+    toggleBag: () => toggleBag(icon),
+    toggleSelecting,
+    toggleCopyColor: () => copyPreviewColor.value = !copyPreviewColor.value,
+    setColor: (value: string) => previewColor.value = value,
+    setCase: (key: string) => preferredCase.value = key as typeof preferredCase.value,
+    setManager: (manager: string) => selectedPackageManager.value = manager,
+    showHelp: () => showHelp.value = !showHelp.value,
+  }
+})
 </script>
 
 <template>
-  <div class="p-2 md:p-4 grid md:grid-cols-[auto_minmax(0,1fr)] md:gap-2 relative">
-    <div class="md:hidden mx-auto mt-1 h-1 w-10 rounded-full bg-gray-400/30" />
-    <IconButton
-      class="absolute top-0 right-0 p-3 text-2xl flex-none leading-none" icon="carbon:close"
-      label="Close"
-      @click="$emit('close')"
-    />
-    <div class="flex justify-center md:block">
-      <ColorPicker v-model:value="previewColor" label="Change preview color" class="inline-block group" title="Click to change color">
-        <div
-          class="rounded-lg transition-colors"
-          :class="lowContrast ? (isDark ? 'bg-gray-200' : 'bg-dark-200') : ''"
-          :style="{ color: previewColor }"
-        >
-          <Icon :key="icon" outer-class="icon-preview p-4" :icon="icon" />
-        </div>
-        <div class="mt-1 flex items-center justify-center gap-1 text-xs op50 group-hover:op100 group-hover:text-primary">
-          <Icon icon="carbon:color-palette" />
-          change color
-        </div>
-      </ColorPicker>
-    </div>
-    <div class="min-w-0 px-4 pb-4 md:px-2 md:py-4">
-      <button class="op50 hover:text-primary hover:op100 text-sm !outline-none" @click="showHelp = !showHelp">
-        How to use the icon?
-      </button>
-      <div class="flex items-center op75 relative font-mono break-all">
-        {{ transformedId }}
-        <IconButton icon="carbon:copy" class="ml-2" label="Copy icon name" @click="copy('id')" />
-        <IconButton icon="carbon:chevron-up" class="ml-2" label="Choose name case" @click="showCaseSelect = !showCaseSelect" />
-        <div class="flex-auto" />
-        <div
-          v-if="showCaseSelect" ref="caseSelector"
-          class="absolute left-0 bottom-1.8em text-sm rounded shadow p-2 bg-base dark:border dark:border-dark-200"
-        >
-          <button
-            v-for="[k, v] of Object.entries(idCases)" :key="k" type="button" class="flex items-center w-full p-1 text-left cursor-pointer"
-            :class="k === preferredCase ? 'text-primary' : ''" :aria-pressed="k === preferredCase" @click="preferredCase = k as any"
-          >
-            <Icon
-              icon="carbon:checkmark" class="text-primary text-lg" outer-class="mr-1"
-              :class="k === preferredCase ? '' : 'opacity-0'"
-            />
-            <span class="flex-auto mr-2">{{ v(icon) }}</span>
-          </button>
-        </div>
-      </div>
-      <div v-if="collection?.license">
-        <a class="text-xs opacity-50 hover:opacity-100" :href="collection.license.url" target="_blank">{{
-          collection.license.title }}</a>
-      </div>
-
-      <p v-if="showCollection && collection" class="flex mb-1 op50 text-sm">
-        Collection:
-        <RouterLink
-          class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white"
-          :to="`/collection/${collection.id}`"
-        >
-          {{ collection.name }}
-        </RouterLink>
-      </p>
-
-      <p v-if="categories.length" class="flex flex-wrap mb-1 op50 text-sm">
-        {{ categories.length > 1 ? 'Categories' : 'Category' }}:
-        <template v-for="(c, idx) of categories" :key="c">
-          <RouterLink
-            class="ml-1 text-gray-600 hover:text-gray-700 dark:text-gray-100 dark:hover:text-white"
-            :to="{ path: `/collection/${icon.split(':')[0]}`, query: { category: c } }"
-          >
-            {{ c }}</RouterLink><span v-if="idx < categories.length - 1">,</span>
-        </template>
-      </p>
-
-      <div>
-        <button
-          class="
-            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
-            hover:bg-gray-50 dark:hover:bg-dark-200
-          " :class="inBag(icon) ? 'text-primary' : 'op50'" @click="toggleBag(icon)"
-        >
-          <template v-if="inBag(icon)">
-            <Icon class="inline-block text-lg align-middle" icon="carbon:shopping-bag" />
-            <span class="inline-block align-middle ml1">in bag</span>
-          </template>
-          <template v-else>
-            <Icon class="inline-block text-lg align-middle" icon="carbon:add" />
-            <span class="inline-block align-middle ml1">add to bag</span>
-          </template>
-        </button>
-
-        <button
-          v-if="inBag(icon)" class="
-            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
-            hover:bg-gray-50 dark:hover:bg-dark-200
-          " :class="activeMode === 'select' ? 'text-primary' : 'op50'" :aria-pressed="activeMode === 'select'" @click="toggleSelectingMode"
-        >
-          <Icon class="inline-block text-lg align-middle" icon="carbon:list-checked" />
-          <span class="inline-block align-middle ml1">multiple select</span>
-        </button>
-
-        <button
-          class="
-            inline-block leading-1em border border-base my-2 mr-2 font-sans pl-2 pr-3 py-1 rounded-full text-sm cursor-pointer
-            hover:bg-gray-50 dark:hover:bg-dark-200
-          " :class="copyPreviewColor ? 'text-primary' : 'op50'" :aria-pressed="copyPreviewColor" @click="copyPreviewColor = !copyPreviewColor"
-        >
-          <Icon v-if="!copyPreviewColor" class="inline-block text-lg align-middle" icon="carbon:checkbox" />
-          <Icon v-else class="inline-block text-lg align-middle" icon="carbon:checkbox-checked" />
-          <span class="inline-block align-middle ml1">copy with color</span>
-          <span class="inline-block align-middle ml1 w-0.8em h-0.8em rounded-full border border-base" :style="{ background: previewColor }" />
-          <span class="inline-block align-middle ml1 font-mono">{{ previewColor }}</span>
-        </button>
-      </div>
-
-      <div class="flex flex-wrap gap-x-4 gap-y-2 mt-2">
-        <template v-for="(group, groupName) in SnippetMap" :key="groupName">
-          <div>
-            <div class="my-1 op50 text-sm">
-              {{ groupName }}
-            </div>
-            <div class="flex flex-wrap gap-1">
-              <template v-for="(snippet, type) in group" :key="`${icon}-${groupName}-${type}`">
-                <SnippetPreview
-                  :collection="collection"
-                  :icon="icon"
-                  :snippet="snippet"
-                  :type="type"
-                  :color="color"
-                >
-                  <button class="btn small opacity-75" @click="copy(type)">
-                    {{ snippet.name }}<sup v-if="snippet.tag" class="opacity-75 -mr-1">{{ snippet.tag }}</sup>
-                  </button>
-                </SnippetPreview>
-              </template>
-            </div>
-          </div>
-        </template>
-        <div>
-          <div class="my-1 op50 text-sm">
-            Download
-          </div>
-          <div class="flex flex-wrap gap-1">
-            <button class="btn small opacity-75" @click="download('svg')">
-              SVG
-            </button>
-            <button class="btn small opacity-75" @click="download('png')">
-              PNG
-            </button>
-            <button class="btn small opacity-75" @click="download('vue')">
-              Vue
-            </button>
-            <button class="btn small opacity-75" @click="download('jsx')">
-              React
-            </button>
-            <button class="btn small opacity-75" @click="download('tsx')">
-              React<sup class="opacity-75 -mr-1">TS</sup>
-            </button>
-            <button class="btn small opacity-75" @click="download('svelte')">
-              Svelte
-            </button>
-            <button class="btn small opacity-75" @click="download('qwik')">
-              Qwik
-            </button>
-            <button class="btn small opacity-75" @click="download('solid')">
-              Solid
-            </button>
-            <button class="btn small opacity-75" @click="download('astro')">
-              Astro
-            </button>
-            <button class="btn small opacity-75" @click="download('react-native')">
-              React Native
-            </button>
-          </div>
-        </div>
-        <div>
-          <div class="my-1 op50 text-sm">
-            View on
-          </div>
-          <div class="flex flex-wrap gap-1">
-            <a
-              v-if="collection" class="btn small opacity-75 inline-flex"
-              :href="`https://icon-sets.iconify.design/${collection.id}/?icon-filter=${icon.split(':')[1]}`" target="_blank"
-            >
-              Iconify
-            </a>
-            <a
-              v-if="collection" class="btn small opacity-75 inline-flex"
-              :href="`https://uno.antfu.me/?s=i-${icon.replace(':', '-')}`" target="_blank"
-            >
-              UnoCSS
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <InstallIconSet v-if="collection" :collection="collection" />
-    </div>
-  </div>
+  <View :of="detailView" :options="options" />
 </template>
-
-<style>
-/* Scale wide icons (like logos) down so the preview fits the screen */
-.icon-preview {
-  font-size: min(4.5rem, (100vw - 3rem) / var(--icon-ratio, 1));
-}
-@media (min-width: 768px) {
-  .icon-preview {
-    font-size: min(6rem, 36vw / var(--icon-ratio, 1));
-  }
-}
-</style>

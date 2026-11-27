@@ -1,0 +1,28 @@
+/* The paper of the page, and the parts that are not Sekiso views yet. */
+html[data-theme='washi'] {
+  ::selection {
+    background: rgb(183 40 46 / 18%);
+  }
+
+  /* The sumi of a native control, like the inputs and the dialogs */
+  input,
+  select,
+  textarea {
+    accent-color: var(--k-accent);
+  }
+
+  /* Square boxes of paper, everywhere */
+  .rounded,
+  .rounded-lg,
+  .rounded-md,
+  .rounded-xl {
+    border-radius: var(--k-radius);
+  }
+}
+
+/* Room for the navigation rail on the right, on large screens */
+@media (min-width: 768px) {
+  html[data-theme='washi'] body {
+    padding-right: 64px;
+  }
+}
