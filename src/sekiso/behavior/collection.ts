@@ -84,7 +84,7 @@ export const collection = defineBehavior({
   },
   options: {
     /** The search of icons. The field follows it, ahead of it while the typing goes on. */
-    search: option<string>('string'),
+    search: option.string(),
   },
   ports: {
     navigate,

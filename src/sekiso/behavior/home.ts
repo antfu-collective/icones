@@ -41,7 +41,7 @@ export const home = defineBehavior({
   },
   options: {
     /** The search of icon sets, by name, author or category. */
-    search: option<string>('string'),
+    search: option.string(),
   },
   ports: {
     navigate,
