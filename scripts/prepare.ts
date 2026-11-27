@@ -135,6 +135,7 @@ async function writeAgentFiles(collections: any[]) {
 - \`${SITE}/collection/mdi?category=Navigation\`: show the icons of one category of an icon set.
 - \`${SITE}/collection/mdi?icon=mdi:home\`: show one icon, with copy and download options.
 - \`${SITE}/bag#mdi:home,carbon:add\`: show a shared bag (a list of icons, separated by commas). The user can add the icons to their own bag.
+- \`${SITE}/?theme=washi\`: open any page in a theme, which the app then keeps: \`original\` (the default), \`washi\` (ink on Japanese paper) or \`swiss\` (a catalog index).
 
 The search (\`s\`) uses the [fzf syntax](https://github.com/junegunn/fzf#search-syntax): \`home outline\` matches both words, \`home | house\` either word, \`'home\` the exact text, \`^home\` the start of the name, \`home$\` the end, and \`!outline\` excludes a word. In \`/collection/all\`, the names start with the set id, so \`^mdi: home\` searches only in \`mdi\`. Encode the query in the URL, for example \`?s=home%20!outline\`.
 
