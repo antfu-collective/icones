@@ -1,5 +1,4 @@
-import { defineBehavior, port } from '@sekiso/core/behavior'
-import { external } from './link'
+import { defineBehavior, external, port } from '@sekiso/core/behavior'
 
 /** Where the help links go, by key. */
 const LINKS: Record<string, string> = {

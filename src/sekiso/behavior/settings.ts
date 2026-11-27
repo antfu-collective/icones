@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { defineBehavior, port } from '@sekiso/core/behavior'
-import { followLink } from './link'
+import { defineBehavior, link, port } from '@sekiso/core/behavior'
 
 /** A theme to pick, with a few of its colors to preview it by. */
 export interface SettingsTheme {
@@ -33,17 +31,12 @@ export const settings = defineBehavior({
     categories: [] as readonly SettingsCategory[],
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     setTheme: port<(name: string) => void>(),
     toggleCategory: port<(name: string) => void>(),
     toggleFavorite: port<(id: string) => void>(),
     toggleCollection: port<(id: string) => void>(),
   },
-  api: context => ({
-    follow(event: Event, to: string): void {
-      followLink(event, to, context.options().navigate)
-    },
-  }),
   slots: slot => ({
     'root': slot({}),
     'theme': slot<{ value: string }>({
@@ -64,10 +57,7 @@ export const settings = defineBehavior({
     }),
     'collection': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: (_state, part) => ({ href: `/collection/${part.key}` }),
-      on: {
-        click: (event, { api, key }) => api.follow(event, `/collection/${key}`),
-      },
+      ...link((_state, part) => `/collection/${part.key}`),
     }),
     'favorite': slot<{ value: string, label: string, pressed: boolean }>({
       props: { value: 'key', label: 'string', pressed: 'boolean' },

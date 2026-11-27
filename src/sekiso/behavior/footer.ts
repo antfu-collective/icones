@@ -1,5 +1,4 @@
-import { defineBehavior } from '@sekiso/core/behavior'
-import { external } from './link'
+import { defineBehavior, external } from '@sekiso/core/behavior'
 
 /** The credits and the build time, at the end of a long page. */
 export const footer = defineBehavior({

@@ -44,7 +44,6 @@ const options = computed(() => ({
   sections: sections.value,
   favorites: favoritedCollectionIds.value,
   mac: platform.toUpperCase().includes('MAC'),
-  navigate: (to: string) => router.push(to),
   setSearch: (search: string) => categorySearch.value = search,
   toggleFavorite: toggleFavoriteCollection,
   removeRecent: removeRecentCollection,

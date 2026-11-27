@@ -41,7 +41,7 @@ export function useSekiso(router: Router) {
     themeName.value = DEFAULT_THEME
   router.afterEach(to => takeThemeParam(new URLSearchParams(to.query as Record<string, string>).toString()))
 
-  const app = createIconesApp(themeName.value)
+  const app = createIconesApp(themeName.value, to => router.push(to))
   app.attach(document.documentElement)
 
   watchEffect(() => {

@@ -1,7 +1,5 @@
-import type { Navigate } from './link'
-import { defineBehavior, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, external, follow, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
-import { external, followLink } from './link'
 
 /** What the page shows of the open icon set. */
 export interface CollectionView {
@@ -93,7 +91,7 @@ export const collection = defineBehavior({
     search: option<string>('string'),
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     setSearch: port<(search: string) => void>(),
     setCategory: port<(category: string) => void>(),
     setVariant: port<(variant: string) => void>(),
@@ -156,9 +154,6 @@ export const collection = defineBehavior({
       },
       setResizing(resizing: boolean): void {
         store.set({ resizing })
-      },
-      follow(event: Event, to: string): void {
-        followLink(event, to, options().navigate)
       },
     }
   },
@@ -326,7 +321,7 @@ export const collection = defineBehavior({
         ...labelled(part.props.label),
       }),
       on: {
-        click: (event, { api }) => api.follow(event, '/settings'),
+        click: (event, { api }) => follow(event, () => api.navigate('/settings')),
       },
     }),
     'favorite': slot<{ label: string }>({

@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { defineBehavior, option, port } from '@sekiso/core/behavior'
-import { followLink } from './link'
+import { defineBehavior, link, option, port } from '@sekiso/core/behavior'
 
 /** How long the search waits for the typing to stop. */
 const DEBOUNCE = 250
@@ -46,7 +44,7 @@ export const home = defineBehavior({
     search: option<string>('string'),
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     /** Takes the search once the typing stops. */
     setSearch: port<(search: string) => void>(),
     toggleFavorite: port<(id: string) => void>(),
@@ -95,9 +93,6 @@ export const home = defineBehavior({
         clear()
         context.options().navigate?.(href)
       },
-      follow(event: Event, to: string): void {
-        followLink(event, to, context.options().navigate)
-      },
     }
   },
   slots: slot => ({
@@ -140,20 +135,12 @@ export const home = defineBehavior({
     }),
     'search-all': slot({
       present: state => state.draft !== '',
-      attrs: state => ({
-        href: searchAllHref(state.draft),
-      }),
-      on: {
-        click: (event, { api, store }) => api.follow(event, searchAllHref(store.get().draft)),
-      },
+      ...link(state => searchAllHref(state.draft)),
     }),
     // A slot rendered more than once takes a key, so each card is its own part
     'card': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: (_state, part) => ({ href: `/collection/${part.key}` }),
-      on: {
-        click: (event, { api, key }) => api.follow(event, `/collection/${key}`),
-      },
+      ...link((_state, part) => `/collection/${part.key}`),
     }),
     'favorite': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },

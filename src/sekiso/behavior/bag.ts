@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { defineBehavior, port } from '@sekiso/core/behavior'
-import { followLink } from './link'
+import { defineBehavior, link, port } from '@sekiso/core/behavior'
 
 /** What the bag can pack its icons into. */
 export type BagPack = 'iconfont' | 'sprite' | `zip:${string}`
@@ -104,14 +102,9 @@ export const sharedBag = defineBehavior({
     bag: 0,
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     addAll: port(),
   },
-  api: context => ({
-    follow(event: Event, to: string): void {
-      followLink(event, to, context.options().navigate)
-    },
-  }),
   slots: slot => ({
     root: slot({}),
     add: slot({
@@ -123,12 +116,7 @@ export const sharedBag = defineBehavior({
       }),
       press: ({ api }) => api.addAll(),
     }),
-    browse: slot({
-      attrs: () => ({ href: '/collection/all' }),
-      on: {
-        click: (event, { api }) => api.follow(event, '/collection/all'),
-      },
-    }),
+    browse: slot(link(() => '/collection/all')),
   }),
   agent: {
     actions: ['addAll'],

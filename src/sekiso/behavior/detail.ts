@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { defineBehavior, port } from '@sekiso/core/behavior'
-import { external, followLink } from './link'
+import { defineBehavior, external, link, port } from '@sekiso/core/behavior'
 
 /** A way to copy or download an icon. */
 export interface DetailFormat {
@@ -55,7 +53,7 @@ export const detail = defineBehavior({
     copied: false,
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     close: port(),
     copy: port<(type: string) => void>(),
     download: port<(type: string) => void>(),
@@ -98,9 +96,6 @@ export const detail = defineBehavior({
             ? Math.round(rect.top)
             : 0,
         })
-      },
-      follow(event: Event, to: string): void {
-        followLink(event, to, options().navigate)
       },
     }
   },
@@ -170,19 +165,11 @@ export const detail = defineBehavior({
     }),
     'collection': slot({
       present: state => Boolean(state.collection),
-      attrs: state => ({ href: `/collection/${state.collection?.id ?? ''}` }),
-      on: {
-        click: (event, { api, store }) => api.follow(event, `/collection/${store.get().collection?.id ?? ''}`),
-      },
+      ...link(state => `/collection/${state.collection?.id ?? ''}`),
     }),
     'category': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: (state, part) => ({
-        href: categoryHref(state.icon, part.key),
-      }),
-      on: {
-        click: (event, { api, key, store }) => api.follow(event, categoryHref(store.get().icon, key)),
-      },
+      ...link((state, part) => categoryHref(state.icon, part.key)),
     }),
     'bag': slot({
       attrs: state => ({

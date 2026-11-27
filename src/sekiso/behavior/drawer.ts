@@ -1,7 +1,5 @@
-import type { Navigate } from './link'
-import { defineBehavior, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, follow, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
-import { followLink } from './link'
 
 /** A row of the sidebar: an icon set, or `all` and `recent`. */
 export interface DrawerItem {
@@ -35,22 +33,14 @@ export const drawer = defineBehavior({
     search: option<string>('string'),
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     /** Opens the home page in place of this one. */
     home: port(),
     setSearch: port<(search: string) => void>(),
     toggleFavorite: port<(id: string) => void>(),
   },
   state: options => ({ draft: options.search ?? '' }),
-  api: (context) => {
-    const draft = createDraft(context as never, (o: { search?: string }) => o.search, search => context.options().setSearch?.(search))
-    return {
-      ...draft,
-      follow(event: Event, to: string): void {
-        followLink(event, to, context.options().navigate)
-      },
-    }
-  },
+  api: context => createDraft(context as never, (o: { search?: string }) => o.search, search => context.options().setSearch?.(search)),
   slots: slot => ({
     root: slot({}),
     back: slot<{ label: string }>({
@@ -92,7 +82,7 @@ export const drawer = defineBehavior({
           : undefined,
       }),
       on: {
-        click: (event, { api, key, store }) => api.follow(event, hrefOf(key, store.get().query)),
+        click: (event, { api, key, store }) => follow(event, () => api.navigate(hrefOf(key, store.get().query))),
       },
     }),
     favorite: slot<{ value: string, label: string }>({

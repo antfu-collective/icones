@@ -21,7 +21,6 @@ const emit = defineEmits<{
   (event: 'prev'): void
 }>()
 
-const router = useRouter()
 const collection = computed(() => collections.find(i => i.id === props.icon.split(':')[0]))
 const color = computed(() => copyPreviewColor.value ? previewColor.value : 'currentColor')
 
@@ -172,7 +171,6 @@ const options = computed(() => {
       ? `@iconify-json/${set.id}`
       : '',
     copied: installCopied.value,
-    navigate: (to: string) => router.push(to),
     close: () => emit('close'),
     copy,
     download,

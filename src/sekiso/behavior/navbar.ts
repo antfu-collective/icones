@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { defineBehavior, port } from '@sekiso/core/behavior'
-import { external, followLink } from './link'
+import { defineBehavior, external, follow, port } from '@sekiso/core/behavior'
 
 /** The bar at the top of every page: back, the app name, and the dark switch. */
 export const navbar = defineBehavior({
@@ -15,15 +13,10 @@ export const navbar = defineBehavior({
     canToggleDark: true,
   },
   ports: {
-    navigate: port<Navigate>(),
+    navigate: port<(to: string) => void>(),
     /** Switches light and dark. It takes the click, to start the transition from it. */
     toggleDark: port<(event?: Event) => void>(),
   },
-  api: context => ({
-    follow(event: Event, to: string): void {
-      followLink(event, to, context.options().navigate)
-    },
-  }),
   slots: slot => ({
     root: slot({}),
     back: slot<{ label: string }>({
@@ -31,7 +24,7 @@ export const navbar = defineBehavior({
       present: state => !state.home,
       attrs: (_state, part) => ({ 'href': '/', 'aria-label': part.props.label, 'title': part.props.label }),
       on: {
-        click: (event, { api }) => api.follow(event, '/'),
+        click: (event, { api }) => follow(event, () => api.navigate('/')),
       },
     }),
     github: slot<{ label: string }>({
@@ -48,7 +41,7 @@ export const navbar = defineBehavior({
       present: state => !state.collection,
       attrs: (_state, part) => ({ 'href': '/settings', 'aria-label': part.props.label, 'title': part.props.label }),
       on: {
-        click: (event, { api }) => api.follow(event, '/settings'),
+        click: (event, { api }) => follow(event, () => api.navigate('/settings')),
       },
     }),
     dark: slot<{ label: string }>({

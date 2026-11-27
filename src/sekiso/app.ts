@@ -17,10 +17,11 @@ export function resolveTheme(name: string | null | undefined): Theme {
   return themes[name ?? ''] ?? themes.original!
 }
 
-/** The composition root: it puts the theme and the i18n engine together. */
-export function createIconesApp(themeName: string): App {
+/** The composition root: it puts the theme, the i18n engine and the ports every screen shares together. */
+export function createIconesApp(themeName: string, navigate: (to: string) => void): App {
   return createApp({
     theme: resolveTheme(themeName),
     i18n: createI18n({ locale: 'en', messages: en }),
+    ports: { navigate },
   })
 }
