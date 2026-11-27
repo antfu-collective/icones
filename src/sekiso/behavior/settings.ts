@@ -1,4 +1,4 @@
-import { defineBehavior, link, navigate, port } from '@sekiso/core/behavior'
+import { defineBehavior, link, port } from '@sekiso/core/behavior'
 
 /** A theme to pick, with a few of its colors to preview it by. */
 export interface SettingsTheme {
@@ -31,7 +31,6 @@ export const settings = defineBehavior({
     categories: [] as readonly SettingsCategory[],
   },
   ports: {
-    navigate,
     setTheme: port<(name: string) => void>(),
     toggleCategory: port<(name: string) => void>(),
     toggleFavorite: port<(id: string) => void>(),

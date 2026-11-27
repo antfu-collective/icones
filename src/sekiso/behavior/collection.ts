@@ -1,4 +1,4 @@
-import { defineBehavior, external, link, navigate, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, external, link, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
 
 /** What the page shows of the open icon set. */
@@ -87,7 +87,6 @@ export const collection = defineBehavior({
     search: option.string(),
   },
   ports: {
-    navigate,
     setSearch: port<(search: string) => void>(),
     setCategory: port<(category: string) => void>(),
     setVariant: port<(variant: string) => void>(),

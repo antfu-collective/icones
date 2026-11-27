@@ -1,4 +1,4 @@
-import { defineBehavior, link, navigate, port } from '@sekiso/core/behavior'
+import { defineBehavior, link, port } from '@sekiso/core/behavior'
 
 /** What the bag can pack its icons into. */
 export type BagPack = 'iconfont' | 'sprite' | `zip:${string}`
@@ -98,7 +98,6 @@ export const sharedBag = defineBehavior({
     bag: 0,
   },
   ports: {
-    navigate,
     addAll: port(),
   },
   slots: slot => ({
