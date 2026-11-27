@@ -8,8 +8,9 @@ import '@unocss/reset/tailwind.css'
 import 'floating-vue/dist/style.css'
 import './main.css'
 import 'uno.css'
-
-const app = createApp(App)
+// After the reset, so the themes come after it
+// eslint-disable-next-line perfectionist/sort-imports
+import { useSekiso } from './sekiso/renderer'
 
 const router = createRouter({
   history: createWebHistory(basePath),
@@ -30,6 +31,8 @@ if (PWA) {
   })
 }
 
+const { wrap } = useSekiso(router)
+const app = createApp(wrap(App))
 app.use(router)
 
 // Tools for AI agents in the browser, see `src/utils/agent-tools.ts`

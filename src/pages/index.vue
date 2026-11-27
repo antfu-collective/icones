@@ -1,47 +1,34 @@
 <script setup lang='ts'>
-import type { PresentType } from '../data'
+import type { HomeSection } from '../sekiso/behavior/home'
+import { Scope, View } from '@sekiso/vue'
 import { categories, categorySearch, favoritedCollections, filteredCollections, recentCollections } from '../data'
+import { home } from '../sekiso/behavior/home'
+import { homeSearchView, homeView } from '../sekiso/views/home'
+import { favoritedCollectionIds, removeRecentCollection, toggleFavoriteCollection } from '../store'
 
-const searchbar = ref<{ input: HTMLElement }>()
-
-const categorized = shallowRef(getIconList(categorySearch.value))
-const availableCategories = computed(() => categorized.value.filter(c => c.collections.length > 0))
+const sections = shallowRef(getSections(categorySearch.value))
 
 // Both lists derive from the search results, so they change after each search,
 // and also after a favorite or recent change, which is reflected at once
 watch([favoritedCollections, recentCollections], () => {
-  categorized.value = getIconList(categorySearch.value)
+  sections.value = getSections(categorySearch.value)
 })
 
-function getIconList(searchString: string) {
-  if (searchString) {
+function getSections(search: string): HomeSection[] {
+  if (search) {
     return [
-      {
-        name: 'Result',
-        type: 'result' as PresentType,
-        collections: filteredCollections.value,
-      },
+      { name: 'Result', type: 'result', collections: filteredCollections.value },
     ]
   }
-  else {
-    return [
-      {
-        name: 'Favorites',
-        type: 'favorite' as PresentType,
-        collections: favoritedCollections.value,
-      },
-      {
-        name: 'Recent',
-        type: 'recent' as PresentType,
-        collections: recentCollections.value,
-      },
-      ...categories.map(category => ({
-        name: category,
-        type: 'normal' as PresentType,
-        collections: filteredCollections.value.filter(collection => collection.category === category),
-      })),
-    ]
-  }
+  return [
+    { name: 'Favorites', type: 'favorite', collections: favoritedCollections.value },
+    { name: 'Recent', type: 'recent', collections: recentCollections.value },
+    ...categories.map(category => ({
+      name: category,
+      type: 'normal' as const,
+      collections: filteredCollections.value.filter(collection => collection.category === category),
+    })),
+  ]
 }
 
 const router = useRouter()
@@ -49,78 +36,29 @@ onKeyStroke('/', (e) => {
   e.preventDefault()
   router.replace('/collection/all')
 })
-onMounted(() => searchbar.value?.input.focus())
 
 const platform = (navigator as any).userAgentData?.platform || navigator.platform || ''
-const isMacOS = platform.toUpperCase().includes('MAC')
 
-function onKeydown(e: KeyboardEvent) {
-  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-    router.replace(`/collection/all?s=${categorySearch.value}`)
-    categorySearch.value = ''
-  }
-}
+const options = computed(() => ({
+  search: categorySearch.value,
+  sections: sections.value,
+  favorites: favoritedCollectionIds.value,
+  mac: platform.toUpperCase().includes('MAC'),
+  navigate: (to: string) => router.push(to),
+  setSearch: (search: string) => categorySearch.value = search,
+  toggleFavorite: toggleFavoriteCollection,
+  removeRecent: removeRecentCollection,
+}))
 </script>
 
 <template>
-  <WithNavbar>
-    <!-- Searching -->
-    <template #header>
-      <div px-4 pt-4 md:px-6 md:pt-6>
-        <SearchBar
-          ref="searchbar"
-          v-model:search="categorySearch"
-          placeholder="Search category..."
-          flex
-          :class="categorySearch ? '!rounded-b-none' : ''"
-          @on-keydown="onKeydown"
-        />
-        <RouterLink
-          :class="categorySearch ? '' : 'op0 pointer-events-none max-md:hidden'"
-          px4 py2 w-full mt--1px text-sm z--1 h-10
-          flex="~ gap-2" items-center
-          border="~ base rounded-b-lg"
-          hover="text-primary !border-primary shadow"
-          :to="`/collection/all?s=${categorySearch}`"
-        >
-          <div i-carbon-direction-right-01 scale-y--100 op50 />
-          Search for all icons...
-          <div max-md:hidden>
-            <kbd text-sm border="~ base rounded" px1>{{ isMacOS ? '⌘' : 'Ctrl' }}</kbd> + <kbd text-sm border="~ base rounded" px1>Enter</kbd>
-          </div>
-        </RouterLink>
-      </div>
-    </template>
-
-    <div flex-auto md:of-y-auto relative space-y-4 md:space-y-6 pt-2 md:pt-0>
-      <!-- Category listing -->
-      <template v-for="c of availableCategories" :key="c.name">
-        <div px-2 md:px-4>
-          <div
-            px-2 py-1 sticky top-0 bg-base z-1
-            class="max-md:top-[var(--header-height)]"
-            flex="~ items-baseline gap-2"
-          >
-            <span text-lg op50>{{ c.name }}</span>
-            <span text-xs op50>{{ c.collections.length }}</span>
-          </div>
-          <CollectionEntries
-            of-hidden
-            :collections="c.collections"
-            :type="c.type"
-          />
-        </div>
+  <!-- One instance for both views, so the search and the list share it -->
+  <Scope :of="home" :options="options">
+    <WithNavbar>
+      <template #header>
+        <View :of="homeSearchView" />
       </template>
-
-      <div
-        v-if="availableCategories.length === 0"
-        class="flex flex-col flex-grow w-full py-6 justify-center items-center"
-      >
-        <Icon icon="ph:x-circle-bold" class="text-4xl mb-2 opacity-20" />
-        <span class="text-lg opacity-60">There is no result corresponding to your search query.</span>
-      </div>
-
-      <Footer />
-    </div>
-  </WithNavbar>
+      <View :of="homeView" />
+    </WithNavbar>
+  </Scope>
 </template>

@@ -4,10 +4,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html.dark {
-  background: #181818;
-  color-scheme: dark;
-}
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark);

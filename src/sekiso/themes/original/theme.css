@@ -1,0 +1,34 @@
+/*
+ * The page itself, and the parts of the app that are not Sekiso views yet.
+ * Everything reads the tokens, so it serves every theme that extends this one.
+ * `html[data-theme]` is stronger than the CSS reset, which also styles `html`.
+ */
+html[data-theme] {
+  color-scheme: light;
+  background: var(--k-surface) var(--k-paper) fixed;
+  color: var(--k-fg);
+  font-family: var(--k-font);
+}
+
+/* The dark switch and the theme decide the class, see `src/store/dark.ts` */
+html[data-theme].dark {
+  color-scheme: dark;
+}
+
+:where([data-theme]) {
+  code,
+  kbd,
+  pre {
+    font-family: var(--k-font-mono);
+  }
+
+  [data-icon] {
+    display: inline-block;
+    flex: none;
+    vertical-align: middle;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--k-accent) 25%, transparent);
+  }
+}

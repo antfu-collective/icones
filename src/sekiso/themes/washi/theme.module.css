@@ -1,0 +1,253 @@
+/* Only what washi adds to the original look. */
+
+.bar {
+  border-bottom: 3px double var(--k-line);
+}
+
+/* The name of the app, with a vermilion seal beside it */
+.brand {
+  font-weight: 500;
+  letter-spacing: 0.35em;
+
+  &::after {
+    content: '図標';
+    display: grid;
+    place-items: center;
+    width: 1.55em;
+    height: 2.7em;
+    margin-left: 0.7em;
+    border-radius: 3px;
+    background: var(--k-accent);
+    color: #f8efe0;
+    font-size: 0.62em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.1;
+    writing-mode: vertical-rl;
+    box-shadow:
+      inset 0 0 0 2px var(--k-accent),
+      inset 0 0 0 3px #f8efe0;
+    opacity: 0.92;
+    transform: rotate(-3deg);
+  }
+}
+
+.heading {
+  letter-spacing: 0.12em;
+}
+
+/* A section title, with a small seal before it and a ruled line after it */
+.subheading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--k-fg);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+
+  &::before {
+    content: '';
+    width: 0.45em;
+    height: 0.45em;
+    background: var(--k-accent);
+    transform: rotate(45deg);
+  }
+}
+
+.caption {
+  font-style: italic;
+}
+
+/* A search is a line to write on */
+.search {
+  border-width: 0 0 1px;
+  border-color: var(--k-fg);
+  border-radius: 0;
+  background: transparent;
+
+  &:focus-within {
+    border-color: var(--k-accent);
+    box-shadow: 0 1px 0 var(--k-accent);
+  }
+}
+
+.card {
+  background: var(--k-raised);
+  box-shadow: 0 1px 0 rgb(80 60 40 / 6%);
+
+  &:hover,
+  &[aria-pressed='true'] {
+    color: var(--k-fg);
+    box-shadow: 3px 3px 0 rgb(183 40 46 / 16%);
+  }
+}
+
+.keycap {
+  border-bottom-width: 2px;
+}
+
+.toggle[aria-pressed='true'] {
+  opacity: 1;
+}
+
+/* Home: a narrow column of paper, titles written top to bottom, portrait cards */
+
+.home-header {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.home-sections {
+  @media (min-width: 768px) {
+    gap: 40px;
+    padding: 16px 0 0;
+  }
+}
+
+.home-section-header {
+  border-bottom: 1px solid var(--k-line);
+  background: rgb(242 234 217 / 82%);
+  backdrop-filter: blur(4px);
+}
+
+@media (min-width: 768px) {
+  .home-section {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* The title of a section, written vertically, beside its cards */
+  .home-section-header {
+    position: sticky;
+    top: 16px;
+    align-self: start;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--k-line);
+    background: none;
+    backdrop-filter: none;
+    writing-mode: vertical-rl;
+  }
+
+  .home-section-name {
+    font-size: 1.35rem;
+    letter-spacing: 0.3em;
+  }
+
+  .home-section-count {
+    text-combine-upright: all;
+  }
+
+  .home-cards {
+    grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+    gap: 16px;
+    padding: 0;
+  }
+
+  /* A tall card, like a tanzaku: the samples first and large, the name below */
+  .home-card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-content: start;
+    gap: 14px;
+    padding: 22px 14px 18px;
+    text-align: center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      width: 18px;
+      height: 1px;
+      background: var(--k-accent);
+      transform: translateX(-50%);
+    }
+  }
+
+  .home-samples {
+    order: -1;
+    margin: 4px 0 0;
+    opacity: 0.85;
+
+    & > * {
+      width: 138px;
+      font-size: 1.5rem;
+    }
+
+    & > * > :nth-child(n + 7) {
+      display: none;
+    }
+  }
+
+  .home-card-body {
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--k-line);
+    width: 100%;
+  }
+
+  .home-card-name {
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  .home-card-meta {
+    align-items: center;
+  }
+
+  .home-license {
+    display: none;
+  }
+
+  .home-total {
+    margin-top: 4px;
+  }
+}
+
+.home-card-name {
+  letter-spacing: 0.04em;
+}
+
+.home-favorite,
+.home-forget {
+  border-color: var(--k-line);
+  background: var(--k-surface);
+}
+
+.home-favorite[aria-pressed='true'] {
+  color: var(--k-accent);
+}
+
+.footer {
+  letter-spacing: 0.08em;
+}
+
+/* Settings: a centered column, like a page of a book */
+.settings {
+  @media (min-width: 768px) {
+    padding: 32px max(24px, calc((100% - 1280px) / 2));
+  }
+}
+
+.settings-intro {
+  text-align: center;
+}
+
+.settings-themes {
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 260px));
+}
+
+.settings-theme {
+  justify-items: center;
+  text-align: center;
+}

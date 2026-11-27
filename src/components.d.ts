@@ -13,8 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ActionsMenu: typeof import('./components/ActionsMenu.vue')['default']
     Bag: typeof import('./components/Bag.vue')['default']
-    CollectionEntries: typeof import('./components/CollectionEntries.vue')['default']
-    CollectionEntry: typeof import('./components/CollectionEntry.vue')['default']
+    CollectionSamples: typeof import('./components/CollectionSamples.vue')['default']
     ColorPicker: typeof import('./components/ColorPicker.vue')['default']
     CustomSelect: typeof import('./components/CustomSelect.vue')['default']
     DarkSwitcher: typeof import('./components/DarkSwitcher.vue')['default']
@@ -31,12 +30,12 @@ declare module 'vue' {
     Modal: typeof import('./components/Modal.vue')['default']
     ModalDialog: typeof import('./components/ModalDialog.vue')['default']
     Navbar: typeof import('./components/Navbar.vue')['default']
+    NavbarSearch: typeof import('./components/NavbarSearch.vue')['default']
     Notification: typeof import('./components/Notification.vue')['default']
     Progress: typeof import('./components/Progress.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchBar: typeof import('./components/SearchBar.vue')['default']
-    SettingsCollectionsList: typeof import('./components/SettingsCollectionsList.vue')['default']
     SnippetPreview: typeof import('./components/SnippetPreview.vue')['default']
     WithNavbar: typeof import('./components/WithNavbar.vue')['default']
   }
