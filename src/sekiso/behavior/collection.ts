@@ -112,7 +112,7 @@ export const collection = defineBehavior({
   api: (context) => {
     const { store } = context
     const options = () => context.options()
-    const draft = createDraft(context as never, (o: { search?: string }) => o.search, search => options().setSearch?.(search))
+    const draft = createDraft(context)
 
     return {
       ...draft,

@@ -39,7 +39,7 @@ export const drawer = defineBehavior({
     toggleFavorite: port<(id: string) => void>(),
   },
   state: options => ({ draft: options.search ?? '' }),
-  api: context => createDraft(context as never, (o: { search?: string }) => o.search, search => context.options().setSearch?.(search)),
+  api: createDraft,
   slots: slot => ({
     root: slot({}),
     back: slot<{ label: string }>({
