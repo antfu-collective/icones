@@ -11,7 +11,7 @@ export const themes: Readonly<Record<string, Theme>> = Object.fromEntries(
 )
 
 /** The themes in the order the theme pickers list them. */
-export const themeOrder = ['original', 'washi', 'swiss'].filter(name => name in themes)
+export const themeOrder = ['original', 'washi', 'geist'].filter(name => name in themes)
 
 export function resolveTheme(name: string | null | undefined): Theme {
   return themes[name ?? ''] ?? themes.original!

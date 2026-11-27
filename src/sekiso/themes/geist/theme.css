@@ -1,0 +1,17 @@
+/* The page grid, and the parts of the app that are not Sekiso views yet. */
+html[data-theme='geist'] {
+  background-size:
+    64px 64px,
+    64px 64px;
+  font-feature-settings: 'liga', 'calt';
+
+  ::selection {
+    background: light-dark(rgb(0 107 255 / 18%), rgb(82 168 255 / 30%));
+  }
+
+  input,
+  select,
+  textarea {
+    accent-color: var(--k-fg);
+  }
+}

@@ -32,10 +32,10 @@
   "settings.showCategory": "Show {name}",
   "settings.theme.hint": "The look of the whole app. Add ?theme= to a link to share one.",
   "settings.theme.title": "Theme",
+  "theme.geist": "Geist",
+  "theme.geist.about": "Geist type in black and white: project cards on a grid, light or dark.",
   "theme.original": "Original",
   "theme.original.about": "The classic Icônes look: cards in a grid, light or dark, in your color.",
-  "theme.swiss": "Swiss",
-  "theme.swiss.about": "A catalog index: a strict grid, bold type, hairline rules, big numbers.",
   "theme.washi": "Washi",
   "theme.washi.about": "Sumi ink on Japanese paper: vertical titles, portrait cards, a vermilion seal."
 }

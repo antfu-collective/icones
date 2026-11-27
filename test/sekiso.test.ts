@@ -42,7 +42,7 @@ describe('home behavior (headless)', () => {
 describe('navbar behavior (headless)', () => {
   it('switches to the next theme, and back to the first after the last', () => {
     const setTheme = vi.fn()
-    const themes = ['original', 'washi', 'swiss']
+    const themes = ['original', 'washi', 'geist']
     navbar({
       id: 'a',
       theme: 'washi',
@@ -51,12 +51,12 @@ describe('navbar behavior (headless)', () => {
     }).api.nextTheme()
     navbar({
       id: 'b',
-      theme: 'swiss',
+      theme: 'geist',
       themes,
       setTheme,
     }).api.nextTheme()
     expect(setTheme.mock.calls).toEqual([
-      ['swiss'],
+      ['geist'],
       ['original'],
     ])
   })

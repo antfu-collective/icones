@@ -34,7 +34,7 @@ The UI uses [Sekiso](https://github.com/vercel-labs/sekiso): neutral views that 
 
 - `behavior/`: primitives (`definePrimitive` from `@ui-sdk/core`). State, actions, and the attributes of each part. No markup, text or styles. The renderer passes data and ports (like `navigate`) as options.
 - `views/`: neutral JSX (`defineView`). Only named parts, no classes, no styles, and all text from `t()` in `locales/en.json`. Native Vue components go in an `<Outlet>`, registered in `src/sekiso/renderer.ts`.
-- `themes/<name>/`: `defineTheme`, with a CSS module that has a class per role and per part (`data-slot`), the tokens, and the icons. `washi` and `swiss` extend `original` and add to it with `compose()`.
+- `themes/<name>/`: `defineTheme`, with a CSS module that has a class per role and per part (`data-slot`), the tokens, and the icons. `washi` and `geist` extend `original` and add to it with `compose()`.
 - `schema.ts`: the icons, roles and tokens that every theme gives.
 
 The theme is in `localStorage` (`src/store/theme.ts`). The `?theme=` query param of any page sets it. The home page, the navigation bar, the settings page and the footer are Sekiso views. The other components are still Vue SFCs with UnoCSS: they follow the theme through the token variables (`bg-base`, `color-base`, `border-base`, `primary` read `--k-*`). New UI goes in `src/sekiso`.
@@ -60,7 +60,7 @@ The app state is in the URL, so links work for people and for agents:
 - `/collection/mdi?s=arrow&category=Navigation`: search one set, in one category.
 - `/collection/mdi?icon=mdi:home`: open the dialog of one icon.
 - `/bag#mdi:home,carbon:add`: show a shared bag. The icons are in the hash, so they are not sent to the server.
-- `/?theme=washi`: open a page in a theme (`original`, `washi` or `swiss`).
+- `/?theme=washi`: open a page in a theme (`original`, `washi` or `geist`).
 
 Keep this. New views and filters must also go in the URL.
 
