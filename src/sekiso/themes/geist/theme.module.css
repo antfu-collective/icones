@@ -330,3 +330,419 @@
 .settings-collection {
   font-size: 0.875rem;
 }
+
+/* The icon set's page: a dashboard, with a sidebar of links */
+
+/* A filter is a small badge; the picked one is inverted */
+.chip {
+  padding: 2px 10px;
+  border-radius: var(--k-radius);
+  background: var(--k-raised);
+  font-size: 0.8125rem;
+  opacity: 1;
+  color: var(--k-muted);
+
+  @media (min-width: 768px) {
+    padding: 2px 10px;
+  }
+
+  &:hover {
+    background: var(--k-raised);
+    border-color: light-dark(#c9c9c9, #454545);
+    color: var(--k-fg);
+  }
+
+  &[aria-pressed='true'] {
+    border-color: var(--k-fg);
+    background: var(--k-fg);
+    color: var(--k-surface);
+  }
+}
+
+.button {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--k-radius);
+  background: var(--k-raised);
+  color: var(--k-fg);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  box-shadow: none;
+
+  &:hover {
+    border-color: light-dark(#c9c9c9, #454545);
+    background: light-dark(#f2f2f2, #1a1a1a);
+    color: var(--k-fg);
+  }
+}
+
+.action {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--k-line);
+  border-radius: var(--k-radius);
+  background: var(--k-raised);
+  font-size: 0.8125rem;
+  font-weight: 500;
+
+  & > [data-icon] {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    color: var(--k-fg);
+    background: light-dark(#f2f2f2, #1a1a1a);
+  }
+}
+
+.popover {
+  border-radius: 12px;
+  background: var(--k-raised);
+  box-shadow:
+    0 0 0 1px light-dark(rgb(0 0 0 / 4%), rgb(255 255 255 / 4%)),
+    0 8px 30px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 60%));
+}
+
+.fab {
+  margin: 24px;
+  padding: 14px;
+  border-radius: 12px;
+  border-color: var(--k-fg);
+  background: var(--k-fg);
+  color: var(--k-surface);
+
+  &:hover {
+    color: var(--k-surface);
+    opacity: 0.9;
+  }
+}
+
+.counter {
+  font-family: var(--k-font-mono);
+}
+
+/* A mode is a pill at the top of the page */
+.banner {
+  top: 76px;
+  right: 50%;
+  border-radius: 9999px;
+  padding: 6px 12px 6px 16px;
+  background: var(--k-fg);
+  color: var(--k-surface);
+  font-size: 0.8125rem;
+  transform: translateX(50%);
+
+  &[aria-hidden='true'] {
+    transform: translate(50%, -160px);
+  }
+}
+
+/* A toast comes up at the bottom right */
+.toast {
+  top: auto;
+  right: 24px;
+  bottom: 24px;
+  left: auto;
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--k-raised);
+  color: var(--k-fg);
+  font-size: 0.875rem;
+  box-shadow: 0 8px 30px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 60%));
+  transform: translateY(150%);
+
+  &[data-shown] {
+    transform: none;
+  }
+}
+
+/* A sheet is a modal in the middle of the page, from 768px */
+.sheet {
+  @media (min-width: 768px) {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: min(960px, 100vw - 64px);
+    border: 1px solid var(--k-line);
+    border-radius: 12px;
+    background: var(--k-raised);
+    box-shadow: 0 30px 60px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 70%));
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.97);
+    transition:
+      opacity 0.15s,
+      transform 0.15s ease-out;
+    pointer-events: none;
+
+    [data-open] > & {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+    }
+  }
+}
+
+.dialog {
+  border-radius: 12px;
+  background: var(--k-raised);
+  box-shadow: 0 30px 60px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 70%));
+}
+
+.detail-backdrop,
+.bag-backdrop,
+.help-backdrop {
+  background: light-dark(rgb(0 0 0 / 40%), rgb(0 0 0 / 70%));
+  backdrop-filter: blur(2px);
+
+  [data-open] > & {
+    opacity: 1;
+  }
+}
+
+/* The sidebar: rounded links, the open one highlighted */
+.drawer {
+  background: var(--k-surface);
+}
+
+.drawer-top {
+  padding-bottom: 8px;
+}
+
+.drawer-bar {
+  height: 64px;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.drawer-back {
+  padding: 0;
+}
+
+.drawer-search {
+  height: 36px;
+  margin: 12px 12px 0;
+  border-width: 1px;
+  border-radius: var(--k-radius);
+  background: var(--k-raised);
+}
+
+.drawer-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  padding: 0 8px 16px;
+}
+
+.drawer-link {
+  align-items: center;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: var(--k-radius);
+
+  &:hover {
+    background: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 6%));
+  }
+
+  &[data-current] {
+    background: light-dark(rgb(0 0 0 / 7%), rgb(255 255 255 / 9%));
+  }
+}
+
+.drawer-text {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  padding: 0;
+}
+
+.drawer-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  [data-current] & {
+    color: var(--k-fg);
+    font-weight: 500;
+  }
+}
+
+.drawer-count {
+  flex: none;
+  margin: 0;
+  font-family: var(--k-font-mono);
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+.collection-drawer-toggle {
+  border-color: var(--k-line);
+  background: var(--k-raised);
+}
+
+/* The page of a set: a project header, then tabs of filters */
+.collection-main {
+  @media (min-width: 768px) {
+    padding-top: 32px;
+  }
+}
+
+.collection-header {
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--k-line);
+}
+
+.collection-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.collection-credits {
+  flex-direction: row;
+  gap: 8px;
+  font-family: var(--k-font-mono);
+  font-size: 0.75rem;
+
+  & > * + *::before {
+    content: '·';
+    margin-right: 8px;
+  }
+}
+
+.collection-actions {
+  align-self: center;
+  gap: 4px;
+}
+
+.collection-categories,
+.collection-variants {
+  gap: 6px;
+}
+
+.collection-search[data-place='page'] {
+  @media (min-width: 768px) {
+    margin: 8px 32px 0;
+  }
+}
+
+.collection-count {
+  font-family: var(--k-font-mono);
+  font-size: 0.75rem;
+}
+
+/* The icon's modal: the preview on a grid, the formats in labelled rows */
+.detail-panel {
+  @media (min-width: 768px) {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 0;
+    padding: 0;
+  }
+}
+
+.detail-aside {
+  @media (min-width: 768px) {
+    display: grid;
+    place-items: center;
+    border-right: 1px solid var(--k-line);
+    background: var(--k-surface) var(--k-paper);
+    background-size: 16px 16px;
+    border-radius: 12px 0 0 12px;
+  }
+}
+
+.detail-artwork {
+  border-radius: 12px;
+}
+
+.detail-body {
+  @media (min-width: 768px) {
+    padding: 24px;
+  }
+}
+
+.detail-id-text {
+  font-size: 1.125rem;
+  font-weight: 500;
+  opacity: 1;
+}
+
+.detail-groups {
+  display: grid;
+  gap: 16px;
+}
+
+.detail-group {
+  display: grid;
+  gap: 6px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 110px minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.detail-group-name {
+  margin: 0;
+  font-family: var(--k-font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.detail-snippet-preview {
+  border-radius: 8px;
+}
+
+.detail-install {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--k-line);
+}
+
+.detail-managers,
+.detail-command {
+  min-width: 420px;
+  border-radius: 8px 8px 0 0;
+  background: var(--k-surface);
+}
+
+.detail-command {
+  border-radius: 0 0 8px 8px;
+  font-family: var(--k-font-mono);
+}
+
+.bag-panel {
+  background: var(--k-raised);
+}
+
+.bag-header {
+  height: 64px;
+}
+
+.bag-title {
+  font-weight: 600;
+}
+
+.bag-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  opacity: 1;
+}
+
+.help-panel {
+  padding: 28px;
+}
+
+.help-title {
+  font-size: 1rem;
+  font-weight: 600;
+}

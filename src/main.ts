@@ -1,15 +1,14 @@
+/* eslint-disable perfectionist/sort-imports -- the reset and the base styles go first, so the themes, which the pages import, come after them */
+import '@unocss/reset/tailwind.css'
+import './main.css'
+import 'uno.css'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import routes from '~pages'
 import App from './App.vue'
 import { basePath } from './env'
-
-import '@unocss/reset/tailwind.css'
-import './main.css'
-import 'uno.css'
-// After the reset, so the themes come after it
-// eslint-disable-next-line perfectionist/sort-imports
 import { useSekiso } from './sekiso/renderer'
+/* eslint-enable perfectionist/sort-imports */
 
 const router = createRouter({
   history: createWebHistory(basePath),

@@ -251,3 +251,246 @@
   justify-items: center;
   text-align: center;
 }
+
+/* The icon set's page: a book, with its table of contents on the side */
+
+/* A filter is a word to underline, not a pill */
+.chip {
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  letter-spacing: 0.06em;
+
+  &:hover {
+    background: none;
+    border-bottom-color: var(--k-line);
+  }
+
+  &[aria-pressed='true'] {
+    border-bottom: 2px solid var(--k-accent);
+    color: var(--k-fg);
+  }
+}
+
+.button {
+  border-radius: 0;
+  border-color: var(--k-line);
+  background: transparent;
+  box-shadow: none;
+  letter-spacing: 0.04em;
+
+  &:hover {
+    border-color: var(--k-fg);
+    color: var(--k-fg);
+    box-shadow: 2px 2px 0 rgb(183 40 46 / 16%);
+  }
+}
+
+.popover {
+  border-radius: 0;
+  background: var(--k-surface) var(--k-paper);
+  box-shadow: 4px 4px 0 rgb(80 60 40 / 10%);
+}
+
+/* The bag is a square seal in the corner, with the count in ink */
+.fab {
+  border: 0;
+  border-radius: 4px;
+  background: var(--k-accent);
+  color: #f8efe0;
+  box-shadow:
+    inset 0 0 0 3px var(--k-accent),
+    inset 0 0 0 4px #f8efe0;
+  transform: rotate(-3deg);
+}
+
+.counter {
+  background: var(--k-fg);
+  color: var(--k-surface);
+}
+
+.banner {
+  border-radius: 0;
+  letter-spacing: 0.1em;
+}
+
+.toast {
+  border-radius: 0;
+  border-color: var(--k-accent);
+  letter-spacing: 0.1em;
+}
+
+/* A sheet is a page laid on the desk, in the middle */
+.sheet {
+  @media (min-width: 768px) {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: min(1040px, 100vw - 64px);
+    border: 1px solid var(--k-line);
+    outline: 1px solid var(--k-line);
+    outline-offset: 4px;
+    background: var(--k-surface) var(--k-paper);
+    box-shadow: 0 30px 60px -20px rgb(60 40 20 / 35%);
+    opacity: 0;
+    transform: translate(-50%, -46%);
+    transition:
+      opacity 0.25s,
+      transform 0.25s ease-out;
+    pointer-events: none;
+
+    [data-open] > & {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+    }
+  }
+}
+
+.dialog {
+  border-radius: 0;
+  background: var(--k-surface) var(--k-paper);
+  outline: 1px solid var(--k-line);
+  outline-offset: 4px;
+}
+
+.detail-backdrop,
+.bag-backdrop,
+.help-backdrop {
+  background: #2b2420;
+
+  [data-open] > & {
+    opacity: 0.35;
+  }
+}
+
+/* The table of contents: names, dotted leaders, counts */
+.drawer {
+  border-right: 3px double var(--k-line);
+  background: var(--k-surface) var(--k-paper) fixed;
+}
+
+.drawer-top {
+  background: var(--k-surface) var(--k-paper) fixed;
+}
+
+.drawer-link {
+  border: 0;
+  padding: 2px 16px;
+}
+
+.drawer-text {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+
+  &::after {
+    content: '';
+    order: 1;
+    flex: auto;
+    min-width: 12px;
+    border-bottom: 1px dotted var(--k-muted);
+  }
+}
+
+.drawer-name {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.95rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  [data-current] & {
+    color: var(--k-accent);
+  }
+}
+
+.drawer-count {
+  order: 2;
+  margin: 0;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* The heading of the set, set like a chapter title */
+.collection-header {
+  align-items: flex-end;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--k-line);
+}
+
+.collection-title {
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+}
+
+.collection-credits {
+  font-style: italic;
+}
+
+.collection-categories {
+  column-gap: 14px;
+}
+
+.detail-panel {
+  @media (min-width: 768px) {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 24px;
+    padding: 32px;
+  }
+}
+
+/* The preview, on a square of paper with a vermilion corner */
+.detail-aside {
+  @media (min-width: 768px) {
+    border-right: 1px solid var(--k-line);
+  }
+}
+
+.detail-artwork {
+  position: relative;
+  border: 1px solid var(--k-line);
+  border-radius: 0;
+  background: rgb(250 245 234 / 60%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    border-width: 0 14px 14px 0;
+    border-style: solid;
+    border-color: transparent var(--k-accent) transparent transparent;
+  }
+}
+
+.detail-id-text {
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  opacity: 1;
+}
+
+.detail-group-name {
+  letter-spacing: 0.12em;
+}
+
+.detail-managers,
+.detail-command {
+  border-radius: 0;
+}
+
+.bag-panel {
+  border-left: 3px double var(--k-line);
+  background: var(--k-surface) var(--k-paper);
+}
+
+.bag-title {
+  letter-spacing: 0.3em;
+}
+
+.help-title {
+  letter-spacing: 0.1em;
+}
