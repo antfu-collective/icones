@@ -1,5 +1,5 @@
-// @ts-check
 import antfu from '@antfu/eslint-config'
+import sekiso from 'eslint-plugin-sekiso'
 
 export default antfu(
   {
@@ -15,4 +15,6 @@ export default antfu(
     ],
     formatters: true,
   },
+  // Keeps each layer of `src/sekiso` to its own job: no markup or text in views, no styles in behavior
+  ...sekiso.configs.recommended,
 )

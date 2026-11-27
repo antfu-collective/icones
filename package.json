@@ -21,10 +21,15 @@
     "dev-pwa": "SW_DEV=true vite --port 3333",
     "typecheck": "vue-tsc --noEmit",
     "build": "tsx scripts/prepare.ts && NODE_ENV=production vite build",
-    "test": "vitest"
+    "test": "vitest",
+    "check:themes": "tsx node_modules/@sekiso/cli/src/cli.ts check --root src/sekiso"
   },
   "dependencies": {
     "@antfu/utils": "^9.3.0",
+    "@sekiso/core": "0.0.1",
+    "@sekiso/vue": "0.0.1",
+    "@ui-sdk/core": "0.1.0-beta.17",
+    "@ui-sdk/vue": "0.1.0-beta.17",
     "@vueuse/core": "^15.0.0",
     "dexie": "^4.4.7",
     "file-saver": "^2.0.5",
@@ -42,12 +47,14 @@
   "devDependencies": {
     "@antfu/eslint-config": "^10.0.0",
     "@iconify/json": "^2.2.559",
+    "@sekiso/cli": "0.0.1",
     "@types/file-saver": "^2.0.7",
     "@unocss/reset": "^66.13.0",
     "@vitejs/plugin-vue": "^6.0.11",
     "client-zip": "^2.5.1",
     "eslint": "^10.15.0",
     "eslint-plugin-format": "^2.0.1",
+    "eslint-plugin-sekiso": "0.0.1",
     "fast-glob": "^3.3.3",
     "lru-cache": "^11.5.3",
     "sax": "^1.6.1",

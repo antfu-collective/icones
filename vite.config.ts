@@ -83,6 +83,10 @@ export default defineConfig({
     }),
     UnoCSS(),
   ],
+  oxc: {
+    // Sekiso views are neutral JSX, see `src/sekiso/views`
+    jsx: { runtime: 'automatic', importSource: '@sekiso/core' },
+  },
   define: {
     // ISO with timezone, formatted in the visitor's timezone at runtime
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),

@@ -184,6 +184,18 @@ importers:
       '@antfu/utils':
         specifier: ^9.3.0
         version: 9.3.0
+      '@sekiso/core':
+        specifier: 0.0.1
+        version: 0.0.1
+      '@sekiso/vue':
+        specifier: 0.0.1
+        version: 0.0.1(vue@3.5.46(typescript@6.0.3))
+      '@ui-sdk/core':
+        specifier: 0.1.0-beta.17
+        version: 0.1.0-beta.17
+      '@ui-sdk/vue':
+        specifier: 0.1.0-beta.17
+        version: 0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))
       '@vueuse/core':
         specifier: ^15.0.0
         version: 15.0.0(vue@3.5.46(typescript@6.0.3))
@@ -230,6 +242,9 @@ importers:
       '@iconify/json':
         specifier: ^2.2.559
         version: 2.2.559
+      '@sekiso/cli':
+        specifier: 0.0.1
+        version: 0.0.1(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
@@ -248,6 +263,9 @@ importers:
       eslint-plugin-format:
         specifier: ^2.0.1
         version: 2.0.1(eslint@10.15.0(jiti@2.7.0))
+      eslint-plugin-sekiso:
+        specifier: 0.0.1
+        version: 0.0.1(eslint@10.15.0(jiti@2.7.0))
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -1889,6 +1907,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@sekiso/cli@0.0.1':
+    resolution: {integrity: sha512-rb5ltadv+EWtFP7VOyX1l13zegb7U9HWqocLAfhRCc764ckaDfkPVFKDRdEQRIVjXdZf5+OqALDnRq2fEOn+SA==}
+    hasBin: true
+
+  '@sekiso/core@0.0.1':
+    resolution: {integrity: sha512-kdTarwVqXp0Rytk5ih21zugywFlr9PLgW6y6r5075eHcqj1OdcqeOcwscIeb0tQa9ystxWi4hQE6WHH8Kb9HBg==}
+
+  '@sekiso/vue@0.0.1':
+    resolution: {integrity: sha512-yRFzgK8gA4SWdnO+nH0aRbPZPIEpaYi5/PPrv3AAJrSPqYxgkRnBFCj+9TvWIBJYQT2hq1vqhhkz01oUtWA5Tw==}
+    peerDependencies:
+      vue: ^3.5.0
+
   '@shikijs/core@4.6.0':
     resolution: {integrity: sha512-bfd4OKgvoyXYiYmMRuleA656P4V7M/Du9lcTl38Ngm6KszMj7bq4J1IGZwSYR4c95Tv5UQALtYNWUwaI9UT3xw==}
     engines: {node: '>=20'}
@@ -2057,6 +2087,25 @@ packages:
   '@typescript-eslint/visitor-keys@8.73.0':
     resolution: {integrity: sha512-k4lsFVpRZICbltkIEEH4hZRkwXkqDF1GHBpClKQOHQY+RkoZAAuyc1ci3I6p+CB6v3U4jaHIUshc4RzzQXZWLg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@ui-sdk/core@0.1.0-beta.17':
+    resolution: {integrity: sha512-wBWNqT0Qf1sE6fqD1XuBnSGBFcY6+cek1z7rKl/r4j2bsv2or9i7z44PLy0J9hmflm3IJ5MLW0P4ur2H9BCIvg==}
+
+  '@ui-sdk/vue@0.1.0-beta.17':
+    resolution: {integrity: sha512-4wx8xdVwXLp++/XEnf0MEMeshHb0UDdotTatfIObbQ2D+QQUG3OMLD0thjQWayMFY5phdYBM9t+YlIJdzYAq5Q==}
+    peerDependencies:
+      '@nuxt/kit': ^4.0.0 || ^5.0.0-0
+      '@nuxt/schema': ^4.0.0 || ^5.0.0-0
+      '@ui-sdk/core': ^0.1.0-beta.17
+      nuxt: ^4.0.0 || ^5.0.0-0
+      vue: '>=3.5'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      '@nuxt/schema':
+        optional: true
+      nuxt:
+        optional: true
 
   '@ungap/structured-clone@1.3.1':
     resolution: {integrity: sha512-mUFwbeTqrVgDQxFveS+df2yfap6iuP20NAKAsBt5jDEoOTDew+zwLAOilHCeQJOVSvmgCX4ogqIrA0mnyr08yQ==}
@@ -3001,6 +3050,11 @@ packages:
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=9.38.0'
+
+  eslint-plugin-sekiso@0.0.1:
+    resolution: {integrity: sha512-S5EZx140K55WoBKXGucjb+N8b6Bsu8m5NHlgbJzEQTU7UnHI10Hfx08d17okQA8AC/OfyD9bXYm7q2UqPr3rrw==}
+    peerDependencies:
+      eslint: '>=9.0.0'
 
   eslint-plugin-toml@1.5.0:
     resolution: {integrity: sha512-qBjRywEkKxO2uYOjus//6GVF1r+Hg5QDkRO8RTY6XcaXgWfBU0DhwpFmJa2Ljf0Sz49r7DdZlpKwwHmJ4nmH1Q==}
@@ -4319,9 +4373,18 @@ packages:
   pkg-types@2.4.0:
     resolution: {integrity: sha512-07Fys7iVx0X6TcviMOgogM1Lk33ZyqOezMnU79S+kffWqwolG/5W9V8EgQSeYCIfFTYVgssRbnH630Oa2+soBA==}
 
+  playwright-core@1.65.1:
+    resolution: {integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
+
+  pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
 
   pnpm-workspace-yaml@1.9.1:
     resolution: {integrity: sha512-Xj/T2X6DNAWbtk/9UQ0/TJRswltiHZevmcMjqoL7WrpJi67lu3qaslU4+I+zJ8wtwqmuvAE0KkB8rbv2ZdogBg==}
@@ -6900,6 +6963,41 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.61.0':
     optional: true
 
+  '@sekiso/cli@0.0.1(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)':
+    dependencies:
+      playwright-core: 1.65.1
+      pngjs: 7.0.0
+      typescript: 6.0.3
+      vite: 8.3.8(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vitejs/devtools'
+      - esbuild
+      - jiti
+      - less
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - yaml
+
+  '@sekiso/core@0.0.1':
+    dependencies:
+      '@ui-sdk/core': 0.1.0-beta.17
+
+  '@sekiso/vue@0.0.1(vue@3.5.46(typescript@6.0.3))':
+    dependencies:
+      '@sekiso/core': 0.0.1
+      '@ui-sdk/core': 0.1.0-beta.17
+      '@ui-sdk/vue': 0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))
+      vue: 3.5.46(typescript@6.0.3)
+    transitivePeerDependencies:
+      - '@nuxt/kit'
+      - '@nuxt/schema'
+      - nuxt
+
   '@shikijs/core@4.6.0':
     dependencies:
       '@shikijs/primitive': 4.6.0
@@ -7110,6 +7208,13 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.73.0
       eslint-visitor-keys: 5.0.1
+
+  '@ui-sdk/core@0.1.0-beta.17': {}
+
+  '@ui-sdk/vue@0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))':
+    dependencies:
+      '@ui-sdk/core': 0.1.0-beta.17
+      vue: 3.5.46(typescript@6.0.3)
 
   '@ungap/structured-clone@1.3.1': {}
 
@@ -8326,6 +8431,10 @@ snapshots:
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
+
+  eslint-plugin-sekiso@0.0.1(eslint@10.15.0(jiti@2.7.0)):
+    dependencies:
+      eslint: 10.15.0(jiti@2.7.0)
 
   eslint-plugin-toml@1.5.0(eslint@10.15.0(jiti@2.7.0)):
     dependencies:
@@ -9947,7 +10056,11 @@ snapshots:
       exsolve: 1.2.0
       pathe: 2.0.3
 
+  playwright-core@1.65.1: {}
+
   pluralize@8.0.0: {}
+
+  pngjs@7.0.0: {}
 
   pnpm-workspace-yaml@1.9.1:
     dependencies:
