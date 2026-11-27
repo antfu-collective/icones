@@ -3,31 +3,20 @@ import { drawer } from '../behavior/drawer'
 import { Icon } from './icon'
 
 export const drawerView = defineView(drawer, {
-  tags: {
+  parts: {
     root: 'aside',
-    back: 'button',
-    search: 'form',
+    back: 'button.icon-button',
+    search: 'form.search',
     input: 'input',
-    clear: 'button',
-    link: 'a',
-    favorite: 'button',
-  },
-  layout: {
+    clear: 'button.icon-button',
+    link: 'a.list-item',
+    favorite: 'button.toggle',
     top: 'div',
     bar: 'div',
     list: 'nav',
     text: 'span',
-    name: 'span',
-    count: 'span',
-  },
-  roles: {
-    back: 'icon-button',
-    search: 'search',
-    clear: 'icon-button',
-    link: 'list-item',
-    name: 'text',
-    count: 'caption',
-    favorite: 'toggle',
+    name: 'span.text',
+    count: 'span.caption',
   },
 }, ({ state, t }, s) => (
   <s.Root>
