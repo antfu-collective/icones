@@ -1,24 +1,15 @@
-import { definePrimitive } from '@ui-sdk/core'
+import { defineBehavior } from '@sekiso/core/behavior'
 import { external } from './link'
 
-export interface FooterOptions {
-  /** When the app was built, formatted for the visitor. */
-  time?: string
-  /** How long ago the app was built, in words. */
-  ago?: string
-}
-
-function stateOf(options: FooterOptions) {
-  return { time: options.time ?? '', ago: options.ago ?? '' }
-}
-
 /** The credits and the build time, at the end of a long page. */
-export const footer = definePrimitive({
+export const footer = defineBehavior({
   name: 'footer',
-  options: { time: 'string', ago: 'string' },
-  state: (options: FooterOptions) => stateOf(options),
-  sync: options => stateOf(options),
-  api: () => ({}),
+  inputs: {
+    /** When the app was built, formatted for the visitor. */
+    time: '',
+    /** How long ago the app was built, in words. */
+    ago: '',
+  },
   slots: slot => ({
     root: slot({}),
     author: slot({

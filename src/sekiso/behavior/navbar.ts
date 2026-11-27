@@ -1,48 +1,27 @@
 import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
+import { defineBehavior, port } from '@sekiso/core/behavior'
 import { external, followLink } from './link'
 
-export interface NavbarOptions {
-  /** The page is the home page, so there is nowhere to go back to. */
-  home?: boolean
-  /** The page shows an icon set. The bar then holds its search, and only on small screens. */
-  collection?: boolean
-  dark?: boolean
-  /** The active theme lets the user pick light or dark. */
-  canToggleDark?: boolean
-  navigate?: Navigate
-  /** Port: switches light and dark. It takes the click, to start the transition from it. */
-  toggleDark?: (event?: Event) => void
-}
-
-function stateOf(options: NavbarOptions) {
-  return {
-    home: options.home ?? false,
-    collection: options.collection ?? false,
-    dark: options.dark ?? false,
-    canToggleDark: options.canToggleDark ?? true,
-  }
-}
-
 /** The bar at the top of every page: back, the app name, and the dark switch. */
-export const navbar = definePrimitive({
+export const navbar = defineBehavior({
   name: 'navbar',
-  options: {
-    home: 'boolean',
-    collection: 'boolean',
-    dark: 'boolean',
-    canToggleDark: 'boolean',
-    navigate: 'value',
-    toggleDark: 'value',
+  inputs: {
+    /** The page is the home page, so there is nowhere to go back to. */
+    home: false,
+    /** The page shows an icon set. The bar then holds its search, and only on small screens. */
+    collection: false,
+    dark: false,
+    /** The active theme lets the user pick light or dark. */
+    canToggleDark: true,
   },
-  state: (options: NavbarOptions) => stateOf(options),
-  sync: options => stateOf(options),
+  ports: {
+    navigate: port<Navigate>(),
+    /** Switches light and dark. It takes the click, to start the transition from it. */
+    toggleDark: port<(event?: Event) => void>(),
+  },
   api: context => ({
     follow(event: Event, to: string): void {
       followLink(event, to, context.options().navigate)
-    },
-    toggleDark(event?: Event): void {
-      context.options().toggleDark?.(event)
     },
   }),
   slots: slot => ({

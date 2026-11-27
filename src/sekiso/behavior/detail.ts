@@ -1,5 +1,5 @@
 import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
+import { defineBehavior, port } from '@sekiso/core/behavior'
 import { external, followLink } from './link'
 
 /** A way to copy or download an icon. */
@@ -15,72 +15,6 @@ export interface DetailGroup {
   formats: readonly DetailFormat[]
 }
 
-export interface DetailOptions {
-  open?: boolean
-  /** The icon id, `prefix:name`. */
-  icon?: string
-  /** The id in the case the user picked. */
-  name?: string
-  cases?: readonly { key: string, label: string }[]
-  preferredCase?: string
-  license?: { title: string, url: string } | null
-  /** The icon's set, shown when the page holds icons of every set. */
-  collection?: { id: string, name: string } | null
-  categories?: readonly string[]
-  inBag?: boolean
-  selecting?: boolean
-  copyColor?: boolean
-  color?: string
-  /** The preview color is close to the page's, so the preview needs a backdrop. */
-  lowContrast?: boolean
-  groups?: readonly DetailGroup[]
-  downloads?: readonly DetailFormat[]
-  links?: readonly { name: string, href: string }[]
-  managers?: readonly string[]
-  manager?: string
-  /** The package of the icon set, for the install command. */
-  packageName?: string
-  /** Something was just copied. */
-  copied?: boolean
-  navigate?: Navigate
-  close?: () => void
-  copy?: (type: string) => void
-  download?: (type: string) => void
-  copyInstall?: () => void
-  toggleBag?: () => void
-  toggleSelecting?: () => void
-  toggleCopyColor?: () => void
-  setColor?: (color: string) => void
-  setCase?: (key: string) => void
-  setManager?: (manager: string) => void
-  showHelp?: () => void
-}
-
-function stateOf(options: DetailOptions) {
-  return {
-    open: options.open ?? false,
-    icon: options.icon ?? '',
-    name: options.name ?? '',
-    cases: options.cases ?? [],
-    preferredCase: options.preferredCase ?? '',
-    license: options.license ?? null,
-    collection: options.collection ?? null,
-    categories: options.categories ?? [],
-    inBag: options.inBag ?? false,
-    selecting: options.selecting ?? false,
-    copyColor: options.copyColor ?? false,
-    color: options.color ?? '#888888',
-    lowContrast: options.lowContrast ?? false,
-    groups: options.groups ?? [],
-    downloads: options.downloads ?? [],
-    links: options.links ?? [],
-    managers: options.managers ?? [],
-    manager: options.manager ?? '',
-    packageName: options.packageName ?? '',
-    copied: options.copied ?? false,
-  }
-}
-
 function labelled(label: string): Record<string, string> {
   return { 'aria-label': label, 'title': label }
 }
@@ -90,51 +24,57 @@ function categoryHref(icon: string, category: string): string {
 }
 
 /** The sheet of one icon: its preview, its name, and every way to copy or download it. */
-export const detail = definePrimitive({
+export const detail = defineBehavior({
   name: 'detail',
-  options: {
-    open: 'boolean',
-    icon: 'string',
-    name: 'string',
-    cases: 'value',
-    preferredCase: 'string',
-    license: 'value',
-    collection: 'value',
-    categories: 'value',
-    inBag: 'boolean',
-    selecting: 'boolean',
-    copyColor: 'boolean',
-    color: 'string',
-    lowContrast: 'boolean',
-    groups: 'value',
-    downloads: 'value',
-    links: 'value',
-    managers: 'value',
-    manager: 'string',
-    packageName: 'string',
-    copied: 'boolean',
-    navigate: 'value',
-    close: 'value',
-    copy: 'value',
-    download: 'value',
-    copyInstall: 'value',
-    toggleBag: 'value',
-    toggleSelecting: 'value',
-    toggleCopyColor: 'value',
-    setColor: 'value',
-    setCase: 'value',
-    setManager: 'value',
-    showHelp: 'value',
+  inputs: {
+    open: false,
+    /** The icon id, `prefix:name`. */
+    icon: '',
+    /** The id in the case the user picked. */
+    name: '',
+    cases: [] as readonly { key: string, label: string }[],
+    preferredCase: '',
+    license: null as { title: string, url: string } | null,
+    /** The icon's set, shown when the page holds icons of every set. */
+    collection: null as { id: string, name: string } | null,
+    categories: [] as readonly string[],
+    inBag: false,
+    selecting: false,
+    copyColor: false,
+    color: '#888888',
+    /** The preview color is close to the page's, so the preview needs a backdrop. */
+    lowContrast: false,
+    groups: [] as readonly DetailGroup[],
+    downloads: [] as readonly DetailFormat[],
+    links: [] as readonly { name: string, href: string }[],
+    managers: [] as readonly string[],
+    manager: '',
+    /** The package of the icon set, for the install command. */
+    packageName: '',
+    /** Something was just copied. */
+    copied: false,
   },
-  state: (options: DetailOptions) => ({
-    ...stateOf(options),
+  ports: {
+    navigate: port<Navigate>(),
+    close: port(),
+    copy: port<(type: string) => void>(),
+    download: port<(type: string) => void>(),
+    copyInstall: port(),
+    toggleBag: port(),
+    toggleSelecting: port(),
+    toggleCopyColor: port(),
+    setColor: port<(color: string) => void>(),
+    setCase: port<(key: string) => void>(),
+    setManager: port<(manager: string) => void>(),
+    showHelp: port(),
+  },
+  state: () => ({
     caseOpen: false,
     /** The format whose code shows in the preview, and where its button is. */
     previewing: '',
     previewX: 0,
     previewY: 0,
   }),
-  sync: options => stateOf(options),
   api: (context) => {
     const { store } = context
     const options = () => context.options()
@@ -143,38 +83,8 @@ export const detail = definePrimitive({
         store.set({ caseOpen: false, previewing: '' })
         options().close?.()
       },
-      copy(type: string): void {
-        options().copy?.(type)
-      },
-      download(type: string): void {
-        options().download?.(type)
-      },
-      copyInstall(): void {
-        options().copyInstall?.()
-      },
-      toggleBag(): void {
-        options().toggleBag?.()
-      },
-      toggleSelecting(): void {
-        options().toggleSelecting?.()
-      },
-      toggleCopyColor(): void {
-        options().toggleCopyColor?.()
-      },
-      setColor(color: string): void {
-        options().setColor?.(color)
-      },
       toggleCase(open = !store.get().caseOpen): void {
         store.set({ caseOpen: open })
-      },
-      setCase(key: string): void {
-        options().setCase?.(key)
-      },
-      setManager(manager: string): void {
-        options().setManager?.(manager)
-      },
-      showHelp(): void {
-        options().showHelp?.()
       },
       /** Shows the code of a format above its button, or hides it with no format. */
       preview(type: string, el?: Element): void {

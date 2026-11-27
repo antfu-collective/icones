@@ -1,5 +1,5 @@
 import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
+import { defineBehavior, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
 import { followLink } from './link'
 
@@ -13,30 +13,6 @@ export interface DrawerItem {
   count: number
 }
 
-export interface DrawerOptions {
-  items?: readonly DrawerItem[]
-  /** The id of the open set. */
-  current?: string
-  search?: string
-  favorites?: readonly string[]
-  /** The search of icons, kept when another set opens. */
-  query?: string
-  navigate?: Navigate
-  /** Opens the home page in place of this one. */
-  home?: () => void
-  setSearch?: (search: string) => void
-  toggleFavorite?: (id: string) => void
-}
-
-function stateOf(options: DrawerOptions) {
-  return {
-    items: options.items ?? [],
-    current: options.current ?? '',
-    favorites: options.favorites ?? [],
-    query: options.query ?? '',
-  }
-}
-
 function hrefOf(id: string, query: string): string {
   return query
     ? `/collection/${id}?s=${encodeURIComponent(query)}`
@@ -44,36 +20,34 @@ function hrefOf(id: string, query: string): string {
 }
 
 /** The sidebar of an icon set's page: every set, to go from one to another. */
-export const drawer = definePrimitive({
+export const drawer = defineBehavior({
   name: 'drawer',
-  options: {
-    items: 'value',
-    current: 'string',
-    search: 'string',
-    favorites: 'value',
-    query: 'string',
-    navigate: 'value',
-    home: 'value',
-    setSearch: 'value',
-    toggleFavorite: 'value',
+  inputs: {
+    items: [] as readonly DrawerItem[],
+    /** The id of the open set. */
+    current: '',
+    favorites: [] as readonly string[],
+    /** The search of icons, kept when another set opens. */
+    query: '',
   },
-  state: (options: DrawerOptions) => ({
-    ...stateOf(options),
-    draft: options.search ?? '',
-  }),
-  sync: options => stateOf(options),
+  options: {
+    /** The search of icon sets. The field follows it, ahead of it while the typing goes on. */
+    search: option<string>('string'),
+  },
+  ports: {
+    navigate: port<Navigate>(),
+    /** Opens the home page in place of this one. */
+    home: port(),
+    setSearch: port<(search: string) => void>(),
+    toggleFavorite: port<(id: string) => void>(),
+  },
+  state: options => ({ draft: options.search ?? '' }),
   api: (context) => {
-    const draft = createDraft(context as never, (o: DrawerOptions) => o.search, search => context.options().setSearch?.(search))
+    const draft = createDraft(context as never, (o: { search?: string }) => o.search, search => context.options().setSearch?.(search))
     return {
       ...draft,
-      home(): void {
-        context.options().home?.()
-      },
       follow(event: Event, to: string): void {
         followLink(event, to, context.options().navigate)
-      },
-      toggleFavorite(id: string): void {
-        context.options().toggleFavorite?.(id)
       },
     }
   },

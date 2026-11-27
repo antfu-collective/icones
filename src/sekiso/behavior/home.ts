@@ -1,5 +1,5 @@
 import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
+import { defineBehavior, option, port } from '@sekiso/core/behavior'
 import { followLink } from './link'
 
 /** How long the search waits for the typing to stop. */
@@ -26,50 +26,35 @@ export interface HomeSection {
   collections: readonly HomeCollection[]
 }
 
-export interface HomeOptions {
-  /** The search of icon sets, by name, author or category. */
-  search?: string
-  sections?: readonly HomeSection[]
-  /** The ids of the favorite icon sets. */
-  favorites?: readonly string[]
-  /** The keyboard has a Command key, for the shortcut hint. */
-  mac?: boolean
-  navigate?: Navigate
-  /** Port: takes the search once the typing stops. */
-  setSearch?: (search: string) => void
-  toggleFavorite?: (id: string) => void
-  removeRecent?: (id: string) => void
-}
-
 /** The search of all icons, for the words typed in the search of icon sets. */
 export function searchAllHref(search: string): string {
   return `/collection/all?s=${encodeURIComponent(search)}`
 }
 
 /** The home page: a search, and the icon sets by category. */
-export const home = definePrimitive({
+export const home = defineBehavior({
   name: 'home',
-  options: {
-    search: 'string',
-    sections: 'value',
-    favorites: 'value',
-    mac: 'boolean',
-    navigate: 'value',
-    setSearch: 'value',
-    toggleFavorite: 'value',
-    removeRecent: 'value',
+  inputs: {
+    sections: [] as readonly HomeSection[],
+    /** The ids of the favorite icon sets. */
+    favorites: [] as readonly string[],
+    /** The keyboard has a Command key, for the shortcut hint. */
+    mac: false,
   },
-  state: (options: HomeOptions) => ({
+  options: {
+    /** The search of icon sets, by name, author or category. */
+    search: option<string>('string'),
+  },
+  ports: {
+    navigate: port<Navigate>(),
+    /** Takes the search once the typing stops. */
+    setSearch: port<(search: string) => void>(),
+    toggleFavorite: port<(id: string) => void>(),
+    removeRecent: port<(id: string) => void>(),
+  },
+  state: options => ({
     /** What is typed, ahead of the search while the typing goes on. */
     draft: options.search ?? '',
-    sections: options.sections ?? [],
-    favorites: options.favorites ?? [],
-    mac: options.mac ?? false,
-  }),
-  sync: options => ({
-    sections: options.sections ?? [],
-    favorites: options.favorites ?? [],
-    mac: options.mac ?? false,
   }),
   api: (context) => {
     const { store } = context
@@ -112,12 +97,6 @@ export const home = definePrimitive({
       },
       follow(event: Event, to: string): void {
         followLink(event, to, context.options().navigate)
-      },
-      toggleFavorite(id: string): void {
-        context.options().toggleFavorite?.(id)
-      },
-      removeRecent(id: string): void {
-        context.options().removeRecent?.(id)
       },
     }
   },
