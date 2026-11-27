@@ -1,4 +1,4 @@
-import { defineBehavior, link, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, link, navigate, option, port } from '@sekiso/core/behavior'
 
 /** How long the search waits for the typing to stop. */
 const DEBOUNCE = 250
@@ -44,7 +44,7 @@ export const home = defineBehavior({
     search: option<string>('string'),
   },
   ports: {
-    navigate: port<(to: string) => void>(),
+    navigate,
     /** Takes the search once the typing stops. */
     setSearch: port<(search: string) => void>(),
     toggleFavorite: port<(id: string) => void>(),

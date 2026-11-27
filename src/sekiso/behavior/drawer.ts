@@ -1,4 +1,4 @@
-import { defineBehavior, link, option, port } from '@sekiso/core/behavior'
+import { defineBehavior, link, navigate, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
 
 /** A row of the sidebar: an icon set, or `all` and `recent`. */
@@ -33,7 +33,7 @@ export const drawer = defineBehavior({
     search: option<string>('string'),
   },
   ports: {
-    navigate: port<(to: string) => void>(),
+    navigate,
     /** Opens the home page in place of this one. */
     home: port(),
     setSearch: port<(search: string) => void>(),

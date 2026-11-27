@@ -1,4 +1,4 @@
-import { defineBehavior, external, link, port } from '@sekiso/core/behavior'
+import { defineBehavior, external, link, navigate, port } from '@sekiso/core/behavior'
 
 /** The bar at the top of every page: back, the app name, and the dark switch. */
 export const navbar = defineBehavior({
@@ -13,7 +13,7 @@ export const navbar = defineBehavior({
     canToggleDark: true,
   },
   ports: {
-    navigate: port<(to: string) => void>(),
+    navigate,
     /** Switches light and dark. It takes the click, to start the transition from it. */
     toggleDark: port<(event?: Event) => void>(),
   },

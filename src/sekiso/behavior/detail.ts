@@ -1,4 +1,4 @@
-import { defineBehavior, external, link, port } from '@sekiso/core/behavior'
+import { defineBehavior, external, link, navigate, port } from '@sekiso/core/behavior'
 
 /** A way to copy or download an icon. */
 export interface DetailFormat {
@@ -49,7 +49,7 @@ export const detail = defineBehavior({
     copied: false,
   },
   ports: {
-    navigate: port<(to: string) => void>(),
+    navigate,
     close: port(),
     copy: port<(type: string) => void>(),
     download: port<(type: string) => void>(),
