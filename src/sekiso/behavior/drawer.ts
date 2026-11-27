@@ -45,7 +45,7 @@ export const drawer = defineBehavior({
     root: slot({}),
     back: slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({ 'aria-label': part.props.label, 'title': part.props.label }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.home(),
     }),
     search: slot({
@@ -57,11 +57,10 @@ export const drawer = defineBehavior({
     input: slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'text',
-        'value': state.draft,
-        'aria-label': part.props.label,
-        'placeholder': part.props.label,
-        'autocomplete': 'off',
+        type: 'text',
+        value: state.draft,
+        placeholder: part.props.label,
+        autocomplete: 'off',
       }),
       on: {
         input: (event, { api }) => api.type((event.target as HTMLInputElement).value),
@@ -70,7 +69,7 @@ export const drawer = defineBehavior({
     clear: slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.draft !== '',
-      attrs: (_state, part) => ({ 'aria-label': part.props.label, 'title': part.props.label }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.clear(),
     }),
     link: slot<{ value: string }>({
@@ -88,7 +87,6 @@ export const drawer = defineBehavior({
     favorite: slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(state.favorites.includes(part.key)),
       }),

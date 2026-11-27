@@ -49,7 +49,6 @@ export const settings = defineBehavior({
     'category-toggle': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(!state.categories.find(category => category.name === part.key)?.hidden),
       }),
@@ -62,7 +61,6 @@ export const settings = defineBehavior({
     'favorite': slot<{ value: string, label: string, pressed: boolean }>({
       props: { value: 'key', label: 'string', pressed: 'boolean' },
       attrs: (_state, part) => ({
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(part.props.pressed),
       }),
@@ -71,7 +69,6 @@ export const settings = defineBehavior({
     'visible': slot<{ value: string, label: string, pressed: boolean }>({
       props: { value: 'key', label: 'string', pressed: 'boolean' },
       attrs: (_state, part) => ({
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(part.props.pressed),
       }),

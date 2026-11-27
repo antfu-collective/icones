@@ -13,10 +13,6 @@ export interface DetailGroup {
   formats: readonly DetailFormat[]
 }
 
-function labelled(label: string): Record<string, string> {
-  return { 'aria-label': label, 'title': label }
-}
-
 function categoryHref(icon: string, category: string): string {
   return `/collection/${icon.split(':')[0]}?category=${encodeURIComponent(category)}`
 }
@@ -113,7 +109,7 @@ export const detail = defineBehavior({
     }),
     'close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.close(),
     }),
     // A label: a click on the preview opens the color input inside it
@@ -129,13 +125,13 @@ export const detail = defineBehavior({
     }),
     'copy-name': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.copy('id'),
     }),
     'case-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-expanded': String(state.caseOpen),
       }),
       press: ({ api }) => api.toggleCase(),
@@ -224,7 +220,7 @@ export const detail = defineBehavior({
     }),
     'copy-install': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.copyInstall(),
     }),
     'toast': slot({

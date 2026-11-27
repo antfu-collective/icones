@@ -162,15 +162,15 @@ export const collectionView = defineView(collection, COLLECTION_PARTS, ({ state,
               <s.MenuBox>
                 <Icon name="menu" />
                 <s.Menu label={t('menu.title')}>
-                  <s.MenuGroup value="view" label={t('menu.view')}>
+                  <s.MenuGroup value="view" name={t('menu.view')}>
                     <s.MenuOption value="grid">{t('menu.grid')}</s.MenuOption>
                     <s.MenuOption value="list">{t('menu.list')}</s.MenuOption>
                   </s.MenuGroup>
-                  <s.MenuGroup value="modes" label={t('menu.modes')}>
+                  <s.MenuGroup value="modes" name={t('menu.modes')}>
                     <s.MenuOption value="select">{t('collection.mode.select')}</s.MenuOption>
                     <s.MenuOption value="copy">{t('collection.mode.copy')}</s.MenuOption>
                   </s.MenuGroup>
-                  <s.MenuGroup value="downloads" label={t('menu.downloads')}>
+                  <s.MenuGroup value="downloads" name={t('menu.downloads')}>
                     <s.MenuOption value="cache">{t('menu.cache')}</s.MenuOption>
                     <s.MenuOption value="download_iconfont">{t('menu.iconfont')}</s.MenuOption>
                     <s.MenuOption value="download_svgs">{t('menu.svgs')}</s.MenuOption>

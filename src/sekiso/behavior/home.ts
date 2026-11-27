@@ -106,12 +106,11 @@ export const home = defineBehavior({
     'input': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'text',
-        'name': 's',
-        'value': state.draft,
-        'aria-label': part.props.label,
-        'placeholder': part.props.label,
-        'autocomplete': 'off',
+        type: 'text',
+        name: 's',
+        value: state.draft,
+        placeholder: part.props.label,
+        autocomplete: 'off',
       }),
       on: {
         input: (event, { api }) => api.type((event.target as HTMLInputElement).value),
@@ -130,7 +129,7 @@ export const home = defineBehavior({
     'clear': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.draft !== '',
-      attrs: (_state, part) => ({ 'aria-label': part.props.label, 'title': part.props.label }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.clear(),
     }),
     'search-all': slot({
@@ -145,7 +144,6 @@ export const home = defineBehavior({
     'favorite': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(state.favorites.includes(part.key)),
       }),
@@ -157,7 +155,7 @@ export const home = defineBehavior({
     }),
     'forget': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
-      attrs: (_state, part) => ({ 'aria-label': part.props.label, 'title': part.props.label }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api, key }, event) => {
         event?.preventDefault()
         api.removeRecent(key)

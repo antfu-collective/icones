@@ -22,7 +22,7 @@ export const navbar = defineBehavior({
     back: slot<{ label: string }>({
       props: { label: 'string' },
       present: state => !state.home,
-      attrs: (_state, part) => ({ 'href': '/', 'aria-label': part.props.label, 'title': part.props.label }),
+      attrs: (_state, part) => ({ href: '/', title: part.props.label }),
       on: {
         click: (event, { api }) => follow(event, () => api.navigate('/')),
       },
@@ -32,14 +32,13 @@ export const navbar = defineBehavior({
       present: state => !state.collection,
       attrs: (_state, part) => ({
         ...external('https://github.com/antfu/icones'),
-        'aria-label': part.props.label,
-        'title': part.props.label,
+        title: part.props.label,
       }),
     }),
     settings: slot<{ label: string }>({
       props: { label: 'string' },
       present: state => !state.collection,
-      attrs: (_state, part) => ({ 'href': '/settings', 'aria-label': part.props.label, 'title': part.props.label }),
+      attrs: (_state, part) => ({ href: '/settings', title: part.props.label }),
       on: {
         click: (event, { api }) => follow(event, () => api.navigate('/settings')),
       },
@@ -48,7 +47,6 @@ export const navbar = defineBehavior({
       props: { label: 'string' },
       present: state => !state.collection && state.canToggleDark,
       attrs: (state, part) => ({
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(state.dark),
       }),

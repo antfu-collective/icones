@@ -51,10 +51,6 @@ const TASKS: Record<string, CollectionTask> = {
   download_json: 'json',
 }
 
-function labelled(label: string): Record<string, string> {
-  return { 'aria-label': label, 'title': label }
-}
-
 /** The page of one icon set: its details, its filters, the search, and what to do with the icons. */
 export const collection = defineBehavior({
   name: 'collection',
@@ -162,7 +158,7 @@ export const collection = defineBehavior({
     'drawer-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-expanded': String(!state.drawerCollapsed),
       }),
       press: ({ api }) => api.toggleDrawer(),
@@ -181,7 +177,6 @@ export const collection = defineBehavior({
       present: state => !state.drawerCollapsed,
       attrs: (state, part) => ({
         'tabindex': '0',
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-orientation': 'vertical',
         'aria-valuenow': String(state.drawerWidth),
@@ -241,7 +236,7 @@ export const collection = defineBehavior({
       present: state => Boolean(state.collection?.url),
       attrs: (state, part) => ({
         ...external(state.collection?.url ?? ''),
-        ...labelled(part.props.label),
+        title: part.props.label,
       }),
     }),
     'npm': slot<{ label: string }>({
@@ -249,7 +244,7 @@ export const collection = defineBehavior({
       present: state => Boolean(state.collection?.npm),
       attrs: (state, part) => ({
         ...external(state.collection?.npm ?? ''),
-        ...labelled(part.props.label),
+        title: part.props.label,
       }),
     }),
     'license': slot({
@@ -259,7 +254,7 @@ export const collection = defineBehavior({
     'size-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-haspopup': 'true',
         'aria-expanded': String(state.sizeOpen),
       }),
@@ -309,7 +304,7 @@ export const collection = defineBehavior({
       props: { label: 'string' },
       present: state => state.canToggleDark,
       attrs: (state, part) => ({
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-pressed': String(state.dark),
       }),
       press: ({ api }, event) => api.toggleDark(event),
@@ -318,7 +313,7 @@ export const collection = defineBehavior({
       props: { label: 'string' },
       attrs: (_state, part) => ({
         href: '/settings',
-        ...labelled(part.props.label),
+        title: part.props.label,
       }),
       on: {
         click: (event, { api }) => follow(event, () => api.navigate('/settings')),
@@ -328,7 +323,7 @@ export const collection = defineBehavior({
       props: { label: 'string' },
       present: state => state.collection !== null && !state.collection.special,
       attrs: (state, part) => ({
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-pressed': String(state.favorite),
       }),
       press: ({ api }) => api.toggleFavorite(),
@@ -344,10 +339,11 @@ export const collection = defineBehavior({
         },
       },
     }),
-    'menu-group': slot<{ value: string, label: string }>({
-      props: { value: 'key', label: 'string' },
+    // The group's own `label` attribute names it, so it takes its text as `name`, not `label`
+    'menu-group': slot<{ value: string, name: string }>({
+      props: { value: 'key', name: 'string' },
       present: (state, part) => part.key !== 'downloads' || !state.collection?.special,
-      attrs: (_state, part) => ({ label: part.props.label }),
+      attrs: (_state, part) => ({ label: part.props.name }),
     }),
     'menu-option': slot<{ value: string }>({
       props: { value: 'key' },
@@ -387,12 +383,11 @@ export const collection = defineBehavior({
     'input': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'type': 'text',
-        'name': 's',
-        'value': state.draft,
-        'aria-label': part.props.label,
-        'placeholder': part.props.label,
-        'autocomplete': 'off',
+        type: 'text',
+        name: 's',
+        value: state.draft,
+        placeholder: part.props.label,
+        autocomplete: 'off',
       }),
       on: {
         input: (event, { api }) => api.type((event.target as HTMLInputElement).value),
@@ -419,13 +414,13 @@ export const collection = defineBehavior({
     'clear': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       present: state => state.draft !== '',
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.clear(),
     }),
     'help-toggle': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-expanded': String(state.helpOpen),
         'aria-controls': `search-syntax-${part.key}`,
       }),
@@ -462,7 +457,7 @@ export const collection = defineBehavior({
     'bag': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.bag > 0,
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.openBag(),
     }),
     'mode': slot({

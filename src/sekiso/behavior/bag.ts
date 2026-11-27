@@ -3,10 +3,6 @@ import { defineBehavior, link, port } from '@sekiso/core/behavior'
 /** What the bag can pack its icons into. */
 export type BagPack = 'iconfont' | 'sprite' | `zip:${string}`
 
-function labelled(label: string): Record<string, string> {
-  return { 'aria-label': label, 'title': label }
-}
-
 /** The bag: the icons the user picked, to share or download together. */
 export const bag = defineBehavior({
   name: 'bag',
@@ -46,18 +42,18 @@ export const bag = defineBehavior({
     'share': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.count > 0,
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.share(),
     }),
     'clear': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.count > 0,
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.clear(),
     }),
     'close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.close(),
     }),
     'zip-options': slot({
@@ -65,7 +61,7 @@ export const bag = defineBehavior({
     }),
     'zip-close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => labelled(part.props.label),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.toggleZip(false),
     }),
     'zip': slot<{ value: string }>({
