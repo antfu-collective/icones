@@ -28,10 +28,9 @@ export default defineTheme({
     'scheme': 'light dark',
   },
   // A part wears the class of its role, then its own where it has one
-  roles: styles,
+  styles,
+  // Parts that need no look of their own
   slots: {
-    ...styles,
-    // Parts that need no look of their own
     'home-search-all-text': '',
     'settings-intro': '',
     'bag': '',
