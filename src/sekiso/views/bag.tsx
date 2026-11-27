@@ -1,6 +1,6 @@
 import { defineView, Outlet } from '@sekiso/core/view'
 import { bag, sharedBag } from '../behavior/bag'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const bagView = defineView(bag, {
   parts: {

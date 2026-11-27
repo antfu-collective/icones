@@ -1,6 +1,6 @@
 import { defineView } from '@sekiso/core/view'
 import { help, progress } from '../behavior/help'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const helpView = defineView(help, {
   parts: {

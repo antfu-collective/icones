@@ -2,8 +2,8 @@ import type { Translate } from '@sekiso/core/view'
 import type { HomeSection } from '../behavior/home'
 import { defineView, Embed, Outlet } from '@sekiso/core/view'
 import { home } from '../behavior/home'
+import { Icon } from '../schema'
 import { footerView } from './footer'
-import { Icon } from './icon'
 
 function sectionName(section: HomeSection, t: Translate): string {
   return section.type === 'normal'

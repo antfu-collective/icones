@@ -1,9 +1,9 @@
 import { defineView, Embed, input, Outlet } from '@sekiso/core/view'
 import { collection } from '../behavior/collection'
 import { SEARCH_SYNTAX } from '../behavior/draft'
+import { Icon } from '../schema'
 import { drawerView } from './drawer'
 import { footerView } from './footer'
-import { Icon } from './icon'
 
 /** Both views of the page share one instance, so the parts are the same. */
 const COLLECTION_PARTS = {

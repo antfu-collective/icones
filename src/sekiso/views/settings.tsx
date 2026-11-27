@@ -1,6 +1,6 @@
 import { defineView } from '@sekiso/core/view'
 import { settings } from '../behavior/settings'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const settingsView = defineView(settings, {
   parts: {

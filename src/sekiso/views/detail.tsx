@@ -1,6 +1,6 @@
 import { defineView, Outlet } from '@sekiso/core/view'
 import { detail } from '../behavior/detail'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const detailView = defineView(detail, {
   parts: {

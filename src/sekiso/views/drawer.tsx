@@ -1,6 +1,6 @@
 import { defineView } from '@sekiso/core/view'
 import { drawer } from '../behavior/drawer'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const drawerView = defineView(drawer, {
   parts: {

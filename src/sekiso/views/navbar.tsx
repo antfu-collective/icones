@@ -1,6 +1,6 @@
 import { defineView, Outlet } from '@sekiso/core/view'
 import { navbar } from '../behavior/navbar'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const navbarView = defineView(navbar, {
   parts: {
