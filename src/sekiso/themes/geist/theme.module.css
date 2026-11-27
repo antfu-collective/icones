@@ -457,33 +457,6 @@
   }
 }
 
-/* A sheet is a modal in the middle of the page, from 768px */
-.sheet {
-  @media (min-width: 768px) {
-    top: 50%;
-    right: auto;
-    bottom: auto;
-    left: 50%;
-    width: min(960px, 100vw - 64px);
-    border: 1px solid var(--k-line);
-    border-radius: 12px;
-    background: var(--k-raised);
-    box-shadow: 0 30px 60px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 70%));
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.97);
-    transition:
-      opacity 0.15s,
-      transform 0.15s ease-out;
-    pointer-events: none;
-
-    [data-open] > & {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-      pointer-events: auto;
-    }
-  }
-}
-
 .dialog {
   border-radius: 12px;
   background: var(--k-raised);
@@ -745,4 +718,263 @@
 .help-title {
   font-size: 1rem;
   font-weight: 600;
+}
+
+/* Home: each section is one list panel, an icon set per row, like a list of deployments */
+.home-cards {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--k-line);
+  border-radius: 12px;
+  background: var(--k-raised);
+
+  @media (min-width: 768px) {
+    gap: 0;
+  }
+}
+
+.home-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: none;
+  align-items: center;
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid var(--k-line);
+  border-radius: 0;
+  background: none;
+
+  @media (min-width: 768px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover {
+    border-color: var(--k-line);
+    background: light-dark(#fafafa, #111111);
+    box-shadow: none;
+  }
+
+  &:hover .home-samples {
+    opacity: 0.25;
+  }
+}
+
+.home-card-body {
+  padding: 14px 20px;
+}
+
+.home-card-name {
+  margin-bottom: 4px;
+  font-size: 0.9375rem;
+}
+
+.home-samples {
+  padding: 0 20px;
+  border: 0;
+  background: none;
+  transition: opacity 0.15s;
+
+  & > * {
+    font-size: 1.125rem;
+  }
+
+  & > * > :nth-child(n + 7) {
+    display: none;
+  }
+}
+
+.home-card-actions {
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+/* The icon set's page: categories are tabs, variants a segmented control, the icons a panel */
+.collection-categories {
+  gap: 0;
+  margin: 0 32px;
+  padding: 0;
+  border-bottom: 1px solid var(--k-line);
+
+  @media (min-width: 768px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  @media (max-width: 767.9px) {
+    margin: 0 16px;
+  }
+}
+
+.collection-category {
+  margin-bottom: -1px;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  font-size: 0.875rem;
+
+  @media (min-width: 768px) {
+    padding: 10px 12px;
+  }
+
+  &:hover {
+    background: none;
+    color: var(--k-fg);
+  }
+
+  &[aria-pressed='true'] {
+    border-color: var(--k-fg);
+    background: none;
+    color: var(--k-fg);
+  }
+}
+
+.collection-variants {
+  gap: 0;
+}
+
+.collection-variants-label {
+  margin-right: 10px;
+}
+
+.collection-variant {
+  border-radius: 0;
+  margin-left: -1px;
+
+  .collection-variants-label + & {
+    border-radius: var(--k-radius) 0 0 var(--k-radius);
+  }
+
+  &:last-child {
+    border-radius: 0 var(--k-radius) var(--k-radius) 0;
+  }
+}
+
+.collection-scroller {
+  @media (min-width: 768px) {
+    margin: 0 32px 24px;
+    border: 1px solid var(--k-line);
+    border-radius: 12px;
+    background: var(--k-raised);
+  }
+}
+
+.collection-grid {
+  @media (min-width: 768px) {
+    padding: 16px 20px;
+  }
+}
+
+.collection-count {
+  padding-bottom: 16px;
+}
+
+/* The icon's sheet: a panel down the right edge, read from top to bottom */
+.detail-panel {
+  @media (min-width: 768px) {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    width: min(600px, 100vw);
+    max-height: none;
+    border-top: 0;
+    border-left: 1px solid var(--k-line);
+    background: var(--k-raised);
+    box-shadow: -24px 0 60px light-dark(rgb(0 0 0 / 8%), rgb(0 0 0 / 60%));
+    transform: translateX(100%);
+  }
+}
+
+.detail-aside {
+  @media (min-width: 768px) {
+    padding: 40px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--k-line);
+    border-radius: 0;
+  }
+}
+
+.detail-install {
+  & .detail-managers,
+  & .detail-command {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* The bag is a modal in the middle of the page */
+.bag-panel {
+  @media (min-width: 768px) {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: min(560px, 100vw - 64px);
+    height: min(640px, 100vh - 64px);
+    border: 1px solid var(--k-line);
+    border-radius: 12px;
+    box-shadow: 0 30px 60px light-dark(rgb(0 0 0 / 12%), rgb(0 0 0 / 70%));
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.97);
+    transition:
+      opacity 0.15s,
+      transform 0.15s ease-out;
+    pointer-events: none;
+  }
+}
+
+[data-open] > .bag-panel {
+  @media (min-width: 768px) {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+  }
+}
+
+/* Settings: the section names in a sticky column, their content beside them */
+.settings {
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 48px;
+    row-gap: 48px;
+  }
+}
+
+.settings-intro {
+  @media (min-width: 1024px) {
+    position: sticky;
+    top: 0;
+    grid-column: 1;
+
+    & .heading {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.settings-themes,
+.settings-categories {
+  @media (min-width: 1024px) {
+    grid-column: 2;
+    margin: 0;
+  }
+}
+
+.settings-categories {
+  @media (min-width: 1280px) {
+    column-count: 4;
+  }
 }

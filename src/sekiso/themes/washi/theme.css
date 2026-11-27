@@ -19,3 +19,10 @@ html[data-theme='washi'] {
     border-radius: var(--k-radius);
   }
 }
+
+/* Room for the navigation rail on the right, on large screens */
+@media (min-width: 768px) {
+  html[data-theme='washi'] body {
+    padding-right: 64px;
+  }
+}

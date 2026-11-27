@@ -360,7 +360,7 @@ export function createAgentTools(router: Router): AgentTool[] {
     {
       name: 'set_theme',
       title: 'Set theme',
-      description: 'Change the look of the whole app. "original" is the classic look, light or dark. "washi" is ink on Japanese paper, with vertical section titles and tall cards. "geist" is black and white, with Geist type and project cards, light or dark.',
+      description: 'Change the look of the whole app. "original" is the classic look, light or dark. "washi" is ink on Japanese paper, laid out like a book, with a rail on the right and vertical titles. "geist" is black and white Geist type, laid out like a dashboard with lists, tabs and side panels, light or dark.',
       inputSchema: {
         type: 'object',
         properties: {

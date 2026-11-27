@@ -494,3 +494,209 @@
 .help-title {
   letter-spacing: 0.1em;
 }
+
+/*
+ * Large screens: a book bound on the right. The navigation is a rail down
+ * the right edge, with the name written top to bottom, and the icon set's
+ * table of contents sits on the right of its page.
+ */
+@media (min-width: 768px) {
+  .bar,
+  .bar[data-collection] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 64px;
+    padding: 24px 0;
+    border-bottom: 0;
+    border-left: 3px double var(--k-line);
+  }
+
+  .bar > * {
+    margin: 0;
+  }
+
+  /* The search of an icon set stays in its page */
+  .bar [data-slot='collection-search'] {
+    display: none;
+  }
+
+  .brand {
+    position: static;
+    flex: none;
+    order: -1;
+    font-size: 1.15rem;
+    letter-spacing: 0.5em;
+    writing-mode: vertical-rl;
+    pointer-events: auto;
+
+    &::after {
+      margin: 0.7em 0 0;
+    }
+  }
+
+  .navbar-back {
+    order: -2;
+  }
+
+  .navbar-github {
+    margin: auto 0 0;
+  }
+
+  .fab,
+  .banner {
+    right: 64px;
+  }
+
+  .banner[aria-hidden='true'] {
+    transform: translateX(calc(100% + 64px));
+  }
+
+  /* The page of an icon set: contents on the right, the title down the left */
+  .collection {
+    flex-direction: row-reverse;
+  }
+
+  .drawer {
+    border-right: 0;
+    border-left: 3px double var(--k-line);
+  }
+
+  .collection-drawer-toggle {
+    right: calc(64px + 250px);
+    left: auto;
+    border: 1px solid var(--k-line);
+    border-right: 0;
+    border-radius: 9999px 0 0 9999px;
+
+    & > [data-icon] {
+      margin: 0 -4px 0 0;
+      transform: rotate(180deg);
+    }
+
+    [data-collapsed] > & {
+      right: 64px;
+      left: auto;
+
+      & > [data-icon] {
+        transform: none;
+      }
+    }
+  }
+
+  .collection-main {
+    padding-left: 112px;
+  }
+
+  .collection-header {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 96px;
+    padding: 28px 0 24px;
+    border-right: 1px solid var(--k-line);
+    border-bottom: 0;
+    writing-mode: vertical-rl;
+  }
+
+  .collection-intro {
+    padding: 0;
+  }
+
+  .collection-title {
+    font-size: 1.7rem;
+    letter-spacing: 0.25em;
+  }
+
+  .collection-name {
+    overflow: visible;
+  }
+
+  .collection-credits {
+    flex-direction: row;
+    gap: 12px;
+    margin-right: 6px;
+  }
+
+  .collection-links {
+    margin: 10px 0 0;
+  }
+
+  .collection-actions {
+    flex-direction: row;
+    align-self: center;
+    gap: 14px;
+  }
+
+  .collection-cached {
+    padding: 0 0 10px;
+    border: 0;
+    border-bottom: 1px solid var(--k-line);
+  }
+
+  .collection-size-menu,
+  .collection-menu {
+    writing-mode: horizontal-tb;
+  }
+
+  .collection-size-menu {
+    top: 0;
+    right: auto;
+    left: 100%;
+    margin: 0 0 0 12px;
+  }
+
+  .collection-categories,
+  .collection-variants {
+    padding-left: 0;
+  }
+
+  .collection-search[data-place='page'] {
+    margin-left: 0;
+  }
+
+  .collection-grid {
+    padding-left: 0;
+  }
+
+  /* The icon's sheet: the words on the left, the preview on the right */
+  .detail-panel {
+    grid-template-columns: minmax(0, 1fr) 220px;
+  }
+
+  .detail-aside {
+    order: 2;
+    padding-left: 24px;
+    border-right: 0;
+    border-left: 1px solid var(--k-line);
+  }
+
+  /* The bag opens from the left, like the cover of the book */
+  .bag-panel {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 28rem;
+    max-height: none;
+    border: 0;
+    border-right: 3px double var(--k-line);
+    outline: 0;
+    opacity: 1;
+    transform: translateX(-100%);
+    pointer-events: auto;
+  }
+
+  [data-open] > .bag-panel {
+    transform: none;
+  }
+}

@@ -963,18 +963,21 @@
 
 .collection-main {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
-  row-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
+  min-width: 0;
   padding-top: 12px;
 
   @media (min-width: 768px) {
-    grid-template-rows: repeat(4, max-content) minmax(0, 1fr);
     max-height: 100%;
     overflow: hidden;
     padding-top: 20px;
+  }
+
+  & > * {
+    flex-shrink: 0;
   }
 }
 
@@ -1184,7 +1187,10 @@
 .collection-scroller {
   padding-top: 8px;
 
+  /* The icons take the rest of the height, and scroll in it */
   @media (min-width: 768px) {
+    flex: 1 1 0;
+    min-height: 0;
     overflow-x: hidden;
     overflow-y: scroll;
   }
