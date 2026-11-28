@@ -1,44 +1,29 @@
 import { defineView, Outlet } from '@sekiso/core/view'
 import { bag, sharedBag } from '../behavior/bag'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const bagView = defineView(bag, {
-  tags: {
+  parts: {
     'root': 'div',
     'backdrop': 'div',
-    'panel': 'div',
-    'share': 'button',
-    'clear': 'button',
-    'close': 'button',
+    'panel': 'div.sheet',
+    'share': 'button.icon-button',
+    'clear': 'button.icon-button',
+    'close': 'button.icon-button',
     'zip-options': 'div',
-    'zip-close': 'button',
-    'zip': 'button',
-    'zip-toggle': 'button',
-    'iconfont': 'button',
-    'sprite': 'button',
-  },
-  layout: {
-    header: 'div',
-    intro: 'div',
-    title: 'h2',
-    count: 'p',
-    icons: 'div',
-    tag: 'sup',
-    footer: 'div',
-    empty: 'p',
-  },
-  roles: {
-    'panel': 'sheet',
-    'count': 'caption',
-    'share': 'icon-button',
-    'clear': 'icon-button',
-    'close': 'icon-button',
-    'zip-close': 'icon-button',
-    'zip': 'button',
-    'zip-toggle': 'action',
-    'iconfont': 'action',
-    'sprite': 'action',
-    'empty': 'empty',
+    'zip-close': 'button.icon-button',
+    'zip': 'button.button',
+    'zip-toggle': 'button.action',
+    'iconfont': 'button.action',
+    'sprite': 'button.action',
+    'header': 'div',
+    'intro': 'div',
+    'title': 'h2',
+    'count': 'p.caption',
+    'icons': 'div',
+    'tag': 'sup',
+    'footer': 'div',
+    'empty': 'p.empty',
   },
 }, ({ state, t }, s) => (
   <s.Root data={{ open: state.open }}>
@@ -97,24 +82,15 @@ export const bagView = defineView(bag, {
 ))
 
 export const sharedBagView = defineView(sharedBag, {
-  tags: {
-    root: 'main',
+  parts: {
+    root: 'main.page',
     add: 'button',
-    browse: 'a',
-  },
-  layout: {
+    browse: 'a.link',
     title: 'h1',
-    hint: 'p',
+    hint: 'p.caption',
     icons: 'div',
-    footer: 'p',
-    empty: 'p',
-  },
-  roles: {
-    root: 'page',
-    hint: 'caption',
-    footer: 'caption',
-    browse: 'link',
-    empty: 'caption',
+    footer: 'p.caption',
+    empty: 'p.caption',
   },
 }, ({ state, t }, s) => (
   <s.Root>

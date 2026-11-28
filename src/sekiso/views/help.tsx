@@ -1,26 +1,17 @@
 import { defineView } from '@sekiso/core/view'
 import { help, progress } from '../behavior/help'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const helpView = defineView(help, {
-  tags: {
+  parts: {
     root: 'div',
     backdrop: 'div',
-    panel: 'div',
+    panel: 'div.dialog',
     link: 'a',
-  },
-  layout: {
-    intro: 'p',
-    title: 'h2',
-    text: 'p',
-    code: 'code',
-  },
-  roles: {
-    panel: 'dialog',
-    intro: 'caption',
-    title: 'subheading',
-    text: 'text',
-    code: 'code',
+    intro: 'p.caption',
+    title: 'h2.subheading',
+    text: 'p.text',
+    code: 'code.code',
   },
 }, ({ state, t }, s) => (
   <s.Root data={{ open: state.open }}>
@@ -70,9 +61,7 @@ export const helpView = defineView(help, {
 ))
 
 export const progressView = defineView(progress, {
-  tags: { root: 'div' },
-  layout: { message: 'span' },
-  roles: { root: 'toast' },
+  parts: { root: 'div.toast', message: 'span' },
 }, ({ state }, s) => (
   <s.Root data={{ shown: state.active }}>
     <Icon name="busy" />

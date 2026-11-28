@@ -1,5 +1,4 @@
-import { definePrimitive } from '@ui-sdk/core'
-import { external } from './link'
+import { defineBehavior, external, port } from '@sekiso/core/behavior'
 
 /** Where the help links go, by key. */
 const LINKS: Record<string, string> = {
@@ -11,22 +10,13 @@ const LINKS: Record<string, string> = {
   'components-post': 'https://antfu.me/posts/journey-with-icons-continues',
 }
 
-export interface HelpOptions {
-  open?: boolean
-  close?: () => void
-}
-
 /** A dialog on how to use an icon. */
-export const help = definePrimitive({
+export const help = defineBehavior({
   name: 'help',
-  options: { open: 'boolean', close: 'value' },
-  state: (options: HelpOptions) => ({ open: options.open ?? false }),
-  sync: options => ({ open: options.open ?? false }),
-  api: context => ({
-    close(): void {
-      context.options().close?.()
-    },
-  }),
+  inputs: { open: false },
+  ports: {
+    close: port(),
+  },
   slots: slot => ({
     root: slot({}),
     backdrop: slot({
@@ -49,18 +39,10 @@ export const help = definePrimitive({
   },
 })
 
-export interface ProgressOptions {
-  active?: boolean
-  message?: string
-}
-
 /** What the app is busy with, like packing a download. */
-export const progress = definePrimitive({
+export const progress = defineBehavior({
   name: 'progress',
-  options: { active: 'boolean', message: 'string' },
-  state: (options: ProgressOptions) => ({ active: options.active ?? false, message: options.message ?? '' }),
-  sync: options => ({ active: options.active ?? false, message: options.message ?? '' }),
-  api: () => ({}),
+  inputs: { active: false, message: '' },
   slots: slot => ({
     root: slot({
       attrs: state => ({

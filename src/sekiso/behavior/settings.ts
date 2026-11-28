@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
-import { followLink } from './link'
+import { defineBehavior, link, port } from '@sekiso/core/behavior'
 
 /** A theme to pick, with a few of its colors to preview it by. */
 export interface SettingsTheme {
@@ -24,63 +22,25 @@ export interface SettingsCategory {
   collections: readonly SettingsCollection[]
 }
 
-export interface SettingsOptions {
-  theme?: string
-  themes?: readonly SettingsTheme[]
-  categories?: readonly SettingsCategory[]
-  navigate?: Navigate
-  setTheme?: (name: string) => void
-  toggleCategory?: (name: string) => void
-  toggleFavorite?: (id: string) => void
-  toggleCollection?: (id: string) => void
-}
-
-function stateOf(options: SettingsOptions) {
-  return {
-    theme: options.theme ?? '',
-    themes: options.themes ?? [],
-    categories: options.categories ?? [],
-  }
-}
-
 /** The settings page: the theme, and which icon sets the app lists. */
-export const settings = definePrimitive({
+export const settings = defineBehavior({
   name: 'settings',
-  options: {
-    theme: 'string',
-    themes: 'value',
-    categories: 'value',
-    navigate: 'value',
-    setTheme: 'value',
-    toggleCategory: 'value',
-    toggleFavorite: 'value',
-    toggleCollection: 'value',
+  inputs: {
+    theme: '',
+    themes: [] as readonly SettingsTheme[],
+    categories: [] as readonly SettingsCategory[],
   },
-  state: (options: SettingsOptions) => stateOf(options),
-  sync: options => stateOf(options),
-  api: context => ({
-    setTheme(name: string): void {
-      context.options().setTheme?.(name)
-    },
-    toggleCategory(name: string): void {
-      context.options().toggleCategory?.(name)
-    },
-    toggleFavorite(id: string): void {
-      context.options().toggleFavorite?.(id)
-    },
-    toggleCollection(id: string): void {
-      context.options().toggleCollection?.(id)
-    },
-    follow(event: Event, to: string): void {
-      followLink(event, to, context.options().navigate)
-    },
-  }),
+  ports: {
+    setTheme: port<(name: string) => void>(),
+    toggleCategory: port<(name: string) => void>(),
+    toggleFavorite: port<(id: string) => void>(),
+    toggleCollection: port<(id: string) => void>(),
+  },
   slots: slot => ({
     'root': slot({}),
     'theme': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.theme === part.key),
       }),
       press: ({ api, key }) => api.setTheme(key),
@@ -88,8 +48,6 @@ export const settings = definePrimitive({
     'category-toggle': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(!state.categories.find(category => category.name === part.key)?.hidden),
       }),
@@ -97,16 +55,11 @@ export const settings = definePrimitive({
     }),
     'collection': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: (_state, part) => ({ href: `/collection/${part.key}` }),
-      on: {
-        click: (event, { api, key }) => api.follow(event, `/collection/${key}`),
-      },
+      ...link((_state, part) => `/collection/${part.key}`),
     }),
     'favorite': slot<{ value: string, label: string, pressed: boolean }>({
       props: { value: 'key', label: 'string', pressed: 'boolean' },
       attrs: (_state, part) => ({
-        'type': 'button',
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(part.props.pressed),
       }),
@@ -115,8 +68,6 @@ export const settings = definePrimitive({
     'visible': slot<{ value: string, label: string, pressed: boolean }>({
       props: { value: 'key', label: 'string', pressed: 'boolean' },
       attrs: (_state, part) => ({
-        'type': 'button',
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-pressed': String(part.props.pressed),
       }),

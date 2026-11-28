@@ -1,6 +1,5 @@
 // @unocss-include
 import { defineTheme } from '@sekiso/core/theme'
-import { compose } from '../compose'
 import original from '../original'
 import styles from './theme.module.css'
 import '@fontsource-variable/geist'
@@ -38,8 +37,7 @@ export default defineTheme({
     'paper': grid,
     'scheme': 'light dark',
   },
-  roles: compose(original.roles, styles),
-  slots: compose(original.slots, styles),
+  styles,
   icons: {
     'back': 'i-lucide-arrow-left',
     'github': 'i-lucide-github',

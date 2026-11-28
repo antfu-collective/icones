@@ -3,6 +3,8 @@
  * `pnpm sekiso check` checks the themes against it.
  */
 
+import { defineIcons } from '@sekiso/core/view'
+
 /** The icon names the views use. Every theme has artwork for each one. */
 export const icons = [
   'back',
@@ -46,6 +48,9 @@ export const icons = [
   'manager-yarn',
   'manager-bun',
 ] as const
+
+/** An icon the schema declares, so every theme is sure to have artwork for it. */
+export const Icon = defineIcons(icons)
 
 /**
  * What a part can be. Every theme dresses each role, and a part wears the look

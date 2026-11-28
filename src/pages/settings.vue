@@ -14,8 +14,6 @@ import {
   toggleFavoriteCollection,
 } from '../store'
 
-const router = useRouter()
-
 /** A few colors of each theme, to preview it by */
 const themeChoices: SettingsTheme[] = themeOrder.map(name => ({
   name,
@@ -40,7 +38,6 @@ const options = computed(() => ({
   theme: themeName.value,
   themes: themeChoices,
   categories: settingsCategories.value,
-  navigate: (to: string) => router.push(to),
   setTheme: (name: string) => themeName.value = name,
   toggleCategory: toggleExcludedCategory,
   toggleFavorite: toggleFavoriteCollection,

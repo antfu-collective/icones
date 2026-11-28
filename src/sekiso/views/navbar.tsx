@@ -1,25 +1,15 @@
 import { defineView, Outlet } from '@sekiso/core/view'
 import { navbar } from '../behavior/navbar'
-import { Icon } from './icon'
+import { Icon } from '../schema'
 
 export const navbarView = defineView(navbar, {
-  tags: {
-    root: 'nav',
-    back: 'a',
-    github: 'a',
-    settings: 'a',
-    dark: 'button',
-  },
-  layout: {
-    brand: 'h1',
-  },
-  roles: {
-    root: 'bar',
-    brand: 'brand',
-    back: 'icon-button',
-    github: 'icon-button',
-    settings: 'icon-button',
-    dark: 'toggle',
+  parts: {
+    root: 'nav.bar',
+    back: 'a.icon-button',
+    github: 'a.icon-button',
+    settings: 'a.icon-button',
+    dark: 'button.toggle',
+    brand: 'h1.brand',
   },
 }, ({ state, t }, s) => (
   <s.Root data={{ collection: state.collection, home: state.home }}>

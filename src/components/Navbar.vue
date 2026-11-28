@@ -5,14 +5,12 @@ import { canToggleDark, isDark } from '../store'
 import { toggleDark } from '../utils/dark'
 
 const route = useRoute()
-const router = useRouter()
 
 const options = computed(() => ({
   home: route.path === '/',
   collection: route.path.startsWith('/collection'),
   dark: isDark.value,
   canToggleDark: canToggleDark.value,
-  navigate: (to: string) => router.push(to),
   toggleDark,
 }))
 </script>

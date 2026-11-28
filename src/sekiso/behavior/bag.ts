@@ -1,70 +1,30 @@
-import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
-import { followLink } from './link'
+import { defineBehavior, link, port } from '@sekiso/core/behavior'
 
 /** What the bag can pack its icons into. */
 export type BagPack = 'iconfont' | 'sprite' | `zip:${string}`
 
-export interface BagOptions {
-  open?: boolean
-  count?: number
-  /** The share link was just copied. */
-  shared?: boolean
-  /** The formats of a zip of the icons. */
-  formats?: readonly { type: string, name: string, tag?: string }[]
-  close?: () => void
-  share?: () => void
-  /** Port: asks the user, then empties the bag. */
-  clear?: () => void
-  pack?: (pack: BagPack) => void
-}
-
-function stateOf(options: BagOptions) {
-  return {
-    open: options.open ?? false,
-    count: options.count ?? 0,
-    shared: options.shared ?? false,
-    formats: options.formats ?? [],
-  }
-}
-
-function labelled(label: string): Record<string, string> {
-  return { 'aria-label': label, 'title': label }
-}
-
 /** The bag: the icons the user picked, to share or download together. */
-export const bag = definePrimitive({
+export const bag = defineBehavior({
   name: 'bag',
-  options: {
-    open: 'boolean',
-    count: 'number',
-    shared: 'boolean',
-    formats: 'value',
-    close: 'value',
-    share: 'value',
-    clear: 'value',
-    pack: 'value',
+  inputs: {
+    open: false,
+    count: 0,
+    /** The share link was just copied. */
+    shared: false,
+    /** The formats of a zip of the icons. */
+    formats: [] as readonly { type: string, name: string, tag?: string }[],
   },
-  state: (options: BagOptions) => ({
-    ...stateOf(options),
-    zipOpen: false,
-  }),
-  sync: options => stateOf(options),
+  ports: {
+    close: port(),
+    share: port(),
+    /** Asks the user, then empties the bag. */
+    clear: port(),
+    pack: port<(pack: BagPack) => void>(),
+  },
+  state: () => ({ zipOpen: false }),
   api: context => ({
-    close(): void {
-      context.options().close?.()
-    },
-    share(): void {
-      context.options().share?.()
-    },
-    clear(): void {
-      context.options().clear?.()
-    },
     toggleZip(open = !context.store.get().zipOpen): void {
       context.store.set({ zipOpen: open })
-    },
-    pack(pack: BagPack): void {
-      context.options().pack?.(pack)
     },
   }),
   slots: slot => ({
@@ -82,27 +42,18 @@ export const bag = definePrimitive({
     'share': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.count > 0,
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.share(),
     }),
     'clear': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.count > 0,
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.clear(),
     }),
     'close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.close(),
     }),
     'zip-options': slot({
@@ -110,30 +61,23 @@ export const bag = definePrimitive({
     }),
     'zip-close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.toggleZip(false),
     }),
     'zip': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: () => ({ type: 'button' }),
       press: ({ api, key }) => api.pack(`zip:${key}`),
     }),
     'zip-toggle': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-expanded': String(state.zipOpen),
       }),
       press: ({ api }) => api.toggleZip(),
     }),
     'iconfont': slot({
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.pack('iconfont'),
     }),
     'sprite': slot({
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.pack('sprite'),
     }),
   }),
@@ -142,59 +86,32 @@ export const bag = definePrimitive({
   },
 })
 
-export interface SharedBagOptions {
-  /** The icons of the link. */
-  count?: number
-  /** Those not in the user's bag yet. */
-  missing?: number
-  /** The icons in the user's bag. */
-  bag?: number
-  navigate?: Navigate
-  addAll?: () => void
-}
-
-function sharedStateOf(options: SharedBagOptions) {
-  return { count: options.count ?? 0, missing: options.missing ?? 0, bag: options.bag ?? 0 }
-}
-
 /** The page of a shared bag: the icons of a link, to add to the user's own bag. */
-export const sharedBag = definePrimitive({
+export const sharedBag = defineBehavior({
   name: 'shared-bag',
-  options: {
-    count: 'number',
-    missing: 'number',
-    bag: 'number',
-    navigate: 'value',
-    addAll: 'value',
+  inputs: {
+    /** The icons of the link. */
+    count: 0,
+    /** Those not in the user's bag yet. */
+    missing: 0,
+    /** The icons in the user's bag. */
+    bag: 0,
   },
-  state: (options: SharedBagOptions) => sharedStateOf(options),
-  sync: options => sharedStateOf(options),
-  api: context => ({
-    addAll(): void {
-      context.options().addAll?.()
-    },
-    follow(event: Event, to: string): void {
-      followLink(event, to, context.options().navigate)
-    },
-  }),
+  ports: {
+    addAll: port(),
+  },
   slots: slot => ({
     root: slot({}),
     add: slot({
       present: state => state.count > 0,
       attrs: state => ({
-        type: 'button',
         disabled: state.missing === 0
           ? ''
           : undefined,
       }),
       press: ({ api }) => api.addAll(),
     }),
-    browse: slot({
-      attrs: () => ({ href: '/collection/all' }),
-      on: {
-        click: (event, { api }) => api.follow(event, '/collection/all'),
-      },
-    }),
+    browse: slot(link(() => '/collection/all')),
   }),
   agent: {
     actions: ['addAll'],

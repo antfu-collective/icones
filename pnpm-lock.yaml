@@ -191,11 +191,11 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       '@sekiso/core':
-        specifier: 0.0.1
-        version: 0.0.1
+        specifier: 0.0.4
+        version: 0.0.4
       '@sekiso/vue':
-        specifier: 0.0.1
-        version: 0.0.1(vue@3.5.46(typescript@6.0.3))
+        specifier: 0.0.4
+        version: 0.0.4(vue@3.5.46(typescript@6.0.3))
       '@ui-sdk/core':
         specifier: 0.1.0-beta.17
         version: 0.1.0-beta.17
@@ -246,8 +246,8 @@ importers:
         specifier: ^2.2.559
         version: 2.2.559
       '@sekiso/cli':
-        specifier: 0.0.1
-        version: 0.0.1(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)
+        specifier: 0.0.4
+        version: 0.0.4(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
@@ -267,8 +267,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(eslint@10.15.0(jiti@2.7.0))
       eslint-plugin-sekiso:
-        specifier: 0.0.1
-        version: 0.0.1(eslint@10.15.0(jiti@2.7.0))
+        specifier: 0.0.4
+        version: 0.0.4(eslint@10.15.0(jiti@2.7.0))
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -1907,15 +1907,15 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sekiso/cli@0.0.1':
-    resolution: {integrity: sha512-rb5ltadv+EWtFP7VOyX1l13zegb7U9HWqocLAfhRCc764ckaDfkPVFKDRdEQRIVjXdZf5+OqALDnRq2fEOn+SA==}
+  '@sekiso/cli@0.0.4':
+    resolution: {integrity: sha512-7n8XXT4ZGUFUlRjikqpANSMHfdUhvJOWsdRTtNu1UN94knBNPsbdKBum/Hde9VmmHALfee+3zLn9DoW78gXN3Q==}
     hasBin: true
 
-  '@sekiso/core@0.0.1':
-    resolution: {integrity: sha512-kdTarwVqXp0Rytk5ih21zugywFlr9PLgW6y6r5075eHcqj1OdcqeOcwscIeb0tQa9ystxWi4hQE6WHH8Kb9HBg==}
+  '@sekiso/core@0.0.4':
+    resolution: {integrity: sha512-F/xNbZ7HRixzg1rA+vPpCENJvQGBolIVk4URgFK+mwRay05HW4cnN4Oi4DzM6C7GX866bz4mOi6wc9cDUwln5A==}
 
-  '@sekiso/vue@0.0.1':
-    resolution: {integrity: sha512-yRFzgK8gA4SWdnO+nH0aRbPZPIEpaYi5/PPrv3AAJrSPqYxgkRnBFCj+9TvWIBJYQT2hq1vqhhkz01oUtWA5Tw==}
+  '@sekiso/vue@0.0.4':
+    resolution: {integrity: sha512-7LQaR9dDg6NddXF2fsT9kn6gxDhOcCd1636YEDbzbFKejRlMv8lfE1012b00IYR4lppYekaDfOUgB4M0C2dLlw==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -3051,8 +3051,8 @@ packages:
     peerDependencies:
       eslint: '>=9.38.0'
 
-  eslint-plugin-sekiso@0.0.1:
-    resolution: {integrity: sha512-S5EZx140K55WoBKXGucjb+N8b6Bsu8m5NHlgbJzEQTU7UnHI10Hfx08d17okQA8AC/OfyD9bXYm7q2UqPr3rrw==}
+  eslint-plugin-sekiso@0.0.4:
+    resolution: {integrity: sha512-GizDuCMk5j5VOWpJxZMgjCPhEoZ53hWECU1yuwC/aQUHNpLr0aEVvd6JDczDXYmQ+qAJa8I6DHP8EWGysGIwDw==}
     peerDependencies:
       eslint: '>=9.0.0'
 
@@ -6947,7 +6947,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.61.0':
     optional: true
 
-  '@sekiso/cli@0.0.1(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)':
+  '@sekiso/cli@0.0.4(@types/node@25.9.1)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.48.0)(tsx@4.23.15)(yaml@2.9.0)':
     dependencies:
       playwright-core: 1.65.1
       pngjs: 7.0.0
@@ -6967,13 +6967,13 @@ snapshots:
       - tsx
       - yaml
 
-  '@sekiso/core@0.0.1':
+  '@sekiso/core@0.0.4':
     dependencies:
       '@ui-sdk/core': 0.1.0-beta.17
 
-  '@sekiso/vue@0.0.1(vue@3.5.46(typescript@6.0.3))':
+  '@sekiso/vue@0.0.4(vue@3.5.46(typescript@6.0.3))':
     dependencies:
-      '@sekiso/core': 0.0.1
+      '@sekiso/core': 0.0.4
       '@ui-sdk/core': 0.1.0-beta.17
       '@ui-sdk/vue': 0.1.0-beta.17(@ui-sdk/core@0.1.0-beta.17)(vue@3.5.46(typescript@6.0.3))
       vue: 3.5.46(typescript@6.0.3)
@@ -8416,7 +8416,7 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
-  eslint-plugin-sekiso@0.0.1(eslint@10.15.0(jiti@2.7.0)):
+  eslint-plugin-sekiso@0.0.4(eslint@10.15.0(jiti@2.7.0)):
     dependencies:
       eslint: 10.15.0(jiti@2.7.0)
 

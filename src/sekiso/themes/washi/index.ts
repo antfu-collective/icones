@@ -1,6 +1,5 @@
 // @unocss-include
 import { defineTheme } from '@sekiso/core/theme'
-import { compose } from '../compose'
 import original from '../original'
 import styles from './theme.module.css'
 import './theme.css'
@@ -34,8 +33,7 @@ export default defineTheme({
     'paper': paper,
     'scheme': 'light',
   },
-  roles: compose(original.roles, styles),
-  slots: compose(original.slots, styles),
+  styles,
   // Thin strokes, like a brush
   icons: {
     'back': 'i-ph-arrow-left-light',

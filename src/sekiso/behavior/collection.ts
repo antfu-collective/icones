@@ -1,7 +1,5 @@
-import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
+import { defineBehavior, external, link, option, port } from '@sekiso/core/behavior'
 import { createDraft } from './draft'
-import { external, followLink } from './link'
 
 /** What the page shows of the open icon set. */
 export interface CollectionView {
@@ -25,51 +23,6 @@ export type ActiveMode = 'normal' | 'select' | 'copy'
 /** What the menu of the icon set can pack or store. */
 export type CollectionTask = 'cache' | 'iconfont' | 'svgs' | 'json'
 
-export interface CollectionOptions {
-  collection?: CollectionView | null
-  loading?: boolean
-  search?: string
-  category?: string
-  variant?: string
-  /** How many icons match, and how many show. */
-  total?: number
-  shown?: number
-  /** The set is stored in the browser. */
-  cached?: boolean
-  /** A pack is in progress. */
-  busy?: boolean
-  favorite?: boolean
-  dark?: boolean
-  canToggleDark?: boolean
-  size?: number
-  sizeMin?: number
-  sizeMax?: number
-  sizeStep?: number
-  list?: 'grid' | 'list'
-  mode?: ActiveMode
-  drawerCollapsed?: boolean
-  /** The width of the sidebar, in px. */
-  drawerWidth?: number
-  bag?: number
-  /** Something was just copied. */
-  copied?: boolean
-  navigate?: Navigate
-  setSearch?: (search: string) => void
-  setCategory?: (category: string) => void
-  setVariant?: (variant: string) => void
-  setSize?: (size: number) => void
-  setList?: (list: 'grid' | 'list') => void
-  setMode?: (mode: ActiveMode) => void
-  run?: (task: CollectionTask) => void
-  loadMore?: () => void
-  loadAll?: () => void
-  toggleFavorite?: () => void
-  toggleDark?: (event?: Event) => void
-  toggleDrawer?: () => void
-  setDrawerWidth?: (width: number) => void
-  openBag?: () => void
-}
-
 /** The widths the sidebar can take, in px, and the one a double click goes back to. */
 export const DRAWER_WIDTH = {
   min: 200,
@@ -90,32 +43,6 @@ function drawerOnLeft(drawer: Element | null): boolean {
   return rect.left + rect.width / 2 < window.innerWidth / 2
 }
 
-function stateOf(options: CollectionOptions) {
-  return {
-    collection: options.collection ?? null,
-    loading: options.loading ?? false,
-    category: options.category ?? '',
-    variant: options.variant ?? '',
-    total: options.total ?? 0,
-    shown: options.shown ?? 0,
-    cached: options.cached ?? false,
-    busy: options.busy ?? false,
-    favorite: options.favorite ?? false,
-    dark: options.dark ?? false,
-    canToggleDark: options.canToggleDark ?? true,
-    size: options.size ?? 24,
-    sizeMin: options.sizeMin ?? 16,
-    sizeMax: options.sizeMax ?? 128,
-    sizeStep: options.sizeStep ?? 4,
-    list: options.list ?? 'grid',
-    mode: options.mode ?? 'normal',
-    drawerCollapsed: options.drawerCollapsed ?? false,
-    drawerWidth: options.drawerWidth ?? DRAWER_WIDTH.default,
-    bag: options.bag ?? 0,
-    copied: options.copied ?? false,
-  }
-}
-
 /** The menu's choices that are not a way to show the icons. */
 const TASKS: Record<string, CollectionTask> = {
   cache: 'cache',
@@ -124,65 +51,68 @@ const TASKS: Record<string, CollectionTask> = {
   download_json: 'json',
 }
 
-function labelled(label: string): Record<string, string> {
-  return { 'aria-label': label, 'title': label }
-}
-
 /** The page of one icon set: its details, its filters, the search, and what to do with the icons. */
-export const collection = definePrimitive({
+export const collection = defineBehavior({
   name: 'collection',
-  options: {
-    collection: 'value',
-    loading: 'boolean',
-    search: 'string',
-    category: 'string',
-    variant: 'string',
-    total: 'number',
-    shown: 'number',
-    cached: 'boolean',
-    busy: 'boolean',
-    favorite: 'boolean',
-    dark: 'boolean',
-    canToggleDark: 'boolean',
-    size: 'number',
-    sizeMin: 'number',
-    sizeMax: 'number',
-    sizeStep: 'number',
-    list: 'string',
-    mode: 'string',
-    drawerCollapsed: 'boolean',
-    drawerWidth: 'number',
-    bag: 'number',
-    copied: 'boolean',
-    navigate: 'value',
-    setSearch: 'value',
-    setCategory: 'value',
-    setVariant: 'value',
-    setSize: 'value',
-    setList: 'value',
-    setMode: 'value',
-    run: 'value',
-    loadMore: 'value',
-    loadAll: 'value',
-    toggleFavorite: 'value',
-    toggleDark: 'value',
-    toggleDrawer: 'value',
-    setDrawerWidth: 'value',
-    openBag: 'value',
+  inputs: {
+    collection: null as CollectionView | null,
+    loading: false,
+    category: '',
+    variant: '',
+    /** How many icons match, and how many show. */
+    total: 0,
+    shown: 0,
+    /** The set is stored in the browser. */
+    cached: false,
+    /** A pack is in progress. */
+    busy: false,
+    favorite: false,
+    dark: false,
+    canToggleDark: true,
+    size: 24,
+    sizeMin: 16,
+    sizeMax: 128,
+    sizeStep: 4,
+    list: 'grid' as 'grid' | 'list',
+    mode: 'normal' as ActiveMode,
+    drawerCollapsed: false,
+    /** The width of the sidebar, in px. */
+    drawerWidth: DRAWER_WIDTH.default,
+    bag: 0,
+    /** Something was just copied. */
+    copied: false,
   },
-  state: (options: CollectionOptions) => ({
-    ...stateOf(options),
+  options: {
+    /** The search of icons. The field follows it, ahead of it while the typing goes on. */
+    search: option.string(),
+  },
+  ports: {
+    setSearch: port<(search: string) => void>(),
+    setCategory: port<(category: string) => void>(),
+    setVariant: port<(variant: string) => void>(),
+    setSize: port<(size: number) => void>(),
+    setList: port<(list: 'grid' | 'list') => void>(),
+    setMode: port<(mode: ActiveMode) => void>(),
+    run: port<(task: CollectionTask) => void>(),
+    loadMore: port(),
+    loadAll: port(),
+    toggleFavorite: port(),
+    toggleDark: port<(event?: Event) => void>(),
+    toggleDrawer: port(),
+    setDrawerWidth: port<(width: number) => void>(),
+    openBag: port(),
+  },
+  state: options => ({
     draft: options.search ?? '',
     sizeOpen: false,
     helpOpen: false,
     /** The sidebar is being dragged to a new width. */
     resizing: false,
   }),
-  sync: options => stateOf(options),
   api: (context) => {
     const { store } = context
     const options = () => context.options()
-    const draft = createDraft(context as never, (o: CollectionOptions) => o.search, search => options().setSearch?.(search))
+    const draft = createDraft(context)
 
     return {
       ...draft,
@@ -202,9 +132,6 @@ export const collection = definePrimitive({
       toggleSize(open = !store.get().sizeOpen): void {
         store.set({ sizeOpen: open })
       },
-      setSize(size: number): void {
-        options().setSize?.(size)
-      },
       /** A choice of the menu: a way to show the icons, a mode, or a task. */
       choose(choice: string): void {
         if (choice === 'grid' || choice === 'list')
@@ -217,32 +144,11 @@ export const collection = definePrimitive({
       exitMode(): void {
         options().setMode?.('normal')
       },
-      loadMore(): void {
-        options().loadMore?.()
-      },
-      loadAll(): void {
-        options().loadAll?.()
-      },
-      toggleFavorite(): void {
-        options().toggleFavorite?.()
-      },
-      toggleDark(event?: Event): void {
-        options().toggleDark?.(event)
-      },
-      toggleDrawer(): void {
-        options().toggleDrawer?.()
-      },
       setDrawerWidth(width: number): void {
         options().setDrawerWidth?.(clampWidth(width))
       },
       setResizing(resizing: boolean): void {
         store.set({ resizing })
-      },
-      openBag(): void {
-        options().openBag?.()
-      },
-      follow(event: Event, to: string): void {
-        followLink(event, to, options().navigate)
       },
     }
   },
@@ -251,8 +157,7 @@ export const collection = definePrimitive({
     'drawer-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-expanded': String(!state.drawerCollapsed),
       }),
       press: ({ api }) => api.toggleDrawer(),
@@ -271,7 +176,6 @@ export const collection = definePrimitive({
       present: state => !state.drawerCollapsed,
       attrs: (state, part) => ({
         'tabindex': '0',
-        'aria-label': part.props.label,
         'title': part.props.label,
         'aria-orientation': 'vertical',
         'aria-valuenow': String(state.drawerWidth),
@@ -331,7 +235,7 @@ export const collection = definePrimitive({
       present: state => Boolean(state.collection?.url),
       attrs: (state, part) => ({
         ...external(state.collection?.url ?? ''),
-        ...labelled(part.props.label),
+        title: part.props.label,
       }),
     }),
     'npm': slot<{ label: string }>({
@@ -339,7 +243,7 @@ export const collection = definePrimitive({
       present: state => Boolean(state.collection?.npm),
       attrs: (state, part) => ({
         ...external(state.collection?.npm ?? ''),
-        ...labelled(part.props.label),
+        title: part.props.label,
       }),
     }),
     'license': slot({
@@ -349,8 +253,7 @@ export const collection = definePrimitive({
     'size-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-haspopup': 'true',
         'aria-expanded': String(state.sizeOpen),
       }),
@@ -377,15 +280,14 @@ export const collection = definePrimitive({
         return () => document.removeEventListener('pointerdown', close)
       },
     }),
-    'size': slot<{ label: string, text: string }>({
-      props: { label: 'string', text: 'string' },
+    'size': slot<{ text: string }>({
+      props: { text: 'string' },
       attrs: (state, part) => ({
         'type': 'range',
         'min': String(state.sizeMin),
         'max': String(state.sizeMax),
         'step': String(state.sizeStep),
         'value': String(state.size),
-        'aria-label': part.props.label,
         'aria-valuetext': part.props.text,
       }),
       on: {
@@ -401,36 +303,27 @@ export const collection = definePrimitive({
       props: { label: 'string' },
       present: state => state.canToggleDark,
       attrs: (state, part) => ({
-        'type': 'button',
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-pressed': String(state.dark),
       }),
       press: ({ api }, event) => api.toggleDark(event),
     }),
     'settings': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        href: '/settings',
-        ...labelled(part.props.label),
-      }),
-      on: {
-        click: (event, { api }) => api.follow(event, '/settings'),
-      },
+      ...link(() => '/settings', (_state, part) => ({ title: part.props.label })),
     }),
     'favorite': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.collection !== null && !state.collection.special,
       attrs: (state, part) => ({
-        'type': 'button',
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-pressed': String(state.favorite),
       }),
       press: ({ api }) => api.toggleFavorite(),
     }),
     // A native select: the value is the way the icons show, and any other choice runs and goes back to it
-    'menu': slot<{ label: string }>({
-      props: { label: 'string' },
-      attrs: (state, part) => ({ 'aria-label': part.props.label, 'value': state.list }),
+    'menu': slot({
+      attrs: state => ({ value: state.list }),
       on: {
         change: (event, { api, store }) => {
           const select = event.target as HTMLSelectElement
@@ -460,7 +353,6 @@ export const collection = definePrimitive({
     'category': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.category === part.key),
       }),
       press: ({ api, key }) => api.toggleCategory(key),
@@ -468,7 +360,6 @@ export const collection = definePrimitive({
     'variant': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.variant === part.key),
       }),
       press: ({ api, key }) => api.toggleVariant(key),
@@ -484,12 +375,11 @@ export const collection = definePrimitive({
     'input': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'type': 'text',
-        'name': 's',
-        'value': state.draft,
-        'aria-label': part.props.label,
-        'placeholder': part.props.label,
-        'autocomplete': 'off',
+        type: 'text',
+        name: 's',
+        value: state.draft,
+        placeholder: part.props.label,
+        autocomplete: 'off',
       }),
       on: {
         input: (event, { api }) => api.type((event.target as HTMLInputElement).value),
@@ -516,17 +406,13 @@ export const collection = definePrimitive({
     'clear': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       present: state => state.draft !== '',
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.clear(),
     }),
     'help-toggle': slot<{ value: string, label: string }>({
       props: { value: 'key', label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-expanded': String(state.helpOpen),
         'aria-controls': `search-syntax-${part.key}`,
       }),
@@ -554,26 +440,20 @@ export const collection = definePrimitive({
     }),
     'load-more': slot({
       present: state => state.total > state.shown,
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.loadMore(),
     }),
     'load-all': slot({
       present: state => state.total > state.shown && state.collection !== null && !state.collection.special,
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.loadAll(),
     }),
     'bag': slot<{ label: string }>({
       props: { label: 'string' },
       present: state => state.bag > 0,
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.openBag(),
     }),
     'mode': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-hidden': state.mode === 'normal'
           ? 'true'
           : undefined,

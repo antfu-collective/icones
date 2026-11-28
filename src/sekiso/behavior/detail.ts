@@ -1,6 +1,4 @@
-import type { Navigate } from './link'
-import { definePrimitive } from '@ui-sdk/core'
-import { external, followLink } from './link'
+import { defineBehavior, external, link, port } from '@sekiso/core/behavior'
 
 /** A way to copy or download an icon. */
 export interface DetailFormat {
@@ -15,126 +13,61 @@ export interface DetailGroup {
   formats: readonly DetailFormat[]
 }
 
-export interface DetailOptions {
-  open?: boolean
-  /** The icon id, `prefix:name`. */
-  icon?: string
-  /** The id in the case the user picked. */
-  name?: string
-  cases?: readonly { key: string, label: string }[]
-  preferredCase?: string
-  license?: { title: string, url: string } | null
-  /** The icon's set, shown when the page holds icons of every set. */
-  collection?: { id: string, name: string } | null
-  categories?: readonly string[]
-  inBag?: boolean
-  selecting?: boolean
-  copyColor?: boolean
-  color?: string
-  /** The preview color is close to the page's, so the preview needs a backdrop. */
-  lowContrast?: boolean
-  groups?: readonly DetailGroup[]
-  downloads?: readonly DetailFormat[]
-  links?: readonly { name: string, href: string }[]
-  managers?: readonly string[]
-  manager?: string
-  /** The package of the icon set, for the install command. */
-  packageName?: string
-  /** Something was just copied. */
-  copied?: boolean
-  navigate?: Navigate
-  close?: () => void
-  copy?: (type: string) => void
-  download?: (type: string) => void
-  copyInstall?: () => void
-  toggleBag?: () => void
-  toggleSelecting?: () => void
-  toggleCopyColor?: () => void
-  setColor?: (color: string) => void
-  setCase?: (key: string) => void
-  setManager?: (manager: string) => void
-  showHelp?: () => void
-}
-
-function stateOf(options: DetailOptions) {
-  return {
-    open: options.open ?? false,
-    icon: options.icon ?? '',
-    name: options.name ?? '',
-    cases: options.cases ?? [],
-    preferredCase: options.preferredCase ?? '',
-    license: options.license ?? null,
-    collection: options.collection ?? null,
-    categories: options.categories ?? [],
-    inBag: options.inBag ?? false,
-    selecting: options.selecting ?? false,
-    copyColor: options.copyColor ?? false,
-    color: options.color ?? '#888888',
-    lowContrast: options.lowContrast ?? false,
-    groups: options.groups ?? [],
-    downloads: options.downloads ?? [],
-    links: options.links ?? [],
-    managers: options.managers ?? [],
-    manager: options.manager ?? '',
-    packageName: options.packageName ?? '',
-    copied: options.copied ?? false,
-  }
-}
-
-function labelled(label: string): Record<string, string> {
-  return { 'aria-label': label, 'title': label }
-}
-
 function categoryHref(icon: string, category: string): string {
   return `/collection/${icon.split(':')[0]}?category=${encodeURIComponent(category)}`
 }
 
 /** The sheet of one icon: its preview, its name, and every way to copy or download it. */
-export const detail = definePrimitive({
+export const detail = defineBehavior({
   name: 'detail',
-  options: {
-    open: 'boolean',
-    icon: 'string',
-    name: 'string',
-    cases: 'value',
-    preferredCase: 'string',
-    license: 'value',
-    collection: 'value',
-    categories: 'value',
-    inBag: 'boolean',
-    selecting: 'boolean',
-    copyColor: 'boolean',
-    color: 'string',
-    lowContrast: 'boolean',
-    groups: 'value',
-    downloads: 'value',
-    links: 'value',
-    managers: 'value',
-    manager: 'string',
-    packageName: 'string',
-    copied: 'boolean',
-    navigate: 'value',
-    close: 'value',
-    copy: 'value',
-    download: 'value',
-    copyInstall: 'value',
-    toggleBag: 'value',
-    toggleSelecting: 'value',
-    toggleCopyColor: 'value',
-    setColor: 'value',
-    setCase: 'value',
-    setManager: 'value',
-    showHelp: 'value',
+  inputs: {
+    open: false,
+    /** The icon id, `prefix:name`. */
+    icon: '',
+    /** The id in the case the user picked. */
+    name: '',
+    cases: [] as readonly { key: string, label: string }[],
+    preferredCase: '',
+    license: null as { title: string, url: string } | null,
+    /** The icon's set, shown when the page holds icons of every set. */
+    collection: null as { id: string, name: string } | null,
+    categories: [] as readonly string[],
+    inBag: false,
+    selecting: false,
+    copyColor: false,
+    color: '#888888',
+    /** The preview color is close to the page's, so the preview needs a backdrop. */
+    lowContrast: false,
+    groups: [] as readonly DetailGroup[],
+    downloads: [] as readonly DetailFormat[],
+    links: [] as readonly { name: string, href: string }[],
+    managers: [] as readonly string[],
+    manager: '',
+    /** The package of the icon set, for the install command. */
+    packageName: '',
+    /** Something was just copied. */
+    copied: false,
   },
-  state: (options: DetailOptions) => ({
-    ...stateOf(options),
+  ports: {
+    close: port(),
+    copy: port<(type: string) => void>(),
+    download: port<(type: string) => void>(),
+    copyInstall: port(),
+    toggleBag: port(),
+    toggleSelecting: port(),
+    toggleCopyColor: port(),
+    setColor: port<(color: string) => void>(),
+    setCase: port<(key: string) => void>(),
+    setManager: port<(manager: string) => void>(),
+    showHelp: port(),
+  },
+  state: () => ({
     caseOpen: false,
     /** The format whose code shows in the preview, and where its button is. */
     previewing: '',
     previewX: 0,
     previewY: 0,
   }),
-  sync: options => stateOf(options),
   api: (context) => {
     const { store } = context
     const options = () => context.options()
@@ -143,38 +76,8 @@ export const detail = definePrimitive({
         store.set({ caseOpen: false, previewing: '' })
         options().close?.()
       },
-      copy(type: string): void {
-        options().copy?.(type)
-      },
-      download(type: string): void {
-        options().download?.(type)
-      },
-      copyInstall(): void {
-        options().copyInstall?.()
-      },
-      toggleBag(): void {
-        options().toggleBag?.()
-      },
-      toggleSelecting(): void {
-        options().toggleSelecting?.()
-      },
-      toggleCopyColor(): void {
-        options().toggleCopyColor?.()
-      },
-      setColor(color: string): void {
-        options().setColor?.(color)
-      },
       toggleCase(open = !store.get().caseOpen): void {
         store.set({ caseOpen: open })
-      },
-      setCase(key: string): void {
-        options().setCase?.(key)
-      },
-      setManager(manager: string): void {
-        options().setManager?.(manager)
-      },
-      showHelp(): void {
-        options().showHelp?.()
       },
       /** Shows the code of a format above its button, or hides it with no format. */
       preview(type: string, el?: Element): void {
@@ -188,9 +91,6 @@ export const detail = definePrimitive({
             ? Math.round(rect.top)
             : 0,
         })
-      },
-      follow(event: Event, to: string): void {
-        followLink(event, to, options().navigate)
       },
     }
   },
@@ -208,38 +108,29 @@ export const detail = definePrimitive({
     }),
     'close': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.close(),
     }),
     // A label: a click on the preview opens the color input inside it
     'preview': slot({}),
-    'color': slot<{ label: string }>({
-      props: { label: 'string' },
-      attrs: (state, part) => ({ 'type': 'color', 'value': state.color, 'aria-label': part.props.label }),
+    'color': slot({
+      attrs: state => ({ type: 'color', value: state.color }),
       on: {
         input: (event, { api }) => api.setColor((event.target as HTMLInputElement).value),
       },
     }),
     'help': slot({
-      attrs: () => ({ type: 'button' }),
       press: ({ api }) => api.showHelp(),
     }),
     'copy-name': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.copy('id'),
     }),
     'case-toggle': slot<{ label: string }>({
       props: { label: 'string' },
       attrs: (state, part) => ({
-        'type': 'button',
-        ...labelled(part.props.label),
+        'title': part.props.label,
         'aria-expanded': String(state.caseOpen),
       }),
       press: ({ api }) => api.toggleCase(),
@@ -259,7 +150,6 @@ export const detail = definePrimitive({
     'case': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.preferredCase === part.key),
       }),
       press: ({ api, key }) => api.setCase(key),
@@ -270,23 +160,14 @@ export const detail = definePrimitive({
     }),
     'collection': slot({
       present: state => Boolean(state.collection),
-      attrs: state => ({ href: `/collection/${state.collection?.id ?? ''}` }),
-      on: {
-        click: (event, { api, store }) => api.follow(event, `/collection/${store.get().collection?.id ?? ''}`),
-      },
+      ...link(state => `/collection/${state.collection?.id ?? ''}`),
     }),
     'category': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: (state, part) => ({
-        href: categoryHref(state.icon, part.key),
-      }),
-      on: {
-        click: (event, { api, key, store }) => api.follow(event, categoryHref(store.get().icon, key)),
-      },
+      ...link((state, part) => categoryHref(state.icon, part.key)),
     }),
     'bag': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-pressed': String(state.inBag),
       }),
       press: ({ api }) => api.toggleBag(),
@@ -294,21 +175,18 @@ export const detail = definePrimitive({
     'selecting': slot({
       present: state => state.inBag,
       attrs: state => ({
-        'type': 'button',
         'aria-pressed': String(state.selecting),
       }),
       press: ({ api }) => api.toggleSelecting(),
     }),
     'copy-color': slot({
       attrs: state => ({
-        'type': 'button',
         'aria-pressed': String(state.copyColor),
       }),
       press: ({ api }) => api.toggleCopyColor(),
     }),
     'snippet': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: () => ({ type: 'button' }),
       press: ({ api, key }) => api.copy(key),
       on: {
         pointerenter: (event, { api, key }) => api.preview(key, event.currentTarget as Element),
@@ -323,7 +201,6 @@ export const detail = definePrimitive({
     }),
     'download': slot<{ value: string }>({
       props: { value: 'key' },
-      attrs: () => ({ type: 'button' }),
       press: ({ api, key }) => api.download(key),
     }),
     'link': slot<{ value: string }>({
@@ -336,17 +213,13 @@ export const detail = definePrimitive({
     'manager': slot<{ value: string }>({
       props: { value: 'key' },
       attrs: (state, part) => ({
-        'type': 'button',
         'aria-pressed': String(state.manager === part.key),
       }),
       press: ({ api, key }) => api.setManager(key),
     }),
     'copy-install': slot<{ label: string }>({
       props: { label: 'string' },
-      attrs: (_state, part) => ({
-        type: 'button',
-        ...labelled(part.props.label),
-      }),
+      attrs: (_state, part) => ({ title: part.props.label }),
       press: ({ api }) => api.copyInstall(),
     }),
     'toast': slot({

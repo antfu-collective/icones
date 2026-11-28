@@ -2,20 +2,12 @@ import { defineView } from '@sekiso/core/view'
 import { footer } from '../behavior/footer'
 
 export const footerView = defineView(footer, {
-  tags: {
+  parts: {
     root: 'footer',
-    author: 'a',
-    iconify: 'a',
-  },
-  layout: {
-    credits: 'p',
-    updated: 'p',
-  },
-  roles: {
-    author: 'link',
-    iconify: 'link',
-    credits: 'caption',
-    updated: 'caption',
+    author: 'a.link',
+    iconify: 'a.link',
+    credits: 'p.caption',
+    updated: 'p.caption',
   },
 }, ({ state, t }, s) => (
   <s.Root>
