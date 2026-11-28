@@ -558,6 +558,11 @@
 .collection-drawer-toggle {
   border-color: var(--k-line);
   background: var(--k-raised);
+
+  /* `.icon-button` above shows it again; on a phone there is no sidebar to toggle */
+  @media (max-width: 767.9px) {
+    display: none;
+  }
 }
 
 /* The page of a set: a project header, then tabs of filters */
