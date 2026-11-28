@@ -17,6 +17,8 @@ function categoryHref(icon: string, category: string): string {
   return `/collection/${icon.split(':')[0]}?category=${encodeURIComponent(category)}`
 }
 
+const PREVIEW_HIDE_DELAY = 300
+
 /** The sheet of one icon: its preview, its name, and every way to copy or download it. */
 export const detail = defineBehavior({
   name: 'detail',
@@ -71,8 +73,17 @@ export const detail = defineBehavior({
   api: (context) => {
     const { store } = context
     const options = () => context.options()
+    let hideTimer: ReturnType<typeof setTimeout> | undefined
+
+    function cancelHide(): void {
+      clearTimeout(hideTimer)
+    }
+
+    context.onDestroy(cancelHide)
+
     return {
       close(): void {
+        cancelHide()
         store.set({ caseOpen: false, previewing: '' })
         options().close?.()
       },
@@ -81,6 +92,7 @@ export const detail = defineBehavior({
       },
       /** Shows the code of a format above its button, or hides it with no format. */
       preview(type: string, el?: Element): void {
+        cancelHide()
         const rect = el?.getBoundingClientRect()
         store.set({
           previewing: type,
@@ -91,6 +103,15 @@ export const detail = defineBehavior({
             ? Math.round(rect.top)
             : 0,
         })
+      },
+      holdPreview(): void {
+        cancelHide()
+      },
+      releasePreview(): void {
+        cancelHide()
+        hideTimer = setTimeout(() => {
+          store.set({ previewing: '' })
+        }, PREVIEW_HIDE_DELAY)
       },
     }
   },
@@ -190,14 +211,23 @@ export const detail = defineBehavior({
       press: ({ api, key }) => api.copy(key),
       on: {
         pointerenter: (event, { api, key }) => api.preview(key, event.currentTarget as Element),
-        pointerleave: (_event, { api }) => api.preview(''),
+        pointerleave: (_event, { api }) => api.releasePreview(),
         focus: (event, { api, key }) => api.preview(key, event.currentTarget as Element),
-        blur: (_event, { api }) => api.preview(''),
+        blur: (_event, { api }) => {
+          const stayed = document.querySelector('[data-slot="detail-snippet-preview"]:hover, [data-slot="detail-snippet"]:hover')
+          if (stayed)
+            return
+          api.preview('')
+        },
       },
     }),
     'snippet-preview': slot({
       present: state => state.previewing !== '',
       attrs: () => ({ 'aria-hidden': 'true' }),
+      on: {
+        pointerenter: (_event, { api }) => api.holdPreview(),
+        pointerleave: (_event, { api }) => api.releasePreview(),
+      },
     }),
     'download': slot<{ value: string }>({
       props: { value: 'key' },
