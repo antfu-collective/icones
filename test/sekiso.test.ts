@@ -97,6 +97,22 @@ describe('detail behavior (headless)', () => {
     instance.api.preview('')
     expect(instance.get().previewing).toBe('')
   })
+
+  it('keeps the preview open while the pointer moves onto it', () => {
+    vi.useFakeTimers()
+    const instance = detail({ id: 'detail', icon: 'mdi:home' })
+    instance.api.preview('vue')
+    instance.api.releasePreview()
+    vi.advanceTimersByTime(299)
+    expect(instance.get().previewing).toBe('vue')
+    instance.api.holdPreview()
+    vi.advanceTimersByTime(1000)
+    expect(instance.get().previewing).toBe('vue')
+    instance.api.releasePreview()
+    vi.advanceTimersByTime(300)
+    expect(instance.get().previewing).toBe('')
+    vi.useRealTimers()
+  })
 })
 
 describe('bag behavior (headless)', () => {

@@ -1520,15 +1520,31 @@
   left: var(--x);
   max-width: min(600px, 90vw);
   margin-top: -10px;
-  overflow: hidden;
+  overflow: visible;
   /* Centered above its button, but never past the left edge */
   transform: translate(max(-50%, 16px - var(--x)), -100%);
-  pointer-events: none;
+  pointer-events: auto;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 14px;
+  }
+
+  & > :first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
 
   & > :last-child {
     max-height: 200px;
     overflow: auto;
     padding: 8px;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
   }
 
   & pre {
